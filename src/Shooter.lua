@@ -106,9 +106,9 @@ function Shooter:update(dt)
 
         if self.knockbackTime > 0 then
             if self.knockbackTime > 0.1 then
-                self.pos = self.pos + Vec2(0, -1.15):rotate(self.knockbackAngle)
-            else
                 self.pos = self.pos + Vec2(0, 1.15):rotate(self.knockbackAngle)
+            else
+                self.pos = self.pos + Vec2(0, -1.15):rotate(self.knockbackAngle)
             end
         else
             self.knockbackTime = 0
