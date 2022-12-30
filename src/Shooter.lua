@@ -35,8 +35,8 @@ function Shooter:new(data)
 
     self.multiColorColor = nil
     self.multiColorCount = 0
-	self.knockbackAngle = 0
-	self.knockbackTime = 0
+    self.knockbackAngle = 0
+    self.knockbackTime = 0
 
 
     -- memorizing the pressed keys for keyboard control of the shooter
@@ -100,21 +100,21 @@ function Shooter:update(dt)
 
 
 
-	-- knockback
-	if self.knockbackTime > 0 then
-		self.knockbackTime = self.knockbackTime - dt
+    -- knockback
+    if self.knockbackTime > 0 then
+        self.knockbackTime = self.knockbackTime - dt
 
-		if self.knockbackTime > 0 then
-			if self.knockbackTime > 0.1 then
-				self.pos = self.pos + Vec2(0, -1.15):rotate(self.knockbackAngle)
-			else
-				self.pos = self.pos + Vec2(0, 1.15):rotate(self.knockbackAngle)
-			end
-		else
-			self.knockbackTime = 0
-			self.pos = Vec2(self.movement.x, self.movement.y)
-		end
-	end
+        if self.knockbackTime > 0 then
+            if self.knockbackTime > 0.1 then
+                self.pos = self.pos + Vec2(0, -1.15):rotate(self.knockbackAngle)
+            else
+                self.pos = self.pos + Vec2(0, 1.15):rotate(self.knockbackAngle)
+            end
+        else
+            self.knockbackTime = 0
+            self.pos = Vec2(self.movement.x, self.movement.y)
+        end
+    end
 
 
 
@@ -262,11 +262,11 @@ function Shooter:shoot()
         _Game.session.level:spawnShotSphere(self, self:getSpherePos(), self.angle, self.color, self:getShootingSpeed())
         self.sphereEntity = nil
         self.active = false
-		-- knockback
-		if self.knockbackTime == 0 then
-			self.knockbackTime = 0.2
-			self.knockbackAngle = self.angle
-		end
+        -- knockback
+        if self.knockbackTime == 0 then
+            self.knockbackTime = 0.2
+            self.knockbackAngle = self.angle
+        end
     end
     if sphereConfig.shootEffects then
         for i, effect in ipairs(sphereConfig.shootEffects) do
