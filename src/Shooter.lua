@@ -261,7 +261,7 @@ function Shooter:shoot()
     else
         _Game.session.level:spawnShotSphere(self, self:getSpherePos(), self.angle, self.color, self:getShootingSpeed())
         self.sphereEntity = nil
-        self.active = false
+        --self.active = false
         -- knockback
         if self.knockbackTime == 0 then
             self.knockbackTime = 0.2
