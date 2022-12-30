@@ -76,8 +76,7 @@
             ],
             "colorStreak": 0.45,
             "spawnRules": {
-                "type": "waves",
-                "amount": 30
+                "type": "continuous"
             },
             "spawnDistance": 0.6,
             "dangerDistance": 0.75,
