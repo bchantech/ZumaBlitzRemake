@@ -502,7 +502,8 @@ end
 ---Returns the center position of the primary sphere.
 ---@return Vector2
 function Shooter:getSpherePos()
-    return self.pos - Vec2(0, 27):rotate(self.angle)
+    -- FORK-SPECIFIC CODE: Sphere position roughly fit to Kroakatoa Frog's mouth
+    return self.pos - Vec2(0, 20):rotate(self.angle)
 end
 
 
