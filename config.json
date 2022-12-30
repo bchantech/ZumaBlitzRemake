@@ -1,6 +1,6 @@
 {
     "$schema": "../../schemas/config.json",
-    "name": "Luxor",
+    "name": "Zuma Blitz Remake (alpha v0.0.1)",
     "engine_version": "v0.40.0",
     "native_resolution": {
         "x": 800,
