@@ -1,0 +1,765 @@
+{
+    "name": "RA'S JOURNEY TO THE WEST",
+    "paths": [
+        [
+            {
+                "x": 820.5,
+                "y": 452.5,
+                "hidden": false
+            },
+            {
+                "x": 466.5,
+                "y": 452.5,
+                "hidden": false
+            },
+            {
+                "x": 465.5,
+                "y": 452.5,
+                "hidden": false
+            },
+            {
+                "x": 460.582,
+                "y": 451.853,
+                "hidden": false
+            },
+            {
+                "x": 456.0,
+                "y": 449.954,
+                "hidden": false
+            },
+            {
+                "x": 452.065,
+                "y": 446.935,
+                "hidden": false
+            },
+            {
+                "x": 449.046,
+                "y": 443.0,
+                "hidden": false
+            },
+            {
+                "x": 447.147,
+                "y": 438.418,
+                "hidden": false
+            },
+            {
+                "x": 446.5,
+                "y": 433.5,
+                "hidden": false
+            },
+            {
+                "x": 446.5,
+                "y": 432.5,
+                "hidden": false
+            },
+            {
+                "x": 446.5,
+                "y": 368.5,
+                "hidden": false
+            },
+            {
+                "x": 446.5,
+                "y": 367.5,
+                "hidden": false
+            },
+            {
+                "x": 447.147,
+                "y": 362.582,
+                "hidden": false
+            },
+            {
+                "x": 449.046,
+                "y": 358.0,
+                "hidden": false
+            },
+            {
+                "x": 452.065,
+                "y": 354.065,
+                "hidden": false
+            },
+            {
+                "x": 456.0,
+                "y": 351.046,
+                "hidden": false
+            },
+            {
+                "x": 460.582,
+                "y": 349.147,
+                "hidden": false
+            },
+            {
+                "x": 465.5,
+                "y": 348.5,
+                "hidden": false
+            },
+            {
+                "x": 466.5,
+                "y": 348.5,
+                "hidden": false
+            },
+            {
+                "x": 739.3,
+                "y": 348.3,
+                "hidden": false
+            },
+            {
+                "x": 740.3,
+                "y": 348.3,
+                "hidden": false
+            },
+            {
+                "x": 745.218,
+                "y": 347.653,
+                "hidden": false
+            },
+            {
+                "x": 749.8,
+                "y": 345.754,
+                "hidden": false
+            },
+            {
+                "x": 753.735,
+                "y": 342.735,
+                "hidden": false
+            },
+            {
+                "x": 756.755,
+                "y": 338.8,
+                "hidden": false
+            },
+            {
+                "x": 758.653,
+                "y": 334.218,
+                "hidden": false
+            },
+            {
+                "x": 759.3,
+                "y": 329.3,
+                "hidden": false
+            },
+            {
+                "x": 759.3,
+                "y": 328.3,
+                "hidden": false
+            },
+            {
+                "x": 759.3,
+                "y": 263.7,
+                "hidden": false
+            },
+            {
+                "x": 759.3,
+                "y": 262.7,
+                "hidden": false
+            },
+            {
+                "x": 758.653,
+                "y": 257.782,
+                "hidden": false
+            },
+            {
+                "x": 756.755,
+                "y": 253.2,
+                "hidden": false
+            },
+            {
+                "x": 753.735,
+                "y": 249.265,
+                "hidden": false
+            },
+            {
+                "x": 749.8,
+                "y": 246.246,
+                "hidden": false
+            },
+            {
+                "x": 745.218,
+                "y": 244.347,
+                "hidden": false
+            },
+            {
+                "x": 740.3,
+                "y": 243.7,
+                "hidden": false
+            },
+            {
+                "x": 739.3,
+                "y": 243.7,
+                "hidden": false
+            },
+            {
+                "x": 466.7,
+                "y": 243.3,
+                "hidden": false
+            },
+            {
+                "x": 465.7,
+                "y": 243.3,
+                "hidden": false
+            },
+            {
+                "x": 460.782,
+                "y": 242.653,
+                "hidden": false
+            },
+            {
+                "x": 456.2,
+                "y": 240.754,
+                "hidden": false
+            },
+            {
+                "x": 452.265,
+                "y": 237.735,
+                "hidden": false
+            },
+            {
+                "x": 449.246,
+                "y": 233.8,
+                "hidden": false
+            },
+            {
+                "x": 447.347,
+                "y": 229.218,
+                "hidden": false
+            },
+            {
+                "x": 446.7,
+                "y": 224.3,
+                "hidden": false
+            },
+            {
+                "x": 446.7,
+                "y": 223.3,
+                "hidden": false
+            },
+            {
+                "x": 446.7,
+                "y": 159.7,
+                "hidden": false
+            },
+            {
+                "x": 446.7,
+                "y": 158.7,
+                "hidden": false
+            },
+            {
+                "x": 447.347,
+                "y": 153.782,
+                "hidden": false
+            },
+            {
+                "x": 449.246,
+                "y": 149.2,
+                "hidden": false
+            },
+            {
+                "x": 452.265,
+                "y": 145.265,
+                "hidden": false
+            },
+            {
+                "x": 456.2,
+                "y": 142.246,
+                "hidden": false
+            },
+            {
+                "x": 460.782,
+                "y": 140.347,
+                "hidden": false
+            },
+            {
+                "x": 465.7,
+                "y": 139.7,
+                "hidden": false
+            },
+            {
+                "x": 466.7,
+                "y": 139.7,
+                "hidden": false
+            },
+            {
+                "x": 739.3,
+                "y": 140.3,
+                "hidden": false
+            },
+            {
+                "x": 740.3,
+                "y": 140.3,
+                "hidden": false
+            },
+            {
+                "x": 745.218,
+                "y": 139.653,
+                "hidden": false
+            },
+            {
+                "x": 749.8,
+                "y": 137.754,
+                "hidden": false
+            },
+            {
+                "x": 753.735,
+                "y": 134.735,
+                "hidden": false
+            },
+            {
+                "x": 756.755,
+                "y": 130.8,
+                "hidden": false
+            },
+            {
+                "x": 758.653,
+                "y": 126.218,
+                "hidden": false
+            },
+            {
+                "x": 759.3,
+                "y": 121.3,
+                "hidden": false
+            },
+            {
+                "x": 759.3,
+                "y": 120.3,
+                "hidden": false
+            },
+            {
+                "x": 759.3,
+                "y": 55.7,
+                "hidden": false
+            },
+            {
+                "x": 759.3,
+                "y": 54.7,
+                "hidden": false
+            },
+            {
+                "x": 758.653,
+                "y": 49.7824,
+                "hidden": false
+            },
+            {
+                "x": 756.755,
+                "y": 45.2,
+                "hidden": false
+            },
+            {
+                "x": 753.735,
+                "y": 41.265,
+                "hidden": false
+            },
+            {
+                "x": 749.8,
+                "y": 38.2455,
+                "hidden": false
+            },
+            {
+                "x": 745.218,
+                "y": 36.3474,
+                "hidden": false
+            },
+            {
+                "x": 740.3,
+                "y": 35.7,
+                "hidden": false
+            },
+            {
+                "x": 739.3,
+                "y": 35.7,
+                "hidden": false
+            },
+            {
+                "x": 68.7,
+                "y": 35.7,
+                "hidden": false
+            },
+            {
+                "x": 67.7,
+                "y": 35.7,
+                "hidden": false
+            },
+            {
+                "x": 62.782,
+                "y": 36.3474,
+                "hidden": false
+            },
+            {
+                "x": 58.2,
+                "y": 38.2455,
+                "hidden": false
+            },
+            {
+                "x": 54.265,
+                "y": 41.265,
+                "hidden": false
+            },
+            {
+                "x": 51.246,
+                "y": 45.2,
+                "hidden": false
+            },
+            {
+                "x": 49.347,
+                "y": 49.7824,
+                "hidden": false
+            },
+            {
+                "x": 48.7,
+                "y": 54.7,
+                "hidden": false
+            },
+            {
+                "x": 48.7,
+                "y": 55.7,
+                "hidden": false
+            },
+            {
+                "x": 48.7,
+                "y": 120.3,
+                "hidden": false
+            },
+            {
+                "x": 48.7,
+                "y": 121.3,
+                "hidden": false
+            },
+            {
+                "x": 49.347,
+                "y": 126.218,
+                "hidden": false
+            },
+            {
+                "x": 51.246,
+                "y": 130.8,
+                "hidden": false
+            },
+            {
+                "x": 54.265,
+                "y": 134.735,
+                "hidden": false
+            },
+            {
+                "x": 58.2,
+                "y": 137.754,
+                "hidden": false
+            },
+            {
+                "x": 62.782,
+                "y": 139.653,
+                "hidden": false
+            },
+            {
+                "x": 67.7,
+                "y": 140.3,
+                "hidden": false
+            },
+            {
+                "x": 68.7,
+                "y": 140.3,
+                "hidden": false
+            },
+            {
+                "x": 341.3,
+                "y": 139.7,
+                "hidden": false
+            },
+            {
+                "x": 342.3,
+                "y": 139.7,
+                "hidden": false
+            },
+            {
+                "x": 347.218,
+                "y": 140.347,
+                "hidden": false
+            },
+            {
+                "x": 351.8,
+                "y": 142.246,
+                "hidden": false
+            },
+            {
+                "x": 355.735,
+                "y": 145.265,
+                "hidden": false
+            },
+            {
+                "x": 358.754,
+                "y": 149.2,
+                "hidden": false
+            },
+            {
+                "x": 360.653,
+                "y": 153.782,
+                "hidden": false
+            },
+            {
+                "x": 361.3,
+                "y": 158.7,
+                "hidden": false
+            },
+            {
+                "x": 361.3,
+                "y": 159.7,
+                "hidden": false
+            },
+            {
+                "x": 361.3,
+                "y": 223.3,
+                "hidden": false
+            },
+            {
+                "x": 361.3,
+                "y": 224.3,
+                "hidden": false
+            },
+            {
+                "x": 360.653,
+                "y": 229.218,
+                "hidden": false
+            },
+            {
+                "x": 358.754,
+                "y": 233.8,
+                "hidden": false
+            },
+            {
+                "x": 355.735,
+                "y": 237.735,
+                "hidden": false
+            },
+            {
+                "x": 351.8,
+                "y": 240.754,
+                "hidden": false
+            },
+            {
+                "x": 347.218,
+                "y": 242.653,
+                "hidden": false
+            },
+            {
+                "x": 342.3,
+                "y": 243.3,
+                "hidden": false
+            },
+            {
+                "x": 341.3,
+                "y": 243.3,
+                "hidden": false
+            },
+            {
+                "x": 68.7,
+                "y": 243.7,
+                "hidden": false
+            },
+            {
+                "x": 67.7,
+                "y": 243.7,
+                "hidden": false
+            },
+            {
+                "x": 62.782,
+                "y": 244.347,
+                "hidden": false
+            },
+            {
+                "x": 58.2,
+                "y": 246.246,
+                "hidden": false
+            },
+            {
+                "x": 54.265,
+                "y": 249.265,
+                "hidden": false
+            },
+            {
+                "x": 51.246,
+                "y": 253.2,
+                "hidden": false
+            },
+            {
+                "x": 49.347,
+                "y": 257.782,
+                "hidden": false
+            },
+            {
+                "x": 48.7,
+                "y": 262.7,
+                "hidden": false
+            },
+            {
+                "x": 48.7,
+                "y": 263.7,
+                "hidden": false
+            },
+            {
+                "x": 48.7,
+                "y": 328.3,
+                "hidden": false
+            },
+            {
+                "x": 48.7,
+                "y": 329.3,
+                "hidden": false
+            },
+            {
+                "x": 49.347,
+                "y": 334.218,
+                "hidden": false
+            },
+            {
+                "x": 51.246,
+                "y": 338.8,
+                "hidden": false
+            },
+            {
+                "x": 54.265,
+                "y": 342.735,
+                "hidden": false
+            },
+            {
+                "x": 58.2,
+                "y": 345.754,
+                "hidden": false
+            },
+            {
+                "x": 62.782,
+                "y": 347.653,
+                "hidden": false
+            },
+            {
+                "x": 67.7,
+                "y": 348.3,
+                "hidden": false
+            },
+            {
+                "x": 68.7,
+                "y": 348.3,
+                "hidden": false
+            },
+            {
+                "x": 341.5,
+                "y": 348.5,
+                "hidden": false
+            },
+            {
+                "x": 342.5,
+                "y": 348.5,
+                "hidden": false
+            },
+            {
+                "x": 347.418,
+                "y": 349.147,
+                "hidden": false
+            },
+            {
+                "x": 352.0,
+                "y": 351.046,
+                "hidden": false
+            },
+            {
+                "x": 355.935,
+                "y": 354.065,
+                "hidden": false
+            },
+            {
+                "x": 358.954,
+                "y": 358.0,
+                "hidden": false
+            },
+            {
+                "x": 360.853,
+                "y": 362.582,
+                "hidden": false
+            },
+            {
+                "x": 361.5,
+                "y": 367.5,
+                "hidden": false
+            },
+            {
+                "x": 361.5,
+                "y": 368.5,
+                "hidden": false
+            },
+            {
+                "x": 361.5,
+                "y": 432.5,
+                "hidden": false
+            },
+            {
+                "x": 361.5,
+                "y": 433.5,
+                "hidden": false
+            },
+            {
+                "x": 360.853,
+                "y": 438.418,
+                "hidden": false
+            },
+            {
+                "x": 358.954,
+                "y": 443.0,
+                "hidden": false
+            },
+            {
+                "x": 355.935,
+                "y": 446.935,
+                "hidden": false
+            },
+            {
+                "x": 352.0,
+                "y": 449.954,
+                "hidden": false
+            },
+            {
+                "x": 347.418,
+                "y": 451.853,
+                "hidden": false
+            },
+            {
+                "x": 342.5,
+                "y": 452.5,
+                "hidden": false
+            },
+            {
+                "x": 341.5,
+                "y": 452.5,
+                "hidden": false
+            },
+            {
+                "x": 94.9837,
+                "y": 452.5,
+                "hidden": true
+            },
+            {
+                "x": 56.5,
+                "y": 452.5,
+                "hidden": true
+            }
+        ]
+    ],
+    "sprites": [
+        {
+            "x": 0,
+            "y": 0,
+            "path": "background.json",
+            "internal": true,
+            "background": true
+        },
+        {
+            "x": 19,
+            "y": 413,
+            "path": "sprites/game/pyramid_shadow.json",
+            "internal": false,
+            "background": true
+        },
+        {
+            "x": 19,
+            "y": 413,
+            "path": "sprites/game/pyramid_right.json",
+            "internal": false,
+            "background": false
+        }
+    ]
+}

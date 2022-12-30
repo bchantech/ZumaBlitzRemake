@@ -1,0 +1,146 @@
+[
+    {
+        "name": "text",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 0.5,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": null,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 4.0,
+            "sprite": "sprites/particles/stage_complete.json",
+            "animationFrameCount": 1,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.1,
+            "fadeOutPoint": 0.8,
+            "posRelative": false,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    },
+    {
+        "name": "flash",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 0.25,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": null,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 1.0,
+            "sprite": "sprites/particles/stage_complete_flash.json",
+            "animationFrameCount": 1,
+            "animationSpeed": 30.0,
+            "animationLoop": true,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.2,
+            "fadeOutPoint": 0.25,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0,
+            "colorPaletteSpeed": 33.333333333333336
+        }
+    },
+    {
+        "name": "flashes",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 3.5,
+        "spawnCount": 0,
+        "spawnMax": 20,
+        "spawnDelay": 0.04,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": {
+                    "type": "randomFloat",
+                    "min": -150.0,
+                    "max": 150.0
+                },
+                "y": {
+                    "type": "randomFloat",
+                    "min": -40.0,
+                    "max": 40.0
+                }
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 0.25,
+            "sprite": "sprites/particles/flash.json",
+            "animationFrameCount": 8,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.9,
+            "posRelative": false,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    }
+]

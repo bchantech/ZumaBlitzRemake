@@ -1,0 +1,22 @@
+{
+    "path": "images/game/shooter.png",
+
+    "frame_size": {
+        "x": 125,
+        "y": 125
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

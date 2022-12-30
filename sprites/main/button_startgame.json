@@ -1,0 +1,51 @@
+{
+    "path": "images/main/button_startgame.png",
+    "frame_size": {
+        "x": 310,
+        "y": 65
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 65
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 130
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 195
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

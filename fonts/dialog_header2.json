@@ -1,0 +1,162 @@
+{
+    "type": "image",
+    "image": "images/fonts/dialog_header2.png",
+    "characters": {
+        "A": {
+            "offset": 0,
+            "width": 18
+        },
+        "B": {
+            "offset": 18,
+            "width": 19
+        },
+        "C": {
+            "offset": 37,
+            "width": 16
+        },
+        "D": {
+            "offset": 53,
+            "width": 22
+        },
+        "E": {
+            "offset": 75,
+            "width": 17
+        },
+        "F": {
+            "offset": 92,
+            "width": 16
+        },
+        "G": {
+            "offset": 108,
+            "width": 19
+        },
+        "H": {
+            "offset": 127,
+            "width": 19
+        },
+        "I": {
+            "offset": 146,
+            "width": 9
+        },
+        "J": {
+            "offset": 155,
+            "width": 12
+        },
+        "K": {
+            "offset": 167,
+            "width": 19
+        },
+        "L": {
+            "offset": 186,
+            "width": 16
+        },
+        "M": {
+            "offset": 202,
+            "width": 23
+        },
+        "N": {
+            "offset": 225,
+            "width": 16
+        },
+        "O": {
+            "offset": 241,
+            "width": 20
+        },
+        "P": {
+            "offset": 261,
+            "width": 18
+        },
+        "Q": {
+            "offset": 279,
+            "width": 21
+        },
+        "R": {
+            "offset": 300,
+            "width": 20
+        },
+        "S": {
+            "offset": 320,
+            "width": 14
+        },
+        "T": {
+            "offset": 334,
+            "width": 18
+        },
+        "U": {
+            "offset": 352,
+            "width": 18
+        },
+        "V": {
+            "offset": 370,
+            "width": 19
+        },
+        "W": {
+            "offset": 389,
+            "width": 24
+        },
+        "X": {
+            "offset": 413,
+            "width": 18
+        },
+        "Y": {
+            "offset": 431,
+            "width": 17
+        },
+        "Z": {
+            "offset": 448,
+            "width": 17
+        },
+        "0": {
+            "offset": 465,
+            "width": 21
+        },
+        "1": {
+            "offset": 486,
+            "width": 9
+        },
+        "2": {
+            "offset": 495,
+            "width": 16
+        },
+        "3": {
+            "offset": 511,
+            "width": 15
+        },
+        "4": {
+            "offset": 526,
+            "width": 19
+        },
+        "5": {
+            "offset": 545,
+            "width": 14
+        },
+        "6": {
+            "offset": 559,
+            "width": 16
+        },
+        "7": {
+            "offset": 575,
+            "width": 16
+        },
+        "8": {
+            "offset": 591,
+            "width": 17
+        },
+        "9": {
+            "offset": 608,
+            "width": 17
+        },
+        "-": {
+            "offset": 625,
+            "width": 12
+        },
+        "'": {
+            "offset": 637,
+            "width": 10
+        },
+        " ": {
+            "offset": 647,
+            "width": 6
+        }
+    }
+}

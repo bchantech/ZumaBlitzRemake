@@ -1,0 +1,666 @@
+{
+    "name": "DEN OF THE HYENAS",
+    "paths": [
+        [
+            {
+                "x": -13.0,
+                "y": 451.0,
+                "hidden": false
+            },
+            {
+                "x": 351.0,
+                "y": 451.0,
+                "hidden": false
+            },
+            {
+                "x": 356.694,
+                "y": 450.25,
+                "hidden": false
+            },
+            {
+                "x": 362.0,
+                "y": 448.053,
+                "hidden": false
+            },
+            {
+                "x": 366.556,
+                "y": 444.556,
+                "hidden": false
+            },
+            {
+                "x": 370.053,
+                "y": 440.0,
+                "hidden": false
+            },
+            {
+                "x": 372.25,
+                "y": 434.694,
+                "hidden": false
+            },
+            {
+                "x": 373.0,
+                "y": 429.0,
+                "hidden": false
+            },
+            {
+                "x": 374.0,
+                "y": 407.0,
+                "hidden": true
+            },
+            {
+                "x": 374.0,
+                "y": 295.0,
+                "hidden": false
+            },
+            {
+                "x": 373.0,
+                "y": 265.0,
+                "hidden": false
+            },
+            {
+                "x": 372.25,
+                "y": 259.306,
+                "hidden": false
+            },
+            {
+                "x": 370.053,
+                "y": 254.0,
+                "hidden": false
+            },
+            {
+                "x": 366.556,
+                "y": 249.444,
+                "hidden": false
+            },
+            {
+                "x": 362.0,
+                "y": 245.947,
+                "hidden": false
+            },
+            {
+                "x": 356.694,
+                "y": 243.75,
+                "hidden": false
+            },
+            {
+                "x": 310.0,
+                "y": 241.0,
+                "hidden": false
+            },
+            {
+                "x": 63.0,
+                "y": 243.0,
+                "hidden": false
+            },
+            {
+                "x": 57.306,
+                "y": 242.25,
+                "hidden": false
+            },
+            {
+                "x": 52.0,
+                "y": 240.053,
+                "hidden": false
+            },
+            {
+                "x": 47.4437,
+                "y": 236.556,
+                "hidden": false
+            },
+            {
+                "x": 43.9474,
+                "y": 232.0,
+                "hidden": false
+            },
+            {
+                "x": 41.7496,
+                "y": 226.694,
+                "hidden": false
+            },
+            {
+                "x": 41.0,
+                "y": 221.0,
+                "hidden": false
+            },
+            {
+                "x": 41.0,
+                "y": 57.0,
+                "hidden": false
+            },
+            {
+                "x": 41.7496,
+                "y": 51.306,
+                "hidden": false
+            },
+            {
+                "x": 43.9474,
+                "y": 46.0,
+                "hidden": false
+            },
+            {
+                "x": 47.4437,
+                "y": 41.4436,
+                "hidden": false
+            },
+            {
+                "x": 52.0,
+                "y": 37.9474,
+                "hidden": false
+            },
+            {
+                "x": 57.306,
+                "y": 35.7496,
+                "hidden": false
+            },
+            {
+                "x": 63.0,
+                "y": 35.0,
+                "hidden": false
+            },
+            {
+                "x": 351.0,
+                "y": 35.0,
+                "hidden": false
+            },
+            {
+                "x": 356.694,
+                "y": 35.7496,
+                "hidden": false
+            },
+            {
+                "x": 362.0,
+                "y": 37.9474,
+                "hidden": false
+            },
+            {
+                "x": 366.556,
+                "y": 41.4436,
+                "hidden": false
+            },
+            {
+                "x": 370.053,
+                "y": 46.0,
+                "hidden": false
+            },
+            {
+                "x": 372.25,
+                "y": 51.306,
+                "hidden": false
+            },
+            {
+                "x": 373.0,
+                "y": 57.0,
+                "hidden": false
+            },
+            {
+                "x": 373.0,
+                "y": 121.0,
+                "hidden": false
+            },
+            {
+                "x": 372.25,
+                "y": 126.694,
+                "hidden": false
+            },
+            {
+                "x": 370.053,
+                "y": 132.0,
+                "hidden": false
+            },
+            {
+                "x": 366.556,
+                "y": 136.556,
+                "hidden": false
+            },
+            {
+                "x": 362.0,
+                "y": 140.053,
+                "hidden": false
+            },
+            {
+                "x": 356.694,
+                "y": 142.25,
+                "hidden": false
+            },
+            {
+                "x": 351.0,
+                "y": 143.0,
+                "hidden": false
+            },
+            {
+                "x": 189.0,
+                "y": 143.0,
+                "hidden": false
+            },
+            {
+                "x": 183.306,
+                "y": 143.75,
+                "hidden": false
+            },
+            {
+                "x": 178.0,
+                "y": 145.947,
+                "hidden": false
+            },
+            {
+                "x": 173.444,
+                "y": 149.444,
+                "hidden": false
+            },
+            {
+                "x": 169.947,
+                "y": 154.0,
+                "hidden": false
+            },
+            {
+                "x": 167.75,
+                "y": 159.306,
+                "hidden": false
+            },
+            {
+                "x": 167.0,
+                "y": 165.0,
+                "hidden": false
+            },
+            {
+                "x": 170.0,
+                "y": 191.0,
+                "hidden": true
+            },
+            {
+                "x": 169.0,
+                "y": 298.0,
+                "hidden": false
+            },
+            {
+                "x": 167.0,
+                "y": 329.0,
+                "hidden": false
+            },
+            {
+                "x": 167.75,
+                "y": 334.694,
+                "hidden": false
+            },
+            {
+                "x": 169.947,
+                "y": 340.0,
+                "hidden": false
+            },
+            {
+                "x": 173.444,
+                "y": 344.556,
+                "hidden": false
+            },
+            {
+                "x": 178.0,
+                "y": 348.053,
+                "hidden": false
+            },
+            {
+                "x": 183.306,
+                "y": 350.25,
+                "hidden": false
+            },
+            {
+                "x": 189.0,
+                "y": 351.0,
+                "hidden": false
+            },
+            {
+                "x": 611.0,
+                "y": 351.0,
+                "hidden": false
+            },
+            {
+                "x": 616.694,
+                "y": 350.25,
+                "hidden": false
+            },
+            {
+                "x": 622.0,
+                "y": 348.053,
+                "hidden": false
+            },
+            {
+                "x": 626.556,
+                "y": 344.556,
+                "hidden": false
+            },
+            {
+                "x": 630.053,
+                "y": 340.0,
+                "hidden": false
+            },
+            {
+                "x": 632.25,
+                "y": 334.694,
+                "hidden": false
+            },
+            {
+                "x": 633.0,
+                "y": 329.0,
+                "hidden": false
+            },
+            {
+                "x": 631.0,
+                "y": 305.0,
+                "hidden": true
+            },
+            {
+                "x": 629.0,
+                "y": 185.0,
+                "hidden": false
+            },
+            {
+                "x": 633.0,
+                "y": 165.0,
+                "hidden": false
+            },
+            {
+                "x": 632.25,
+                "y": 159.306,
+                "hidden": false
+            },
+            {
+                "x": 630.053,
+                "y": 154.0,
+                "hidden": false
+            },
+            {
+                "x": 626.556,
+                "y": 149.444,
+                "hidden": false
+            },
+            {
+                "x": 622.0,
+                "y": 145.947,
+                "hidden": false
+            },
+            {
+                "x": 616.694,
+                "y": 143.75,
+                "hidden": false
+            },
+            {
+                "x": 611.0,
+                "y": 143.0,
+                "hidden": false
+            },
+            {
+                "x": 449.0,
+                "y": 143.0,
+                "hidden": false
+            },
+            {
+                "x": 443.306,
+                "y": 142.25,
+                "hidden": false
+            },
+            {
+                "x": 438.0,
+                "y": 140.053,
+                "hidden": false
+            },
+            {
+                "x": 433.444,
+                "y": 136.556,
+                "hidden": false
+            },
+            {
+                "x": 429.947,
+                "y": 132.0,
+                "hidden": false
+            },
+            {
+                "x": 427.75,
+                "y": 126.694,
+                "hidden": false
+            },
+            {
+                "x": 427.0,
+                "y": 121.0,
+                "hidden": false
+            },
+            {
+                "x": 427.0,
+                "y": 57.0,
+                "hidden": false
+            },
+            {
+                "x": 427.75,
+                "y": 51.306,
+                "hidden": false
+            },
+            {
+                "x": 429.947,
+                "y": 46.0,
+                "hidden": false
+            },
+            {
+                "x": 433.444,
+                "y": 41.4436,
+                "hidden": false
+            },
+            {
+                "x": 438.0,
+                "y": 37.9474,
+                "hidden": false
+            },
+            {
+                "x": 443.306,
+                "y": 35.7496,
+                "hidden": false
+            },
+            {
+                "x": 449.0,
+                "y": 35.0,
+                "hidden": false
+            },
+            {
+                "x": 737.0,
+                "y": 35.0,
+                "hidden": false
+            },
+            {
+                "x": 742.694,
+                "y": 35.7496,
+                "hidden": false
+            },
+            {
+                "x": 748.0,
+                "y": 37.9474,
+                "hidden": false
+            },
+            {
+                "x": 752.556,
+                "y": 41.4436,
+                "hidden": false
+            },
+            {
+                "x": 756.053,
+                "y": 46.0,
+                "hidden": false
+            },
+            {
+                "x": 758.25,
+                "y": 51.306,
+                "hidden": false
+            },
+            {
+                "x": 759.0,
+                "y": 57.0,
+                "hidden": false
+            },
+            {
+                "x": 762.0,
+                "y": 221.0,
+                "hidden": false
+            },
+            {
+                "x": 761.25,
+                "y": 226.694,
+                "hidden": false
+            },
+            {
+                "x": 759.053,
+                "y": 232.0,
+                "hidden": false
+            },
+            {
+                "x": 755.556,
+                "y": 236.556,
+                "hidden": false
+            },
+            {
+                "x": 751.0,
+                "y": 240.053,
+                "hidden": false
+            },
+            {
+                "x": 745.694,
+                "y": 242.25,
+                "hidden": false
+            },
+            {
+                "x": 709.0,
+                "y": 247.0,
+                "hidden": false
+            },
+            {
+                "x": 514.0,
+                "y": 241.0,
+                "hidden": false
+            },
+            {
+                "x": 443.306,
+                "y": 243.75,
+                "hidden": false
+            },
+            {
+                "x": 438.0,
+                "y": 245.947,
+                "hidden": false
+            },
+            {
+                "x": 433.444,
+                "y": 249.444,
+                "hidden": false
+            },
+            {
+                "x": 429.947,
+                "y": 254.0,
+                "hidden": false
+            },
+            {
+                "x": 427.75,
+                "y": 259.306,
+                "hidden": false
+            },
+            {
+                "x": 427.0,
+                "y": 265.0,
+                "hidden": false
+            },
+            {
+                "x": 427.0,
+                "y": 295.0,
+                "hidden": true
+            },
+            {
+                "x": 427.0,
+                "y": 407.0,
+                "hidden": false
+            },
+            {
+                "x": 427.0,
+                "y": 429.0,
+                "hidden": false
+            },
+            {
+                "x": 427.75,
+                "y": 434.694,
+                "hidden": false
+            },
+            {
+                "x": 429.947,
+                "y": 440.0,
+                "hidden": false
+            },
+            {
+                "x": 433.444,
+                "y": 444.556,
+                "hidden": false
+            },
+            {
+                "x": 438.0,
+                "y": 448.053,
+                "hidden": false
+            },
+            {
+                "x": 443.306,
+                "y": 450.25,
+                "hidden": false
+            },
+            {
+                "x": 449.0,
+                "y": 451.0,
+                "hidden": false
+            },
+            {
+                "x": 716.02,
+                "y": 451.024,
+                "hidden": true
+            },
+            {
+                "x": 753.0,
+                "y": 451.0,
+                "hidden": true
+            }
+        ]
+    ],
+    "sprites": [
+        {
+            "x": 0,
+            "y": 0,
+            "path": "background.json",
+            "internal": true,
+            "background": true
+        },
+        {
+            "x": 132,
+            "y": 203,
+            "path": "mask1_path1.json",
+            "internal": true,
+            "background": false
+        },
+        {
+            "x": 349,
+            "y": 313,
+            "path": "mask2_path1.json",
+            "internal": true,
+            "background": false
+        },
+        {
+            "x": 604,
+            "y": 198,
+            "path": "mask3_path1.json",
+            "internal": true,
+            "background": false
+        },
+        {
+            "x": 715,
+            "y": 413,
+            "path": "sprites/game/pyramid_shadow.json",
+            "internal": false,
+            "background": true
+        },
+        {
+            "x": 713,
+            "y": 411,
+            "path": "sprites/game/pyramid_left.json",
+            "internal": false,
+            "background": false
+        }
+    ]
+}

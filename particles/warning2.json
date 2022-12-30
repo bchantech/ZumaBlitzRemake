@@ -1,0 +1,231 @@
+[
+    {
+        "name": "gem",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": null,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": 0.5,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 0.6,
+            "sprite": "sprites/particles/warning2.json",
+            "animationFrameCount": 32,
+            "animationSpeed": 30.0,
+            "animationLoop": true,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.4,
+            "fadeOutPoint": 0.6,
+            "posRelative": false,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    },
+    {
+        "name": "UL",
+        "pos": {
+            "x": -36.0,
+            "y": -36.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": null,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": 0.5,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 100.0,
+                "y": 100.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 0.35,
+            "sprite": "sprites/particles/warning.json",
+            "animationFrameCount": 8,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.9,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0,
+            "colorPaletteSpeed": 33.333333333333336
+        }
+    },
+    {
+        "name": "UR",
+        "pos": {
+            "x": 36.0,
+            "y": -36.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": null,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": 0.5,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": -100.0,
+                "y": 100.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 0.35,
+            "sprite": "sprites/particles/warning.json",
+            "animationFrameCount": 8,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.9,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0,
+            "colorPaletteSpeed": 33.333333333333336
+        }
+    },
+    {
+        "name": "LL",
+        "pos": {
+            "x": -36.0,
+            "y": 36.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": null,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": 0.5,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 100.0,
+                "y": -100.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 0.35,
+            "sprite": "sprites/particles/warning.json",
+            "animationFrameCount": 8,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.9,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0,
+            "colorPaletteSpeed": 33.333333333333336
+        }
+    },
+    {
+        "name": "LR",
+        "pos": {
+            "x": 36.0,
+            "y": 36.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": null,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": 0.5,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": -100.0,
+                "y": -100.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 0.35,
+            "sprite": "sprites/particles/warning.json",
+            "animationFrameCount": 8,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.9,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0,
+            "colorPaletteSpeed": 33.333333333333336
+        }
+    }
+]

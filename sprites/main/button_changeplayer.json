@@ -1,0 +1,51 @@
+{
+    "path": "images/main/button_changeplayer.png",
+    "frame_size": {
+        "x": 308,
+        "y": 33
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 33
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 66
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 99
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

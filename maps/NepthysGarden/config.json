@@ -1,0 +1,405 @@
+{
+    "name": "NEPTHY'S GARDEN",
+    "paths": [
+        [
+            {
+                "x": 818.0,
+                "y": 58.5,
+                "hidden": false
+            },
+            {
+                "x": 62.0,
+                "y": 58.5,
+                "hidden": false
+            },
+            {
+                "x": 60.0,
+                "y": 58.5,
+                "hidden": false
+            },
+            {
+                "x": 56.1177,
+                "y": 59.0111,
+                "hidden": false
+            },
+            {
+                "x": 52.5,
+                "y": 60.5096,
+                "hidden": false
+            },
+            {
+                "x": 49.3934,
+                "y": 62.8934,
+                "hidden": false
+            },
+            {
+                "x": 47.0096,
+                "y": 66.0,
+                "hidden": false
+            },
+            {
+                "x": 45.5111,
+                "y": 69.6177,
+                "hidden": false
+            },
+            {
+                "x": 45.0,
+                "y": 73.5,
+                "hidden": false
+            },
+            {
+                "x": 45.0,
+                "y": 75.0,
+                "hidden": false
+            },
+            {
+                "x": 45.0,
+                "y": 337.0,
+                "hidden": false
+            },
+            {
+                "x": 45.0,
+                "y": 338.5,
+                "hidden": false
+            },
+            {
+                "x": 45.5111,
+                "y": 342.382,
+                "hidden": false
+            },
+            {
+                "x": 47.0096,
+                "y": 346.0,
+                "hidden": false
+            },
+            {
+                "x": 49.3934,
+                "y": 349.107,
+                "hidden": false
+            },
+            {
+                "x": 52.5,
+                "y": 351.49,
+                "hidden": false
+            },
+            {
+                "x": 56.1177,
+                "y": 352.989,
+                "hidden": false
+            },
+            {
+                "x": 60.0,
+                "y": 353.5,
+                "hidden": false
+            },
+            {
+                "x": 62.0,
+                "y": 353.5,
+                "hidden": false
+            },
+            {
+                "x": 572.0,
+                "y": 353.5,
+                "hidden": false
+            },
+            {
+                "x": 574.0,
+                "y": 353.5,
+                "hidden": false
+            },
+            {
+                "x": 577.882,
+                "y": 352.989,
+                "hidden": false
+            },
+            {
+                "x": 581.5,
+                "y": 351.49,
+                "hidden": false
+            },
+            {
+                "x": 584.607,
+                "y": 349.107,
+                "hidden": false
+            },
+            {
+                "x": 586.99,
+                "y": 346.0,
+                "hidden": false
+            },
+            {
+                "x": 588.489,
+                "y": 342.382,
+                "hidden": false
+            },
+            {
+                "x": 589.0,
+                "y": 338.5,
+                "hidden": false
+            },
+            {
+                "x": 589.0,
+                "y": 337.0,
+                "hidden": false
+            },
+            {
+                "x": 589.0,
+                "y": 266.5,
+                "hidden": false
+            },
+            {
+                "x": 589.0,
+                "y": 265.0,
+                "hidden": false
+            },
+            {
+                "x": 588.489,
+                "y": 261.118,
+                "hidden": false
+            },
+            {
+                "x": 586.99,
+                "y": 257.5,
+                "hidden": false
+            },
+            {
+                "x": 584.607,
+                "y": 254.393,
+                "hidden": false
+            },
+            {
+                "x": 581.5,
+                "y": 252.01,
+                "hidden": false
+            },
+            {
+                "x": 577.882,
+                "y": 250.511,
+                "hidden": false
+            },
+            {
+                "x": 574.0,
+                "y": 250.0,
+                "hidden": false
+            },
+            {
+                "x": 572.0,
+                "y": 250.0,
+                "hidden": false
+            },
+            {
+                "x": 227.0,
+                "y": 250.0,
+                "hidden": false
+            },
+            {
+                "x": 225.5,
+                "y": 250.0,
+                "hidden": false
+            },
+            {
+                "x": 221.618,
+                "y": 249.489,
+                "hidden": false
+            },
+            {
+                "x": 218.0,
+                "y": 247.99,
+                "hidden": false
+            },
+            {
+                "x": 214.893,
+                "y": 245.607,
+                "hidden": false
+            },
+            {
+                "x": 212.51,
+                "y": 242.5,
+                "hidden": false
+            },
+            {
+                "x": 211.011,
+                "y": 238.882,
+                "hidden": false
+            },
+            {
+                "x": 210.5,
+                "y": 235.0,
+                "hidden": false
+            },
+            {
+                "x": 210.5,
+                "y": 233.0,
+                "hidden": false
+            },
+            {
+                "x": 210.5,
+                "y": 162.0,
+                "hidden": false
+            },
+            {
+                "x": 210.5,
+                "y": 160.0,
+                "hidden": false
+            },
+            {
+                "x": 211.011,
+                "y": 156.118,
+                "hidden": false
+            },
+            {
+                "x": 212.51,
+                "y": 152.5,
+                "hidden": false
+            },
+            {
+                "x": 214.893,
+                "y": 149.393,
+                "hidden": false
+            },
+            {
+                "x": 218.0,
+                "y": 147.01,
+                "hidden": false
+            },
+            {
+                "x": 221.618,
+                "y": 145.511,
+                "hidden": false
+            },
+            {
+                "x": 225.5,
+                "y": 145.0,
+                "hidden": false
+            },
+            {
+                "x": 227.0,
+                "y": 145.0,
+                "hidden": false
+            },
+            {
+                "x": 739.0,
+                "y": 145.0,
+                "hidden": false
+            },
+            {
+                "x": 740.5,
+                "y": 145.0,
+                "hidden": false
+            },
+            {
+                "x": 744.382,
+                "y": 145.511,
+                "hidden": false
+            },
+            {
+                "x": 748.0,
+                "y": 147.01,
+                "hidden": false
+            },
+            {
+                "x": 751.107,
+                "y": 149.393,
+                "hidden": false
+            },
+            {
+                "x": 753.49,
+                "y": 152.5,
+                "hidden": false
+            },
+            {
+                "x": 754.989,
+                "y": 156.118,
+                "hidden": false
+            },
+            {
+                "x": 755.5,
+                "y": 160.0,
+                "hidden": false
+            },
+            {
+                "x": 755.5,
+                "y": 162.0,
+                "hidden": false
+            },
+            {
+                "x": 755.5,
+                "y": 424.0,
+                "hidden": false
+            },
+            {
+                "x": 755.5,
+                "y": 426.0,
+                "hidden": false
+            },
+            {
+                "x": 754.989,
+                "y": 429.882,
+                "hidden": false
+            },
+            {
+                "x": 753.49,
+                "y": 433.5,
+                "hidden": false
+            },
+            {
+                "x": 751.107,
+                "y": 436.607,
+                "hidden": false
+            },
+            {
+                "x": 748.0,
+                "y": 438.99,
+                "hidden": false
+            },
+            {
+                "x": 744.382,
+                "y": 440.489,
+                "hidden": false
+            },
+            {
+                "x": 740.5,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 739.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 90.7795,
+                "y": 441.0,
+                "hidden": true
+            },
+            {
+                "x": 54.0,
+                "y": 441.0,
+                "hidden": true
+            }
+        ]
+    ],
+    "sprites": [
+        {
+            "x": 0,
+            "y": 0,
+            "path": "background.json",
+            "internal": true,
+            "background": true
+        },
+        {
+            "x": 17,
+            "y": 402,
+            "path": "sprites/game/pyramid_shadow.json",
+            "internal": false,
+            "background": true
+        },
+        {
+            "x": 17,
+            "y": 402,
+            "path": "sprites/game/pyramid_right.json",
+            "internal": false,
+            "background": false
+        }
+    ]
+}

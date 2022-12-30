@@ -1,0 +1,115 @@
+{
+    "map": "CobraicTwilight",
+    "music": "level",
+    "dangerMusic": "danger",
+    "powerupGenerator": "vanilla_powerup.json",
+    "gemGenerator": "vanilla_gem.json",
+    "colorGeneratorNormal": "default",
+    "colorGeneratorDanger": "danger",
+    "matchEffect": "match",
+    "target": 600,
+    "pathsBehavior": [
+        {
+            "colors": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+            ],
+            "colorStreak": 0.23333333333333334,
+            "spawnRules": {
+                "type": "waves",
+                "amount": 35
+            },
+            "spawnDistance": 0.49,
+            "dangerDistance": 0.75,
+            "speeds": [
+                {
+                    "distance": 0,
+                    "speed": 800.0,
+                    "transition": {
+                        "type": "bezier",
+                        "point1": 0.9,
+                        "point2": 0.9
+                    }
+                },
+                {
+                    "distance": 0.31,
+                    "speed": 100.0,
+                    "transition": {
+                        "type": "bezier",
+                        "point1": 0.333,
+                        "point2": 0.75
+                    }
+                },
+                {
+                    "distance": 0.61,
+                    "speed": 100.0,
+                    "transition": {
+                        "type": "bezier",
+                        "point1": 0.333,
+                        "point2": 0.75
+                    }
+                },
+                {
+                    "distance": 1,
+                    "speed": 4.0
+                }
+            ]
+        },
+        {
+            "colors": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+            ],
+            "colorStreak": 0.23333333333333334,
+            "spawnRules": {
+                "type": "waves",
+                "amount": 35
+            },
+            "spawnDistance": 0,
+            "dangerDistance": 0.75,
+            "speeds": [
+                {
+                    "distance": 0,
+                    "speed": 800.0,
+                    "transition": {
+                        "type": "bezier",
+                        "point1": 0.9,
+                        "point2": 0.9
+                    }
+                },
+                {
+                    "distance": 0,
+                    "speed": 100.0,
+                    "transition": {
+                        "type": "bezier",
+                        "point1": 0.333,
+                        "point2": 0.75
+                    }
+                },
+                {
+                    "distance": 0,
+                    "speed": 100.0,
+                    "transition": {
+                        "type": "bezier",
+                        "point1": 0.333,
+                        "point2": 0.75
+                    }
+                },
+                {
+                    "distance": 1,
+                    "speed": 4.0
+                }
+            ]
+        }
+    ]
+}

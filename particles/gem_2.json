@@ -1,0 +1,240 @@
+[
+    {
+        "name": "shadow",
+        "pos": {
+            "x": 12.0,
+            "y": 12.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 0.5,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": 0.04,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": null,
+            "sprite": "sprites/particles/gem_shadow.json",
+            "animationFrameCount": 1,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 1.0,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    },
+    {
+        "name": "trail",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": null,
+        "spawnCount": 0,
+        "spawnMax": 25,
+        "spawnDelay": 0.1,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 1.0,
+            "sprite": "sprites/particles/spark_ball_6.json",
+            "animationFrameCount": 16,
+            "animationSpeed": 60.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.75,
+            "posRelative": false,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    },
+    {
+        "name": "bloom",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 0.5,
+        "spawnCount": 1,
+        "spawnMax": 2,
+        "spawnDelay": 0.1,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": null,
+            "sprite": "sprites/particles/gem_bloom.json",
+            "animationFrameCount": 1,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.4,
+            "fadeOutPoint": 0.6,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0,
+            "colorPalette": "images/particles/gem_bloom_pink.png"
+        }
+    },
+    {
+        "name": "gem",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 0.1,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": null,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": null,
+            "sprite": "sprites/powerups/gem_2.json",
+            "animationFrameCount": 16,
+            "animationSpeed": 30.0,
+            "animationLoop": true,
+            "animationFrameRandom": true,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 1.0,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    },
+    {
+        "name": "sparkles",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": null,
+        "spawnCount": 0,
+        "spawnMax": 4,
+        "spawnDelay": 0.1,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": {
+                    "type": "randomFloat",
+                    "min": -12.0,
+                    "max": 12.0
+                },
+                "y": {
+                    "type": "randomFloat",
+                    "min": -12.0,
+                    "max": 12.0
+                }
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": {
+                "type": "randomFloat",
+                "min": 0.25,
+                "max": 0.75
+            },
+            "sprite": "sprites/particles/spark_ball_6.json",
+            "animationFrameCount": 16,
+            "animationSpeed": 60.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.5,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    }
+]

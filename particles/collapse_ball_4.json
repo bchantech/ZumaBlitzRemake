@@ -1,0 +1,118 @@
+[
+    {
+        "name": "flash",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 0.5,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": null,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": 0.25,
+            "sprite": "sprites/particles/flash.json",
+            "animationFrameCount": 8,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 1.0,
+            "posRelative": false,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    },
+    {
+        "name": "sparks",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 0.5,
+        "spawnCount": 25,
+        "spawnMax": 25,
+        "spawnDelay": null,
+        "particleData": {
+            "speedMode": "radius",
+            "spawnScale": {
+                "x": {
+                    "type": "randomFloat",
+                    "min": -5.0,
+                    "max": 5.0
+                },
+                "y": {
+                    "type": "randomFloat",
+                    "min": -5.0,
+                    "max": 5.0
+                }
+            },
+            "speed": {
+                "x": {
+                    "type": "randomFloat",
+                    "min": 45.0,
+                    "max": 60.0
+                },
+                "y": {
+                    "type": "randomFloat",
+                    "min": 45.0,
+                    "max": 60.0
+                }
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": {
+                "type": "randomFloat",
+                "min": 0.25,
+                "max": 0.75
+            },
+            "sprite": "sprites/particles/spark_ball_4.json",
+            "animationFrameCount": 16,
+            "animationSpeed": 30.0,
+            "animationLoop": true,
+            "animationFrameRandom": true,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.5,
+            "posRelative": false,
+            "rainbow": false,
+            "rainbowSpeed": 0,
+            "directionDeviationTime": 0.0,
+            "directionDeviationSpeed": {
+                "type": "randomFloat",
+                "min": 8.726646259971647,
+                "max": 12.217304763960307
+            }
+        }
+    }
+]

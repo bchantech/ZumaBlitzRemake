@@ -1,0 +1,51 @@
+{
+    "path": "images/dialogs/button_instructions.png",
+    "frame_size": {
+        "x": 270,
+        "y": 27
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 27
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 54
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 81
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}
