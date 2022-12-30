@@ -1,3 +1,8 @@
+# Zuma Blitz Remake - OpenSMCE Fork Branch
+This branch is designated for Zuma Blitz remake/revival efforts in the Sphere Matchers Discord server.
+
+If this branch somehow does well in the future, a new, separate repository will be created.
+
 # OpenSMCE
 **Open-source Sphere Matcher Community Engine** - an engine that is made to run various Sphere Matching games.
 

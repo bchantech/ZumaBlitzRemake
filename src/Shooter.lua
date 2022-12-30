@@ -35,12 +35,8 @@ function Shooter:new(data)
 
     self.multiColorColor = nil
     self.multiColorCount = 0
+    self.knockbackid = 0
 
-    self.knockbackDistancex = 20
-    self.knockbackDistancey = -20
-    self.shooterSpeed = 0.5
-    self.knockbackSpeed = 0.5
-    self.knockbackProgress = 0
 
     -- memorizing the pressed keys for keyboard control of the shooter
     self.moveKeys = {left = false, right = false}
@@ -60,9 +56,7 @@ function Shooter:new(data)
     self.sphereEntity = nil
 end
 
-
 local timer = 0
-local knockbackid = 0
 
 function Shooter:knockback()
     if timer == 0 then
@@ -70,7 +64,6 @@ function Shooter:knockback()
 
     end
 end
-
 
 ---Updates the Shooter.
 ---@param dt number Delta time in seconds.
@@ -86,20 +79,20 @@ function Shooter:update(dt)
         self.pos.y = self.config.movement.y
     end
     if timer >= 0.1 then
-        knockbackid = 1
+        self.knockbackid = 1
     end
     if timer <= 0.1 then
-        knockbackid = 2
+        self.knockbackid = 2
     end
     if timer == 0 then
-        knockbackid = 0
+        self.knockbackid = 0
     end
-    if knockbackid == 1 then
+    if self.knockbackid == 1 then
         self.pos.x = self.pos.x - math.sin(self.angle) * 1.15
         self.pos.y = self.pos.y - math.cos(self.angle) * -1.15
     end
 
-    if knockbackid == 2 then
+    if self.knockbackid == 2 then
         self.pos.x = self.pos.x - math.sin(self.angle) * -1.15
         self.pos.y = self.pos.y - math.cos(self.angle) * 1.15
     end
