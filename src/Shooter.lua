@@ -36,6 +36,12 @@ function Shooter:new(data)
     self.multiColorColor = nil
     self.multiColorCount = 0
 
+    self.knockbackDistancex = 20
+    self.knockbackDistancey = -20
+    self.shooterSpeed = 0.5
+    self.knockbackSpeed = 0.5
+    self.knockbackProgress = 0
+
     -- memorizing the pressed keys for keyboard control of the shooter
     self.moveKeys = {left = false, right = false}
     self.mousePos = _MousePos
@@ -55,12 +61,49 @@ function Shooter:new(data)
 end
 
 
+local timer = 0
+local knockbackid = 0
 
+function Shooter:knockback()
+    if timer == 0 then
+        timer = 0.2
+
+    end
+end
 
 
 ---Updates the Shooter.
 ---@param dt number Delta time in seconds.
 function Shooter:update(dt)
+
+    timer = timer - dt
+    -- Check if the timer has reached zero
+    if timer <= 0 then
+        timer = 0
+    end
+    if timer == 0 and not _Game.session.level.pause then
+        self.pos.x = self.config.movement.x
+        self.pos.y = self.config.movement.y
+    end
+    if timer >= 0.1 then
+        knockbackid = 1
+    end
+    if timer <= 0.1 then
+        knockbackid = 2
+    end
+    if timer == 0 then
+        knockbackid = 0
+    end
+    if knockbackid == 1 then
+        self.pos.x = self.pos.x - math.sin(self.angle) * 1.15
+        self.pos.y = self.pos.y - math.cos(self.angle) * -1.15
+    end
+
+    if knockbackid == 2 then
+        self.pos.x = self.pos.x - math.sin(self.angle) * -1.15
+        self.pos.y = self.pos.y - math.cos(self.angle) * 1.15
+    end
+
     -- movement
     if self.movement.type == "linear" then
         -- luxor shooter
@@ -97,6 +140,8 @@ function Shooter:update(dt)
     end
     self.mousePos = _MousePos
 
+
+
     -- filling
     if self.active then
         -- remove nonexistent colors, but only if the current color generator allows removing these colors
@@ -109,6 +154,8 @@ function Shooter:update(dt)
         end
         self:fill()
     end
+
+
 
     -- speed shot time counting
     if self.speedShotTime > 0 then
@@ -130,8 +177,17 @@ function Shooter:update(dt)
     -- Update the sphere entity position.
     if self.sphereEntity then
         self.sphereEntity:setPos(self:getSpherePos())
+
+        
     end
 end
+
+
+    
+
+
+
+
 
 
 
@@ -248,6 +304,7 @@ function Shooter:shoot()
     _Game:playSound(sphereConfig.shootSound, 1, self.pos)
     self.color = 0
     _Game.session.level.spheresShot = _Game.session.level.spheresShot + 1
+    self:knockback()
 end
 
 
@@ -473,7 +530,7 @@ end
 ---Returns the center position of the primary sphere.
 ---@return Vector2
 function Shooter:getSpherePos()
-    return self.pos - Vec2(0, -5):rotate(self.angle)
+    return self.pos - Vec2(0, 27):rotate(self.angle)
 end
 
 
