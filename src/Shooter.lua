@@ -353,7 +353,8 @@ function Shooter:draw()
     -- this color
     if self.sphereEntity then
         self.sphereEntity:setPos(self:getSpherePos())
-        self.sphereEntity:setAngle(self.angle)
+        -- FORK-SPECIFIC CODE: We want the ball in the frog to face it's mouth towards the mouse, not it's eyes.
+        self.sphereEntity:setAngle(self.angle + ((180 * math.pi) / 180) )
         self.sphereEntity:setFrame(self:getSphereFrame())
         self.sphereEntity:draw()
     end
