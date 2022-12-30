@@ -85,6 +85,22 @@ function Level:updateLogic(dt)
 
 
 
+	-- Time
+	if self.started and self.time > 0 then
+		if math.floor(self.time) ~= math.floor(self.time - dt) then
+			_Debug.console:print("Time: " .. self.time)
+		end
+		self.time = self.time - dt
+		if self.time <= 0 then
+			self.shooter:empty()
+			_Game.session:destroyAllSpheres()
+			self.finish = true
+			self.wonDelay = _Game.configManager.gameplay.level.wonDelay
+		end
+	end
+
+
+
 	-- Shot spheres, collectibles, floating texts
 	for i, shotSphere in ipairs(self.shotSpheres) do
 		shotSphere:update(dt)
@@ -715,6 +731,7 @@ function Level:reset()
 	self.dangerSound = nil
 	self.warningDelay = 0
 	self.warningDelayMax = nil
+	self.time = 60
 
 	self.pause = false
 	self.canPause = true
