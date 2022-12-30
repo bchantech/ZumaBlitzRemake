@@ -35,7 +35,8 @@ function Shooter:new(data)
 
     self.multiColorColor = nil
     self.multiColorCount = 0
-    self.knockbackid = 0
+	self.knockbackAngle = 0
+	self.knockbackTime = 0
 
 
     -- memorizing the pressed keys for keyboard control of the shooter
@@ -56,47 +57,11 @@ function Shooter:new(data)
     self.sphereEntity = nil
 end
 
-local timer = 0
 
-function Shooter:knockback()
-    if timer == 0 then
-        timer = 0.2
-
-    end
-end
 
 ---Updates the Shooter.
 ---@param dt number Delta time in seconds.
 function Shooter:update(dt)
-
-    timer = timer - dt
-    -- Check if the timer has reached zero
-    if timer <= 0 then
-        timer = 0
-    end
-    if timer == 0 and not _Game.session.level.pause then
-        self.pos.x = self.config.movement.x
-        self.pos.y = self.config.movement.y
-    end
-    if timer >= 0.1 then
-        self.knockbackid = 1
-    end
-    if timer <= 0.1 then
-        self.knockbackid = 2
-    end
-    if timer == 0 then
-        self.knockbackid = 0
-    end
-    if self.knockbackid == 1 then
-        self.pos.x = self.pos.x - math.sin(self.angle) * 1.15
-        self.pos.y = self.pos.y - math.cos(self.angle) * -1.15
-    end
-
-    if self.knockbackid == 2 then
-        self.pos.x = self.pos.x - math.sin(self.angle) * -1.15
-        self.pos.y = self.pos.y - math.cos(self.angle) * 1.15
-    end
-
     -- movement
     if self.movement.type == "linear" then
         -- luxor shooter
@@ -135,6 +100,24 @@ function Shooter:update(dt)
 
 
 
+	-- knockback
+	if self.knockbackTime > 0 then
+		self.knockbackTime = self.knockbackTime - dt
+
+		if self.knockbackTime > 0 then
+			if self.knockbackTime > 0.1 then
+				self.pos = self.pos + Vec2(0, -1.15):rotate(self.knockbackAngle)
+			else
+				self.pos = self.pos + Vec2(0, 1.15):rotate(self.knockbackAngle)
+			end
+		else
+			self.knockbackTime = 0
+			self.pos = Vec2(self.movement.x, self.movement.y)
+		end
+	end
+
+
+
     -- filling
     if self.active then
         -- remove nonexistent colors, but only if the current color generator allows removing these colors
@@ -170,17 +153,8 @@ function Shooter:update(dt)
     -- Update the sphere entity position.
     if self.sphereEntity then
         self.sphereEntity:setPos(self:getSpherePos())
-
-        
     end
 end
-
-
-    
-
-
-
-
 
 
 
@@ -288,6 +262,11 @@ function Shooter:shoot()
         _Game.session.level:spawnShotSphere(self, self:getSpherePos(), self.angle, self.color, self:getShootingSpeed())
         self.sphereEntity = nil
         self.active = false
+		-- knockback
+		if self.knockbackTime == 0 then
+			self.knockbackTime = 0.2
+			self.knockbackAngle = self.angle
+		end
     end
     if sphereConfig.shootEffects then
         for i, effect in ipairs(sphereConfig.shootEffects) do
@@ -297,7 +276,6 @@ function Shooter:shoot()
     _Game:playSound(sphereConfig.shootSound, 1, self.pos)
     self.color = 0
     _Game.session.level.spheresShot = _Game.session.level.spheresShot + 1
-    self:knockback()
 end
 
 
