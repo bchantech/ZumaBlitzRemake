@@ -19,6 +19,26 @@ end
 
 
 
+function c.disclaimerClickShown(f)
+  f.getWidgetN("splash/Disclaimer/Frame/Container/ClickAnywhere"):hide()
+end
+
+
+
+function c.disclaimerClickHidden(f)
+  f.getWidgetN("splash/Disclaimer/Frame/Container/ClickAnywhere"):show()
+end
+
+
+
+function c.click(f)
+  if f.getWidgetN("splash/Disclaimer") and f.getWidgetN("splash/Disclaimer"):isVisible() then
+    f.getWidgetN("splash/Disclaimer"):hide()
+  end
+end
+
+
+
 function c.disclaimerEnd(f)
   f.getWidgetN("splash/Disclaimer"):clean()
   f.getWidgetN("splash/Main"):show()

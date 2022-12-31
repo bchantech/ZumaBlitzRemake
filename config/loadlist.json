@@ -3,12 +3,14 @@
         "images/splash/background.png",
         "images/splash/button_play.png",
         "images/splash/disclaimer.png",
+        "images/splash/disclaimer_clickanywhere.png",
         "images/splash/progressbar.png"
     ],
     "sprites": [
         "sprites/splash/background.json",
         "sprites/splash/button_play.json",
         "sprites/splash/disclaimer.json",
+        "sprites/splash/disclaimer_clickanywhere.json",
         "sprites/splash/progressbar.json"
     ],
     "sounds": [

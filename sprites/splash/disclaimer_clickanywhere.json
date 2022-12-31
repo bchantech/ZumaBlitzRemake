@@ -1,0 +1,21 @@
+{
+    "path": "images/splash/disclaimer_clickanywhere.png",
+    "frame_size": {
+        "x": 268,
+        "y": 24
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

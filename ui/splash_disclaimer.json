@@ -49,7 +49,65 @@
                 "y": 0
             },
             "alpha": 1,
-            "children": {},
+            "children": {
+                "Container": {
+                    "inheritShow":false,
+                    "inheritHide":false,
+                    "type": "none",
+                    "pos": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "alpha": 1,
+                    "children": {
+                        "ClickAnywhere": {
+                            "inheritShow":false,
+                            "inheritHide":false,
+                            "type": "sprite",
+                            "pos": {
+                                "x": 450,
+                                "y": 530
+                            },
+                            "alpha": 0,
+                            "children": {},
+                            "animations": {
+                                "in_": {
+                                    "type": "fade",
+                                    "time": 1,
+                                    "startValue": 0.0,
+                                    "endValue": 1.0
+                                },
+                                "out": {
+                                    "type": "fade",
+                                    "time": 1,
+                                    "startValue": 1.0,
+                                    "endValue": 0.0
+                                }
+                            },
+                            "sounds": {},
+                            "sprite": "sprites/splash/disclaimer_clickanywhere.json",
+                            "layer": "MenuControls",
+                            "callbacks": {
+                                "showEnd": "disclaimerClickShown",
+                                "hideEnd": "disclaimerClickHidden"
+                            }
+                        }
+                    },
+                    "animations": {
+                        "in_": {
+                            "type": "fade",
+                            "time": 0,
+                            "startValue": 1.0,
+                            "endValue": 1.0
+                        }
+                    },
+                    "sounds": {},
+                    "callbacks": {
+                        "showEnd": "disclaimerClickHidden"
+                    },
+                    "showDelay": 3
+                }
+            },
             "animations": {},
             "sounds": {},
             "layer": "MenuBackground",
@@ -57,6 +115,5 @@
         }
     },
     "animations": {},
-    "sounds": {},
-    "hideDelay": 10
+    "sounds": {}
 }
