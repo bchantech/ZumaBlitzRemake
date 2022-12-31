@@ -954,13 +954,8 @@ end
 
 function c.levelStart(f)
   c.Banner_LevelLose:clean()
-  c.Banner_Intro:show()
-  c.Banner_Intro_Panel:scheduleFunction("hideEnd",
-  function()
-    f.levelBegin()
-    c.Button_Pause:buttonSetEnabled(true)
-  end
-  )
+  f.levelBegin()
+  c.Button_Pause:buttonSetEnabled(true)
 end
 
 
