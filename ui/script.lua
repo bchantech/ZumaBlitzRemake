@@ -13,9 +13,33 @@ local c = {}
 -- It is used just as a simple way to provide the function library to be used here.
 
 -- SPLASH STUFF
+function c.init(f)
+  f.getWidgetN("splash/Disclaimer"):show()
+  f.getWidgetN("splash/Disclaimer"):setActive()
+end
+
+
+
+function c.disclaimerEnd(f)
+  f.getWidgetN("splash/Disclaimer"):clean()
+  f.getWidgetN("splash/Main"):show()
+  f.getWidgetN("splash/Main"):setActive()
+  f.musicVolume("menu", 1)
+end
+
+
+
 function c.splashStart(f)
   f.loadMain()
 end
+
+
+
+function c.splashClick(f)
+  f.getWidgetN("splash/Main"):hide()
+end
+
+
 
 function c.splashEnd(f)
   f.initSession()
@@ -226,10 +250,6 @@ function c.splashEnd(f)
     end
     )
   end
-end
-
-function c.splashClick(f)
-  f.getWidgetN("splash"):hide()
 end
 
 
@@ -810,6 +830,18 @@ end
 ----------------------
 
 function c.tick(f)
+  -- update splash screen
+  local splash = f.getWidgetN("splash/Main")
+  if splash then
+    local progress = f.loadingGetProgress()
+    f.getWidgetN("splash/Main/Frame/Progress").widget.valueData = progress
+    if progress == 1 then
+      f.getWidgetN("splash/Main/Frame/Button_Play"):show()
+    end
+  end
+
+
+
   -- when the options menu is open, update options to the widget positions
 
   -- The "if Menu_Options" check refers to the existence of the widget itself.
