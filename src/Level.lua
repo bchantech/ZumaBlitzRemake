@@ -93,6 +93,7 @@ function Level:updateLogic(dt)
 
 
 	-- Time
+	--[[
 	if self.started and self.time > 0 then
 		if math.floor(self.time) ~= math.floor(self.time - dt) then
 			_Debug.console:print("Time: " .. self.time)
@@ -105,7 +106,7 @@ function Level:updateLogic(dt)
 			self.wonDelay = _Game.configManager.gameplay.level.wonDelay
 		end
 	end
-
+]]
 
 
 	-- Shot spheres, collectibles, floating texts
@@ -783,7 +784,6 @@ function Level:reset()
 	self.dangerSound = nil
 	self.warningDelay = 0
 	self.warningDelayMax = nil
-	self.time = 60
 
 	self.pause = false
 	self.canPause = true
