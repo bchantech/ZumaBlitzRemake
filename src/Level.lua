@@ -170,7 +170,7 @@ function Level:updateLogic(dt)
 
 
 	-- Clear board once target time reached
-	if not self.finish and self:areAllTargetsReached() then
+	if not self.finish and self:areAllObjectivesReached() then
 		self.shooter:empty()
 		_Game.session:destroyAllSpheres(true)
 		self.finish = true
@@ -442,7 +442,7 @@ function Level:applyEffect(effect, TMP_pos)
 	elseif effect.type == "incrementGemStat" then
 		self:grantGem()
 	elseif effect.type == "addTime" then
-		self.targets[1].value = self.targets[1].value + effect.amount
+		self.objectives[1].target = self.objectives[1].target + effect.amount
 	end
 end
 
