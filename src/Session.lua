@@ -116,7 +116,8 @@ end
 ---@param f function The function to be run for each sphere. Two parameters are allowed: `sphere` (Sphere) and `spherePos` (Vector2). If the function returns `true`, the sphere is destroyed.
 ---@param scorePos Vector2 The location of the floating text indicator showing how much score the player has gained.
 ---@param scoreFont string? The font to be used in the score text.
-function Session:destroyFunction(f, scorePos, scoreFont)
+---@param noRewards boolean? If set to `true`, the previous two parameters are ignored, and the spheres are destroyed without giving any points.
+function Session:destroyFunction(f, scorePos, scoreFont, noRewards)
 	-- we pass a function in the f variable
 	-- if f(param1, param2, ...) returns true, the sphere is nuked
 	local score = 0
@@ -130,14 +131,18 @@ function Session:destroyFunction(f, scorePos, scoreFont)
 					local spherePos = sphereGroup:getSpherePos(l)
 					if f(sphere, spherePos) and sphere.color ~= 0 then
 						sphereGroup:destroySphere(l)
-						score = score + 100
+						if not noRewards then
+							score = score + 100
+						end
 					end
 				end
 			end
 		end
 	end
-	self.level:grantScore(score)
-	self.level:spawnFloatingText(_NumStr(score), scorePos, scoreFont or "fonts/score0.json")
+	if not noRewards then
+		self.level:grantScore(score)
+		self.level:spawnFloatingText(_NumStr(score), scorePos, scoreFont or "fonts/score0.json")
+	end
 end
 
 
@@ -169,10 +174,13 @@ end
 
 
 ---Destroys all spheres on the board.
-function Session:destroyAllSpheres()
+---@param noRewards boolean? If set, all the spheres are destroyed without giving any points.
+function Session:destroyAllSpheres(noRewards)
 	self:destroyFunction(
 		function(sphere, spherePos) return true end,
-		self.level.shooter.pos + Vec2(0, -32)
+		self.level.shooter.pos + Vec2(0, -32),
+		nil,
+		noRewards
 	)
 end
 
