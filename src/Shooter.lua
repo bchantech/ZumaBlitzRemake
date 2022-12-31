@@ -32,7 +32,7 @@ function Shooter:new(data)
     self.speedShotTime = 0
     self.speedShotAnim = 0
     self.speedShotParticle = nil
-
+    self.ShooterReloadTime = 0
     self.multiColorColor = nil
     self.multiColorCount = 0
     self.knockbackAngle = 0
@@ -116,7 +116,19 @@ function Shooter:update(dt)
         end
     end
 
+    -- reload time
+    if self.ShooterReloadTime > 0 then
+        self.ShooterReloadTime = self.ShooterReloadTime - dt
+    end
+    if self.ShooterReloadTime < 0 then
+        self.ShooterReloadTime = 0
 
+    end
+    if self.ShooterReloadTime == 0 then
+        self.active = true
+    else
+        self.active = false
+    end
 
     -- filling
     if self.active then
@@ -276,8 +288,8 @@ function Shooter:shoot()
     _Game:playSound(sphereConfig.shootSound, 1, self.pos)
     self.color = 0
     _Game.session.level.spheresShot = _Game.session.level.spheresShot + 1
+    self.ShooterReloadTime = 0.2
 end
-
 
 
 ---Deinitialization function.
