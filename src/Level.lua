@@ -169,22 +169,22 @@ function Level:updateLogic(dt)
 
 
 
-	-- Time counting
-	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
-		self.time = self.time + dt
-		if math.floor(self.time) ~= math.floor(self.time + dt) then
-			_Debug.console:print(math.floor(self.time))
-		end
-	end
-
-
-
 	-- Clear board once target time reached
 	if not self.finish and self:areAllTargetsReached() then
 		self.shooter:empty()
 		_Game.session:destroyAllSpheres(true)
 		self.finish = true
 		self.wonDelay = _Game.configManager.gameplay.level.wonDelay
+	end
+
+
+
+	-- Time counting
+	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
+		self.time = self.time + dt
+		if math.floor(self.time) ~= math.floor(self.time + dt) then
+			_Debug.console:print(math.floor(self.time))
+		end
 	end
 
 
