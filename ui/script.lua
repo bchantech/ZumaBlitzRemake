@@ -14,8 +14,7 @@ local c = {}
 
 -- SPLASH STUFF
 function c.init(f)
-  f.getWidgetN("splash/Disclaimer"):show()
-  f.getWidgetN("splash/Disclaimer"):setActive()
+  f.getWidgetN("splash"):show()
 end
 
 

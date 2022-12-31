@@ -1,6 +1,6 @@
 {
-	"inheritShow":false,
-	"inheritHide":false,
+	"inheritShow":true,
+	"inheritHide":true,
     "type": "none",
     "pos": {
         "x": 0,
