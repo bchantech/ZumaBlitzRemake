@@ -260,6 +260,10 @@ function Game:keypressed(key)
 		if key == "right" then shooter.moveKeys.right = true end
 		if key == "up" then shooter:shoot() end
 		if key == "down" then shooter:swapColors() end
+
+		if key == ";" then
+			self.session.level:applyEffect({type = "addTime", amount = 10})
+		end
 	end
 end
 

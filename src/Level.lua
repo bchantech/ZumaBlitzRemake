@@ -436,6 +436,8 @@ function Level:applyEffect(effect, TMP_pos)
 		self:grantCoin()
 	elseif effect.type == "incrementGemStat" then
 		self:grantGem()
+	elseif effect.type == "addTime" then
+		self.targets[1].value = self.targets[1].value + effect.amount
 	end
 end
 
