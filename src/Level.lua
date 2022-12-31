@@ -183,9 +183,19 @@ function Level:updateLogic(dt)
 	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
 		self.time = self.time + dt
 		if math.floor(self.time) ~= math.floor(self.time + dt) then
-			_Debug.console:print(math.floor(self.time))
+			--_Debug.console:print(math.floor(self.time))
 		end
-	end
+    end
+	
+
+    -- Hot Frog handling
+	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
+        local gracePeriod = 3 -- In seconds
+        self.timeSinceLastSuccessfulShot = self.timeSinceLastSuccessfulShot + dt
+		if self.timeSinceLastSuccessfulShot > gracePeriod then
+            self.blitzMeter = 0
+        end
+    end
 
 
 
@@ -769,7 +779,10 @@ function Level:reset()
 	self.gems = 0
 	self.combo = 0
 	self.destroyedSpheres = 0
-	self.time = 0
+    self.time = 0
+
+    self.blitzMeter = 0
+	self.timeSinceLastSuccessfulShot = 0
 
 	self.spheresShot = 0
 	self.sphereChainsSpawned = 0
