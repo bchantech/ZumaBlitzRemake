@@ -872,6 +872,7 @@ function c.tick(f)
         -- Level
         if f.levelExists() then
           local levelProgress = f.levelGetProgress()
+          local levelObjectives = f.levelGetObjectives()
           local levelScore = _NumStr(f.levelGetScore())
           local levelShots = tostring(f.levelGetShots())
           local levelCoins = tostring(f.levelGetCoins())
@@ -879,6 +880,9 @@ function c.tick(f)
           local levelChains = tostring(f.levelGetChains())
           local levelMaxCombo = tostring(f.levelGetMaxCombo())
           local levelMaxChain = tostring(f.levelGetMaxChain())
+
+          local time = math.floor(math.max(levelObjectives[1].target - levelObjectives[1].progress, 0))
+          c.Hud_Text_Lives.widget.text = string.format("%.1d %.2d", math.floor(time / 60), time % 60)
 
           c.Hud_Progress.widget.valueData = levelProgress
       		if c.Hud_Progress.widget.value == 1 then
