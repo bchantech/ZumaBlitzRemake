@@ -178,6 +178,7 @@ function UIManager:mousereleased(x, y, button)
 		for widgetN, widget in pairs(self.widgets) do
 			widget:unclick()
 		end
+    self:executeCallback("click")
 	end
 end
 
