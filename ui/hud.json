@@ -38,7 +38,7 @@
 					"inheritHide":true,
                     "type": "text",
                     "pos": {
-                        "x": 45,
+                        "x": 145,
                         "y": 7
                     },
                     "alpha": 1,
@@ -58,8 +58,8 @@
 					"inheritHide":true,
                     "type": "text",
                     "pos": {
-                        "x": 136,
-                        "y": 500
+                        "x": 66,
+                        "y": 4
                     },
                     "alpha": 1,
                     "children": {},
