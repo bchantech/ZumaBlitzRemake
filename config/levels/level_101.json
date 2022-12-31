@@ -7,10 +7,10 @@
     "colorGeneratorNormal": "default",
     "colorGeneratorDanger": "default",
     "matchEffect": "match",
-    "targets": [
+    "objectives": [
         {
             "type": "timeSurvived",
-            "value": 60
+            "target": 60
         }
     ],
     "shooter": {
