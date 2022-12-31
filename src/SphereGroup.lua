@@ -666,6 +666,14 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	-- Update max combo and max chain stats.
 	self.map.level.maxCombo = math.max(self.map.level.combo, self.map.level.maxCombo)
 	self.map.level.maxChain = math.max(self.sphereChain.combo, self.map.level.maxChain)
+
+    -- Update Hot Frog meter
+	if boostCombo then
+		self.map.level.timeSinceLastSuccessfulShot = 0
+		self.map.level.blitzMeter = self.map.level.blitzMeter + math.max(0.05 * (3 - self.map.level.timeSinceLastSuccessfulShot), 0)
+		_Debug.console:print("add: "..math.max(0.05 * (3 - self.map.level.timeSinceLastSuccessfulShot), 0))
+		_Debug.console:print("blitzMeter: "..self.map.level.blitzMeter)
+	end
 end
 
 
