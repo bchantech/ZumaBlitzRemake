@@ -7,7 +7,12 @@
     "colorGeneratorNormal": "default",
     "colorGeneratorDanger": "default",
     "matchEffect": "match",
-    "target": 100,
+    "targets": [
+        {
+            "type": "timeSurvived",
+            "value": 60
+        }
+    ],
     "shooter": {
         "name": "default",
         "movement": {
@@ -44,54 +49,6 @@
                 },
                 {
                     "distance": 0.2,
-                    "speed": 75.0,
-                    "transition": {
-                        "type": "bezier",
-                        "point1": 0.25,
-                        "point2": 0.75
-                    }
-                },
-                {
-                    "distance": 0.6,
-                    "speed": 75.0,
-                    "transition": {
-                        "type": "bezier",
-                        "point1": 0.25,
-                        "point2": 0.75
-                    }
-                },
-                {
-                    "distance": 1,
-                    "speed": 3.0
-                }
-            ]
-        },
-        {
-            "colors": [
-                1,
-                2,
-                3,
-                4,
-                5
-            ],
-            "colorStreak": 0.45,
-            "spawnRules": {
-                "type": "continuous"
-            },
-            "spawnDistance": 0.6,
-            "dangerDistance": 0.75,
-            "speeds": [
-                {
-                    "distance": 0,
-                    "speed": 800.0,
-                    "transition": {
-                        "type": "bezier",
-                        "point1": 0.9,
-                        "point2": 0.9
-                    }
-                },
-                {
-                    "distance": 0.3,
                     "speed": 75.0,
                     "transition": {
                         "type": "bezier",
