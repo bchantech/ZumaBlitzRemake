@@ -255,14 +255,14 @@
 		"in_": {
 			"type": "move",
 			"time": 0.5,
-			"startPos": {"x":0,"y":36},
+			"startPos": {"x":0,"y":0},
 			"endPos": {"x":0,"y":0}
 		},
 		"out": {
 			"type": "move",
 			"time": 0.5,
 			"startPos": {"x":0,"y":0},
-			"endPos": {"x":0,"y":36}
+			"endPos": {"x":0,"y":0}
 		}
 	},
     "sounds": {}
