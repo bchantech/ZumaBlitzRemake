@@ -922,7 +922,7 @@ function c.tick(f)
 
         -- Level
         if f.levelExists() then
-          local levelProgress = f.levelGetProgress()
+          local levelProgress = f.levelGetBlitzMeter()
           local levelObjectives = f.levelGetObjectives()
           local levelScore = _NumStr(f.levelGetScore())
           local levelShots = tostring(f.levelGetShots())
