@@ -637,14 +637,16 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	self.sphereChain.comboScore = self.sphereChain.comboScore + score
 
 	-- Determine and display the floating text.
-	local scoreText = _NumStr(score)
+    local scoreText = _NumStr(score)
+    -- Zuma's meanings of "Combo" and "Chain" is reverse from Luxor's.
+	-- Keep this in mind when modifying code as OpenSMCE is based off Luxor.
 	if boostCombo and self.map.level.combo > 2 then
-		scoreText = scoreText .. "\n COMBO X" .. tostring(self.map.level.combo)
+		scoreText = scoreText .. "\n CHAIN x" .. tostring(self.map.level.combo)
 	end
 	if effectConfig.apply_chain_multiplier and self.sphereChain.combo ~= 1 then
-		scoreText = scoreText .. "\n CHAIN X" .. tostring(self.sphereChain.combo)
+		scoreText = scoreText .. "\n COMBO x" .. tostring(self.sphereChain.combo)
 	end
-	local scoreGapTexts = {"GAP BONUS!", "DOUBLE GAP BONUS!", "TRIPLE GAP BONUS!", "QUADRUPLE GAP BONUS!", "QUINTUPLE GAP BONUS!"}
+	local scoreGapTexts = {"GAP SHOT", "DOUBLE GAP", "TRIPLE GAP", "QUADRUPLE GAP", "QUINTUPLE GAP"}
 	if #gaps > 0 then
 		scoreText = scoreText .. "\n" .. scoreGapTexts[#gaps]
 	end
