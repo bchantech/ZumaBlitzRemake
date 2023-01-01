@@ -91,6 +91,12 @@ function Level:updateLogic(dt)
 	self.danger = self:getDanger() and not self.lost
 
 
+    -- Curve Clears
+	if self:getClearedPaths() and self.started then
+		_Debug.console:print("Curve Clear!")
+	end
+
+
 
 	-- Shot spheres, collectibles, floating texts
 	for i, shotSphere in ipairs(self.shotSpheres) do
@@ -606,6 +612,19 @@ function Level:getDanger()
 	for i, path in ipairs(self.map.paths) do
 		for j, sphereChain in ipairs(path.sphereChains) do
 			if sphereChain:getDanger() then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+
+
+function Level:getClearedPaths()
+    for i, path in ipairs(self.map.paths) do
+		for j, sphereChain in ipairs(path.sphereChains) do
+			if sphereChain:getCurveClear() then
 				return true
 			end
 		end
