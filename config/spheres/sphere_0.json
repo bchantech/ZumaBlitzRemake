@@ -4,7 +4,7 @@
     "nextSprite": "sprites/game/next_ball_0.json",
     "idleParticle": null,
     "destroyParticle": "particles/collapse_vise.json",
-    "destroyCollectible": "vanilla_vise.json",
+    "destroyCollectible": null,
     "color": {
         "r": 1,
         "g": 1,

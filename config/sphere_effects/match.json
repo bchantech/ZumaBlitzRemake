@@ -5,7 +5,7 @@
     "infection_time": 0,
     "destroy_sound": "hardcoded",
     "destroy_font": "hardcoded",
-    "destroy_collectible": "vanilla_match.json",
+    "destroy_collectible": null,
     "level_loss_protection": true,
     "immobile": false,
     "fragile": false,
