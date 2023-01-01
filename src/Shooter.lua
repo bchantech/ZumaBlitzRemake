@@ -482,6 +482,9 @@ end
 ---Returns the primary sphere color.
 ---@return table
 function Shooter:getReticalColor()
+    if not self:getSphereConfig() then
+        return Color(1, 1, 1)
+    end
     local color = self:getSphereConfig().color
     if type(color) == "string" then
         return _Game.resourceManager:getColorPalette(color):getColor(_TotalTime * self:getSphereConfig().colorSpeed)
