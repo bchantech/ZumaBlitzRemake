@@ -170,7 +170,7 @@ function Level:updateLogic(dt)
 
 
 	-- Clear board once target time reached
-	if not self.finish and self:areAllObjectivesReached() then
+	if not self.finish and self:areAllObjectivesReached() and not self:hasShotSpheres() and not self:areMatchesPredicted() then
 		self.shooter:empty()
 		_Game.session:destroyAllSpheres(true)
 		self.finish = true
@@ -712,6 +712,21 @@ end
 ---@return boolean
 function Level:hasShotSpheres()
 	return #self.shotSpheres > 0
+end
+
+
+
+---Returns `true` if there are any matches predicted (spheres that magnetize to each other), `false` otherwise.
+---@return boolean
+function Level:areMatchesPredicted()
+	for i, path in ipairs(self.map.paths) do
+		for j, chain in ipairs(path.sphereChains) do
+			if chain:isMatchPredicted() then
+				return true
+			end
+		end
+	end
+	return false
 end
 
 
