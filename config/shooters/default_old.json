@@ -2,60 +2,12 @@
     "$schema": "../../../../schemas/config/shooter.json",
     "sprite": "sprites/game/shooter.json",
     "shadowSprite": "sprites/game/shooter_shadow.json",
-    "unused_nextColorSprites": {
-        "-11": {
-            "sprite": "sprites/game/next_ball_1.json"
-        },
-        "-12": {
-            "sprite": "sprites/game/next_ball_2.json"
-        },
-        "-13": {
-            "sprite": "sprites/game/next_ball_3.json"
-        },
-        "-14": {
-            "sprite": "sprites/game/next_ball_4.json"
-        },
-        "-15": {
-            "sprite": "sprites/game/next_ball_5.json"
-        },
-        "-16": {
-            "sprite": "sprites/game/next_ball_6.json"
-        },
-        "-17": {
-            "sprite": "sprites/game/next_ball_7.json"
-        },
-        "-21": {
-            "sprite": "sprites/game/next_ball_1.json"
-        },
-        "-22": {
-            "sprite": "sprites/game/next_ball_2.json"
-        },
-        "-23": {
-            "sprite": "sprites/game/next_ball_3.json"
-        },
-        "-24": {
-            "sprite": "sprites/game/next_ball_4.json"
-        },
-        "-25": {
-            "sprite": "sprites/game/next_ball_5.json"
-        },
-        "-26": {
-            "sprite": "sprites/game/next_ball_6.json"
-        },
-        "-27": {
-            "sprite": "sprites/game/next_ball_7.json"
-        },
-        "-5": {
-            "sprite": "sprites/game/next_ball_lightning.json"
-        },
-        "-4": {
-            "sprite": "sprites/game/next_ball_lightning.json"
-        },
+    "nextBallSprites": {
         "-3": {
             "sprite": "sprites/game/next_ball_lightning.json"
         },
         "-2": {
-            "sprite": "sprites/game/next_ball_fireball.json"
+            "sprite": "sprites/game/next_ball_bomb.json"
         },
         "-1": {
             "sprite": "sprites/game/next_ball_wild.json"
@@ -82,6 +34,9 @@
             "sprite": "sprites/game/next_ball_6.json"
         },
         "7": {
+            "sprite": "sprites/game/next_ball_7.json"
+        },
+        "10": {
             "sprite": "sprites/game/next_ball_7.json"
         }
     },
