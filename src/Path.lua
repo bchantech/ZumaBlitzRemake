@@ -56,6 +56,7 @@ function Path:new(map, pathData, pathBehavior)
 	self.bonusScarab = nil
 	self.scorpions = {}
 	self.sphereEffectGroups = {}
+	self.pathClearGranted = false
 end
 
 
@@ -121,15 +122,30 @@ function Path:update(dt)
 			sphereChain:update(dt)
 		end
 	end
+
+	-- Sphere chain spawning
 	if self:shouldSpawn() then self:spawnChain() end
+
+	-- Bonus Scarab
 	if self.bonusScarab then self.bonusScarab:update(dt) end
 
+	-- Scorpions
 	for i, scorpion in ipairs(self.scorpions) do
 		scorpion:update(dt)
 	end
 	for i = #self.scorpions, 1, -1 do
 		local scorpion = self.scorpions[i]
 		if scorpion.delQueue then table.remove(self.scorpions, i) end
+	end
+
+	-- Path Clears
+	if self:isValidForCurveClear() then
+		self.pathClearGranted = true
+		_Debug.console:print("Curve Clear!")
+		self.map.level:grantScore(10000)
+	-- 10% of this path's length to be able to reclaim path clear bonus
+	elseif self:getMaxOffset() > self.length * 0.1 then
+		self.pathClearGranted = false
 	end
 end
 
@@ -455,7 +471,7 @@ end
 ---Returns `true` if the given path should give a Curve Clear bonus.
 ---@return boolean
 function Path:isValidForCurveClear()
-	return self:getMaxOffset() <= 0
+	return not self.map.isDummy and not self.map.level.controlDelay and self:getMaxOffset() <= 0 and not self.pathClearGranted and #self.sphereChains > 0
 end
 
 
