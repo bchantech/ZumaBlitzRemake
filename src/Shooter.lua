@@ -27,12 +27,11 @@ function Shooter:new(data)
 
     self.color = 0
     self.nextColor = 0
-    self.active = false -- when the sphere is shot you can't shoot; same for start, win, lose
+    self.shotCooldown = nil
     self.speedShotSpeed = 0
     self.speedShotTime = 0
     self.speedShotAnim = 0
     self.speedShotParticle = nil
-    self.shooterReloadTime = 0
     self.multiColorColor = nil
     self.multiColorCount = 0
     self.knockbackAngle = 0
@@ -98,7 +97,13 @@ function Shooter:update(dt)
     end
     self.mousePos = _MousePos
 
-
+    -- shot cooldown
+    if self.shotCooldown and (not _Game.session.level:hasShotSpheres() or self.config.multishot) then
+        self.shotCooldown = self.shotCooldown - dt
+        if self.shotCooldown <= 0 then
+            self.shotCooldown = nil
+        end
+    end
 
     -- knockback
     if self.knockbackTime > 0 then
@@ -116,22 +121,8 @@ function Shooter:update(dt)
         end
     end
 
-    -- reload time
-    if self.shooterReloadTime > 0 then
-        self.shooterReloadTime = self.shooterReloadTime - dt
-    end
-    if self.shooterReloadTime < 0 then
-        self.shooterReloadTime = 0
-
-    end
-    if self.shooterReloadTime == 0 then
-        self.active = true
-    else
-        self.active = false
-    end
-
     -- filling
-    if self.active then
+    if self:isActive() then
         -- remove nonexistent colors, but only if the current color generator allows removing these colors
         local remTable = _Game.session.level:getCurrentColorGenerator().colors_remove_if_nonexistent
         if _MathIsValueInTable(remTable, self.color) and not _Game.session.colorManager:isColorExistent(self.color) then
@@ -198,9 +189,8 @@ end
 
 
 
----Empties and deactivates this shooter. This includes removing all effects, such as speed shot or multi-color spheres.
+---Empties this shooter. This includes removing all effects, such as speed shot or multi-color spheres.
 function Shooter:empty()
-    self.active = false
     self:setColor(0)
     self:setNextColor(0)
     self.multiColorColor = nil
@@ -239,6 +229,9 @@ end
 
 ---Fills any empty spaces in the shooter.
 function Shooter:fill()
+    if self.nextColor == 0 or self.color == 0 then
+        _Game:playSound(self.config.sounds.sphereFill, 1, self.pos)
+    end
     if self.nextColor == 0 then
         self:setNextColor(self:getNextColor())
     end
@@ -250,10 +243,24 @@ end
 
 
 
----Activates the shooter and plays a shooter fill sound.
-function Shooter:activate()
-    self.active = true
-    _Game:playSound(self.config.sounds.sphereFill, 1, self.pos)
+---Returns whether the Shooter is active.
+---When the shooter is deactivated, new balls won't be added and existing can't be shot or removed.
+function Shooter:isActive()
+    local level = _Game.session.level
+    -- Eliminate all cases where we're not in the main level gameplay loop.
+    if not level.started or level.controlDelay or level.lost or level:hasNoMoreSpheres() then
+        return false
+    end
+    -- When there's already a shot sphere and the config does not permit more, disallow.
+    if level:hasShotSpheres() and not self.config.multishot then
+        return false
+    end
+    -- Same for shooting delay.
+    if self.shotCooldown then
+        return false
+    end
+    -- Otherwise, allow.
+    return true
 end
 
 
@@ -261,7 +268,7 @@ end
 ---Launches the current sphere, if possible.
 function Shooter:shoot()
     -- if nothing to shoot, it's pointless
-    if _Game.session.level.pause or not self.active or self.color == 0 then
+    if _Game.session.level.pause or not self:isActive() or self.color == 0 then
         return
     end
 
@@ -287,8 +294,8 @@ function Shooter:shoot()
     end
     _Game:playSound(sphereConfig.shootSound, 1, self.pos)
     self.color = 0
+    self.shotCooldown = self.config.shotCooldown
     _Game.session.level.spheresShot = _Game.session.level.spheresShot + 1
-    self.shooterReloadTime = 0.2
 end
 
 
@@ -600,8 +607,7 @@ function Shooter:serialize()
         multiColorColor = self.multiColorColor,
         multiColorCount = self.multiColorCount,
         speedShotTime = self.speedShotTime,
-        speedShotSpeed = self.speedShotSpeed,
-        active = self.active
+        speedShotSpeed = self.speedShotSpeed
     }
 end
 
@@ -616,7 +622,6 @@ function Shooter:deserialize(t)
     self.multiColorCount = t.multiColorCount
     self.speedShotTime = t.speedShotTime
     self.speedShotSpeed = t.speedShotSpeed
-    self.active = t.active
 
 
 

@@ -238,7 +238,7 @@ Thank you for your support!
 	-----------------------------
 	love.graphics.setFont(self.font)
 	love.graphics.print("OpenSMCE is a short for Open-Source Sphere Matcher Community Engine.", 30, 525)
-	love.graphics.print("Copyright (C) 2020-2022 jakubg1. Collaborators: ShamblesSM, Nxgi\nThis software is licensed under MIT license.", 30, 555)
+	love.graphics.print("Copyright (C) 2020-2023 jakubg1. Collaborators: ShamblesSM, Nxgi\nThis software is licensed under MIT license.", 30, 555)
 
 	-----------------------------
 	-- BUTTONS

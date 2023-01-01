@@ -213,9 +213,6 @@ function ShotSphere:destroy()
 		self.sphereEntity:destroy(false)
 	end
 	self.delQueue = true
-	if not _Game.session.level.lost then
-		self.shooter:activate()
-	end
 end
 
 
