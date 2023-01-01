@@ -112,5 +112,43 @@
     "nextBallOffset": {
         "x": -1.5,
         "y": -45
-    }    
+    },
+    "nextBallSprites": {
+        "-3": {
+            "sprite": "sprites/game/next_ball_lightning.json"
+        },
+        "-2": {
+            "sprite": "sprites/game/next_ball_bomb.json"
+        },
+        "-1": {
+            "sprite": "sprites/game/next_ball_wild.json"
+        },
+        "0": {
+            "sprite": "sprites/game/next_ball_0.json"
+        },
+        "1": {
+            "sprite": "sprites/game/next_ball_1.json"
+        },
+        "2": {
+            "sprite": "sprites/game/next_ball_2.json"
+        },
+        "3": {
+            "sprite": "sprites/game/next_ball_3.json"
+        },
+        "4": {
+            "sprite": "sprites/game/next_ball_4.json"
+        },
+        "5": {
+            "sprite": "sprites/game/next_ball_5.json"
+        },
+        "6": {
+            "sprite": "sprites/game/next_ball_6.json"
+        },
+        "7": {
+            "sprite": "sprites/game/next_ball_7.json"
+        },
+        "10": {
+            "sprite": "sprites/game/next_ball_7.json"
+        }
+    }
 }
