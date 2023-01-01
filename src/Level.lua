@@ -695,7 +695,6 @@ function Level:incrementBlitzMeter(amount)
 		-- hot frog
 		self.shooter:getMultiSphere(-2, 3)
 	end
-	_Debug.console:print("blitzMeter: " .. self.blitzMeter)
 end
 
 
