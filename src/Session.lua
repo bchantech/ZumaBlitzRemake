@@ -141,7 +141,7 @@ function Session:destroyFunction(f, scorePos, scoreFont, noRewards)
 	end
 	if not noRewards then
 		self.level:grantScore(score)
-		self.level:spawnFloatingText(_NumStr(score), scorePos, scoreFont or "fonts/score0.json")
+		self.level:spawnFloatingText("+".._NumStr(score), scorePos, scoreFont or "fonts/score0.json")
 	end
 end
 

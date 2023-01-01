@@ -274,6 +274,10 @@ function SphereChain:getDanger()
 	return self.path:getDanger(self.maxOffset)
 end
 
+function SphereChain:getCurveClear()
+	return self.path:isValidForCurveClear()
+end
+
 
 
 function SphereChain:getDebugText()

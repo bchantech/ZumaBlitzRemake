@@ -452,6 +452,13 @@ function Path:getDanger(pixels)
 end
 
 
+---Returns `true` if the given path should give a Curve Clear bonus.
+---@return boolean
+function Path:isValidForCurveClear()
+	return self:getMaxOffset() <= 0
+end
+
+
 
 ---Unused, or at least that's what they told me. Or did I tell that to myself?
 ---@param pixels number The path offset to be considered, in pixels.
