@@ -106,7 +106,7 @@ function Scorpion:explode()
 	end
 
 	local pos = self:getPos()
-	local score = self.destroyedSpheres * 100
+	local score = self.destroyedSpheres * 10
 
 	_Game.session.level:grantScore(score)
 	_Game.session.level:spawnFloatingText(_NumStr(score), pos, self.config.scoreFont)

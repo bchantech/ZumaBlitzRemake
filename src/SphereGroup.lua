@@ -626,7 +626,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 
 	-- Calculate and grant score.
-	local score = length * 100
+	local score = length * 10
 	if boostCombo then
 		score = score + math.max(self.map.level.combo - 3, 0) * 100
 	end
@@ -637,7 +637,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	self.sphereChain.comboScore = self.sphereChain.comboScore + score
 
 	-- Determine and display the floating text.
-    local scoreText = _NumStr(score)
+    local scoreText = "+".._NumStr(score)
     -- Zuma's meanings of "Combo" and "Chain" is reverse from Luxor's.
 	-- Keep this in mind when modifying code as OpenSMCE is based off Luxor.
 	if boostCombo and self.map.level.combo > 2 then

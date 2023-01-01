@@ -477,8 +477,8 @@ function Level:spawnLightningStormPiece()
 
 	-- spawn a particle, add points etc
 	local pos = sphere:getPos()
-	self:grantScore(100)
-	self:spawnFloatingText(_NumStr(100), pos, _Game.configManager.spheres[sphere.color].matchFont)
+	self:grantScore(10)
+	self:spawnFloatingText(_NumStr(10), pos, _Game.configManager.spheres[sphere.color].matchFont)
 	_Game:spawnParticle("particles/lightning_beam.json", pos)
 	_Game:playSound("sound_events/lightning_storm_destroy.json")
 	-- destroy it

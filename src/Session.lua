@@ -132,7 +132,7 @@ function Session:destroyFunction(f, scorePos, scoreFont, noRewards)
 					if f(sphere, spherePos) and sphere.color ~= 0 then
 						sphereGroup:destroySphere(l)
 						if not noRewards then
-							score = score + 100
+							score = score + 10
 						end
 					end
 				end
