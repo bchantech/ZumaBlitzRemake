@@ -1,8 +1,8 @@
 {
     "path": "images/game/next_ball_bomb.png",
     "frame_size": {
-        "x": 49,
-        "y": 17
+        "x": 125,
+        "y": 125
     },
     "states": [
         {

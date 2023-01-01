@@ -10,12 +10,12 @@
     "shootBehavior": {
         "type": "normal"
     },
-    "shootSound": "sound_events/sphere_shoot_fire.json",
+    "shootSound": "sound_events/sphere_shoot_fire_hotfrog.json",
     "hitBehavior": {
         "type": "fireball",
         "range": 125
     },
-    "hitSound": "sound_events/sphere_hit_fire.json",
+    "hitSound": "sound_events/sphere_hit_fire_hotfrog.json",
     "matches": [
         -1,
         1,
