@@ -13,11 +13,13 @@ local Vec2 = require("src/Essentials/Vector2")
 ---@param instance love.sound? A sound instance, if preloaded.
 function SoundInstance:new(path, instance)
   if path then
+    self.path = path
     self.sound = _LoadSound(path, "static")
     if not self.sound then
       error("Failed to load sound: " .. path)
     end
   elseif instance then
+    self.path = "[Instance]"
     self.sound = instance
   end
 
@@ -58,7 +60,11 @@ function SoundInstance:setPos(pos)
     self.sound:setAttenuationDistances(0, _NATIVE_RESOLUTION.x)
   else
     self.pos = Vec2()
-    self.sound:setPosition(0, 0, 0)
+    if self.sound:getChannelCount() == 1 then
+      self.sound:setPosition(0, 0, 0)
+    else
+      _Log:printt("SoundEvent", "The sound event \""..self.path.."\" is a stereo instance and must have it's \"flat\" property set to true.")
+    end
   end
 end
 
