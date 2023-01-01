@@ -17,8 +17,9 @@
         "joinSound": "sound_events/sphere_group_join.json",
         "newGroupSound": "sound_events/sphere_chain_spawn.json",
         "overspeedCheck": true,
-        "invincible_scarabs": false,
-		"luxorized": true
+        "invincibleScarabs": false,
+		"luxorized": true,
+        "noScarabs": true
     },
     "collectibleBehaviour": {
         "speed": {
