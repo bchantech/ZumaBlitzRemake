@@ -190,11 +190,19 @@ function Level:updateLogic(dt)
 
     -- Hot Frog handling
 	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
-        local gracePeriod = 3 -- In seconds
-        self.timeSinceLastSuccessfulShot = self.timeSinceLastSuccessfulShot + dt
-		if self.timeSinceLastSuccessfulShot > gracePeriod then
-            self.blitzMeter = 0
-        end
+		if self.blitzMeter == 1 then
+			-- We're in hot frog mode, reset once the shooter has a ball other than the fireball.
+			if self.shooter.color > 0 then
+				self.blitzMeter = 0
+				self.blitzMeterCooldown = 0
+			end
+		else
+			if self.blitzMeterCooldown == 0 then
+				self.blitzMeter = math.max(self.blitzMeter - 0.03 * dt, 0)
+			else
+				self.blitzMeterCooldown = math.max(self.blitzMeterCooldown - dt, 0)
+			end
+		end
     end
 
 
@@ -679,6 +687,19 @@ end
 
 
 
+---Increments the level's Blitz Meter by a given amount and launches the Hot Frog if reaches 1.
+---@param amount any
+function Level:incrementBlitzMeter(amount)
+	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
+	if self.blitzMeter == 1 then
+		-- hot frog
+		self.shooter:getMultiSphere(-2, 3)
+	end
+	_Debug.console:print("blitzMeter: " .. self.blitzMeter)
+end
+
+
+
 ---Returns `true` when there are no more spheres on the board and no more spheres can spawn, too.
 ---@return boolean
 function Level:hasNoMoreSpheres()
@@ -782,7 +803,7 @@ function Level:reset()
     self.time = 0
 
     self.blitzMeter = 0
-	self.timeSinceLastSuccessfulShot = 0
+	self.blitzMeterCooldown = 0
 
 	self.spheresShot = 0
 	self.sphereChainsSpawned = 0
@@ -923,6 +944,8 @@ function Level:serialize()
 			maxCombo = self.maxCombo
 		},
 		time = self.time,
+		blitzMeter = self.blitzMeter,
+		blitzMeterCooldown = self.blitzMeterCooldown,
 		controlDelay = self.controlDelay,
 		finish = self.finish,
 		finishDelay = self.finishDelay,
@@ -966,6 +989,8 @@ function Level:deserialize(t)
 	self.combo = t.combo
 	self.destroyedSpheres = t.destroyedSpheres
 	self.time = t.time
+	self.blitzMeter = t.blitzMeter
+	self.blitzMeterCooldown = t.blitzMeterCooldown
 	self.lost = t.lost
 	-- Utils
 	self.controlDelay = t.controlDelay

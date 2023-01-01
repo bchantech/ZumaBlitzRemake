@@ -40,6 +40,7 @@ function UIManager:new()
     levelGetChains = function() return _Game.session.level.sphereChainsSpawned end,
     levelGetMaxCombo = function() return _Game.session.level.maxCombo end,
     levelGetMaxChain = function() return _Game.session.level.maxChain end,
+    levelGetBlitzMeter = function() return _Game.session.level.blitzMeter end,
 
     musicVolume = function(music, volume) _Game:getMusic(music):setVolume(volume) end,
 

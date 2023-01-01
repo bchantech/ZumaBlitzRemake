@@ -145,6 +145,7 @@ function ShotSphere:moveStep()
 				self.hitSphere = nil -- avoid deleting this time
 			else
 				_Game:playSound(badShot and sphereConfig.hitSoundBad or sphereConfig.hitSound, 1, self.pos)
+				_Game.session.level.blitzMeterCooldown = 0.5
 			end
 		end
 	end
