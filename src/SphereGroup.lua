@@ -616,6 +616,12 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		_Game:playSound(soundParams.name, soundParams.pitch, pos)
 	else
 		_Game:playSound(effectConfig.destroy_sound, 1, pos)
+    end
+	if boostCombo and self.map.level.combo > 2 then
+		_Game:playSound("sound_events/chain_bonus.json")
+	end
+	if #gaps > 0 then
+		_Game:playSound("sound_events/gap_bonus.json")
 	end
 	-- Boost chain and combo values.
 	if effectConfig.can_boost_chain then
