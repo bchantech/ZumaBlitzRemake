@@ -1,3 +1,4 @@
 {
-    "path": "sounds/collapse_fireball.ogg"
+    "path": "sounds/collapse_fireball.ogg",
+    "flat": true
 }
