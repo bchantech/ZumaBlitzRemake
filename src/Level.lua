@@ -690,6 +690,9 @@ end
 ---Increments the level's Blitz Meter by a given amount and launches the Hot Frog if reaches 1.
 ---@param amount any
 function Level:incrementBlitzMeter(amount)
+	if self.blitzMeter == 1 then
+		return
+	end
 	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
 	if self.blitzMeter == 1 then
 		-- hot frog
