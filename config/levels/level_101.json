@@ -17,8 +17,8 @@
         "name": "default",
         "movement": {
             "type": "circular",
-            "x": 332,
-            "y": 182
+            "x": 386,
+            "y": 236
         }
     },
     "pathsBehavior": [
