@@ -46,7 +46,7 @@
                     "animations": {},
                     "sounds": {},
                     "layer": "HudControls",
-                    "font": "fonts/hud.json",
+                    "font": "fonts/hud2.json",
                     "align": {
                         "x": 0.5,
                         "y": 0
@@ -86,7 +86,7 @@
                     "animations": {},
                     "sounds": {},
                     "layer": "HudControls",
-                    "font": "fonts/hud.json",
+                    "font": "fonts/hud2.json",
                     "align": {
                         "x": 0.5,
                         "y": 0
