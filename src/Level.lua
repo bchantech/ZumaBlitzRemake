@@ -256,21 +256,17 @@ function Level:updateLogic(dt)
 		self.wonDelay = self.wonDelay - dt
 		if self.wonDelay <= 0 then
 			self.wonDelay = nil
-			self.won = true
-			local newRecord = _Game:getCurrentProfile():getLevelHighscoreInfo(self.score)
-			_Game.uiManager:executeCallback({
-				name = "levelComplete",
-				parameters = {newRecord}
-			})
+			_Game.uiManager:executeCallback("levelComplete")
+			self.ended = true
 		end
 	end
 
 
 
 	-- Level lose
-	if self.lost and self:getEmpty() and not self.restart then
+	if self.lost and self:getEmpty() and not self.ended then
 		_Game.uiManager:executeCallback("levelLost")
-		self.restart = true
+		self.ended = true
 	end
 end
 
@@ -285,7 +281,7 @@ function Level:updateMusic()
 
 		-- If the level hasn't started yet, is lost, won or the game is paused,
 		-- mute the music.
-		if not self.started or self.lost or self.won or self.pause then
+		if not self.started or self.ended or self.pause then
 			music:setVolume(0)
 			dangerMusic:setVolume(0)
 		else
@@ -300,7 +296,7 @@ function Level:updateMusic()
 		end
 	else
 		-- If there's no danger music, then mute it or unmute in a similar fashion.
-		if not self.started or self.lost or self.won or self.pause then
+		if not self.started or self.ended or self.pause then
 			music:setVolume(0)
 		else
 			music:setVolume(1)
@@ -716,6 +712,14 @@ end
 
 
 
+---Returns `true` if the current level score is the highest in history for the current Profile.
+---@return boolean
+function Level:hasNewScoreRecord()
+	return _Game:getCurrentProfile():getLevelHighscoreInfo(self.score)
+end
+
+
+
 ---Returns `true` if there are any matches predicted (spheres that magnetize to each other), `false` otherwise.
 ---@return boolean
 function Level:areMatchesPredicted()
@@ -847,8 +851,7 @@ function Level:reset()
 	self.started = false
 	self.controlDelay = nil
 	self.lost = false
-	self.restart = false
-	self.won = false
+	self.ended = false
 	self.wonDelay = nil
 	self.finish = false
 	self.finishDelay = nil
