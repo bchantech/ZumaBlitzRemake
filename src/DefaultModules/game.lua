@@ -41,7 +41,15 @@ end
 function f.chainSound(chainLv)
   return {
     name = "sound_events/sphere_destroy_chime.json",
-    pitch = 1 + (0.1 * chainLv)
+    pitch = 1 + math.min((0.1 * chainLv), 1.8)
+  }
+end
+
+-- FORK-SPECIFIC CODE: Supplemental to f.matchSound() to emulate Zuma chain bonus chime pitching
+function f.comboSound(comboLv)
+  return {
+    name = "sound_events/chain_bonus.json",
+    pitch = math.min((1 + (0.1 * (comboLv - 6))), 2)
   }
 end
 

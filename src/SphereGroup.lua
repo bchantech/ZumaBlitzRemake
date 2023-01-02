@@ -619,18 +619,16 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 
 	-- Play a sound.
-	if effectConfig.destroy_sound == "hardcoded" then
+    if effectConfig.destroy_sound == "hardcoded" then
 		local destroySoundParams = MOD_GAME.matchSound(length, self.map.level.combo, self.sphereChain.combo, boostCombo)
 		_Game:playSound(destroySoundParams.name, destroySoundParams.pitch, pos)
 		local chainSoundParams = MOD_GAME.chainSound(self.sphereChain.combo)
-		_Game:playSound(chainSoundParams.name, chainSoundParams.pitch, pos)
+        _Game:playSound(chainSoundParams.name, chainSoundParams.pitch, pos)
 	else
 		_Game:playSound(effectConfig.destroy_sound, 1, pos)
     end
-	if boostCombo and self.map.level.combo > 2 then
-		_Game:playSound("sound_events/chain_bonus.json")
-	end
-	if #gaps > 0 then
+    if #gaps > 0 then
+        -- NOTE: Zuma Blitz does not pitch/repeat the Gap Bonus sound in case of double+ gap bonuses.
 		_Game:playSound("sound_events/gap_bonus.json")
 	end
 	-- Boost chain and combo values.
@@ -639,12 +637,19 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 	if boostCombo then
 		self.map.level.combo = self.map.level.combo + 1
+    end
+	-- Place this below chain and combo value boosting.
+    if boostCombo and self.map.level.combo > 5 then
+		local comboSoundParams = MOD_GAME.comboSound(self.map.level.combo)
+		_Game:playSound(comboSoundParams.name, comboSoundParams.pitch, pos)
 	end
 
 	-- Calculate and grant score.
 	local score = length * 10
 	if boostCombo then
-		score = score + math.max(self.map.level.combo - 3, 0) * 100
+        if self.map.level.combo > 5 then
+			score = score + 200 + ((self.map.level.combo - 6) * 10)
+		end
 	end
 	if effectConfig.apply_chain_multiplier then
 		score = score * self.sphereChain.combo
@@ -655,8 +660,9 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	-- Determine and display the floating text.
     local scoreText = "+".._NumStr(score)
     -- Zuma's meanings of "Combo" and "Chain" is reverse from Luxor's.
-	-- Keep this in mind when modifying code as OpenSMCE is based off Luxor.
-	if boostCombo and self.map.level.combo > 2 then
+    -- Keep this in mind when modifying code as OpenSMCE is based off Luxor.
+	-- Start counting chains from Chain x6.
+	if boostCombo and self.map.level.combo > 5 then
 		scoreText = scoreText .. "\n CHAIN x" .. tostring(self.map.level.combo)
 	end
 	if effectConfig.apply_chain_multiplier and self.sphereChain.combo ~= 1 then
