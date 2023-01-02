@@ -1,8 +1,8 @@
 {
-    "path": "images/game/ball_wild.png",
+    "path": "images/game/blitzmeter.png",
     "frame_size": {
-        "x": 32,
-        "y": 32
+        "x": 100,
+        "y": 168
     },
     "states": [
         {
@@ -11,7 +11,7 @@
                 "y": 0
             },
             "frames": {
-                "x": 30,
+                "x": 1,
                 "y": 1
             }
         }

@@ -148,6 +148,23 @@
 					"value":0,
 					"smooth":true
                 },
+                "Blitz_Meter": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 330,
+                        "y": 440
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "HudControls2",
+                    "sprite": "sprites/game/blitzmeter.json",
+					"value":0,
+					"smooth":true
+                },
 				"Progress_Complete":{
 					"inheritShow":false,
 					"inheritHide":false,
