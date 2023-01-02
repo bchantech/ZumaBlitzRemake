@@ -239,6 +239,7 @@ function c.splashEnd(f)
   c.Hud_Text_Lives = f.getWidgetN("root/Game/Hud/Frame/Text_Lives")
   c.Hud_Text_Coins = f.getWidgetN("root/Game/Hud/Frame/Text_Coins")
   c.Hud_Text_Score = f.getWidgetN("root/Game/Hud/Frame/Text_Score")
+  c.Hud_Blitz_Meter = f.getWidgetN("root/Game/Hud/Frame/Blitz_Meter")
   c.Hud_Progress = f.getWidgetN("root/Game/Hud/Frame/Progress")
   c.Hud_Progress_Complete = f.getWidgetN("root/Game/Hud/Frame/Progress_Complete")
   c.Banner_LevelComplete_Text_Stage = f.getWidgetN("root/Game/Hud/Banner_LevelComplete/Frame/Text_Stage")
@@ -539,6 +540,7 @@ end
 -- WHEN CLICKED "START GAME" ON MAIN MENU
 function c.mainStart(f)
   if f.profileGetSession() then
+    c.Hud_Blitz_Meter:show()
     c.Menu_Continue:show()
     c.Menu_Continue:setActive()
   else
