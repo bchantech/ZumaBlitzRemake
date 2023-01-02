@@ -7,6 +7,10 @@
             "type": "string",
             "description": "A sprite to be drawn when the sphere is on the screen."
         },
+        "colorblindSprite": {
+            "type": "string",
+            "description": "An alternative sprite to be drawn when Colorblind Mode is enabled."
+        },
         "shadowSprite": {
             "type": "string",
             "description": "A shadow sprite to be drawn along the sphere. Defaults to sprites/game/ball_shadow.json.",
