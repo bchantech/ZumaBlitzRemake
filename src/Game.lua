@@ -145,27 +145,28 @@ end
 ---Updates the game's Rich Presence information.
 function Game:updateRichPresence()
 	local p = self:getCurrentProfile()
-	local line1 = "Playing: " .. self.configManager:getGameName()
-	local line2 = ""
+	local line1 = ""
+    local line2 = ""
+	local countTime = false
 
 	if self:levelExists() then
 		local l = self.session.level
-		line2 = string.format("Level %s (%s), Score: %s, Lives: %s",
-			p:getLevelName(),
-			l.won and "Complete!" or string.format("%s%%", math.floor((l:getObjectiveProgress(1)) * 100)),
-			p:getScore(),
-			p:getLives()
+		line1 = string.format("In-Game: %s",
+			p:getMapData().name
 		)
 		if l.pause then
 			line1 = line1 .. " - Paused"
 		end
-	elseif p and p:getSession() then
-		line2 = string.format("In menus, Score: %s, Lives: %s", p:getScore(), p:getLives())
+	--elseif p and p:getSession() then
+    --line2 = ""
+		countTime = true
 	else
-		line2 = string.format("In menus")
+		line1 = "In menus"
+		countTime = false
 	end
 
-	_DiscordRPC:setStatus(line1, line2)
+	-- Known issue: Timer keeps resetting to 0 seconds per 2 seconds
+	_DiscordRPC:setStatus(line1, line2, countTime)
 end
 
 

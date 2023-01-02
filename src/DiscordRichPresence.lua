@@ -143,7 +143,7 @@ function DiscordRichPresence:setStatus(line1, line2, countTime)
 	else
 		self.status.startTimestamp = nil
 	end
-	self.status.largeImageKey = "icon_rpc"
+	self.status.largeImageKey = "main"
 	if self.egg then
 		self.status.largeImageText = self.egg
 	end
