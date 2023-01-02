@@ -40,7 +40,9 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 		self.shootTime = nil
 		self.effects = {}
 		self.gaps = gaps or {}
-	end
+    end
+	
+	self.entity = sphereEntity or SphereEntity(self:getPos(), self.color)
 
 	self:loadConfig()
 
@@ -58,8 +60,6 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 	end
 
 	self.danger = false
-
-	self.entity = sphereEntity or SphereEntity(self:getPos(), self.color)
 
 	self.delQueue = false
 end
@@ -497,12 +497,9 @@ end
 
 ---Reloads the configuration variables of the current sphere color.
 function Sphere:loadConfig()
-	self.config = _Game.configManager.spheres[self.color]
-	if _Game.runtimeManager.options:getColorblindMode() then
-        self.sprite = _Game.resourceManager:getSprite(self.config.colorblindSprite)
-    else
-		self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
-	end
+    self.config = _Game.configManager.spheres[self.color]
+	self.sprite = self.entity:getSprite()
+
 	-- TODO/DEPRECATED: Remove default value
 	self.shadowSprite = _Game.resourceManager:getSprite(self.config.shadowSprite or "sprites/game/ball_shadow.json")
 	self.frameCount = self.sprite.states[1].frameCount.x

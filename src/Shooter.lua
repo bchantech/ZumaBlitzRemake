@@ -365,7 +365,12 @@ function Shooter:draw()
         self.sphereEntity:draw()
     end
     -- next color
-    local sprite = self.config.nextBallSprites[self.nextColor].sprite
+    local sprite
+    if _Game.runtimeManager.options:getColorblindMode() and self.config.nextBallSprites[self.nextColor].colorblindSprite then
+        sprite = self.config.nextBallSprites[self.nextColor].colorblindSprite
+    else
+		sprite = self.config.nextBallSprites[self.nextColor].sprite
+    end
     sprite:draw(self.pos + self.config.nextBallOffset:rotate(self.angle), self.config.nextBallAnchor, nil, self:getNextSphereFrame(), self.angle)
 
     --local p4 = posOnScreen(self.pos)

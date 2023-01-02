@@ -23,7 +23,22 @@ function SphereEntity:new(pos, color)
 
 	self.shadowSprite = _Game.resourceManager:getSprite(self.config.shadowSprite or "sprites/game/ball_shadow.json")
 	self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
+	if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
+        self.sprite = _Game.resourceManager:getSprite(self.config.colorblindSprite)
+    end
 	self.particle = self.config.idleParticle and _Game:spawnParticle(self.config.idleParticle, pos)
+end
+
+
+
+---Gets the current sprite which is dependant on Colorblind Mode.
+---@return Sprite
+function SphereEntity:getSprite()
+	if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
+        return _Game.resourceManager:getSprite(self.config.colorblindSprite)
+    else
+		return _Game.resourceManager:getSprite(self.config.sprite)
+    end
 end
 
 
@@ -68,7 +83,7 @@ end
 function SphereEntity:setColor(color)
 	self.color = color
 	self.config = _Game.configManager.spheres[color]
-	self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
+	self.sprite = self:getSprite()
 
 	-- Particle stuff
 	if self.particle then
