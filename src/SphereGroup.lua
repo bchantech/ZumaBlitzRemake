@@ -620,8 +620,10 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 
 	-- Play a sound.
 	if effectConfig.destroy_sound == "hardcoded" then
-		local soundParams = MOD_GAME.matchSound(length, self.map.level.combo, self.sphereChain.combo, boostCombo)
-		_Game:playSound(soundParams.name, soundParams.pitch, pos)
+		local destroySoundParams = MOD_GAME.matchSound(length, self.map.level.combo, self.sphereChain.combo, boostCombo)
+		_Game:playSound(destroySoundParams.name, destroySoundParams.pitch, pos)
+		local chainSoundParams = MOD_GAME.chainSound(self.sphereChain.combo)
+		_Game:playSound(chainSoundParams.name, chainSoundParams.pitch, pos)
 	else
 		_Game:playSound(effectConfig.destroy_sound, 1, pos)
     end

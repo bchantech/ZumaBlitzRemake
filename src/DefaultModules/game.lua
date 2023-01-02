@@ -37,6 +37,14 @@ function f.matchSound(length, comboLv, chainLv, comboBoost)
   }
 end
 
+-- FORK-SPECIFIC CODE: Supplemental to f.matchSound() to emulate Zuma combo chime pitching
+function f.chainSound(chainLv)
+  return {
+    name = "sound_events/sphere_destroy_chime.json",
+    pitch = 1 + (0.1 * chainLv)
+  }
+end
+
 
 
 -- Now we need to carry all functions that we've inserted over to the engine.
