@@ -41,7 +41,7 @@ end
 function f.chainSound(chainLv)
   return {
     name = "sound_events/sphere_destroy_chime.json",
-    pitch = 1 + math.min((0.1 * chainLv), 1.8)
+    pitch = 1 + math.min((0.05 * chainLv), 1.4)
   }
 end
 

@@ -666,7 +666,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		scoreText = scoreText .. "\n CHAIN x" .. tostring(self.map.level.combo)
 	end
 	if effectConfig.apply_chain_multiplier and self.sphereChain.combo ~= 1 then
-		scoreText = scoreText .. "\n COMBO x" .. tostring(self.sphereChain.combo)
+		scoreText = scoreText .. "\n COMBO x" .. tostring(self.sphereChain.combo - 1)
 	end
 	local scoreGapTexts = {"GAP SHOT", "DOUBLE GAP", "TRIPLE GAP", "QUADRUPLE GAP", "QUINTUPLE GAP"}
 	if #gaps > 0 then
