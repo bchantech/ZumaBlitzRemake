@@ -40,7 +40,7 @@
         "Menu": {
             "inheritShow": true,
             "inheritHide": true,
-            "type": "level",
+            "type": "none",
             "pos": {
                 "x": 0,
                 "y": 0
@@ -218,8 +218,7 @@
             },
             "animations": {},
             "sounds": {},
-            "layer": "MenuBackground",
-			"path": "config/levels/level_0.json"
+            "layer": "MenuBackground"
         },
 		"Profile_Manage":"ui/profile_manage.json",
 		"Profile_Create":"ui/profile_create.json",
