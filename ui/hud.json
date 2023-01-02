@@ -136,7 +136,7 @@
 					"inheritHide":true,
                     "type": "spriteProgress",
                     "pos": {
-                        "x": 300.5,
+                        "x": 300.75,
                         "y": 468
                     },
                     "alpha": 1,
