@@ -1019,11 +1019,10 @@ end
 
 
 
-function c.levelComplete(f, params)
-  local record = params[1]
+function c.levelComplete(f)
   c.Button_Pause:buttonSetEnabled(false)
   c.Banner_LevelComplete:show()
-  if not record then
+  if not f.levelGetNewRecord() then
     c.Banner_LevelComplete_Record:hide()
   end
 end
@@ -1031,13 +1030,7 @@ end
 
 
 function c.levelLost(f)
-  c.Button_Pause:buttonSetEnabled(false)
-  c.Banner_LevelLose:show()
-  c.Banner_LevelLose_Panel:scheduleFunction("hideEnd",
-  function()
-    f.levelRestart()
-  end
-  )
+  c.levelComplete(f)
 end
 
 
