@@ -498,7 +498,11 @@ end
 ---Reloads the configuration variables of the current sphere color.
 function Sphere:loadConfig()
 	self.config = _Game.configManager.spheres[self.color]
-	self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
+	if _Game.runtimeManager.options:getColorblindMode() then
+        self.sprite = _Game.resourceManager:getSprite(self.config.colorblindSprite)
+    else
+		self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
+	end
 	-- TODO/DEPRECATED: Remove default value
 	self.shadowSprite = _Game.resourceManager:getSprite(self.config.shadowSprite or "sprites/game/ball_shadow.json")
 	self.frameCount = self.sprite.states[1].frameCount.x

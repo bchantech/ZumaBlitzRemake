@@ -28,7 +28,7 @@ local DiscordRichPresence = require("src/DiscordRichPresence")
 -- CONSTANT ZONE
 _VERSION = "vZB"
 _VERSION_NAME = "Zuma Blitz Remake Fork (based on Beta 4.6.1)"
-_DISCORD_APPLICATION_ID = "797956172539887657"
+_DISCORD_APPLICATION_ID = "1059347284623638609"
 _BUILD_NUMBER = "unknown"
 _START_TIME = love.timer.getTime()
 
