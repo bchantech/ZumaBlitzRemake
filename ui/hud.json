@@ -38,15 +38,15 @@
 					"inheritHide":true,
                     "type": "text",
                     "pos": {
-                        "x": 145,
-                        "y": 7
+                        "x": 120,
+                        "y": 541
                     },
                     "alpha": 1,
                     "children": {},
                     "animations": {},
                     "sounds": {},
                     "layer": "HudControls",
-                    "font": "fonts/hud.json",
+                    "font": "fonts/hud2.json",
                     "align": {
                         "x": 0.5,
                         "y": 0
@@ -58,8 +58,8 @@
 					"inheritHide":true,
                     "type": "text",
                     "pos": {
-                        "x": 66,
-                        "y": 4
+                        "x": 178,
+                        "y": 502
                     },
                     "alpha": 1,
                     "children": {},
@@ -78,15 +78,15 @@
 					"inheritHide":true,
                     "type": "text",
                     "pos": {
-                        "x": 226,
-                        "y": 7
+                        "x": 229,
+                        "y": 542
                     },
                     "alpha": 1,
                     "children": {},
                     "animations": {},
                     "sounds": {},
                     "layer": "HudControls",
-                    "font": "fonts/hud.json",
+                    "font": "fonts/hud2.json",
                     "align": {
                         "x": 0.5,
                         "y": 0
@@ -98,8 +98,8 @@
 					"inheritHide":true,
                     "type": "text",
                     "pos": {
-                        "x": 590,
-                        "y": 7
+                        "x": 589,
+                        "y": 524
                     },
                     "alpha": 1,
                     "children": {},
@@ -190,8 +190,8 @@
 					"inheritHide":true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 694,
-                        "y": 4
+                        "x": 715,
+                        "y": 519
                     },
                     "alpha": 1,
                     "children": {},

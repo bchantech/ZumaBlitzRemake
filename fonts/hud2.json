@@ -1,0 +1,58 @@
+{
+    "type": "image",
+    "image": "images/fonts/hud2.png",
+    "characters": {
+        "0": {
+            "offset": 2,
+            "width": 13
+        },
+        "1": {
+            "offset": 17,
+            "width": 9
+        },
+        "2": {
+            "offset": 28,
+            "width": 11
+        },
+        "3": {
+            "offset": 41,
+            "width": 12
+        },
+        "4": {
+            "offset": 55,
+            "width": 13
+        },
+        "5": {
+            "offset": 70,
+            "width": 12
+        },
+        "6": {
+            "offset": 84,
+            "width": 12
+        },
+        "7": {
+            "offset": 98,
+            "width": 11
+        },
+        "8": {
+            "offset": 111,
+            "width": 12
+        },
+        "9": {
+            "offset": 125,
+            "width": 11
+        },
+        ",": {
+            "offset": 138,
+            "width": 5
+        },
+        "-": {
+            "offset": 145,
+            "width": 7
+        }, 
+        " ": {
+            "offset": 190,
+            "width": 5
+        }  
+    }
+}

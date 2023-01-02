@@ -1,1 +1,4 @@
 runtime.json
+
+# personal folder for Discord Rich Presence assets
+_discord/**
