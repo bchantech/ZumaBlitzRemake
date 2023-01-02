@@ -41,7 +41,7 @@ end
 function f.chainSound(chainLv)
   return {
     name = "sound_events/sphere_destroy_chime.json",
-    pitch = 1 + math.min((0.05 * chainLv), 1.4)
+    pitch = 1 + 0.06 * math.min(chainLv, 28)
   }
 end
 
@@ -49,7 +49,7 @@ end
 function f.comboSound(comboLv)
   return {
     name = "sound_events/chain_bonus.json",
-    pitch = math.min((1 + (0.1 * (comboLv - 6))), 2)
+    pitch = 1 + 0.1 * (math.min(comboLv, 16) - 6)
   }
 end
 
