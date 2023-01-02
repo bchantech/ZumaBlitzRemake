@@ -73,10 +73,12 @@
             "sprite": "sprites/game/next_ball_3.json"
         },
         "4": {
-            "sprite": "sprites/game/next_ball_4.json"
+            "sprite": "sprites/game/next_ball_4.json",
+            "colorblindSprite": "sprites/game/next_ball_4_cb.json"
         },
         "5": {
-            "sprite": "sprites/game/next_ball_5.json"
+            "sprite": "sprites/game/next_ball_5.json",
+            "colorblindSprite": "sprites/game/next_ball_5_cb.json"
         },
         "6": {
             "sprite": "sprites/game/next_ball_6.json"

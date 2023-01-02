@@ -1,8 +1,8 @@
 {
-    "path": "images/game/ball_4_cb.png",
+    "path": "images/game/next_ball_5_cb.png",
     "frame_size": {
-        "x": 32,
-        "y": 32
+        "x": 108,
+        "y": 99
     },
     "states": [
         {
@@ -11,7 +11,7 @@
                 "y": 0
             },
             "frames": {
-                "x": 30,
+                "x": 1,
                 "y": 1
             }
         }
