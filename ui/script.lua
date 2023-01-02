@@ -540,7 +540,6 @@ end
 -- WHEN CLICKED "START GAME" ON MAIN MENU
 function c.mainStart(f)
   if f.profileGetSession() then
-    c.Hud_Blitz_Meter:show()
     c.Menu_Continue:show()
     c.Menu_Continue:setActive()
   else
