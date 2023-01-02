@@ -12,6 +12,14 @@ local SphereEntity = require("src/SphereEntity")
 
 
 
+---Constructs a new Sphere.
+---@param sphereGroup SphereGroup The sphere group this sphere belongs to.
+---@param deserializationTable table? If set, internal data will be loaded from this table.
+---@param color integer The type/color ID of this Sphere.
+---@param shootOrigin Vector2? If set, the position of Shot Sphere which has been transformed into this Sphere. It also implies that it will be inserted from that position.
+---@param shootTime number? The duration of the sphere insertion animation.
+---@param sphereEntity SphereEntity? If set, this will be the Sphere Entity used to draw this Sphere. Else, a new one will be created.
+---@param gaps table? If set, this Sphere will have a list of numbers (traversed gap distances) stored so it can be used later when calculating gap shots.
 function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shootTime, sphereEntity, gaps)
 	self.sphereGroup = sphereGroup
 	self.path = sphereGroup.sphereChain.path
@@ -40,8 +48,10 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 		self.shootOrigin = shootOrigin
 		self.shootTime = shootTime
 		self.size = 0
-		self.frameOffset = 0
 	end
+
+	self.animationPrevOffset = self:getOffset()
+	self.animationFrame = math.random() * self.frameCount
 
 	if not self.map.isDummy then
 		_Game.session.colorManager:increment(self.color)
@@ -54,6 +64,10 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 	self.delQueue = false
 end
 
+
+
+---Updates this Sphere.
+---@param dt number Time delta in seconds.
 function Sphere:update(dt)
 	-- for spheres that are being added
 	if self.size < 1 then
@@ -123,13 +137,26 @@ function Sphere:update(dt)
 			end
 		end
 	end
+
+	-- animation
+	local dist = self:getOffset() - self.animationPrevOffset
+	self.animationPrevOffset = self:getOffset()
+	self.animationFrame = (self.animationFrame + dist * (self.config.spriteRollingSpeed or 1)) % self.frameCount
 end
 
+
+
+---Recalculates the offset this Sphere has from the offset of the Sphere Group it belongs to.
 function Sphere:updateOffset()
 	-- calculate the offset
 	self.offset = self.prevSphere and self.prevSphere.offset + 32 * self.size or 0
 end
 
+
+
+---Changes the color of this Sphere.
+---@param color integer The new color for this Sphere to be obtained.
+---@param particle string? A one-time particle packet pointer to be spawned if the color change is successful.
 function Sphere:changeColor(color, particle)
 	_Game.session.colorManager:decrement(self.color)
 	_Game.session.colorManager:increment(color)
@@ -143,9 +170,10 @@ end
 
 
 
--- Removes this sphere.
--- Warning! The removal of the sphere itself is done in SphereGroup.lua!
--- Please do not call this function if you want to remove this sphere from the board.
+---Removes this sphere.
+---Warning! The removal of the sphere itself is done in SphereGroup.lua!
+---Please do not call this function if you want to remove this sphere from the board.
+---@param crushed boolean Used when this sphere is a vise and is destroyed by joining two sphere chains together. Sets a variable.
 function Sphere:delete(crushed)
 	if self.delQueue then
 		return
@@ -200,7 +228,7 @@ end
 
 
 
--- Unloads this sphere.
+---Unloads this sphere.
 function Sphere:destroy()
 	self.entity:destroy(false)
 	for i, effect in ipairs(self.effects) do
@@ -213,7 +241,11 @@ end
 
 
 
--- Applies an effect to this sphere.
+---Applies an effect to this sphere.
+---@param name string The sphere effect ID.
+---@param infectionSize integer? How many spheres can this effect traverse to in one direction. If not set, data from the sphere effect config is prepended.
+---@param infectionTime number? The time that needs to elapse before this effect traverses to the neighboring spheres. If not set, data from the sphere effect config is prepended.
+---@param effectGroupID integer The sphere effect group ID this sphere belongs to. Used to determine the cause sphere.
 function Sphere:applyEffect(name, infectionSize, infectionTime, effectGroupID)
 	-- Don't allow a single sphere to have the same effect applied twice.
 	if self:hasEffect(name) then
@@ -249,21 +281,23 @@ end
 
 
 
--- Returns true if this sphere is a stone sphere.
+---Returns `true` if this sphere is a stone sphere.
+---@return boolean
 function Sphere:isStone()
 	return self.config.type == "stone"
 end
 
 
 
--- Destroys this and any number of connected spheres with a given effect.
+---Destroys this and any number of connected spheres with a given effect.
+---@param name string The name of the sphere effect.
 function Sphere:matchEffect(name)
 	self.sphereGroup:matchAndDeleteEffect(self.sphereGroup:getSphereID(self), name)
 end
 
 
 
--- Destroys this and any number of connected spheres with a fragile effect.
+---Destroys this and any number of connected spheres with a fragile effect.
 function Sphere:matchEffectFragile()
 	local name = nil
 	for i, effect in ipairs(self.effects) do
@@ -277,7 +311,9 @@ end
 
 
 
--- Returns the effect group ID of a given effect of this sphere.
+---Returns the effect group ID of a given effect of this sphere, or `nil` if not found.
+---@param name string The ID of the sphere effect.
+---@return integer?
 function Sphere:getEffectGroupID(name)
 	for i, effect in ipairs(self.effects) do
 		if effect.name == name then
@@ -288,7 +324,10 @@ end
 
 
 
--- Returns true if this sphere has already that effect applied.
+---Returns `true` if this sphere is inflicted with a given effect.
+---@param name string The ID of the sphere effect.
+---@param effectGroupID integer? If given, this function will return `true` only if this sphere is in that particular effect group ID.
+---@return boolean
 function Sphere:hasEffect(name, effectGroupID)
 	for i, effect in ipairs(self.effects) do
 		if effect.name == name and (not effectGroupID or effect.effectGroupID == effectGroupID) then
@@ -301,7 +340,8 @@ end
 
 
 
--- Returns true if this sphere has an effect which prevents the level from being lost.
+---Returns `true` if this sphere has an effect which prevents the level from being lost.
+---@return boolean
 function Sphere:hasLossProtection()
 	for i, effect in ipairs(self.effects) do
 		if effect.config.level_loss_protection then
@@ -314,7 +354,8 @@ end
 
 
 
--- Returns true if this sphere has an effect which makes it immobile.
+---Returns `true` if this sphere has an effect which makes the group immobile.
+---@return boolean
 function Sphere:isImmobile()
 	for i, effect in ipairs(self.effects) do
 		if effect.config.immobile then
@@ -327,7 +368,8 @@ end
 
 
 
--- Returns true if this sphere has an effect which makes it fragile.
+---Returns `true` if this sphere has an effect which makes it fragile.
+---@return boolean
 function Sphere:isFragile()
 	for i, effect in ipairs(self.effects) do
 		if effect.config.fragile then
@@ -340,7 +382,8 @@ end
 
 
 
--- Returns true if this sphere has an effect which makes it able to keep combo.
+---Returns `true` if this sphere has an effect which makes it able to keep combo.
+---@return boolean
 function Sphere:canKeepCombo()
 	for i, effect in ipairs(self.effects) do
 		if effect.config.can_keep_combo then
@@ -353,37 +396,59 @@ end
 
 
 
-function Sphere:getFrame()
-	return ((self.frameOffset + self.offset + self.sphereGroup.offset) * self.frameCount / 32) % self.frameCount
-end
-
+---Returns the current global offset of this sphere on its path.
+---@return number
 function Sphere:getOffset()
 	return self.sphereGroup.offset + self.offset
 end
 
+
+
+---Returns the current global position of this Sphere.
+---@return Vector2
 function Sphere:getPos()
 	return self.path:getPos(self:getOffset())
 end
 
+
+
+---Returns the current rotation of this Sphere.
+---@return number
 function Sphere:getAngle()
 	return self.path:getAngle(self:getOffset())
 end
 
+
+
+---Returns `true` if this Sphere is near a path node flagged as hidden. This will make it impossible to shoot at.
+---@return boolean
 function Sphere:getHidden()
 	return self.path:getHidden(self:getOffset())
 end
 
+
+
+---Returns the color tint the sphere should have.
+---@return Color
 function Sphere:getColor()
 	local brightness = self.path:getBrightness(self:getOffset())
 	return Color(brightness)
 end
 
+
+
+---Returns `true` if this sphere has not escaped the spawn point.
+---@return boolean
 function Sphere:isOffscreen()
 	return self:getOffset() < 32
 end
 
 
 
+---Draws this Sphere.
+---@param color integer Only if this sphere has this given color, the sphere will be drawn.
+---@param hidden boolean Filter the drawing routine only to hidden or not hidden spheres.
+---@param shadow boolean If `true`, the shadow sprite will be rendered, else, the main entity.
 function Sphere:draw(color, hidden, shadow)
 	if self.color ~= color or self:getHidden() ~= hidden then
 		return
@@ -400,7 +465,7 @@ function Sphere:draw(color, hidden, shadow)
 	if self.config.spriteAnimationSpeed then
 		frame = Vec2(math.floor(self.config.spriteAnimationSpeed * _TotalTime), 1)
 	elseif self.size == 1 then
-		frame = Vec2(math.ceil(self.frameCount - self:getFrame()), 1)
+		frame = Vec2(math.ceil(self.frameCount - self.animationFrame), 1)
 	end
 
 	local colorM = self:getColor()
@@ -430,21 +495,19 @@ end
 
 
 
+---Reloads the configuration variables of the current sphere color.
 function Sphere:loadConfig()
 	self.config = _Game.configManager.spheres[self.color]
 	self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
 	-- TODO/DEPRECATED: Remove default value
 	self.shadowSprite = _Game.resourceManager:getSprite(self.config.shadowSprite or "sprites/game/ball_shadow.json")
 	self.frameCount = self.sprite.states[1].frameCount.x
-	self.frameOffset = math.random() * self.frameCount -- move to the "else" part if you're a purist and want this to be saved
-
-	if self.color == 0 then -- vises follow another way
-		self.frameOffset = 0
-	end
 end
 
 
 
+---Returns a table of IDs, which at the very moment identify this very sphere. Used in saving.
+---@return table
 function Sphere:getIDs()
 	local s = self
 	local g = s.sphereGroup
@@ -467,10 +530,12 @@ end
 
 
 
+---Serializes this Sphere's data for reusing it later.
+---@return table
 function Sphere:serialize()
 	local t = {
 		color = self.color,
-		--frameOffset = self.frameOffset, -- who cares about that, you can uncomment this if you do
+		--animationFrame = self.animationFrame, -- who cares about that, you can uncomment this if you do
 		shootOrigin = self.shootOrigin and {x = self.shootOrigin.x, y = self.shootOrigin.y} or nil,
 		shootTime = self.shootTime
 	}
@@ -503,9 +568,13 @@ function Sphere:serialize()
 	return t
 end
 
+
+
+---Deserializes the Sphere's data so the saved data can be reused.
+---@param t table Previously serialized Sphere's data.
 function Sphere:deserialize(t)
 	self.color = t.color
-	--self.frameOffset = t.frameOffset
+	--self.animationFrame = t.animationFrame
 	self.size = t.size or 1
 	self.boostCombo = t.boostCombo or false
 	self.shootOrigin = t.shootOrigin and Vec2(t.shootOrigin.x, t.shootOrigin.y) or nil
@@ -530,5 +599,7 @@ function Sphere:deserialize(t)
 
 	self.gaps = t.gaps or {}
 end
+
+
 
 return Sphere
