@@ -52,8 +52,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 357,
-                        "y": 174
+                        "x": 349,
+                        "y": 60
                     },
                     "alpha": 1,
                     "children": {},
@@ -70,8 +70,8 @@
                     "inheritHide": true,
                     "type": "text",
                     "pos": {
-                        "x": 373,
-                        "y": 145
+                        "x": 296,
+                        "y": 29
                     },
                     "alpha": 1,
                     "children": {},
@@ -130,8 +130,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 358,
-                        "y": 234
+                        "x": 220,
+                        "y": 150 
                     },
                     "alpha": 1,
                     "children": {},
@@ -148,8 +148,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 395,
-                        "y": 318
+                        "x": 755,
+                        "y": 25
                     },
                     "alpha": 1,
                     "children": {},
@@ -166,7 +166,7 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 395,
+                        "x": 800,
                         "y": 369
                     },
                     "alpha": 1,
@@ -184,7 +184,7 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 395,
+                        "x": 800,
                         "y": 419
                     },
                     "alpha": 1,
@@ -202,8 +202,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 395,
-                        "y": 478
+                        "x": 600,
+                        "y": 500
                     },
                     "alpha": 1,
                     "children": {},
