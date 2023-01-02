@@ -27,11 +27,13 @@ function f.powerupSpawn(length, comboLv, chainLv, comboBoost)
 end
 
 -- This function returns parameters for Game:playSound() when matching. Used for sound robustness.
+-- NOTE: Is gamehjh.lua even used in the game? Will be modifying this file in the meantime.
+-- FORK-SPECIFIC CODE: The match sound is based off the chain (combo in Zuma) amount.
 function f.matchSound(length, comboLv, chainLv, comboBoost)
-  local soundID = math.min(math.max(length - 2, 1), 5)
+  local soundID = math.min(chainLv+1, 5)
   return {
     name = "sound_events/sphere_destroy_" .. tostring(soundID) .. ".json",
-    pitch = 1 + chainLv * 0.1
+    pitch = 1
   }
 end
 
