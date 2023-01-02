@@ -1,8 +1,8 @@
 {
     "path": "images/game/progress.png",
     "frame_size": {
-        "x": 221,
-        "y": 13
+        "x": 157,
+        "y": 80
     },
     "states": [
         {
