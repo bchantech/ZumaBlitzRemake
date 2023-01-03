@@ -5,10 +5,10 @@
     "colorblindSprite": "sprites/game/ball_4_cb.json",
     "destroyParticle": "particles/collapse_ball_4.json",
     "powerupSprites": {
-        "multiplier": "sprites/game/multiplier_ball_4.json"
+        "time": "sprites/game/time_ball_4.json"
     },
     "colorblindPowerupSprites": {
-        "multiplier": "sprites/game/multiplier_ball_4_cb.json"
+        "time": "sprites/game/time_ball_4_cb.json"
     },
     "color": {
         "r": 0,

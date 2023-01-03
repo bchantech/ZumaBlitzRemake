@@ -1,5 +1,5 @@
 {
-    "path": "images/game/multiplier_balls.png",
+    "path": "images/game/time_balls.png",
     "frame_size": {
         "x": 32,
         "y": 32
@@ -8,7 +8,7 @@
         {
             "pos": {
                 "x": 32,
-                "y": 32
+                "y": 0
             },
             "frames": {
                 "x": 1,
