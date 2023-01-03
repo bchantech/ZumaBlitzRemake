@@ -315,7 +315,11 @@ function c.levelCompleteOk(f)
   function()
     f.levelWin()
     c.Banner_LevelComplete:clean()
-    c.stageMapShow(f, true)
+    c.Hud:hide()
+    c.Main:show()
+    c.Main:setActive()
+    f.profileDeleteGame()
+    f.musicVolume("menu", 1)
   end
   )
 end
@@ -543,7 +547,23 @@ function c.mainStart(f)
     c.Menu_Continue:show()
     c.Menu_Continue:setActive()
   else
-    c.stageSelectShow(f)
+    --c.stageSelectShow(f)
+    f.profileNewGame(c.newGameStage)
+    c.Main:hide()
+    c.Main_Background:scheduleFunction("hideEnd",
+    function()
+      c.Main:clean()
+      f.musicVolume("menu", 0)
+      if not f.profileGetVariable("dontShowInstructions") then
+        c.newGameStarting = true
+        c.Menu_Instructions:show()
+        c.Menu_Instructions:setActive()
+        c.Menu_Instructions_Toggle_DontShow.widget:setState(f.profileGetVariable("dontShowInstructions"))
+      else
+        c.startGame(f)
+      end
+    end
+    )
   end
 end
 
@@ -717,7 +737,7 @@ end
 
 
 
--- WHEN CLICKED QUIT ON MAIN MENU
+-- WHEN CLICKED QUIT ON MAIN MENUhide()
 function c.mainQuit(f)
   f.quit()
 end
@@ -727,7 +747,26 @@ end
 -- WHEN CLICKED NEW GAME ON CONTINUE MENU
 function c.mainContinueNew(f)
   c.Menu_Continue:hide()
-  c.Menu_Continue_Background:scheduleFunction("hideEnd", c.stageSelectShow)
+  c.Menu_Continue_Background:scheduleFunction("hideEnd",
+  function()
+    f.profileNewGame(c.newGameStage)
+    c.Main:hide()
+    c.Main_Background:scheduleFunction("hideEnd",
+    function()
+      c.Main:clean()
+      f.musicVolume("menu", 0)
+      if not f.profileGetVariable("dontShowInstructions") then
+        c.newGameStarting = true
+        c.Menu_Instructions:show()
+        c.Menu_Instructions:setActive()
+        c.Menu_Instructions_Toggle_DontShow.widget:setState(f.profileGetVariable("dontShowInstructions"))
+      else
+        c.startGame(f)
+      end
+    end
+    )
+  end
+  )
 end
 
 
