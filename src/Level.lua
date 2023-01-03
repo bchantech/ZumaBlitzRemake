@@ -34,8 +34,10 @@ function Level:new(data)
 		table.insert(self.objectives, {type = objective.type, target = objective.target, progress = 0, reached = false})
 	end
 
-	-- hardcoded value is temporary
-	self.powerupInterval = 1
+	self.stateCount = 0
+
+    self.powerupFrequency = data.powerupFrequency
+	self.lastPowerupDelta = self.stateCount - 600
 
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
@@ -79,7 +81,9 @@ end
 ---@param dt number Delta time in seconds.
 function Level:updateLogic(dt)
 	self.map:update(dt)
-	self.shooter:update(dt)
+    self.shooter:update(dt)
+	
+	self.stateCount = self.stateCount + dt
 
 	-- Danger sound
 	local d1 = self:getDanger() and not self.lost
@@ -211,19 +215,15 @@ function Level:updateLogic(dt)
 
 
 
-    -- Powerups
-	if self.started and not self.finish and not self:areAllObjectivesReached() then
-        self.powerupInterval = self.powerupInterval - dt
-        if self.powerupInterval < 0 then
-            local randomSphere = _Game.session:getRandomSphere()
-            randomSphere:addPowerup("time")
-            randomSphere.powerupTimeout = randomSphere.powerupTimeout - dt
-			if randomSphere.powerupTimeout < 0 then
-                randomSphere:removePowerup()
-				randomSphere.powerupTimeout = 1
+    -- Zuma style powerups
+    if self.started and not self.finish and not self:areAllObjectivesReached() and not self:getEmpty() then
+		-- use math.random from 0 to 2^31 - 1 instead; Sexy::AppRand() essentially returns a random hex number
+		if self.powerupFrequency > 0 and (math.random() < 1 / self.powerupFrequency) and self.powerupFrequency < self.stateCount - self.lastPowerupDelta then
+            local sphere = _Game.session:getRandomSphere()
+			if sphere then
+				sphere:addPowerup("time")
 			end
-			-- hardcoded value temp, change this when it's customizable
-			self.powerupInterval = 1
+			self.lastPowerupDelta = self.stateCount
 		end
 	end
 
@@ -850,6 +850,7 @@ function Level:reset()
 	self.combo = 0
 	self.destroyedSpheres = 0
     self.time = 0
+	self.stateCount = 0
 
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0

@@ -32,7 +32,7 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
     -- Temporary value.
     -- In the future this should be customizable per-level, and in case of ZBR
 	-- this shall be linked to a Power/Food.
-	self.powerupTimeout = 1
+	self.powerupTimeout = 20
 
 	if deserializationTable then
 		self:deserialize(deserializationTable)
@@ -128,6 +128,14 @@ function Sphere:update(dt)
 		if self:isGhostForDeletion() then
 			self:deleteGhost()
 		end
+    end
+
+    -- Update powerup timeout.
+	if self.powerup then
+        self.powerupTimeout = self.powerupTimeout - dt
+        if self.powerupTimeout < 0 then
+			self:removePowerup()
+		end
 	end
 
 	-- if the sphere was flagged as it was a part of a combo but got obstructed then it's unflagged
@@ -203,7 +211,8 @@ end
 function Sphere:removePowerup()
 	if not self:isGhost() then
         self.powerup = nil
-		self.entity:setSprite()
+        self.entity:setSprite()
+		self.powerupTimeout = 20
 	end
 end
 
