@@ -22,7 +22,8 @@
         "overspeedCheck": true,
         "invincibleScarabs": false,
 		"luxorized": false,
-        "noScarabs": true
+        "noScarabs": true,
+        "permitLongMatches": false
     },
     "collectibleBehaviour": {
         "speed": {
