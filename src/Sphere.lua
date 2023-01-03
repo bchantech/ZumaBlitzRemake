@@ -28,7 +28,11 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 	-- these two are filled by the sphere group object
 	self.prevSphere = nil
 	self.nextSphere = nil
-	self.offset = 0
+    self.offset = 0
+    -- Temporary value.
+    -- In the future this should be customizable per-level, and in case of ZBR
+	-- this shall be linked to a Power/Food.
+	self.powerupTimeout = 1
 
 	if deserializationTable then
 		self:deserialize(deserializationTable)
@@ -38,14 +42,10 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 		self.boostCombo = false
 		self.shootOrigin = nil
 		self.shootTime = nil
-        self.currentPowerup = nil
-		self.powerupTime = nil
+        self.powerup = nil
 		self.effects = {}
 		self.gaps = gaps or {}
         self.ghostTime = nil
-		self.powerupTime = nil
-		-- this should be per-level in the future
-		self.powerupCooldown = 3
     end
 	
 	self.entity = sphereEntity or SphereEntity(self:getPos(), self.color)
@@ -92,28 +92,6 @@ function Sphere:update(dt)
 				self.sphereGroup:matchAndDelete(index)
 			end
 		end
-	end
-
-    -- Base for powerup system
-    -- TODO: De-hardcode stuff in this block of code
-    self.powerupCooldown = self.powerupCooldown - dt
-    if math.random() >= 0.75 then
-		if not self.currentPowerup and self.powerupCooldown >= 0 then
-			self.currentPowerup = "time"
-            self.entity:setSprite(self.currentPowerup)
-			-- also dehardcode this in the future
-            self.powerupTime = 3 - dt
-			--_Debug.console:print("Powerup added")
-        else
-			self.powerupCooldown = 15
-            self.powerupTime = self.powerupTime - dt
-			if self.powerupTime <= 0 then
-				self.currentPowerup = nil
-                self.entity:setSprite()
-				self.powerupTime = nil
-				--_Debug.console:print("Powerup removed")
-			end
-        end
 	end
 
 	-- Update the effects.
@@ -206,6 +184,31 @@ end
 
 
 
+---Adds a powerup to the current Sphere.
+---@param powerup string
+function Sphere:addPowerup(powerup)
+    if not powerup then
+		_Log:printt("Sphere", "No powerup defined when calling Sphere:addPowerup()")
+		return
+	end
+	if not (self:isGhost() or self:isOffscreen()) then
+        self.powerup = powerup
+        self.entity:setSprite(powerup)
+    end
+end
+
+
+
+---Removes any powerups from the current Sphere.
+function Sphere:removePowerup()
+	if not self:isGhost() then
+        self.powerup = nil
+		self.entity:setSprite()
+	end
+end
+
+
+
 ---Removes this sphere.
 ---Warning! The removal of the sphere itself is done in SphereGroup.lua!
 ---Please do not call this function if you want to remove this sphere from the board.
@@ -256,6 +259,19 @@ function Sphere:deleteVisually(ghostTime, crushed)
 		if self.danger then
 			_Game.session.colorManager:decrement(self.color, true)
 		end
+	end
+
+	-- Remove and apply any powerups that this sphere may have.
+    if self.powerup then
+        local effectTable = {
+			time = function ()
+				self.map.level:applyEffect({type = "addTime", amount = 8})
+            end,
+            multiplier = function()
+				-- to be added
+			end
+		}
+		effectTable[self.powerup]()
 	end
 
 	-- Remove the entity.
@@ -662,9 +678,7 @@ function Sphere:deserialize(t)
 	self.shootOrigin = t.shootOrigin and Vec2(t.shootOrigin.x, t.shootOrigin.y) or nil
 	self.shootTime = t.shootTime
 	self.ghostTime = t.ghostTime
-	self.currentPowerup = t.currentPowerup
-	self.powerupTime = t.powerupTime
-	self.powerupCooldown = t.powerupCooldown
+	self.powerup = t.currentPowerup
 
 	self.effects = {}
 	if t.effects then

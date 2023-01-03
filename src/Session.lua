@@ -391,6 +391,27 @@ end
 
 
 
+---Returns a random sphere on the board.
+---@return Sphere
+function Session:getRandomSphere()
+	local allSpheres = {}
+	for i, path in ipairs(self.level.map.paths) do
+		for j, sphereChain in ipairs(path.sphereChains) do
+			for k, sphereGroup in ipairs(sphereChain.sphereGroups) do
+				for l, sphere in ipairs(sphereGroup.spheres) do
+					local sphereHidden = sphereGroup:getSphereHidden(l)
+					if not sphere:isGhost() and not sphereHidden then
+						table.insert(allSpheres, sphere)
+					end
+				end
+			end
+		end
+    end
+	return allSpheres[math.random(1, #allSpheres)]
+end
+
+
+
 ---Returns the first sphere to collide with a provided line of sight along with some extra data.
 ---The returned table has the following fields:
 ---

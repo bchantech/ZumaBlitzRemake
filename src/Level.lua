@@ -34,6 +34,9 @@ function Level:new(data)
 		table.insert(self.objectives, {type = objective.type, target = objective.target, progress = 0, reached = false})
 	end
 
+	-- hardcoded value is temporary
+	self.powerupInterval = 1
+
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
 
@@ -186,7 +189,8 @@ function Level:updateLogic(dt)
 			--_Debug.console:print(math.floor(self.time))
 		end
     end
-	
+
+
 
     -- Hot Frog handling
 	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
@@ -204,6 +208,24 @@ function Level:updateLogic(dt)
 			end
 		end
     end
+
+
+
+    -- Powerups
+	if self.started and not self.finish and not self:areAllObjectivesReached() then
+        self.powerupInterval = self.powerupInterval - dt
+        if self.powerupInterval < 0 then
+            local randomSphere = _Game.session:getRandomSphere()
+            randomSphere:addPowerup("time")
+            randomSphere.powerupTimeout = randomSphere.powerupTimeout - dt
+			if randomSphere.powerupTimeout < 0 then
+                randomSphere:removePowerup()
+				randomSphere.powerupTimeout = 1
+			end
+			-- hardcoded value temp, change this when it's customizable
+			self.powerupInterval = 1
+		end
+	end
 
 
 
