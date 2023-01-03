@@ -38,9 +38,14 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 		self.boostCombo = false
 		self.shootOrigin = nil
 		self.shootTime = nil
+        self.currentPowerup = nil
+		self.powerupTime = nil
 		self.effects = {}
 		self.gaps = gaps or {}
-		self.ghostTime = nil
+        self.ghostTime = nil
+		self.powerupTime = nil
+		-- this should be per-level in the future
+		self.powerupCooldown = 3
     end
 	
 	self.entity = sphereEntity or SphereEntity(self:getPos(), self.color)
@@ -87,6 +92,28 @@ function Sphere:update(dt)
 				self.sphereGroup:matchAndDelete(index)
 			end
 		end
+	end
+
+    -- Base for powerup system
+    -- TODO: De-hardcode stuff in this block of code
+    self.powerupCooldown = self.powerupCooldown - dt
+    if math.random() >= 0.75 then
+		if not self.currentPowerup and self.powerupCooldown >= 0 then
+			self.currentPowerup = "time"
+            self.entity:setSprite(self.currentPowerup)
+			-- also dehardcode this in the future
+            self.powerupTime = 3 - dt
+			--_Debug.console:print("Powerup added")
+        else
+			self.powerupCooldown = 15
+            self.powerupTime = self.powerupTime - dt
+			if self.powerupTime <= 0 then
+				self.currentPowerup = nil
+                self.entity:setSprite()
+				self.powerupTime = nil
+				--_Debug.console:print("Powerup removed")
+			end
+        end
 	end
 
 	-- Update the effects.
@@ -633,6 +660,9 @@ function Sphere:deserialize(t)
 	self.shootOrigin = t.shootOrigin and Vec2(t.shootOrigin.x, t.shootOrigin.y) or nil
 	self.shootTime = t.shootTime
 	self.ghostTime = t.ghostTime
+	self.currentPowerup = t.currentPowerup
+	self.powerupTime = t.powerupTime
+	self.powerupCooldown = t.powerupCooldown
 
 	self.effects = {}
 	if t.effects then

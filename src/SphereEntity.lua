@@ -26,12 +26,13 @@ function SphereEntity:new(pos, color)
 	if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
         self.sprite = _Game.resourceManager:getSprite(self.config.colorblindSprite)
     end
+	self.shouldRotate = true
 	self.particle = self.config.idleParticle and _Game:spawnParticle(self.config.idleParticle, pos)
 end
 
 
 
----Gets the current sprite which is dependant on Colorblind Mode.
+---Gets the current sprite which is dependent on Colorblind Mode.
 ---@return Sprite
 function SphereEntity:getSprite()
 	if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
@@ -39,6 +40,39 @@ function SphereEntity:getSprite()
     else
 		return _Game.resourceManager:getSprite(self.config.sprite)
     end
+end
+
+
+---Sets the current sprite to whatever powerup is specified.
+---@param powerup? string Defaults to `nil`, which resets the sphere.
+---@param shouldRotate? boolean Defaults to `true`. If `powerup` is nil, this will always be true.
+function SphereEntity:setSprite(powerup, shouldRotate)
+	if not powerup then
+		powerup = nil
+    end
+	if not shouldRotate then
+		shouldRotate = true
+    end
+	
+	if shouldRotate then
+		self.shouldRotate = shouldRotate
+    end
+	if powerup then
+		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindPowerupSprites[powerup] then
+			self.sprite = _Game.resourceManager:getSprite(self.config.colorblindPowerupSprites[powerup])
+		else
+			self.sprite = _Game.resourceManager:getSprite(self.config.powerupSprites[powerup])
+		end
+    else
+        -- fallback to defaults
+		-- should rotate regardless of shouldRotate setting
+		self.shouldRotate = true
+		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
+			self.sprite = _Game.resourceManager:getSprite(self.config.colorblindSprite)
+		else
+			self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
+		end
+	end
 end
 
 
