@@ -538,7 +538,7 @@ end
 ---@return Vector2
 function Shooter:getSpherePos()
     -- FORK-SPECIFIC CODE: Sphere position roughly fit to Kroakatoa Frog's mouth
-    return self.pos - Vec2(0, 20):rotate(self.angle)
+    return self.pos - Vec2(0, 33):rotate(self.angle)
 end
 
 
