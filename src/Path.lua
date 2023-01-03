@@ -142,7 +142,8 @@ function Path:update(dt)
 	if self:isValidForCurveClear() then
 		self.pathClearGranted = true
 		_Debug.console:print("Curve Clear!")
-		self.map.level:grantScore(10000)
+        self.map.level:grantScore(10000)
+		self.map.level:applyEffect({type = "addTime", amount = 1})
 	-- 10% of this path's length to be able to reclaim path clear bonus
 	elseif self:getMaxOffset() > self.length * 0.1 then
 		self.pathClearGranted = false
