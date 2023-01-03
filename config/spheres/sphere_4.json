@@ -4,6 +4,12 @@
     "sprite": "sprites/game/ball_4.json",
     "colorblindSprite": "sprites/game/ball_4_cb.json",
     "destroyParticle": "particles/collapse_ball_4.json",
+    "powerupSprites": {
+        "multiplier": "sprites/game/multiplier_ball_4.json"
+    },
+    "colorblindPowerupSprites": {
+        "multiplier": "sprites/game/multiplier_ball_4_cb.json"
+    },
     "color": {
         "r": 0,
         "g": 1,
