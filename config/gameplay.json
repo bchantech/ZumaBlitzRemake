@@ -7,18 +7,21 @@
         "wonDelay": 1.5
     },
     "sphereBehaviour": {
-        "acceleration": 500,
-        "decceleration": 500,
+        "acceleration": 50,
+        "decceleration": 1000,
         "attractionSpeedBase": -5000,
         "attractionSpeedMult": 0,
         "knockbackSpeedBase": 0,
         "knockbackSpeedMult": -150,
+        "knockbackTime": 0.3,
+        "knockbackStopAfterTime": true,
         "foulSpeed": 2000,
+        "foulAcceleration": 1000,
         "joinSound": "sound_events/sphere_group_join.json",
         "newGroupSound": "sound_events/sphere_chain_spawn.json",
         "overspeedCheck": true,
         "invincibleScarabs": false,
-		"luxorized": true,
+		"luxorized": false,
         "noScarabs": true
     },
     "collectibleBehaviour": {

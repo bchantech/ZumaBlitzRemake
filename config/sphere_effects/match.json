@@ -13,5 +13,6 @@
     "can_boost_chain": true,
     "apply_chain_multiplier": true,
     "can_keep_combo": true,
-    "cause_check": true
+    "cause_check": true,
+    "ghostTime": 0.3
 }
