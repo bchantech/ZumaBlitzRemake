@@ -176,22 +176,9 @@ function Level:updateLogic(dt)
 
 
 
-	-- Clear board once target time reached
-	if not self.finish and self:areAllObjectivesReached() and not self:hasShotSpheres() and not self:areMatchesPredicted() then
-		self.shooter:empty()
-		_Game.session:destroyAllSpheres(true)
-		self.finish = true
-		self.wonDelay = _Game.configManager.gameplay.level.wonDelay
-	end
-
-
-
 	-- Time counting
 	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
 		self.time = self.time + dt
-		if math.floor(self.time) ~= math.floor(self.time + dt) then
-			--_Debug.console:print(math.floor(self.time))
-		end
     end
 
 
@@ -217,7 +204,6 @@ function Level:updateLogic(dt)
 
     -- Zuma style powerups
     if self.started and not self.finish and not self:areAllObjectivesReached() and not self:getEmpty() then
-		-- use math.random from 0 to 2^31 - 1 instead; Sexy::AppRand() essentially returns a random hex number
 		if self.powerupFrequency > 0 and (math.random() < 1 / self.powerupFrequency) and self.powerupFrequency < self.stateCount - self.lastPowerupDelta then
             local sphere = _Game.session:getRandomSphere()
 			if sphere then
@@ -231,6 +217,22 @@ function Level:updateLogic(dt)
 
 	-- Objectives
 	self:updateObjectives()
+
+
+
+	-- Clear board once target time reached
+	if not self.finish and self:areAllObjectivesReached() and not self:hasShotSpheres() and not self:areMatchesPredicted() then
+		self.shooter:empty()
+		self.finish = true
+		self.wonDelay = _Game.configManager.gameplay.level.wonDelay
+
+		for i, path in ipairs(self.map.paths) do
+			for j, chain in ipairs(path.sphereChains) do
+				chain:concludeGeneration()
+			end
+		end
+		_Game.session:destroyAllSpheres(true)
+	end
 
 
 

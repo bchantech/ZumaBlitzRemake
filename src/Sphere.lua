@@ -271,7 +271,7 @@ function Sphere:deleteVisually(ghostTime, crushed)
 	end
 
 	-- Remove and apply any powerups that this sphere may have.
-    if self.powerup then
+    if self.powerup and not self.map.level.finish then
         local effectTable = {
 			time = function ()
 				self.map.level:applyEffect({type = "addTime", amount = 8})
