@@ -201,6 +201,7 @@ function Sphere:addPowerup(powerup)
 	end
 	if not (self:isGhost() or self:isOffscreen()) then
         self.powerup = powerup
+		_Game:playSound("sound_events/spawn_powerup.json")
         self.entity:setSprite(powerup)
     end
 end
@@ -211,6 +212,7 @@ end
 function Sphere:removePowerup()
 	if not self:isGhost() then
         self.powerup = nil
+		_Game:playSound("sound_events/despawn_powerup.json")
         self.entity:setSprite()
 		self.powerupTimeout = 20
 	end
@@ -277,10 +279,11 @@ function Sphere:deleteVisually(ghostTime, crushed)
 				self.map.level:applyEffect({type = "addTime", amount = 8})
             end,
             multiplier = function()
-				-- to be added
+				self.map.level:applyEffect({type = "addMultiplier", amount = 1})
 			end
 		}
 		effectTable[self.powerup]()
+		_Game:playSound("sound_events/sphere_destroy_"..self.powerup..".json")
 	end
 
 	-- Remove the entity.

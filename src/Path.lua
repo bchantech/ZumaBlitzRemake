@@ -141,7 +141,6 @@ function Path:update(dt)
 	-- Path Clears
 	if self:isValidForCurveClear() then
 		self.pathClearGranted = true
-        _Debug.console:print("Curve Clear!")
         -- Curve Clears in Kroakatoa grant 1000 + total time elapsed.
 		-- Reference: http://bchantech.dreamcrafter.com/zumablitz/scoringmechanics_relaunch.php
         self.map.level:grantScore(1000 + math.floor(self.map.level.stateCount))

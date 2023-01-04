@@ -715,7 +715,6 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 	if effectConfig.applyChainMultiplier then
         -- Combos give score + 1000 x combo
-		print(self.sphereChain.combo - 1)
 		score = score + (1000 * (self.sphereChain.combo - 1))
     end
 	-- FORK-SPECIFIC CHANGE:
@@ -732,8 +731,9 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	self.map.level:grantScore(score)
 	self.sphereChain.comboScore = self.sphereChain.comboScore + score
 
-	-- Determine and display the floating text.
-    local scoreText = "+".._NumStr(score)
+    -- Determine and display the floating text.
+	-- Level:grantScore() already multiplies our score for us, so let's multiply here.
+    local scoreText = "+".._NumStr(score * self.map.level.multiplier)
 	-- TODO: Move this specific score text to the middle
 	if isCritical then
 		scoreText = scoreText .. "\n CRITICAL X2!"

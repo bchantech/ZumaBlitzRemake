@@ -36,8 +36,18 @@ function Level:new(data)
 
 	self.stateCount = 0
 
-    self.powerupFrequency = data.powerupFrequency
-	self.lastPowerupDelta = self.stateCount - 600
+    self.powerupFrequency = data.powerupFrequency or 15
+    self.individualPowerupFrequencies = data.individualPowerupFrequencies or nil
+	self.powerupList = {"time", "multiplier"} -- this should prob be replaced with a function when powers are implemented
+    self.lastPowerupDeltas = {}
+	for i, powerup in ipairs(self.powerupList) do
+        self.lastPowerupDeltas[powerup] = self.stateCount - 600
+    end
+	for powerup, v in pairs(self.lastPowerupDeltas) do
+		if self.individualPowerupFrequencies and #self.individualPowerupFrequencies ~= 0 then
+			self.individualPowerupFrequencies[powerup] = data.individualPowerupFrequencies[powerup]
+		end
+	end
 
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
@@ -204,12 +214,28 @@ function Level:updateLogic(dt)
 
     -- Zuma style powerups
     if self.started and not self.finish and not self:areAllObjectivesReached() and not self:getEmpty() then
-		if self.powerupFrequency > 0 and (math.random() < 1 / self.powerupFrequency) and self.powerupFrequency < self.stateCount - self.lastPowerupDelta then
-            local sphere = _Game.session:getRandomSphere()
-			if sphere then
-				sphere:addPowerup("time")
+        local powerups = { "time", "multiplier" }
+        local powerupToAdd = powerups[math.random(1, #powerups)]
+        local frequencies = {
+            all = self.powerupFrequency
+        }
+		for powerup, freq in pairs(self.individualPowerupFrequencies) do
+			frequencies[powerup] = freq
+		end
+        for powerup, v in pairs(self.lastPowerupDeltas) do
+			for k, freq in pairs(frequencies) do
+				if freq > 0 and (math.random() < 1 / freq) and freq < self.stateCount - self.lastPowerupDeltas[powerup] then
+					local sphere = _Game.session:getRandomSphere()
+					if sphere then
+						if powerupToAdd == "multiplier" and self.multiplier < 10 then
+							sphere:addPowerup("multiplier")
+						elseif powerupToAdd ~= "multiplier" then
+							sphere:addPowerup(powerupToAdd)
+						end
+					end
+					self.lastPowerupDeltas[powerup] = self.stateCount
+				end
 			end
-			self.lastPowerupDelta = self.stateCount
 		end
 	end
 
@@ -374,6 +400,7 @@ end
 ---Adds score to the current Profile, as well as to level's statistics.
 ---@param score integer The score to be added.
 function Level:grantScore(score)
+	score = score * self.multiplier
 	self.score = self.score + score
 	_Game:getCurrentProfile():grantScore(score)
 end
@@ -478,7 +505,9 @@ function Level:applyEffect(effect, TMP_pos)
 	elseif effect.type == "incrementGemStat" then
 		self:grantGem()
 	elseif effect.type == "addTime" then
-		self.objectives[1].target = self.objectives[1].target + effect.amount
+        self.objectives[1].target = self.objectives[1].target + effect.amount
+    elseif effect.type == "addMultiplier" then
+		self.multiplier = self.multiplier + effect.amount
 	end
 end
 
@@ -856,6 +885,7 @@ function Level:reset()
 
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
+	self.multiplier = 1
 
 	self.spheresShot = 0
 	self.sphereChainsSpawned = 0
@@ -1043,6 +1073,7 @@ function Level:deserialize(t)
 	self.time = t.time
 	self.blitzMeter = t.blitzMeter
 	self.blitzMeterCooldown = t.blitzMeterCooldown
+	self.multiplier = t.multiplier
 	self.lost = t.lost
 	-- Utils
 	self.controlDelay = t.controlDelay
