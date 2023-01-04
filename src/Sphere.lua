@@ -577,7 +577,11 @@ function Sphere:draw(color, hidden, shadow)
 
 	-- Update the entity position.
 	self.entity:setPos(pos)
-	self.entity:setAngle(angle)
+	if self.powerup then
+        self.entity:setAngle(0)
+    else
+		self.entity:setAngle(angle)
+	end
 	self.entity:setFrame(frame)
 	self.entity:setColorM(colorM)
 

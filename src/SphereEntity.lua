@@ -45,17 +45,9 @@ end
 
 ---Sets the current sprite to whatever powerup is specified.
 ---@param powerup? string Defaults to `nil`, which resets the sphere.
----@param shouldRotate? boolean Defaults to `true`. If `powerup` is nil, this will always be true.
-function SphereEntity:setSprite(powerup, shouldRotate)
+function SphereEntity:setSprite(powerup)
 	if not powerup then
 		powerup = nil
-    end
-	if not shouldRotate then
-		shouldRotate = true
-    end
-	
-	if shouldRotate then
-		self.shouldRotate = shouldRotate
     end
 	if powerup then
 		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindPowerupSprites[powerup] then
