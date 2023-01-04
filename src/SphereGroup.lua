@@ -663,13 +663,13 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 
 	-- Play a sound.
 
-    if effectConfig.destroy_sound == "hardcoded" then
+    if effectConfig.destroySound == "hardcoded" then
 		local destroySoundParams = MOD_GAME.matchSound(length, self.map.level.combo, self.sphereChain.combo, boostCombo)
 		_Game:playSound(destroySoundParams.name, destroySoundParams.pitch, pos)
 		local chainSoundParams = MOD_GAME.chainSound(self.sphereChain.combo)
         _Game:playSound(chainSoundParams.name, chainSoundParams.pitch, pos)
 	else
-		_Game:playSound(effectConfig.destroy_sound, 1, pos)
+		_Game:playSound(effectConfig.destroySound, 1, pos)
     end
     if #gaps > 0 then
         -- NOTE: Zuma Blitz does not pitch/repeat the Gap Bonus sound in case of double+ gap bonuses.
@@ -709,7 +709,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		end
 	end
 
-	if effectConfig.apply_chain_multiplier then
+	if effectConfig.applyChainMultiplier then
 		-- Combos give score + 1000 x combo
 		score = score + (1000 * (self.sphereChain.combo - 1))
     end
@@ -743,7 +743,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		scoreText = scoreText .. "\n CHAIN x" .. tostring(self.map.level.combo)
 	end
 
-	if effectConfig.apply_chain_multiplier and self.sphereChain.combo ~= 1 then
+	if effectConfig.applyChainMultiplier and self.sphereChain.combo ~= 1 then
         scoreText = scoreText .. "\n COMBO x" .. tostring(self.sphereChain.combo - 1)
 	end
 	if effectConfig.applyChainMultiplier and self.sphereChain.combo ~= 1 then
