@@ -696,7 +696,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 			-- then add +250 every 5th chain
             if self.map.level.combo == 10 then
                 score = score + 500
-			else if self.map.level.combo > 10 and score % 5 == 0 then
+			elseif self.map.level.combo > 10 and score % 5 == 0 then
 				score = score + 250
 			end
 		end
