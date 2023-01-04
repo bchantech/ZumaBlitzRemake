@@ -928,7 +928,6 @@ function c.tick(f)
       player = f.profileGetName()
 
       if f.profileGetSession() then
-        local lives = tostring(f.profileGetLives())
         local coins = tostring(f.profileGetCoins())
         local score = f.profileGetScore()
         local scoreStr = _NumStr(score)
@@ -946,7 +945,6 @@ function c.tick(f)
         c.Menu_Continue_Text_Score.widget.text = scoreStr
 
         c.Hud_Text_Stage.widget.text = levelName
-        c.Hud_Text_Lives.widget.text = lives
         c.Hud_Text_Coins.widget.text = coins
         c.Hud_Text_Score.widget.text = scoreAnim
 
@@ -971,9 +969,12 @@ function c.tick(f)
           local levelChains = tostring(f.levelGetChains())
           local levelMaxCombo = tostring(f.levelGetMaxCombo())
           local levelMaxChain = tostring(f.levelGetMaxChain())
-
           local time = math.floor(math.max(levelObjectives[1].target - levelObjectives[1].progress, 0))
-          c.Hud_Text_Lives.widget.text = string.format("%.1d %.2d", math.floor(time / 60), time % 60)
+          local levelTime = string.format("%.1d %.2d", math.floor(time / 60), time % 60)
+          local levelMultiplier = tostring(f.levelGetMultiplier())
+
+          c.Hud_Text_Lives.widget.text = levelTime
+          c.Hud_Text_Stage.widget.text = levelMultiplier
 
           c.Hud_Progress.widget.valueData = levelProgress
           c.Hud_Progress_Marker.angle = -math.pi / 2 + c.Hud_Progress.widget.value * math.pi
