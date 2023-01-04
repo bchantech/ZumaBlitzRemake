@@ -557,7 +557,7 @@ function Level:generateColor(data)
 		-- Make a pool with colors which are on the board.
 		local pool = {}
 		for i, color in ipairs(data.colors) do
-			if not data.has_to_exist or _Game.session.colorManager:isColorExistent(color) then
+			if not data.hasToExist or _Game.session.colorManager:isColorExistent(color) then
 				table.insert(pool, color)
 			end
 		end
