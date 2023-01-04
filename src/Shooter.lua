@@ -130,7 +130,7 @@ function Shooter:update(dt)
     -- filling
     if self:isActive() then
         -- remove nonexistent colors, but only if the current color generator allows removing these colors
-        local remTable = _Game.session.level:getCurrentColorGenerator().colors_remove_if_nonexistent
+        local remTable = _Game.session.level:getCurrentColorGenerator().colorsRemoveIfNonexistent
         if _MathIsValueInTable(remTable, self.color) and not _Game.session.colorManager:isColorExistent(self.color) then
             self:setColor(0)
         end
