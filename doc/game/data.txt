@@ -268,10 +268,10 @@ D		- type (string) |<b><i>collectible</i></b>
 D		- name (string) |A collectible ID to be evaluated to.
 D		- conditions* (list) |A list of conditions. All of them must be satisfied. In other case, this entry will not generate any collectibles and return an empty list. More info below.
 
-H3	<i>collectible_generator</i>
+H3	<i>collectibleGenerator</i>
 P	Evaluates to another collectible generator result.
 D	- (object) |A single entry.
-D		- type (string) |<b><i>collectible_generator</i></b>
+D		- type (string) |<b><i>collectibleGenerator</i></b>
 D		- name (string) |A collectible generator ID to be evaluated.
 D		- conditions* (list) |A list of conditions. All of them must be satisfied. In other case, this entry will not generate any collectibles and return an empty list. More info below.
 
@@ -290,10 +290,10 @@ D		- entry (object) |A collectible entry to be evaluated.
 D		- count (Expression|number) |How many times the entry should be evaluated.
 D		- conditions* (list) |A list of conditions. All of them must be satisfied. In other case, this entry will not generate any collectibles and return an empty list. More info below.
 
-H3	<i>random_pick</i>
+H3	<i>randomPick</i>
 P	Evaluates all the choices, discards empty ones, and selects one of the remaining results at random.
 D	- (object) |A single entry.
-D		- type (string) |<b><i>random_pick</i></b>
+D		- type (string) |<b><i>randomPick</i></b>
 D		- pool (list) |A list of choices to be picked from.
 D			- (object) |A single choice.
 D				- entry (object) |A collectible entry to be evaluated.
@@ -309,16 +309,16 @@ D	- (object) |A single condition.
 D		- type (string) |<b><i>expression</i></b>
 D		- expression (Expression|boolean) |An expression to be evaluated.
 
-H3	<i>color_present</i>
+H3	<i>colorPresent</i>
 P	Returns true if a given color is present on the board.
 D	- (object) |A single condition.
-D		- type (string) |<b><i>color_present</i></b>
+D		- type (string) |<b><i>colorPresent</i></b>
 D		- color (number) |A color to be checked.
 
-H3	<i>cmp_latest_checkpoint</i>
+H3	<i>cmpLatestCheckpoint</i>
 P	Returns true if the profile latest checkpoint value is within defined bounds.
 D	- (object) |A single condition.
-D		- type (string) |<b><i>cmp_latest_checkpoint</i></b>
+D		- type (string) |<b><i>cmpLatestCheckpoint</i></b>
 D		- min* (number) |If the checked value is lower than this value, this check will fail.
 D		- max* (number) |If the checked value is greater than this value, this check will fail.
 D		- value* (number) |If the checked value is not equal to this value, this check will fail.
@@ -481,9 +481,9 @@ D		- count (number) |How many levels are to be picked from the pool.
 D		- mode (string) |How the levels will be randomized. There are three possible values:
 D		R <ol>
 D		R <li><b>repeat</b> - Every next level is simply drawn at random from the list.</li>
-D		R <li><b>no_repeat</b> - Same as above, but an entry is removed from the pool once it's been picked.</li>
+D		R <li><b>noRepeat</b> - Same as above, but an entry is removed from the pool once it's been picked.</li>
 D		R <li><b>order</b> - Chooses <i>count</i> entries from the pool, without changing their order.</li>
-D		R <li>Both <b>no_repeat</b> and <b>order</b> modes need the pool size to be greater or equal to the <i>count</i>.</li>
+D		R <li>Both <b>noRepeat</b> and <b>order</b> modes need the pool size to be greater or equal to the <i>count</i>.</li>
 D		R </ol>
 D		- unlockCheckpointsOnBeat* (list) |If specified, after beating this entry, checkpoints with IDs corresponding to numbers in this list will be unlocked.
 
