@@ -2,7 +2,7 @@
     "map": "JourneyToKroakatoa",
     "music": "level",
     "dangerMusic": "danger",
-    "powerupFrequency": 12,
+    "powerupFrequency": 15,
     "powerupGenerator": "vanilla_powerup.json",
     "gemGenerator": "vanilla_gem.json",
     "colorGeneratorNormal": "default",
