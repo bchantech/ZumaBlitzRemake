@@ -736,7 +736,11 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
     local scoreText = "+".._NumStr(score * self.map.level.multiplier)
 	-- TODO: Move this specific score text to the middle
 	if isCritical then
-		scoreText = scoreText .. "\n CRITICAL X2!"
+        self.map.level:spawnFloatingText(
+            "CRITICAL 2X!",
+            {x = 380, y = 150},
+            "fonts/dialog_header2.json"
+		)
 	end
     -- Zuma's meanings of "Combo" and "Chain" is reverse from Luxor's.
     -- Keep this in mind when modifying code as OpenSMCE is based off Luxor.

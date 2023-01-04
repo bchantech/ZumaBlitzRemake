@@ -275,11 +275,22 @@ function Sphere:deleteVisually(ghostTime, crushed)
 	-- Remove and apply any powerups that this sphere may have.
     if self.powerup and not self.map.level.finish then
         local effectTable = {
-			time = function ()
-				self.map.level:applyEffect({type = "addTime", amount = 8})
+            time = function()
+				local secs = 8
+				self.map.level:applyEffect({type = "addTime", amount = secs})
+				self.map.level:spawnFloatingText(
+					string.format("+%d SECONDS", secs),
+					{x = 380, y = 150},
+					"fonts/dialog_header2.json"
+				)
             end,
             multiplier = function()
-				self.map.level:applyEffect({type = "addMultiplier", amount = 1})
+                self.map.level:applyEffect({ type = "addMultiplier", amount = 1 })
+				self.map.level:spawnFloatingText(
+					string.format("MULTIPLIER %dX", self.map.level.multiplier),
+					{x = 380, y = 150},
+					"fonts/dialog_header2.json"
+				)
 			end
 		}
 		effectTable[self.powerup]()
