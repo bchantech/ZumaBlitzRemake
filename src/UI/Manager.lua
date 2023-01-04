@@ -43,6 +43,7 @@ function UIManager:new()
     levelGetNewRecord = function() return _Game.session.level:hasNewScoreRecord() end,
     levelGetBlitzMeter = function() return _Game.session.level.blitzMeter end,
     levelGetMultiplier = function() return _Game.session.level.multiplier end,
+    levelGetCombo = function() return _Game.session.level.combo end,
 
     musicVolume = function(music, volume) _Game:getMusic(music):setVolume(volume) end,
 
@@ -99,7 +100,7 @@ function UIManager:initSplash()
   self.widgets.splash = UIWidget("Splash", _LoadJson(_ParsePath("ui/splash.json")))
 
   self.script = require(_ParsePath("ui/script"))
-  self.script.init(self.scriptFunctions)
+  self:executeCallback("init")
 end
 
 function UIManager:init()
