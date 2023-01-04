@@ -488,7 +488,10 @@ end
 ---Returns `true` if this sphere is a ghost, i.e. has no visual representation and no hitbox, but exists.
 ---@return boolean
 function Sphere:isGhost()
-	return self.ghostTime and self.ghostTime >= 0
+	if self.ghostTime then
+		return true
+	end
+	return false
 end
 
 
@@ -496,7 +499,7 @@ end
 ---Returns `true` if this sphere is a ghost and can be now removed entirely from the board.
 ---@return boolean
 function Sphere:isGhostForDeletion()
-	return self.ghostTime and self.ghostTime <= 0
+	return self.ghostTime and self.ghostTime <= 0 or false
 end
 
 
