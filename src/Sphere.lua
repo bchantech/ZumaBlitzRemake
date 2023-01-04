@@ -45,9 +45,9 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
         self.powerup = nil
 		self.effects = {}
 		self.gaps = gaps or {}
-        self.ghostTime = nil
+		self.ghostTime = nil
     end
-	
+
 	self.entity = sphereEntity or SphereEntity(self:getPos(), self.color)
 
 	self:loadConfig()

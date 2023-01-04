@@ -757,8 +757,6 @@ end
 
 -- Only removes the already destroyed spheres which have been ghosts.
 function SphereGroup:deleteGhost(position)
-	-- Prepare a list of spheres to be destroyed.
-	local spheres = {}
 	local position1, position2 = self:getGhostBounds(position)
 	self:destroySpheres(position1, position2)
 end
