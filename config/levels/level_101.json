@@ -4,7 +4,7 @@
     "dangerMusic": "danger",
     "powerupFrequency": 15,
     "individualPowerupFrequencies": {
-        "time": 15,
+        "time": 16,
         "multiplier": 18
     },
     "powerupGenerator": "vanilla_powerup.json",
