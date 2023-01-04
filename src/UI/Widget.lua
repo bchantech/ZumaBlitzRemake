@@ -10,6 +10,7 @@ local UIWidgetSpriteButton = require("src/UI/WidgetSpriteButton")
 local UIWidgetSpriteButtonCheckbox = require("src/UI/WidgetSpriteButtonCheckbox")
 local UIWidgetSpriteButtonSlider = require("src/UI/WidgetSpriteButtonSlider")
 local UIWidgetSpriteProgress = require("src/UI/WidgetSpriteProgress")
+local UIWidgetSpriteProgressBlitz = require("src/UI/WidgetSpriteProgressBlitz")
 local UIWidgetText = require("src/UI/WidgetText")
 local UIWidgetTextInput = require("src/UI/WidgetTextInput")
 local UIWidgetParticle = require("src/UI/WidgetParticle")
@@ -28,6 +29,8 @@ function UIWidget:new(name, data, parent)
 	if type(data) == "string" then data = _LoadJson(_ParsePath(data)) end
 
 	self.pos = _ParseVec2(data.pos)
+	self.angle = data.angle or 0
+	self.align = data.align or Vec2()
 	self.layer = data.layer
 	self.alpha = data.alpha
 
@@ -55,6 +58,8 @@ function UIWidget:new(name, data, parent)
 		self.widget = UIWidgetSpriteButtonSlider(self, data.sprite, data.bounds)
 	elseif data.type == "spriteProgress" then
 		self.widget = UIWidgetSpriteProgress(self, data.sprite, data.value, data.smooth)
+	elseif data.type == "spriteProgressBlitz" then
+		self.widget = UIWidgetSpriteProgressBlitz(self, data.sprite, data.value, data.smooth)
 	elseif data.type == "text" then
 		self.widget = UIWidgetText(self, data.text, data.font, data.align)
 	elseif data.type == "textInput" then
