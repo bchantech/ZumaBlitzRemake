@@ -710,7 +710,8 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 
 	if effectConfig.applyChainMultiplier then
-		-- Combos give score + 1000 x combo
+        -- Combos give score + 1000 x combo
+		print(self.sphereChain.combo - 1)
 		score = score + (1000 * (self.sphereChain.combo - 1))
     end
 	-- FORK-SPECIFIC CHANGE:
@@ -722,9 +723,6 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		isCritical = true
 		score = score * 2
 		_Game:playSound("sound_events/critical_shot.json")
-	end
-	if effectConfig.applyChainMultiplier then
-		score = score * self.sphereChain.combo
 	end
 
 	self.map.level:grantScore(score)
@@ -746,7 +744,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	if effectConfig.applyChainMultiplier and self.sphereChain.combo ~= 1 then
         scoreText = scoreText .. "\n COMBO x" .. tostring(self.sphereChain.combo - 1)
 	end
-	if effectConfig.applyChainMultiplier and self.sphereChain.combo ~= 1 then
+	if boostCombo and self.map.level.combo > 2 then
 		scoreText = scoreText .. "\n CHAIN X" .. tostring(self.sphereChain.combo)
 	end
 	local scoreGapTexts = {"GAP SHOT", "DOUBLE GAP", "TRIPLE GAP", "QUADRUPLE GAP", "QUINTUPLE GAP"}
