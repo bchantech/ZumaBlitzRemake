@@ -130,9 +130,14 @@ function SphereGroup:update(dt)
 	end
 
 	-- stop spheres when away from board and rolling back
-	if self.speed < 0 and self:getFrontPos() < 0 then
+	if self.speed < 0 and self:getFrontPos() < 0 and not self:isMagnetizing() then
 		self.speed = 0
 		self.speedTime = nil
+	end
+
+	-- FORK-SPECIFIC-CODE: Teleport the group to the spawn point if behind and nothing obstructs it.
+	if self:getFrontPos() < 0 and not self:isMagnetizing() and (not self.nextGroup or (self.nextGroup:getBackPos() >= 0 and not self.nextGroup:isMagnetizing())) then
+		self.offset = self.offset - self:getLastSphereOffset()
 	end
 
 	self:move(self.speed * dt)
