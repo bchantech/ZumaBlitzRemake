@@ -42,6 +42,7 @@ function UIManager:new()
     levelGetMaxChain = function() return _Game.session.level.maxChain end,
     levelGetNewRecord = function() return _Game.session.level:hasNewScoreRecord() end,
     levelGetBlitzMeter = function() return _Game.session.level.blitzMeter end,
+    levelGetMultiplier = function() return _Game.session.level.multiplier end,
 
     musicVolume = function(music, volume) _Game:getMusic(music):setVolume(volume) end,
 

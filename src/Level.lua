@@ -1028,6 +1028,7 @@ function Level:serialize()
 		stateCount = self.stateCount,
 		blitzMeter = self.blitzMeter,
 		blitzMeterCooldown = self.blitzMeterCooldown,
+		multiplier = self.multiplier,
 		controlDelay = self.controlDelay,
 		finish = self.finish,
 		finishDelay = self.finishDelay,
