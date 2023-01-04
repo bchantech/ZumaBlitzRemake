@@ -3,6 +3,10 @@
     "music": "level",
     "dangerMusic": "danger",
     "powerupFrequency": 15,
+    "individualPowerupFrequencies": {
+        "time": 15,
+        "multiplier": 18
+    },
     "powerupGenerator": "vanilla_powerup.json",
     "gemGenerator": "vanilla_gem.json",
     "colorGeneratorNormal": "default",
