@@ -241,7 +241,7 @@ function c.splashEnd(f)
   c.Hud_Text_Score = f.getWidgetN("root/Game/Hud/Frame/Text_Score")
   c.Hud_Blitz_Meter = f.getWidgetN("root/Game/Hud/Frame/Blitz_Meter")
   c.Hud_Progress = f.getWidgetN("root/Game/Hud/Frame/Progress")
-  c.Hud_Progress_Complete = f.getWidgetN("root/Game/Hud/Frame/Progress_Complete")
+  c.Hud_Progress_Marker = f.getWidgetN("root/Game/Hud/Frame/Blitz_Meter")
   c.Banner_LevelComplete_Text_Stage = f.getWidgetN("root/Game/Hud/Banner_LevelComplete/Frame/Text_Stage")
   c.Banner_LevelComplete_Text_MapName = f.getWidgetN("root/Game/Hud/Banner_LevelComplete/Frame/Text_MapName")
   c.Banner_LevelComplete_Text_LevelScore = f.getWidgetN("root/Game/Hud/Banner_LevelComplete/Frame/Container/Text_LevelScore")
@@ -976,12 +976,7 @@ function c.tick(f)
           c.Hud_Text_Lives.widget.text = string.format("%.1d %.2d", math.floor(time / 60), time % 60)
 
           c.Hud_Progress.widget.valueData = levelProgress
-      		if c.Hud_Progress.widget.value == 1 then
-      			c.Hud_Progress_Complete:show()
-      		else
-      			c.Hud_Progress_Complete:hide()
-      			c.Hud_Progress_Complete:clean()
-      		end
+          c.Hud_Progress_Marker.angle = -math.pi / 2 + c.Hud_Progress.widget.value * math.pi
 
           c.Banner_LevelComplete_Text_Stage.widget.text = "STAGE " .. levelName
           c.Banner_LevelComplete_Text_MapName.widget.text = levelMapName

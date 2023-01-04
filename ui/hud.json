@@ -134,7 +134,7 @@
                 "Progress": {
 					"inheritShow":true,
 					"inheritHide":true,
-                    "type": "spriteProgress",
+                    "type": "spriteProgressBlitz",
                     "pos": {
                         "x": 300.75,
                         "y": 468
@@ -153,8 +153,12 @@
 					"inheritHide":true,
                     "type": "sprite",
                     "pos": {
-                        "x": 330,
-                        "y": 440
+                        "x": 378,
+                        "y": 549
+                    },
+                    "align": {
+                        "x": 48,
+                        "y": 109
                     },
                     "alpha": 1,
                     "children": {},
@@ -165,43 +169,6 @@
 					"value":0,
 					"smooth":true
                 },
-				"Progress_Complete":{
-					"inheritShow":false,
-					"inheritHide":false,
-					"type":"sprite",
-					"sprite":"sprites/particles/prog_complete.json",
-					"pos":{"x":261,"y":11},
-                    "alpha": 0,
-					"layer":"HudControls2",
-					"animations":{
-						"in_":{
-							"type":"fade",
-							"time":0.5,
-							"startValue":0,
-							"endValue":1
-						}
-					},
-					"sounds":{
-						"in_":"sound_events/ui_progress_complete.json"
-					},
-					"children":{
-						"Psys_Progress_Complete":{
-							"inheritShow":true,
-							"inheritHide":true,
-							"type": "particle",
-							"pos": {
-								"x": 0,
-								"y": 0
-							},
-							"alpha": 1,
-							"children": {},
-							"animations": {},
-							"sounds": {},
-							"layer": "HudControls3",
-							"path": "particles/progress.json"
-						}
-					}
-				},
                 "Button_Menu": {
 					"inheritShow":true,
 					"inheritHide":true,
