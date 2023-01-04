@@ -994,7 +994,8 @@ function Level:serialize()
 			maxChain = self.maxChain,
 			maxCombo = self.maxCombo
 		},
-		time = self.time,
+        time = self.time,
+		stateCount = self.stateCount,
 		blitzMeter = self.blitzMeter,
 		blitzMeterCooldown = self.blitzMeterCooldown,
 		controlDelay = self.controlDelay,
