@@ -130,8 +130,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 220,
-                        "y": 150 
+                        "x": 218,
+                        "y": 152 
                     },
                     "alpha": 1,
                     "children": {},
