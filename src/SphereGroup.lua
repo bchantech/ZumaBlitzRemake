@@ -691,11 +691,19 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	local score = length * 10
 	if boostCombo then
         if self.map.level.combo > 5 then
-			score = score + 200 + ((self.map.level.combo - 6) * 10)
+            score = score + 100 + ((self.map.level.combo - 6) * 10)
+            -- Starting from Chain x10, grant +500 to score,
+			-- then add +250 every 5th chain
+            if self.map.level.combo == 10 then
+                score = score + 500
+			else if self.map.level.combo > 10 and score % 5 == 0 then
+				score = score + 250
+			end
 		end
 	end
 	if effectConfig.apply_chain_multiplier then
-		score = score * self.sphereChain.combo
+		-- Combos give score + 1000 x combo
+		score = score + (1000 * self.sphereChain.combo)
     end
 	-- FORK-SPECIFIC CHANGE:
 	-- Estimated 12% critical rate chance from the following footage:
