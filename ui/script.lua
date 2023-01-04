@@ -971,10 +971,12 @@ function c.tick(f)
           local levelMaxChain = tostring(f.levelGetMaxChain())
           local time = math.floor(math.max(levelObjectives[1].target - levelObjectives[1].progress, 0))
           local levelTime = string.format("%.1d %.2d", math.floor(time / 60), time % 60)
+          local levelCombo = tostring(f.levelGetCombo())
           local levelMultiplier = tostring(f.levelGetMultiplier())
 
           c.Hud_Text_Lives.widget.text = levelTime
-          c.Hud_Text_Stage.widget.text = levelMultiplier
+          c.Hud_Text_Stage.widget.text = levelCombo
+          c.Hud_Text_Coins.widget.text = levelMultiplier
 
           c.Hud_Progress.widget.valueData = levelProgress
           c.Hud_Progress_Marker.angle = -math.pi / 2 + c.Hud_Progress.widget.value * math.pi
