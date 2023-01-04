@@ -703,7 +703,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 	if effectConfig.apply_chain_multiplier then
 		-- Combos give score + 1000 x combo
-		score = score + (1000 * self.sphereChain.combo)
+		score = score + (1000 * self.sphereChain.combo - 1)
     end
 	-- FORK-SPECIFIC CHANGE:
 	-- Estimated 12% critical rate chance from the following footage:
