@@ -39,7 +39,7 @@
                     "type": "text",
                     "pos": {
                         "x": 120,
-                        "y": 541
+                        "y": 543
                     },
                     "alpha": 1,
                     "children": {},
@@ -59,7 +59,7 @@
                     "type": "text",
                     "pos": {
                         "x": 178,
-                        "y": 502
+                        "y": 504
                     },
                     "alpha": 1,
                     "children": {},
@@ -79,7 +79,7 @@
                     "type": "text",
                     "pos": {
                         "x": 229,
-                        "y": 542
+                        "y": 544
                     },
                     "alpha": 1,
                     "children": {},
@@ -99,7 +99,7 @@
                     "type": "text",
                     "pos": {
                         "x": 589,
-                        "y": 524
+                        "y": 526
                     },
                     "alpha": 1,
                     "children": {},
@@ -137,7 +137,7 @@
                     "type": "spriteProgressBlitz",
                     "pos": {
                         "x": 300.75,
-                        "y": 468
+                        "y": 470
                     },
                     "alpha": 1,
                     "children": {},
@@ -154,7 +154,7 @@
                     "type": "sprite",
                     "pos": {
                         "x": 378,
-                        "y": 549
+                        "y": 551
                     },
                     "align": {
                         "x": 48,
@@ -175,7 +175,7 @@
                     "type": "spriteButton",
                     "pos": {
                         "x": 715,
-                        "y": 519
+                        "y": 521
                     },
                     "alpha": 1,
                     "children": {},
