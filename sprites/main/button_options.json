@@ -1,8 +1,8 @@
 {
     "path": "images/main/button_options.png",
     "frame_size": {
-        "x": 31,
-        "y": 33
+        "x": 36,
+        "y": 36
     },
     "states": [
         {
@@ -18,7 +18,7 @@
         {
             "pos": {
                 "x": 0,
-                "y": 33
+                "y": 36
             },
             "frames": {
                 "x": 1,
@@ -28,17 +28,7 @@
         {
             "pos": {
                 "x": 0,
-                "y": 66
-            },
-            "frames": {
-                "x": 1,
-                "y": 1
-            }
-        },
-        {
-            "pos": {
-                "x": 0,
-                "y": 99
+                "y": 73
             },
             "frames": {
                 "x": 1,
