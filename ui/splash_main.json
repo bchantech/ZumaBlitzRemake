@@ -56,8 +56,8 @@
 					"inheritHide":true,
                     "type": "spriteProgress",
                     "pos": {
-                        "x": 264,
-                        "y": 161
+                        "x": 293,
+                        "y": 299
                     },
                     "alpha": 1,
                     "children": {},
@@ -72,8 +72,8 @@
 					"inheritHide":true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 264,
-                        "y": 161
+                        "x": 525,
+                        "y": 500
                     },
                     "alpha": 0,
                     "children": {},

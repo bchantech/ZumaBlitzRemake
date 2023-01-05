@@ -1,8 +1,8 @@
 {
     "path": "images/splash/progressbar.png",
     "frame_size": {
-        "x": 270,
-        "y": 27
+        "x": 182,
+        "y": 191
     },
     "states": [
         {

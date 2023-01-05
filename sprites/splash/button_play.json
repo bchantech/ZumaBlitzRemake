@@ -2,7 +2,7 @@
     "path": "images/splash/button_play.png",
     "frame_size": {
         "x": 270,
-        "y": 27
+        "y": 34
     },
     "states": [
         {
@@ -18,7 +18,7 @@
         {
             "pos": {
                 "x": 0,
-                "y": 27
+                "y": 0
             },
             "frames": {
                 "x": 1,
@@ -28,7 +28,7 @@
         {
             "pos": {
                 "x": 0,
-                "y": 54
+                "y": 0
             },
             "frames": {
                 "x": 1,
@@ -38,7 +38,7 @@
         {
             "pos": {
                 "x": 0,
-                "y": 81
+                "y": 0
             },
             "frames": {
                 "x": 1,
