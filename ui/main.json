@@ -52,8 +52,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 349,
-                        "y": 60
+                        "x": 144,
+                        "y": 25
                     },
                     "alpha": 1,
                     "children": {},
@@ -130,8 +130,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 218,
-                        "y": 152 
+                        "x": 217,
+                        "y": 152
                     },
                     "alpha": 1,
                     "children": {},
@@ -148,8 +148,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 755,
-                        "y": 25
+                        "x": 709,
+                        "y": 19
                     },
                     "alpha": 1,
                     "children": {},
@@ -166,8 +166,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 800,
-                        "y": 369
+                        "x": 541,
+                        "y": 3
                     },
                     "alpha": 1,
                     "children": {},
@@ -184,8 +184,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 800,
-                        "y": 419
+                        "x": 617,
+                        "y": 0
                     },
                     "alpha": 1,
                     "children": {},
@@ -202,8 +202,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 600,
-                        "y": 500
+                        "x": 445,
+                        "y": 25
                     },
                     "alpha": 1,
                     "children": {},
