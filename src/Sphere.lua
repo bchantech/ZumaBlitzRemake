@@ -282,16 +282,16 @@ function Sphere:deleteVisually(ghostTime, crushed)
 				self.map.level:applyEffect({type = "addTime", amount = secs})
 				self.map.level:spawnFloatingText(
 					string.format("+%d SECONDS", secs),
-					{x = 380, y = 150},
-					"fonts/dialog_header2.json"
+					Vec2(380, 150),
+					"fonts/score0.json"
 				)
             end,
             multiplier = function()
                 self.map.level:applyEffect({ type = "addMultiplier", amount = 1 })
 				self.map.level:spawnFloatingText(
-					string.format("MULTIPLIER %dX", self.map.level.multiplier),
-					{x = 380, y = 150},
-					"fonts/dialog_header2.json"
+					string.format("MULTIPLIER x%d", self.map.level.multiplier),
+					Vec2(380, 150),
+					"fonts/score0.json"
 				)
 			end
 		}
