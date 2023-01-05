@@ -5,7 +5,7 @@
     "spawnSound": "sound_events/collectible_spawn_powerup.json",
     "pickupSound": "sound_events/collectible_catch_powerup_colorbomb.json",
     "pickupName": "COLOR BOMB!",
-    "pickupFont": "fonts/score6.json",
+    "pickupFont": "fonts/score0.json",
     "effects": [
         {
             "type": "destroyColor",
