@@ -12,6 +12,17 @@
         "time": "sprites/game/time_ball_4_cb.json",
         "multiplier": "sprites/game/multiplier_ball_4_cb.json"
     },
+    "multiplierOverlaySprites": {
+        "2": "sprites/game/multiplier_overlay_x2.json",
+        "3": "sprites/game/multiplier_overlay_x3.json",
+        "4": "sprites/game/multiplier_overlay_x4.json",
+        "5": "sprites/game/multiplier_overlay_x5.json",
+        "6": "sprites/game/multiplier_overlay_x6.json",
+        "7": "sprites/game/multiplier_overlay_x7.json",
+        "8": "sprites/game/multiplier_overlay_x8.json",
+        "9": "sprites/game/multiplier_overlay_x9.json",
+        "10": "sprites/game/multiplier_overlay_x10.json"
+    },
     "color": {
         "r": 0,
         "g": 1,
