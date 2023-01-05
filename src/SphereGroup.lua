@@ -717,16 +717,6 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
         -- Combos give score + 1000 x combo
 		score = score + (1000 * (self.sphereChain.combo - 1))
     end
-	-- FORK-SPECIFIC CHANGE:
-	-- Estimated 12% critical rate chance from the following footage:
-	-- https://www.youtube.com/watch?v=giIy7p-qJk8
-	-- (Should this be de-hardcoded and be customizable?)
-	local isCritical = false
-	if math.random() < 0.12 then
-		isCritical = true
-		score = score * 2
-		_Game:playSound("sound_events/critical_shot.json")
-    end
 
 	self.map.level:grantScore(score)
 	self.sphereChain.comboScore = self.sphereChain.comboScore + score
@@ -734,14 +724,6 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
     -- Determine and display the floating text.
 	-- Level:grantScore() already multiplies our score for us, so let's multiply here.
     local scoreText = "+".._NumStr(score * self.map.level.multiplier)
-	-- TODO: Move this specific score text to the middle
-	if isCritical then
-        self.map.level:spawnFloatingText(
-            "CRITICAL 2X!",
-            {x = 380, y = 150},
-            "fonts/dialog_header2.json"
-		)
-	end
     -- Zuma's meanings of "Combo" and "Chain" is reverse from Luxor's.
     -- Keep this in mind when modifying code as OpenSMCE is based off Luxor.
 	-- Start counting chains from Chain x6.
