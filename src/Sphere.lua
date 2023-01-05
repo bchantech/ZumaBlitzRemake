@@ -50,7 +50,7 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 
 	self.entity = sphereEntity or SphereEntity(self:getPos(), self.color)
 
-	self:loadConfig()
+    self.config = _Game.configManager.spheres[self.color]
 
 	if shootOrigin then
 		self.shootOrigin = shootOrigin
@@ -59,7 +59,7 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 	end
 
 	self.animationPrevOffset = self:getOffset()
-	self.animationFrame = math.random() * self.frameCount
+	self.animationFrame = math.random() * self:getFrameCount()
 
 	if not self.map.isDummy then
 		_Game.session.colorManager:increment(self.color)
@@ -161,9 +161,11 @@ function Sphere:update(dt)
 	end
 
 	-- animation
-	local dist = self:getOffset() - self.animationPrevOffset
-	self.animationPrevOffset = self:getOffset()
-	self.animationFrame = (self.animationFrame + dist * (self.config.spriteRollingSpeed or 1)) % self.frameCount
+	if self.entity then
+		local dist = self:getOffset() - self.animationPrevOffset
+		self.animationPrevOffset = self:getOffset()
+		self.animationFrame = (self.animationFrame + dist * (self.config.spriteRollingSpeed or 1)) % self:getFrameCount()
+	end
 end
 
 
@@ -184,7 +186,7 @@ function Sphere:changeColor(color, particle)
 	_Game.session.colorManager:increment(color)
 	self.color = color
 	self.entity:setColor(color)
-	self:loadConfig()
+    self.config = _Game.configManager.spheres[self.color]
 	if particle then
 		_Game:spawnParticle(particle, self:getPos())
 	end
@@ -202,7 +204,7 @@ function Sphere:addPowerup(powerup)
 	if not (self:isGhost() or self:isOffscreen()) then
         self.powerup = powerup
 		_Game:playSound("sound_events/spawn_powerup.json")
-        self.entity:setSprite(powerup)
+        self.entity:setPowerup(powerup)
     end
 end
 
@@ -213,7 +215,7 @@ function Sphere:removePowerup()
 	if not self:isGhost() then
         self.powerup = nil
 		_Game:playSound("sound_events/despawn_powerup.json")
-        self.entity:setSprite()
+        self.entity:setPowerup()
 		self.powerupTimeout = 20
 	end
 end
@@ -587,7 +589,7 @@ function Sphere:draw(color, hidden, shadow)
 	if self.config.spriteAnimationSpeed then
 		frame = Vec2(math.floor(self.config.spriteAnimationSpeed * _TotalTime), 1)
 	elseif self.size == 1 then
-		frame = Vec2(math.ceil(self.frameCount - self.animationFrame), 1)
+		frame = Vec2(math.ceil(self:getFrameCount() - self.animationFrame), 1)
 	end
 
 	local colorM = self:getColor()
@@ -621,14 +623,10 @@ end
 
 
 
----Reloads the configuration variables of the current sphere color.
-function Sphere:loadConfig()
-    self.config = _Game.configManager.spheres[self.color]
-	self.sprite = self.entity:getSprite()
-
-	-- TODO/DEPRECATED: Remove default value
-	self.shadowSprite = _Game.resourceManager:getSprite(self.config.shadowSprite or "sprites/game/ball_shadow.json")
-	self.frameCount = self.sprite.states[1].frameCount.x
+---Returns the current frame count of this Sphere.
+---@return number
+function Sphere:getFrameCount()
+	return self.entity:getSprite().states[1].frameCount.x
 end
 
 

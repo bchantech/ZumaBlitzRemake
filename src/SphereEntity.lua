@@ -18,14 +18,11 @@ function SphereEntity:new(pos, color)
 	self.frame = Vec2(1)
 	self.colorM = Color()
 	self.color = color
+	self.powerup = nil
 
 	self.config = _Game.configManager.spheres[color]
 
 	self.shadowSprite = _Game.resourceManager:getSprite(self.config.shadowSprite or "sprites/game/ball_shadow.json")
-	self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
-	if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
-        self.sprite = _Game.resourceManager:getSprite(self.config.colorblindSprite)
-    end
 	self.shouldRotate = true
 	self.particle = self.config.idleParticle and _Game:spawnParticle(self.config.idleParticle, pos)
 end
@@ -35,36 +32,40 @@ end
 ---Gets the current sprite which is dependent on Colorblind Mode.
 ---@return Sprite
 function SphereEntity:getSprite()
-	if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
-        return _Game.resourceManager:getSprite(self.config.colorblindSprite)
+	if self.powerup then
+		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindPowerupSprites[self.powerup] then
+			return _Game.resourceManager:getSprite(self.config.colorblindPowerupSprites[self.powerup])
+		else
+			return _Game.resourceManager:getSprite(self.config.powerupSprites[self.powerup])
+		end
     else
-		return _Game.resourceManager:getSprite(self.config.sprite)
-    end
+		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
+			return _Game.resourceManager:getSprite(self.config.colorblindSprite)
+		else
+			return _Game.resourceManager:getSprite(self.config.sprite)
+		end
+	end
 end
 
 
----Sets the current sprite to whatever powerup is specified.
----@param powerup? string Defaults to `nil`, which resets the sphere.
-function SphereEntity:setSprite(powerup)
-	if not powerup then
-		powerup = nil
-    end
-	if powerup then
-		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindPowerupSprites[powerup] then
-			self.sprite = _Game.resourceManager:getSprite(self.config.colorblindPowerupSprites[powerup])
-		else
-			self.sprite = _Game.resourceManager:getSprite(self.config.powerupSprites[powerup])
-		end
-    else
-        -- fallback to defaults
-		-- should rotate regardless of shouldRotate setting
-		self.shouldRotate = true
-		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindSprite then
-			self.sprite = _Game.resourceManager:getSprite(self.config.colorblindSprite)
-		else
-			self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
+
+---Returns the overlay Sprite, if any. For now used only with Multiplier Balls.
+---@return Sprite?
+function SphereEntity:getOverlaySprite()
+	if self.powerup == "multiplier" then
+		local name = self.config.multiplierOverlaySprites and self.config.multiplierOverlaySprites[tostring(_Game.session.level.multiplier + 1)]
+		if name then
+			return _Game.resourceManager:getSprite(name)
 		end
 	end
+end
+
+
+
+---Sets the current powerup to be displayed on this Sphere Entity.
+---@param powerup? string The powerup to be displayed, or `nil` if none.
+function SphereEntity:setPowerup(powerup)
+	self.powerup = powerup
 end
 
 
@@ -109,7 +110,6 @@ end
 function SphereEntity:setColor(color)
 	self.color = color
 	self.config = _Game.configManager.spheres[color]
-	self.sprite = self:getSprite()
 
 	-- Particle stuff
 	if self.particle then
@@ -146,7 +146,11 @@ function SphereEntity:draw(shadow)
 	if shadow then
 		self.shadowSprite:draw(self.pos + Vec2(4), Vec2(0.5))
 	else
-		self.sprite:draw(self.pos, Vec2(0.5), nil, self.frame, self.angle, self.colorM)
+		self:getSprite():draw(self.pos, Vec2(0.5), nil, self.frame, self.angle, self.colorM)
+		local overlaySprite = self:getOverlaySprite()
+		if overlaySprite then
+			overlaySprite:draw(self.pos, Vec2(0.5), nil, self.frame, self.angle, self.colorM)
+		end
 	end
 end
 
