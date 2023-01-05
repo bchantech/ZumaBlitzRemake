@@ -66,24 +66,6 @@
                     "layer": "MenuControls",
                     "sprite": "sprites/splash/progressbar.json",
 					"value": 0.5
-                },
-                "Button_Play": {
-					"inheritShow":false,
-					"inheritHide":true,
-                    "type": "spriteButton",
-                    "pos": {
-                        "x": 525,
-                        "y": 500
-                    },
-                    "alpha": 0,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "sprite": "sprites/splash/button_play.json",
-                    "layer": "MenuControls2",
-					"callbacks": {
-						"buttonClick": "splashClick"
-					}
                 }
             },
             "animations": {},

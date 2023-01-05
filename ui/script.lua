@@ -895,7 +895,7 @@ function c.tick(f)
     local progress = f.loadingGetProgress()
     f.getWidgetN("splash/Main/Frame/Progress").widget.valueData = progress
     if progress == 1 then
-      f.getWidgetN("splash/Main/Frame/Button_Play"):show()
+      c.splashClick(f)
     end
   end
 
