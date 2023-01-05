@@ -203,7 +203,11 @@ function Sphere:addPowerup(powerup)
 	end
 	if not (self:isGhost() or self:isOffscreen()) then
         self.powerup = powerup
-		_Game:playSound("sound_events/spawn_powerup.json")
+		if powerup == "multiplier" then
+			_Game:playSound("sound_events/multiplier_appear.json")
+        else
+			_Game:playSound("sound_events/spawn_powerup.json")
+		end
         self.entity:setPowerup(powerup)
     end
 end
