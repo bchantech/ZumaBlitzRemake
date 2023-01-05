@@ -822,6 +822,59 @@ end
 
 
 
+function SphereGroup:willBeMagnetizingAfterGhostDeletion()
+	-- Returns true if there will be magnetization processes happening after all ghost spheres in this chain are deleted.
+	local position = 1
+	while position <= #self.spheres do
+		local sphere = self.spheres[position]
+		if sphere:isGhost() then
+			-- Get ghost boundaries.
+			local position1, position2 = self:getGhostBounds(position)
+			-- Get spheres we will be comparing. Only non-ghost and mature spheres are counted.
+			local sphere1 = self:getSphereInChain(position1 - 1)
+			local sphere2 = self:getSphereInChain(position2 + 1)
+			-- Abort if there are no spheres on either end of the ghost segment.
+			if not sphere1 or not sphere2 then
+				return false
+			end
+			while sphere1:isGhost() or sphere1.size < 1 do
+				position1 = position1 - 1
+				sphere1 = self:getSphereInChain(position1)
+				if not sphere1 then
+					-- There are no more spheres, so nothing will be magnetized to. Abort the whole operation.
+					return false
+				end
+			end
+			while sphere2:isGhost() or sphere2.size < 1 do
+				position2 = position2 + 1
+				sphere2 = self:getSphereInChain(position2)
+				if not sphere2 then
+					-- There are no more spheres, so nothing will be magnetized to. Abort the whole operation.
+					return false
+				end
+			end
+
+			-- Now the actual part.
+			-- Check if on each side of the empty area there's the same color.
+			local byColor = _Game.session:colorsMatch(sphere1.color, sphere2.color)
+			-- The scarab can magnetize any color.
+			local byScarab = sphere1.color == 0
+			-- If any of these checks has passed, return true. else, keep on searching.
+			if byColor or byScarab then
+				return true
+			end
+
+			-- Skip all remaining ghost spheres.
+			position = position2
+		end
+		position = position + 1
+	end
+
+	return false
+end
+
+
+
 
 
 function SphereGroup:draw(color, hidden, shadow)

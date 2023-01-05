@@ -152,7 +152,7 @@ function SphereChain:isMatchPredicted()
 			sphereGroup:isMagnetizing() or
 			sphereGroup:hasShotSpheres() or
 			sphereGroup:hasKeepComboSpheres() or
-			sphereGroup:hasGhostSpheres() or
+			sphereGroup:willBeMagnetizingAfterGhostDeletion() or
 			(_Game.configManager.gameplay.sphereBehaviour.luxorized and sphereGroup.speed < 0)
 		) then
 			return true
