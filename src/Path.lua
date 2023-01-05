@@ -142,8 +142,15 @@ function Path:update(dt)
 	if self:isValidForCurveClear() then
 		self.pathClearGranted = true
         -- Curve Clears in Kroakatoa grant 1000 + total time elapsed.
-		-- Reference: http://bchantech.dreamcrafter.com/zumablitz/scoringmechanics_relaunch.php
-        self.map.level:grantScore(1000 + math.floor(self.map.level.stateCount))
+        -- Reference: http://bchantech.dreamcrafter.com/zumablitz/scoringmechanics_relaunch.php
+		local score = 1000 + math.floor(self.map.level.stateCount)
+        self.map.level:grantScore(score)
+		self.map.level:spawnFloatingText(
+            string.format("CURVE CLEARED\n+%s", _NumStr(score * self.map.level.multiplier)),
+			Vec2(380, 236),
+			"fonts/score0.json"
+        )
+		_Game:playSound("sound_events/curve_clear.json")
 		if not self.map.level.finish then
 			self.map.level:applyEffect({type = "addTime", amount = 1})
 		end
