@@ -94,7 +94,13 @@ function love.load()
 	_DiscordRPC = DiscordRichPresence()
 	
 	-- Init boot screen
-	_LoadBootScreen()
+	-- _LoadBootScreen()
+
+    -- If autoload.txt exists, load the game name from there
+    local autoload = _LoadFile("autoload.txt") or nil
+	if autoload then
+		_LoadGame(autoload)
+	end
 end
 
 function love.update(dt)
