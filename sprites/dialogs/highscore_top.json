@@ -2,7 +2,7 @@
     "path": "images/dialogs/highscore_top.png",
     "frame_size": {
         "x": 800,
-        "y": 107
+        "y": 600
     },
     "states": [
         {
