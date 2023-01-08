@@ -43,7 +43,7 @@ function Level:new(data)
 	for i, powerup in ipairs(self.powerupList) do
         self.lastPowerupDeltas[powerup] = self.stateCount - 600
     end
-	for powerup, v in pairs(self.lastPowerupDeltas) do
+    for powerup, v in pairs(self.lastPowerupDeltas) do
 		if self.individualPowerupFrequencies and #self.individualPowerupFrequencies ~= 0 then
 			self.individualPowerupFrequencies[powerup] = data.individualPowerupFrequencies[powerup]
 		end
@@ -219,12 +219,12 @@ function Level:updateLogic(dt)
         local frequencies = {
             all = self.powerupFrequency
         }
-		for powerup, freq in pairs(self.individualPowerupFrequencies) do
-			frequencies[powerup] = freq
+        for i, powerup in ipairs(self.powerupList) do
+            frequencies[powerup] = (self.individualPowerupFrequencies and self.individualPowerupFrequencies[powerup]) or frequencies.all
 		end
         for powerup, v in pairs(self.lastPowerupDeltas) do
-			for k, freq in pairs(frequencies) do
-				if freq > 0 and (math.random() < 1 / freq) and freq < self.stateCount - self.lastPowerupDeltas[powerup] then
+			for k, w in pairs(frequencies) do
+				if frequencies[powerup] > 0 and (math.random() < 1 / frequencies[powerup]) and frequencies[powerup] < self.stateCount - self.lastPowerupDeltas[powerup] then
 					local sphere = _Game.session:getRandomSphere()
 					if sphere then
 						if powerupToAdd == "multiplier" and self.multiplier < 10 then
