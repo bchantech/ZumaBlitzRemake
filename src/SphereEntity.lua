@@ -32,8 +32,8 @@ end
 ---Gets the current sprite which is dependent on Colorblind Mode.
 ---@return Sprite
 function SphereEntity:getSprite()
-	if self.powerup then
-		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindPowerupSprites[self.powerup] then
+    if self.powerup then
+		if _Game.runtimeManager.options:getColorblindMode() and self.config.colorblindPowerupSprites and self.config.colorblindPowerupSprites[self.powerup] then
 			return _Game.resourceManager:getSprite(self.config.colorblindPowerupSprites[self.powerup])
 		else
 			return _Game.resourceManager:getSprite(self.config.powerupSprites[self.powerup])
