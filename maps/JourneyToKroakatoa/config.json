@@ -2579,5 +2579,13 @@
             "internal": true,
             "background": true
         }
-    ]
+    ],
+    "shooter": {
+        "name": "default",
+        "movement": {
+            "type": "circular",
+            "x": 386,
+            "y": 236
+        }
+    }
 }
