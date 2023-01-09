@@ -17,8 +17,8 @@ local FloatingText = require("src/FloatingText")
 ---Constructs a new Level.
 ---@param data table The level data, specified in a level config file.
 function Level:new(data)
-	self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
-	self.shooter = Shooter(data.shooter)
+    self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
+	self.shooter = Shooter(data.shooter or self.map.shooter)
 
 	self.matchEffect = data.matchEffect
 
