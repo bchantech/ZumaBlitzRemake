@@ -13,16 +13,11 @@ local Profile = require("src/Profile")
 ---@param path string Path to the file. The file is not loaded here, but is used in error messages.
 function Power:new(data, path)
     self._path = path
-    self._name = nil
+    self._name = nil -- Only used for self-reference; assigned in ConfigManager.lua
     self.displayName = data.displayName
     self.type = data.type
     self.levels = data.levels
-
-    for i, levelTable in ipairs(self.levels) do
-        if levelTable.displayName then
-            self.displayName = levelTable.displayName
-        end
-    end
+    self.maxLevel = #self.levels
 end
 
 
