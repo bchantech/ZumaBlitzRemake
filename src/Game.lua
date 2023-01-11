@@ -147,26 +147,60 @@ function Game:updateRichPresence()
 	local p = self:getCurrentProfile()
 	local line1 = ""
     local line2 = ""
-	local countTime = false
+    local largeImageKey = nil
+	local largeImageText = nil
+    local smallImageKey = nil
+	local smallImageText = nil
 
 	if self:levelExists() then
-		local l = self.session.level
-		line1 = string.format("In-Game: %s",
+        local l = self.session.level
+		
+		largeImageKey = "board_temporary"
+		largeImageText = string.format("%s",
 			p:getMapData().name
 		)
 		if l.pause then
-			line1 = line1 .. " - Paused"
+			largeImageText = largeImageText .. " (Paused)"
+        end
+		smallImageKey = "frogatar_temporary"
+		smallImageText = "Basic Frog"
+
+        local profile = _Game:getCurrentProfile()
+        local powerString = ""
+
+        if #profile.equippedPowers ~= 0 then
+            local powerNames = {}
+			for i, power in ipairs(profile.equippedPowers) do
+				table.insert(powerNames, _Game.configManager:getPower(power):getLeveledDisplayName())
+			end
+			powerString = table.concat(powerNames, ", ")
+        else
+			powerString = "None"
 		end
+
+        line1 = string.format(
+            "Score: %s | Multiplier: %s | Chain: %s (Max: %s)",
+            _NumStr(l.score),
+            "x"..l.multiplier,
+			"x"..((l.combo > 5 and l.combo) or 0),
+			"x"..((l.maxCombo > 5 and l.maxCombo) or 0)
+		)
+        line2 = string.format(
+            "Powers: %s | Food: %s",
+			powerString,
+			"None" -- add food later
+		)
 	--elseif p and p:getSession() then
     --line2 = ""
-		countTime = true
 	else
+		largeImageKey = nil
+		largeImageText = nil
+		smallImageKey = nil
+		smallImageText = nil
 		line1 = "In menus"
-		countTime = false
 	end
 
-	-- Known issue: Timer keeps resetting to 0 seconds per 2 seconds
-	_DiscordRPC:setStatus(line1, line2, countTime)
+	_DiscordRPC:setStatus(line1, line2, false, largeImageKey, largeImageText, smallImageKey, smallImageText)
 end
 
 
