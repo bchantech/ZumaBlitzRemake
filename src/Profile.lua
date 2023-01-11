@@ -17,7 +17,8 @@ function Profile:new(data, name)
 	self.levels = {}
 	self.checkpoints = {}
 	self.variables = {}
-	self.equippedPowers = {}
+    self.equippedPowers = {}
+	self.powerCatalog = {}
 	self.equippedFood = nil
 	self.colorblindMode = false
 
@@ -534,7 +535,8 @@ function Profile:deserialize(t)
 	if t.variables then
 		self.variables = t.variables
 	end
-	self.equippedPowers = t.equippedPowers
+    self.equippedPowers = t.equippedPowers
+	self.powerCatalog = t.powerCatalog
 	self.equippedFood = t.equippedFood
 	self.colorblindMode = t.colorblindMode
     self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
