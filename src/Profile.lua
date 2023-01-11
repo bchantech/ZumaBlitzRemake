@@ -535,9 +535,84 @@ function Profile:deserialize(t)
 		self.variables = t.variables
 	end
 	self.equippedPowers = t.equippedPowers
-	self.equippedFood = t.equippedPowers
+	self.equippedFood = t.equippedFood
 	self.colorblindMode = t.colorblindMode
-	self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
+    self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
+
+	-- Equipped Powers routines
+    local hash = {}
+    local res = {}
+	-- 1. Handle duplicates
+	for i, v in ipairs(self.equippedPowers) do
+		if (not hash[v]) then
+            res[#res + 1] = v
+			hash[v] = true
+		end
+    end
+    -- 2. Handle equippedPowers[>=4]
+	if #self.equippedPowers >= 4 then
+		for i = #self.equippedPowers, 4, -1 do
+            table.remove(self.equippedPowers, i)
+		end
+	end
+end
+
+
+
+---Equips a Power.
+---@param power string
+function Profile:equipPower(power)
+	for k, v in pairs(_Game.configManager.powers) do
+        if not _Game.configManager.powers[power] then
+			_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+			return
+		end
+    end
+	if not self:isPowerEquipped(power) then
+		if #self.equippedPowers <= 3 then
+			table.insert(self.equippedPowers, power)
+		else
+			_Log:printt("Profile", string.format("Equipped powers is already 3", power))
+        end
+	else
+		_Log:printt("Profile", string.format("Power ID %s is already equipped", power))
+	end
+end
+
+
+
+---Equips a Power.
+---@param power string
+function Profile:unequipPower(power)
+	for k, v in pairs(_Game.configManager.powers) do
+        if not _Game.configManager.powers[power] then
+			_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+			return
+		end
+    end
+	if self:isPowerEquipped(power) then
+		for i, v in ipairs(self.equippedPowers) do
+			if self.equippedPowers[i] == power then
+				table.remove(self.equippedPowers, i)
+			end
+		end
+	else
+		_Log:printt("Profile", string.format("Power ID %s is already unequipped", power))
+	end
+end
+
+
+
+---Returns true if a Power is already equipped.
+---@param power string
+---@return boolean
+function Profile:isPowerEquipped(power)
+	for i, value in ipairs(self.equippedPowers) do
+		if value == power then
+			return true
+		end
+	end
+	return false
 end
 
 

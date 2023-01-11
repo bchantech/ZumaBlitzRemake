@@ -16,13 +16,12 @@ function Power:new(data, path)
     self._path = path
     self.displayName = data.displayName
     self.type = data.type
-end
+    self.levels = data.levels
 
-
-
-function Power:isEquipped()
-    for i, power in ipairs(_Game:getCurrentProfile().equippedPowers) do
-        
+    for i, levelTable in ipairs(self.levels) do
+        if levelTable.displayName then
+            self.displayName = levelTable.displayName
+        end
     end
 end
 
