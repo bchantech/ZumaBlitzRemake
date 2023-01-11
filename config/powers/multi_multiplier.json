@@ -4,11 +4,11 @@
     "levels": [
         {
             "displayName": "Doubler",
-            "multiplierAdd": 2
+            "additiveAmount": 1
         },
         {
             "displayName": "Tripler",
-            "multiplierAdd": 3
+            "additiveAmount": 2
         }
     ]
 }

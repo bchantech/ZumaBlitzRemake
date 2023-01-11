@@ -2,8 +2,8 @@
     "displayName": "Sands of Time",
     "type": "timeBallAmount",
     "levels": [
-        {"amount": 6},
-        {"amount": 7},
-        {"amount": 8}
+        {"additiveAmount": 1},
+        {"additiveAmount": 2},
+        {"additiveAmount": 3}
     ]
 }

@@ -2,8 +2,8 @@
     "displayName": "Speed Shot",
     "type": "shotSpeedModifier",
     "levels": [
-        {"amount": 0.1},
-        {"amount": 0.2},
-        {"amount": 0.3}
+        {"additiveMultiplier": 0.1},
+        {"additiveMultiplier": 0.2},
+        {"additiveMultiplier": 0.3}
     ]
 }
