@@ -1,0 +1,10 @@
+{
+    "displayName": "Wild Shot",
+    "type": "sphereEveryNthShot",
+    "sphere": -1,
+    "levels": [
+        {"interval": 15},
+        {"interval": 13},
+        {"interval": 11}
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "displayName": "Bombs",
+    "type": "addPowerup",
+    "powerup": "bomb",
+    "levels": [
+        {"frequency": 20},
+        {"frequency": 16},
+        {"radius": 40}
+    ]
+}
