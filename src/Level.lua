@@ -885,7 +885,10 @@ function Level:reset()
 
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
-	self.multiplier = 1
+    self.multiplier = 1
+	if _Game:getCurrentProfile():isPowerEquipped("multi_multiplier") then
+		self.multiplier = self.multiplier + _Game.configManager:getPower("multi_multiplier").levels[_Game:getCurrentProfile():getPowerLevel("multi_multiplier")].additiveAmount
+	end
 
 	self.spheresShot = 0
 	self.sphereChainsSpawned = 0

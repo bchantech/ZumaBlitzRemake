@@ -24,19 +24,24 @@ end
 
 ---Returns the leveled display name of this Power.
 ---If value is nil, returns the current level.
----@param value number|"current"
+---@param value number|"current"|nil
 ---@return string
 function Power:getLeveledDisplayName(value)
-    if value == "current" or (not value) then
-        ---@diagnostic disable-next-line: cast-local-type
+    if value == "current" or value == nil then
         value = _Game:getCurrentProfile():getPowerLevel(self._name)
     end
     local romanNums = { "I", "II", "III" }
-    if self.levels[value].displayName then
+    if self.levels and self.levels[value] and self.levels[value].displayName then
         return self.levels[value].displayName
     else
         return self.displayName..string.format(" %s", romanNums[value])
     end
+end
+
+
+
+function Power:isMaxLevel()
+    return _Game:getCurrentProfile():getPowerLevel(self._name) == self.maxLevel
 end
 
 

@@ -282,7 +282,11 @@ function Sphere:deleteVisually(ghostTime, crushed)
     if self.powerup and not self.map.level.finish then
         local effectTable = {
             time = function()
-				local secs = 8
+                local secs = 5
+				if _Game:getCurrentProfile():isPowerEquipped("sands_of_time") then
+					secs = secs + _Game.configManager:getPower("sands_of_time").levels[_Game:getCurrentProfile():getPowerLevel("sands_of_time")].additiveAmount
+				end
+				
 				self.map.level:applyEffect({type = "addTime", amount = secs})
 				self.map.level:spawnFloatingText(
 					string.format("+%d SECONDS", secs),
