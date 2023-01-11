@@ -20,13 +20,19 @@ function Profile:new(data, name)
     self.equippedPowers = {}
 	self.powerCatalog = {}
 	self.equippedFood = nil
-	self.colorblindMode = false
+    self.colorblindMode = false
 
 	if data then
 		self:deserialize(data)
 	else
 		for i, checkpoint in ipairs(_Game.configManager.levelSet.startCheckpoints) do
 			self.checkpoints[i] = checkpoint
+        end
+		for power, v in pairs(_Game.configManager.powers) do
+            self.powerCatalog[power] = {
+                level = 1,
+				amount = 0 -- if this is 0 then pay up
+			}
 		end
 	end
 end
