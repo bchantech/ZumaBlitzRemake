@@ -17,6 +17,9 @@ function Profile:new(data, name)
 	self.levels = {}
 	self.checkpoints = {}
 	self.variables = {}
+	self.equippedPowers = {}
+	self.equippedFood = nil
+	self.colorblindMode = false
 
 	if data then
 		self:deserialize(data)
@@ -511,7 +514,10 @@ function Profile:serialize()
 		session = self.session,
 		levels = self.levels,
 		checkpoints = self.checkpoints,
-		variables = self.variables,
+        variables = self.variables,
+		equippedPowers = self.equippedPowers,
+		equippedFood = self.equippedFood,
+		colorblindMode = self.colorblindMode,
 		ultimatelySatisfyingMode = self.ultimatelySatisfyingMode
 	}
 	return t
@@ -528,6 +534,9 @@ function Profile:deserialize(t)
 	if t.variables then
 		self.variables = t.variables
 	end
+	self.equippedPowers = t.equippedPowers
+	self.equippedFood = t.equippedPowers
+	self.colorblindMode = t.colorblindMode
 	self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
 end
 

@@ -7,6 +7,7 @@ local ConfigManager = class:derive("ConfigManager")
 local CollectibleGeneratorManager = require("src/CollectibleGenerator/Manager")
 
 local ShooterConfig = require("src/Configs/Shooter")
+local Power = require("src/Configs/Power")
 
 
 
@@ -56,7 +57,7 @@ function ConfigManager:new()
 	self.collectibles = self:loadFolder("config/collectibles", "collectible")
 	self.spheres = self:loadFolder("config/spheres", "sphere", true)
 	self.sphereEffects = self:loadFolder("config/sphere_effects", "sphere effect")
-	self.colorGenerators = self:loadFolder("config/color_generators", "color generator")
+    self.colorGenerators = self:loadFolder("config/color_generators", "color generator")
 
 	self.collectibleGeneratorManager = CollectibleGeneratorManager()
 
@@ -82,6 +83,7 @@ end
 ---Loads config files which are implemented the new way so that they require to be loaded after the resources.
 function ConfigManager:loadStuffAfterResources()
 	self.shooters = self:loadFolder("config/shooters", "shooter", false, ShooterConfig)
+    self.powers = self:loadFolder("config/powers", "power", false, Power)
 end
 
 
@@ -119,6 +121,15 @@ end
 ---@return ShooterConfig
 function ConfigManager:getShooter(name)
 	return self.shooters[name]
+end
+
+
+
+---Returns a power config for a given shooter name.
+---@param name string The name of the power.
+---@return Power
+function ConfigManager:getPower(name)
+	return self.powers[name]
 end
 
 
