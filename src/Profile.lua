@@ -20,7 +20,6 @@ function Profile:new(data, name)
     self.equippedPowers = {}
 	self.powerCatalog = {}
 	self.equippedFood = nil
-    self.colorblindMode = false
 
 	if data then
 		self:deserialize(data)
@@ -511,61 +510,7 @@ function Profile:writeHighscore()
 end
 
 
-
--- Serialization
-
----Serializes the Profile's data for saving purposes.
----@return table
-function Profile:serialize()
-	local t = {
-		session = self.session,
-		levels = self.levels,
-		checkpoints = self.checkpoints,
-        variables = self.variables,
-		equippedPowers = self.equippedPowers,
-		equippedFood = self.equippedFood,
-		colorblindMode = self.colorblindMode,
-		ultimatelySatisfyingMode = self.ultimatelySatisfyingMode
-	}
-	return t
-end
-
-
-
----Restores all data which has been saved by the serialization function.
----@param t table The data to be serialized.
-function Profile:deserialize(t)
-	self.session = t.session
-	self.levels = t.levels
-	self.checkpoints = t.checkpoints
-	if t.variables then
-		self.variables = t.variables
-	end
-    self.equippedPowers = t.equippedPowers
-	self.powerCatalog = t.powerCatalog
-	self.equippedFood = t.equippedFood
-	self.colorblindMode = t.colorblindMode
-    self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
-
-	-- Equipped Powers routines
-    local hash = {}
-    local res = {}
-	-- 1. Handle duplicates
-	for i, v in ipairs(self.equippedPowers) do
-		if (not hash[v]) then
-            res[#res + 1] = v
-			hash[v] = true
-		end
-    end
-    -- 2. Handle equippedPowers[>=4]
-	if #self.equippedPowers >= 4 then
-		for i = #self.equippedPowers, 4, -1 do
-            table.remove(self.equippedPowers, i)
-		end
-	end
-end
-
-
+-- Powers
 
 ---Equips a Power.
 ---@param power string
@@ -589,7 +534,7 @@ end
 
 
 
----Equips a Power.
+---Unequips a Power.
 ---@param power string
 function Profile:unequipPower(power)
 	for k, v in pairs(_Game.configManager.powers) do
@@ -611,6 +556,21 @@ end
 
 
 
+---Gets a power's level.
+---@param power string
+---@return number|nil
+function Profile:getPowerLevel(power)
+	for k, v in pairs(_Game.configManager.powers) do
+        if not _Game.configManager.powers[power] then
+			_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+			return
+		end
+    end
+	return self.powerCatalog[power].level
+end
+
+
+
 ---Returns true if a Power is already equipped.
 ---@param power string
 ---@return boolean
@@ -621,6 +581,60 @@ function Profile:isPowerEquipped(power)
 		end
 	end
 	return false
+end
+
+
+
+-- Serialization
+
+---Serializes the Profile's data for saving purposes.
+---@return table
+function Profile:serialize()
+	local t = {
+		session = self.session,
+		levels = self.levels,
+		checkpoints = self.checkpoints,
+        variables = self.variables,
+		equippedPowers = self.equippedPowers,
+        equippedFood = self.equippedFood,
+		powerCatalog = self.powerCatalog,
+		ultimatelySatisfyingMode = self.ultimatelySatisfyingMode
+	}
+	return t
+end
+
+
+
+---Restores all data which has been saved by the serialization function.
+---@param t table The data to be serialized.
+function Profile:deserialize(t)
+	self.session = t.session
+	self.levels = t.levels
+	self.checkpoints = t.checkpoints
+	if t.variables then
+		self.variables = t.variables
+	end
+    self.equippedPowers = t.equippedPowers
+	self.powerCatalog = t.powerCatalog
+	self.equippedFood = t.equippedFood
+    self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
+
+	-- Equipped Powers routines
+    local hash = {}
+    local res = {}
+	-- 1. Handle duplicates
+	for i, v in ipairs(self.equippedPowers) do
+		if (not hash[v]) then
+            res[#res + 1] = v
+			hash[v] = true
+		end
+    end
+    -- 2. Handle equippedPowers[>=4]
+	if #self.equippedPowers >= 4 then
+		for i = #self.equippedPowers, 4, -1 do
+            table.remove(self.equippedPowers, i)
+		end
+	end
 end
 
 
