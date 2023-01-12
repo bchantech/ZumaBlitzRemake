@@ -1,8 +1,8 @@
 {
-    "path": "images/dialogs/slider_slot.png",
+    "path": "images/dialogs/options_menu.png",
     "frame_size": {
-        "x": 230,
-        "y": 28
+        "x": 555,
+        "y": 473
     },
     "states": [
         {
