@@ -10,7 +10,7 @@
         "colored": false
     },
     "speedShotParticle": "particles/speed_shot_beam.json",
-    "shootSpeed": 1000,
+    "shootSpeed": 770,
     "multishot": true,
     "shotCooldown": 0.2,
     "hitboxSize": {

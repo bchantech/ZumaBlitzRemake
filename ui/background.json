@@ -3,7 +3,7 @@
 	"inheritHide":true,
 	"type":"rectangle",
 	"pos":{"x":0,"y":0},
-	"size":{"x":800,"y":600},
+	"size":{"x":760,"y":570},
 	"color":{"r":0,"g":0,"b":0},
 	"alpha":0
 }
