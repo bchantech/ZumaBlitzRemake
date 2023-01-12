@@ -3,8 +3,8 @@
     "name": "Zuma Blitz Remake (alpha v0.1.0)",
     "engineVersion": "vZB",
     "nativeResolution": {
-        "x": 800,
-        "y": 600
+        "x": 760,
+        "y": 570
     },
     "richPresence": {
         "enabled": true
