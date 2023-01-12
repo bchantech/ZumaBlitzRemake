@@ -65,7 +65,7 @@
                         "x": 0.5,
                         "y": 0
                     },
-                    "text": "OPTIONS"
+                    "text": " "
                 },
                 "Text_Effects": {
                     "inheritShow": true,
@@ -85,15 +85,15 @@
                         "x": 0.5,
                         "y": 0
                     },
-                    "text": "EFFECTS VOLUME"
+                    "text": " "
                 },
                 "Slot_sfx": {
                     "inheritShow": true,
                     "inheritHide": true,
                     "type": "sprite",
                     "pos": {
-                        "x": 77,
-                        "y": 95
+                        "x": 190,
+                        "y": 180
                     },
                     "alpha": 1,
                     "children": {
@@ -102,7 +102,7 @@
                             "inheritHide": true,
                             "type": "spriteButtonSlider",
                             "pos": {
-                                "x": 2,
+                                "x": 25,
                                 "y": 2
                             },
                             "alpha": 1,
@@ -113,7 +113,7 @@
                             "sprite": "sprites/dialogs/slider.json",
                             "bounds": [
                                 2,
-                                369
+                                210
                             ]
                         }
                     },
@@ -127,7 +127,7 @@
                     "inheritHide": true,
                     "type": "text",
                     "pos": {
-                        "x": 275,
+                        "x": 190,
                         "y": 132
                     },
                     "alpha": 1,
@@ -140,15 +140,15 @@
                         "x": 0.5,
                         "y": 0
                     },
-                    "text": "MUSIC VOLUME"
+                    "text": " "
                 },
                 "Slot_music": {
                     "inheritShow": true,
                     "inheritHide": true,
                     "type": "sprite",
                     "pos": {
-                        "x": 77,
-                        "y": 155
+                        "x": 190,
+                        "y": 135
                     },
                     "alpha": 1,
                     "children": {
@@ -168,7 +168,7 @@
                             "sprite": "sprites/dialogs/slider.json",
                             "bounds": [
                                 2,
-                                369
+                                210
                             ]
                         }
                     },
@@ -182,8 +182,8 @@
                     "inheritHide": true,
                     "type": "spriteButtonCheckbox",
                     "pos": {
-                        "x": 190,
-                        "y": 200
+                        "x": 170,
+                        "y": 230
                     },
                     "alpha": 1,
                     "children": {},
@@ -200,8 +200,8 @@
                     "inheritHide": true,
                     "type": "spriteButtonCheckbox",
                     "pos": {
-                        "x": 190,
-                        "y": 245
+                        "x": 127,
+                        "y": 160
                     },
                     "alpha": 1,
                     "children": {},
@@ -218,8 +218,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 225,
-                        "y": 291
+                        "x": 210,
+                        "y": 365
                     },
                     "alpha": 1,
                     "children": {},
@@ -236,8 +236,8 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 395,
-                        "y": 291
+                        "x": 230,
+                        "y": 325
                     },
                     "alpha": 1,
                     "children": {},
@@ -266,7 +266,7 @@
             },
             "sounds": {},
             "layer": "MenuDialog2",
-            "sprite": "sprites/dialogs/dialog_1.json"
+            "sprite": "sprites/dialogs/options_menu.json"
         }
     },
     "animations": {},
