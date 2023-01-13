@@ -7,6 +7,11 @@
         "time": 16,
         "multiplier": 18
     },
+    "targetFrequency": {
+        "type": "seconds",
+        "initialDelay": 12,
+        "delay": 16
+    },
     "powerupGenerator": "vanilla_powerup.json",
     "gemGenerator": "vanilla_gem.json",
     "colorGeneratorNormal": "default",

@@ -2571,11 +2571,6 @@
             }
         ]
     ],
-    "targetFrequency": {
-        "type": "seconds",
-        "initialDelay": 12,
-        "delay": 16
-    },
     "targetPoints": [
         {
             "path": 1,
