@@ -569,7 +569,8 @@ function Shooter:getShootingSpeed()
     elseif self.speedShotTime > 0 then
         return self.speedShotSpeed
     end
-    return self.config.shootSpeed
+    local powerMultiplier = (_Game:getCurrentProfile():isPowerEquipped("speed_shot") and _Game.configManager:getPower("speed_shot").levels[_Game:getCurrentProfile():getPowerLevel("speed_shot")].additiveMultiplier) or 0
+    return self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier)
 end
 
 

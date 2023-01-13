@@ -742,8 +742,9 @@ function Level:incrementBlitzMeter(amount)
 	end
 	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
 	if self.blitzMeter == 1 then
-		-- hot frog
-		self.shooter:getMultiSphere(-2, 3)
+        -- hot frog
+		local additiveAmount = (_Game:getCurrentProfile():isPowerEquipped("inferno_frog") and _Game.configManager:getPower("inferno_frog").levels[_Game:getCurrentProfile():getPowerLevel("inferno_frog")].additiveAmount) or 0
+		self.shooter:getMultiSphere(-2, (3 + additiveAmount))
 	end
 end
 
