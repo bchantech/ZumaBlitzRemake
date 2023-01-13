@@ -9,6 +9,7 @@ local Vec2 = require("src/Essentials/Vector2")
 local Map = require("src/Map")
 local Shooter = require("src/Shooter")
 local ShotSphere = require("src/ShotSphere")
+local Target = require("src/Target")
 local Collectible = require("src/Collectible")
 local FloatingText = require("src/FloatingText")
 
@@ -48,6 +49,9 @@ function Level:new(data)
 			self.individualPowerupFrequencies[powerup] = data.individualPowerupFrequencies[powerup]
 		end
 	end
+
+    self.targetFrequency = data.targetFrequency
+	self.targetInitialDelaySecondsElapsed = false
 
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
@@ -92,7 +96,6 @@ end
 function Level:updateLogic(dt)
 	self.map:update(dt)
     self.shooter:update(dt)
-	
 	self.stateCount = self.stateCount + dt
 
 	-- Danger sound
@@ -235,6 +238,53 @@ function Level:updateLogic(dt)
 					end
 					self.lastPowerupDeltas[powerup] = self.stateCount
 				end
+			end
+		end
+	end
+
+
+
+    -- Targets
+    if self.started and not self.finish then
+		if not self.target and self.map.targetPoints and self.targetFrequency then
+            local validPoints = {}
+			if self.targetFrequency.type == "seconds" then
+				self.targetSecondsCooldown = self.targetSecondsCooldown - dt
+				if self.targetSecondsCooldown < 0 then
+					if not self.targetInitialDelaySecondsElapsed then
+						self.targetInitialDelaySecondsElapsed = true
+						self.targetSecondsCooldown = self.targetFrequency.delay
+					end
+					for i, point in ipairs(self.map.targetPoints) do
+						for j, path in ipairs(self.map.paths) do
+							local d = path:getMaxOffset() / path.length
+							if d > point.distance then
+								table.insert(validPoints, Vec2(point.pos.x, point.pos.y))
+							end
+						end
+					end
+				end
+			elseif self.targetFrequency.type == "frequency" then
+				-- we won't be implementing this for ZBR, but this is here for
+				-- flexibility of OpenSMCE
+			end
+			if #validPoints > 0 then
+				self.target = Target(
+					_Game.configManager.targetSprites.random[math.random(1, #_Game.configManager.targetSprites.random)],
+					validPoints[math.random(1, #validPoints)],
+					false -- no slot machine yet!
+                )
+				_Game:playSound("sound_events/target_spawn.json")
+			end
+		else
+			-- don't tick the timer down if there's fruit present
+			self.targetSecondsCooldown = self.targetFrequency.delay
+			if self.target.delQueue then
+				self.target = nil
+            end
+            if self.target then
+				-- this may get called after target gets nil'd
+				self.target:update(dt)
 			end
 		end
 	end
@@ -884,6 +934,11 @@ function Level:reset()
     self.time = 0
 	self.stateCount = 0
 
+    self.target = nil
+	if self.targetFrequency.type == "seconds" then
+		self.targetSecondsCooldown = self.targetFrequency.initialDelay
+	end
+
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
     self.multiplier = 1
@@ -1029,7 +1084,12 @@ function Level:serialize()
 			maxCombo = self.maxCombo
 		},
         time = self.time,
-		stateCount = self.stateCount,
+        stateCount = self.stateCount,
+		powerupList = self.powerupList,
+		lastPowerupDeltas = self.lastPowerupDeltas,
+        target = (self.target and self.target:serialize()) or {},
+        targetSecondsCooldown = self.targetSecondsCooldown,
+		targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
 		blitzMeter = self.blitzMeter,
 		blitzMeterCooldown = self.blitzMeterCooldown,
 		multiplier = self.multiplier,
@@ -1076,6 +1136,13 @@ function Level:deserialize(t)
 	self.combo = t.combo
 	self.destroyedSpheres = t.destroyedSpheres
 	self.time = t.time
+    self.stateCount = t.stateCount
+	self.powerupList = t.powerupList
+	self.lastPowerupDeltas = t.lastPowerupDeltas
+	self.target = t.target
+    self.targetSecondsCooldown = t.targetSecondsCooldown
+    self.targetFrequency = t.targetFrequency
+	self.targetInitialDelaySecondsElapsed = t.targetInitialDelaySecondsElapsed
 	self.blitzMeter = t.blitzMeter
 	self.blitzMeterCooldown = t.blitzMeterCooldown
 	self.multiplier = t.multiplier

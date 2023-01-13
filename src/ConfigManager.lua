@@ -87,7 +87,8 @@ function ConfigManager:loadStuffAfterResources()
     for k, v in pairs(self.powers) do
 		-- Only used for self-reference in Powers.lua
 		v._name = k
-	end
+    end
+	self.targetSprites = _LoadJson(_ParsePath("config/target_sprites.json"))
 end
 
 

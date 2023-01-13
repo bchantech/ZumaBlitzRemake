@@ -40,7 +40,8 @@ function Map:new(level, path, pathsBehavior, isDummy)
 		local pathBehavior = pathsBehavior[(i - 1) % #pathsBehavior + 1]
 		table.insert(self.paths, Path(self, pathData, pathBehavior))
 	end
-	self.shooter = data.shooter
+    self.shooter = data.shooter
+	self.targetPoints = data.targetPoints
 end
 
 
