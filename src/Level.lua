@@ -51,7 +51,12 @@ function Level:new(data)
 	end
 
     self.targetFrequency = data.targetFrequency
-	self.targetInitialDelaySecondsElapsed = false
+    self.targetInitialDelaySecondsElapsed = false
+
+	self.targetHitBases = {3000, 4500, 6750, 10150, 15200, 22800}
+    self.targetHitScore = 0
+    -- TODO: Additions to targetHitScore once Spirit Animals and Food are implemented
+    -- (Kiwi Kebab, to be exact)
 
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
@@ -96,7 +101,8 @@ end
 function Level:updateLogic(dt)
 	self.map:update(dt)
     self.shooter:update(dt)
-	self.stateCount = self.stateCount + dt
+    self.stateCount = self.stateCount + dt
+	self.targetHitScore = self.targetHitBases[math.min(self.targets+1, 6)]
 
 	-- Danger sound
 	local d1 = self:getDanger() and not self.lost
@@ -253,7 +259,10 @@ function Level:updateLogic(dt)
 				if self.targetSecondsCooldown < 0 then
 					if not self.targetInitialDelaySecondsElapsed then
 						self.targetInitialDelaySecondsElapsed = true
-						self.targetSecondsCooldown = self.targetFrequency.delay
+                        self.targetSecondsCooldown = self.targetFrequency.delay
+						if _Game:getCurrentProfile():isPowerEquipped("fruit_master") then
+							self.targetSecondsCooldown = self.targetSecondsCooldown - _Game.configManager:getPower("fruit_master").levels[_Game:getCurrentProfile():getPowerLevel("fruit_master")].subtractiveSeconds
+						end
 					end
 					for i, point in ipairs(self.map.targetPoints) do
 						for j, path in ipairs(self.map.paths) do
@@ -278,7 +287,10 @@ function Level:updateLogic(dt)
 			end
 		else
 			-- don't tick the timer down if there's fruit present
-			self.targetSecondsCooldown = self.targetFrequency.delay
+            self.targetSecondsCooldown = self.targetFrequency.delay
+			if _Game:getCurrentProfile():isPowerEquipped("fruit_master") then
+				self.targetSecondsCooldown = self.targetSecondsCooldown - _Game.configManager:getPower("fruit_master").levels[_Game:getCurrentProfile():getPowerLevel("fruit_master")].subtractiveSeconds
+			end
 			if self.target.delQueue then
 				self.target = nil
             end
@@ -931,12 +943,16 @@ function Level:reset()
 	self.gems = 0
 	self.combo = 0
 	self.destroyedSpheres = 0
+	self.targets = 0
     self.time = 0
 	self.stateCount = 0
 
     self.target = nil
 	if self.targetFrequency.type == "seconds" then
-		self.targetSecondsCooldown = self.targetFrequency.initialDelay
+        self.targetSecondsCooldown = self.targetFrequency.initialDelay
+		if _Game:getCurrentProfile():isPowerEquipped("fruit_master") then
+			self.targetSecondsCooldown = self.targetSecondsCooldown - _Game.configManager:getPower("fruit_master").levels[_Game:getCurrentProfile():getPowerLevel("fruit_master")].subtractiveSeconds
+		end
 	end
 
     self.blitzMeter = 0
@@ -1082,7 +1098,8 @@ function Level:serialize()
 			coins = self.coins,
 			gems = self.gems,
 			spheresShot = self.spheresShot,
-			sphereChainsSpawned = self.sphereChainsSpawned,
+            sphereChainsSpawned = self.sphereChainsSpawned,
+			targets = self.targets,
 			maxChain = self.maxChain,
 			maxCombo = self.maxCombo
 		},
@@ -1092,7 +1109,8 @@ function Level:serialize()
 		lastPowerupDeltas = self.lastPowerupDeltas,
         target = (self.target and self.target:serialize()) or {},
         targetSecondsCooldown = self.targetSecondsCooldown,
-		targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
+        targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
+		targetHitScore = self.targetHitScore,
 		blitzMeter = self.blitzMeter,
 		blitzMeterCooldown = self.blitzMeterCooldown,
 		multiplier = self.multiplier,
@@ -1133,7 +1151,8 @@ function Level:deserialize(t)
 	self.coins = t.stats.coins
 	self.gems = t.stats.gems
 	self.spheresShot = t.stats.spheresShot
-	self.sphereChainsSpawned = t.stats.sphereChainsSpawned
+    self.sphereChainsSpawned = t.stats.sphereChainsSpawned
+	self.targets = t.stats.targets
 	self.maxChain = t.stats.maxChain
 	self.maxCombo = t.stats.maxCombo
 	self.combo = t.combo
@@ -1145,6 +1164,7 @@ function Level:deserialize(t)
 	self.target = t.target
     self.targetSecondsCooldown = t.targetSecondsCooldown
     self.targetFrequency = t.targetFrequency
+	self.targetHitScore = t.targetHitScore
 	self.targetInitialDelaySecondsElapsed = t.targetInitialDelaySecondsElapsed
 	self.blitzMeter = t.blitzMeter
 	self.blitzMeterCooldown = t.blitzMeterCooldown

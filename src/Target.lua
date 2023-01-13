@@ -48,6 +48,14 @@ end
 
 function Target:onShot()
     self:destroy()
+    _Game:playSound("sound_events/target_hit.json")
+    _Game.session.level:grantScore(_Game.session.level.targetHitScore)
+    _Game.session.level:spawnFloatingText(
+        string.format("BONUS\n+%s", _NumStr(_Game.session.level.targetHitScore * _Game.session.level.multiplier)),
+        self.pos,
+        "fonts/score0.json"
+    )
+    _Game.session.level.targets = _Game.session.level.targets + 1
 end
 
 

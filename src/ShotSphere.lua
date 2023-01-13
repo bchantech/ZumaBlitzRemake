@@ -108,6 +108,14 @@ function ShotSphere:moveStep()
 				end
 			elseif sphereConfig.hitBehavior.type == "fireball" then
 				_Game.session:destroyRadiusColor(self.pos, sphereConfig.hitBehavior.range, self.color)
+				-- check for targets
+				if _Game.session.level.target then
+					local targetPos = _Game.session.level.target.pos
+					local dist = (targetPos - self.pos):len()
+					if dist <= sphereConfig.hitBehavior.range then
+						_Game.session.level.target:onShot()
+					end
+				end
 				self:destroy()
 				_Game:spawnParticle(sphereConfig.destroyParticle, self.pos)
 			elseif sphereConfig.hitBehavior.type == "colorCloud" then
@@ -147,6 +155,25 @@ function ShotSphere:moveStep()
 				_Game:playSound(badShot and sphereConfig.hitSoundBad or sphereConfig.hitSound, 1, self.pos)
 				_Game.session.level.blitzMeterCooldown = 0.5
 			end
+		end
+    end
+	
+
+    -- check for targets
+	if _Game.session.level.target then
+		local targetPos = _Game.session.level.target.pos
+        local dist = (targetPos - self.pos):len()
+		if dist < 40 then
+			local sphereConfig = _Game.configManager.spheres[self.color]
+            -- TODO: check for color nuke sphere type?
+			-- they don't hit fruits
+            _Game.session.level.target:onShot()
+			if sphereConfig.hitBehavior.type == "fireball" then
+                _Game.session:destroyRadiusColor(self.pos, sphereConfig.hitBehavior.range, self.color)
+				_Game:playSound(sphereConfig.hitSound, 1, self.pos)
+			end
+			self:destroy()
+			_Game:spawnParticle(sphereConfig.destroyParticle, self.pos)
 		end
 	end
 
