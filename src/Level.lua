@@ -1061,6 +1061,9 @@ function Level:draw()
 	end
 	for i, floatingText in ipairs(self.floatingTexts) do
 		floatingText:draw()
+    end
+	if self.target then
+		self.target:draw()
 	end
 
 	-- local p = posOnScreen(Vec2(20, 500))

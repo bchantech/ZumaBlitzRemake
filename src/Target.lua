@@ -29,7 +29,6 @@ end
 function Target:update(dt)
     if _Game:levelExists() and _Game.session.level.target then
         self.duration = self.duration - dt
-        self:draw()
         if self.duration < 0 then
             self:destroy()
             _Game:playSound("sound_events/target_despawn.json")
