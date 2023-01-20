@@ -561,7 +561,7 @@ function Profile:getPowerLevel(power)
 		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
 		return
 	end
-	return self.powerCatalog[power].level
+	return self.powerCatalog[power] and self.powerCatalog[power].level or 1
 end
 
 
