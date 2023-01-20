@@ -67,7 +67,8 @@ function Level:new(data)
 
 	self.dangerSoundName = data.dangerSound or "sound_events/warning.json"
 	self.dangerLoopSoundName = data.dangerLoopSound or "sound_events/warning_loop.json"
-
+    self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
+	
 	-- Additional variables come from this method!
 	self:reset()
 end
@@ -329,7 +330,10 @@ function Level:updateLogic(dt)
 	if self.controlDelay then
 		self.controlDelay = self.controlDelay - dt
 		if self.controlDelay <= 0 then
-			self.controlDelay = nil
+            self.controlDelay = nil
+			if self.rollingSound then
+				self.rollingSound:stop()
+			end
 		end
 	end
 
@@ -376,7 +380,10 @@ function Level:updateLogic(dt)
 
 
 	-- Level lose
-	if self.lost and self:getEmpty() and not self.ended then
+    if self.lost and self:getEmpty() and not self.ended then
+		if self.rollingSound then
+			self.rollingSound:stop()
+		end
 		_Game.uiManager:executeCallback("levelLost")
 		self.ended = true
 	end
@@ -1010,7 +1017,8 @@ function Level:lose()
 		shotSphere:destroy()
 	end
 	self.shotSpheres = {}
-	_Game:playSound("sound_events/level_lose.json")
+	self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
+    _Game:playSound("sound_events/level_lose.json")
 end
 
 
