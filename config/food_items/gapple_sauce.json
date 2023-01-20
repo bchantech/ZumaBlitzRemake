@@ -1,0 +1,7 @@
+{
+    "displayName": "Gapple Sauce",
+    "sprite": "",
+    "effects": {
+        "maximumGapShotScoreModifier": 3000
+    }
+}

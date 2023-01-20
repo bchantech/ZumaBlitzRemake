@@ -1,0 +1,9 @@
+{
+    "displayName": "Key Time Punch",
+    "sprite": "",
+    "effects": {
+        "shotSpeedModifier": 0.22,
+        "startingTimeModifier": 5,
+        "quintupleTimeBallAdditiveModifier": 1
+    }
+}

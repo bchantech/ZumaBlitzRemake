@@ -1,0 +1,8 @@
+{
+    "displayName": "Chocolate Love",
+    "sprite": "",
+    "effects": {
+        "targetsGiveOneSecond": true,
+        "fruitValueModifier": 750
+    }
+}

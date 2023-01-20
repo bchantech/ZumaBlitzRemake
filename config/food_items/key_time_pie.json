@@ -1,0 +1,13 @@
+{
+    "displayName": "Key Time Pie",
+    "sprite": "",
+    "variants": {
+        "progressive": {
+            "displayName": "Price Gun Pie",
+            "sprite": ""
+        }
+    },
+    "effects": {
+        "startingTimeModifier": 5
+    }
+}

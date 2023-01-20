@@ -1,0 +1,10 @@
+{
+    "displayName": "Canned Cran Blast",
+    "sprite": "",
+    "effects": {
+        "activatePower": "chain_blast",
+        "chainBlastPointsModifier": 500,
+        "chainBonusPointsModifier": 50,
+        "chainBlastExplosionRadiusModifier": 0.40
+    }
+}

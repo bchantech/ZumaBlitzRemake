@@ -1,0 +1,7 @@
+{
+    "displayName": "Hog Wild Sliders",
+    "sprite": "",
+    "effects": {
+        "wildBallShotSubtractiveModifier": 2
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "displayName": "Kroakatoa Wave",
+    "sprite": "",
+    "effects": {
+        "cannonBallRadiusModifier": 0.10
+    }
+}

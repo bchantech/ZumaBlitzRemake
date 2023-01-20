@@ -1,0 +1,11 @@
+{
+    "displayName": "Smokin' Hot Links",
+    "sprite": "",
+    "effects": {
+        "blitzMeterChainModifier": {
+            "initialChain": 10,
+            "subsequentChains": 5,
+            "value": 0.33
+        }
+    }
+}

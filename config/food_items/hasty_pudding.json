@@ -1,0 +1,15 @@
+{
+    "displayName": "Hasty Pudding",
+    "sprite": "",
+    "variants": {
+        "progressive": {
+            "displayName": "Policy Pudding",
+            "sprite": ""
+        }
+    },
+    "effects": {
+        "speedModifier": 0.33,
+        "initialChainPointsAdditive": 250,
+        "consequentChainPointsAdditive": 100
+    }
+}

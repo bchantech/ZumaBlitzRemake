@@ -1,0 +1,7 @@
+{
+    "displayName": "Pyro Popcorn",
+    "sprite": "",
+    "effects": {
+        "totalExplosionRadius": 0.40
+    }
+}

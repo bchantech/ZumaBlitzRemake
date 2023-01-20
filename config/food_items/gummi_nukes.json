@@ -1,0 +1,11 @@
+{
+    "displayName": "Gummi Nukes",
+    "sprite": "",
+    "effects": {
+        "powerupFrequencyModifier": {
+            "powerup": "color_nuke",
+            "value": 7
+        },
+        "colorNukeUsagePoints": 500
+    }
+}

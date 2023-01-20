@@ -1,0 +1,8 @@
+{
+    "displayName": "Chocolate Eggs",
+    "sprite": "",
+    "effects": {
+        "shotSpeedModifier": 0.30,
+        "spawnStreakModifier": 0.30
+    }
+}

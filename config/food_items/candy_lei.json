@@ -1,0 +1,9 @@
+{
+    "displayName": "Candy Lei",
+    "sprite": "",
+    "effects": {
+        "spawnStreakModifier": 0.30,
+        "curveClearSpeedDistanceModifier": 0.10,
+        "alwaysHaveMatches": true
+    }
+}

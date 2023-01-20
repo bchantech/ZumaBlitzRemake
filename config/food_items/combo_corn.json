@@ -1,0 +1,8 @@
+{
+    "displayName": "Combo Corn",
+    "sprite": "",
+    "effects": {
+        "comboPointModifier": 0.15,
+        "alwaysHaveMatches": true
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "displayName": "Ignition Sauce",
+    "sprite": "",
+    "effects": {
+        "blitzMeterChargeModifier": 0.25,
+        "fireballRadiusModifier": 0.40,
+        "fireballScoreModifier": 0.50
+    }
+}

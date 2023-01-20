@@ -1,0 +1,13 @@
+{
+    "displayName": "Hot Chocolate",
+    "sprite": "",
+    "effects": {
+        "activatePower": "bombs",
+        "bombExplosionRadiusModifier": 0.40,
+        "powerupFrequencyModifier": {
+            "bomb": {
+                "value": 8
+            }
+        }
+    }
+}

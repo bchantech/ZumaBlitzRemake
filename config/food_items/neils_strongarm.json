@@ -1,0 +1,9 @@
+{
+    "displayName": "Neil's Strongarm",
+    "sprite": "",
+    "effects": {
+        "shotSpeedModifier": 0.22,
+        "fireballRadiusModifier": 0.40,
+        "fireballScoreModifier": 0.50
+    }
+}
