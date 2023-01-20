@@ -167,6 +167,7 @@ function Game:updateRichPresence()
 
         local profile = _Game:getCurrentProfile()
         local powerString = ""
+		local foodString = ""
 
         if #profile.equippedPowers ~= 0 then
             local powerNames = {}
@@ -176,6 +177,11 @@ function Game:updateRichPresence()
 			powerString = table.concat(powerNames, ", ")
         else
 			powerString = "None"
+        end
+		if profile.equippedFood then
+			foodString = profile:getEquippedFoodItem(profile.equippedFood).displayName
+        else
+			foodString = "None"
 		end
 
         line1 = string.format(
@@ -188,7 +194,7 @@ function Game:updateRichPresence()
         line2 = string.format(
             "Powers: %s | Food: %s",
 			powerString,
-			"None" -- add food later
+			foodString
 		)
 	--elseif p and p:getSession() then
     --line2 = ""

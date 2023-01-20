@@ -18,8 +18,9 @@ function Profile:new(data, name)
 	self.checkpoints = {}
 	self.variables = {}
     self.equippedPowers = {}
-	self.powerCatalog = {}
+    self.powerCatalog = {}
 	self.equippedFood = nil
+	self.foodInventory = {}
 
 	if data then
 		self:deserialize(data)
@@ -598,6 +599,84 @@ end
 
 
 
+-- Food items
+
+
+
+---Equips a Food Item.
+---@param foodItem string
+function Profile:equipFoodItem(foodItem)
+	if not _Game.configManager.foodItems[foodItem] then
+		_Log:printt("Profile", string.format("Food ID %s does not exist", foodItem))
+		return
+	end
+	if not self:isFoodItemEquipped(foodItem) then
+		self.equippedFood = foodItem
+	else
+		_Log:printt("Profile", string.format("Food ID %s is already equipped", foodItem))
+	end
+end
+
+
+
+---Unequips a Food Item.
+---@param foodItem string
+function Profile:unequipFoodItem(foodItem)
+	if not _Game.configManager.powers[foodItem] then
+		_Log:printt("Profile", string.format("Food ID %s does not exist", foodItem))
+		return
+	end
+	if self:isPowerEquipped(foodItem) then
+		self.equippedFood = nil
+	else
+		_Log:printt("Profile", string.format("Food ID %s is already unequipped", foodItem))
+	end
+end
+
+
+
+---Returns true if a Food Item is already equipped.
+---@param foodItem string
+---@return boolean
+function Profile:isFoodItemEquipped(foodItem)
+	if self.equippedFood == foodItem then
+		return true
+	end
+	return false
+end
+
+
+
+---Returns the specified Food Item if it is equipped or `nil`.
+---
+---This should only be used for UI related functions.
+---If you wish to get the gameplay effects, use `Profile:getEquippedFoodItemEffects()`.
+---@return FoodItem|nil
+function Profile:getEquippedFoodItem(foodItem)
+	if not _Game.configManager.foodItems[foodItem] then
+		_Log:printt("Profile", string.format("Food ID %s does not exist", foodItem))
+		return
+    end
+	if self.equippedFood == foodItem then
+		return _Game.configManager:getFoodItem(foodItem)
+	end
+end
+
+
+
+---Returns the specified Food Item's effects if it is equipped or `nil`.
+---
+---Use this instead of `Profile:isFoodItemEquipped` and `_Game.configManager:getFoodItem()`.
+---@return table|nil
+function Profile:getEquippedFoodItemEffects()
+	if not self.equippedFood then
+		return
+	end
+	return self:getEquippedFoodItem(self.equippedFood).effects or nil
+end
+
+
+
 -- Serialization
 
 ---Serializes the Profile's data for saving purposes.
@@ -610,7 +689,8 @@ function Profile:serialize()
         variables = self.variables,
 		equippedPowers = self.equippedPowers,
         equippedFood = self.equippedFood,
-		powerCatalog = self.powerCatalog,
+        powerCatalog = self.powerCatalog,
+		foodInventory = self.foodInventory,
 		ultimatelySatisfyingMode = self.ultimatelySatisfyingMode
 	}
 	return t
@@ -629,6 +709,7 @@ function Profile:deserialize(t)
 	end
     self.equippedPowers = t.equippedPowers
 	self.powerCatalog = t.powerCatalog
+	self.foodInventory = t.foodInventory
 	self.equippedFood = t.equippedFood
     self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
 

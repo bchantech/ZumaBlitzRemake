@@ -151,7 +151,9 @@ function Path:update(dt)
 			"fonts/score0.json"
         )
 		_Game:playSound("sound_events/curve_clear.json")
-		if not self.map.level.finish then
+
+		local shouldGiveOneSecond = _Game:getCurrentProfile():getEquippedFoodItemEffects() and _Game:getCurrentProfile():getEquippedFoodItemEffects().curveClearsGiveOneSecond
+		if not self.map.level.finish and shouldGiveOneSecond then
 			self.map.level:applyEffect({type = "addTime", amount = 1})
 		end
 	-- 10% of this path's length to be able to reclaim path clear bonus

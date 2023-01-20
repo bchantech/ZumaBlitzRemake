@@ -8,6 +8,7 @@ local CollectibleGeneratorManager = require("src/CollectibleGenerator/Manager")
 
 local ShooterConfig = require("src/Configs/Shooter")
 local Power = require("src/Configs/Power")
+local FoodItem = require("src/Configs/FoodItem")
 
 
 
@@ -82,13 +83,32 @@ end
 
 ---Loads config files which are implemented the new way so that they require to be loaded after the resources.
 function ConfigManager:loadStuffAfterResources()
-	self.shooters = self:loadFolder("config/shooters", "shooter", false, ShooterConfig)
-    self.powers = self:loadFolder("config/powers", "power", false, Power)
-    for k, v in pairs(self.powers) do
-        v._name = k -- Only used for self-reference in Powers.lua
-		v:updateCurrentLevel()
-    end
+    self.shooters = self:loadFolder("config/shooters", "shooter", false, ShooterConfig)
 	self.targetSprites = _LoadJson(_ParsePath("config/target_sprites.json"))
+	
+    self.powers = self:loadFolder("config/powers", "power", false, Power)
+    for powerID, power in pairs(self.powers) do
+        power._name = powerID -- Only used for self-reference in Powers.lua
+		power:updateCurrentLevel()
+    end
+    self.foodItems = self:loadFolder("config/food_items", "food item", false, FoodItem)
+	for foodID, food in pairs(self.foodItems) do
+        food._name = foodID -- Only used for self-reference in FoodItem.lua
+        if food.variants then
+            for variant, data in pairs(food.variants) do
+				_Log:printt("ConfigManager", string.format("Loading food variant %s (base: %s). ID: %s", variant, food._name, food._name.."_"..variant))
+                local foodVariant = {
+					_name = food._name.."_"..variant,
+                    displayName = data.displayName or food.displayName,
+                    sprite = data.sprite or food.sprite,
+                    price = data.price or food.price,
+                }
+                local instance = FoodItem(foodVariant, food._path)
+				instance.variantBase = food._name
+                table.insert(self.foodItems, instance)
+			end
+		end
+    end
 end
 
 
@@ -130,11 +150,20 @@ end
 
 
 
----Returns a power config for a given shooter name.
+---Returns a power config for a given power name.
 ---@param name string The name of the power.
 ---@return Power
 function ConfigManager:getPower(name)
 	return self.powers[name]
+end
+
+
+
+---Returns a food config for a given food item name.
+---@param name string The name of the food.
+---@return FoodItem
+function ConfigManager:getFoodItem(name)
+	return self.foodItems[name]
 end
 
 

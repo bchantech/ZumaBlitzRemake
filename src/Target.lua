@@ -50,6 +50,10 @@ function Target:onShot()
     self:destroy()
     _Game:playSound("sound_events/target_hit.json")
     _Game.session.level:grantScore(_Game.session.level.targetHitScore)
+    local shouldGiveOneSecond = _Game:getCurrentProfile():getEquippedFoodItemEffects() and _Game:getCurrentProfile():getEquippedFoodItemEffects().targetsGiveOneSecond
+	if shouldGiveOneSecond then
+        _Game.session.level:applyEffect({type = "addTime", amount = 1})
+    end
     _Game.session.level:spawnFloatingText(
         string.format("BONUS\n+%s", _NumStr(_Game.session.level.targetHitScore * _Game.session.level.multiplier)),
         self.pos,
