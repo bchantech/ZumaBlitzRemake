@@ -18,6 +18,14 @@ function Power:new(data, path)
     self.type = data.type
     self.levels = data.levels
     self.maxLevel = #self.levels
+    self.currentLevel = nil -- Assigned in Power:updateCurrentLevel()
+end
+
+
+
+---Updates the currentLevel value.
+function Power:updateCurrentLevel()
+    self.currentLevel = _Game:getCurrentProfile():getPowerLevel(self._name)
 end
 
 
@@ -42,6 +50,13 @@ end
 
 function Power:isMaxLevel()
     return _Game:getCurrentProfile():getPowerLevel(self._name) == self.maxLevel
+end
+
+
+
+---@return table
+function Power:getCurrentLevelData()
+    return self.levels[self.currentLevel]
 end
 
 

@@ -85,8 +85,8 @@ function ConfigManager:loadStuffAfterResources()
 	self.shooters = self:loadFolder("config/shooters", "shooter", false, ShooterConfig)
     self.powers = self:loadFolder("config/powers", "power", false, Power)
     for k, v in pairs(self.powers) do
-		-- Only used for self-reference in Powers.lua
-		v._name = k
+        v._name = k -- Only used for self-reference in Powers.lua
+		v:updateCurrentLevel()
     end
 	self.targetSprites = _LoadJson(_ParsePath("config/target_sprites.json"))
 end

@@ -515,12 +515,10 @@ end
 ---Equips a Power.
 ---@param power string
 function Profile:equipPower(power)
-	for k, v in pairs(_Game.configManager.powers) do
-        if not _Game.configManager.powers[power] then
-			_Log:printt("Profile", string.format("Power ID %s does not exist", power))
-			return
-		end
-    end
+	if not _Game.configManager.powers[power] then
+		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+		return
+	end
 	if not self:isPowerEquipped(power) then
 		if #self.equippedPowers <= 3 then
 			table.insert(self.equippedPowers, power)
@@ -537,12 +535,10 @@ end
 ---Unequips a Power.
 ---@param power string
 function Profile:unequipPower(power)
-	for k, v in pairs(_Game.configManager.powers) do
-        if not _Game.configManager.powers[power] then
-			_Log:printt("Profile", string.format("Power ID %s does not exist", power))
-			return
-		end
-    end
+	if not _Game.configManager.powers[power] then
+		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+		return
+	end
 	if self:isPowerEquipped(power) then
 		for i, v in ipairs(self.equippedPowers) do
 			if self.equippedPowers[i] == power then
@@ -560,12 +556,10 @@ end
 ---@param power string
 ---@return number|nil
 function Profile:getPowerLevel(power)
-	for k, v in pairs(_Game.configManager.powers) do
-        if not _Game.configManager.powers[power] then
-			_Log:printt("Profile", string.format("Power ID %s does not exist", power))
-			return
-		end
-    end
+	if not _Game.configManager.powers[power] then
+		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+		return
+	end
 	return self.powerCatalog[power].level
 end
 
@@ -581,6 +575,25 @@ function Profile:isPowerEquipped(power)
 		end
 	end
 	return false
+end
+
+
+
+---Returns the specified Power if it is equipped or `nil`.
+---
+---Use this instead of `Profile:isPowerEquipped` and `_Game.configManager:getPower()`.
+---This will then let you use `Power:getCurrentLevelData()`.
+---@return Power|nil
+function Profile:getEquippedPower(power)
+	if not _Game.configManager.powers[power] then
+		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+		return
+	end
+	for i, value in ipairs(self.equippedPowers) do
+		if value == power then
+			return _Game.configManager:getPower(power)
+		end
+	end
 end
 
 
