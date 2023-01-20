@@ -309,18 +309,27 @@ function Level:updateLogic(dt)
 
 
 
-	-- Clear board once target time reached
+	-- Stop the board once target time reached
 	if not self.finish and self:areAllObjectivesReached() and not self:hasShotSpheres() and not self:areMatchesPredicted() then
 		self.shooter:empty()
 		self.finish = true
 		self.wonDelay = _Game.configManager.gameplay.level.wonDelay
 
-		for i, path in ipairs(self.map.paths) do
+        for i, path in ipairs(self.map.paths) do
 			for j, chain in ipairs(path.sphereChains) do
-				chain:concludeGeneration()
+                chain:concludeGeneration()
+				self:applyEffect({
+                    type = "speedOverride",
+					speedBase = 0,
+					speedMultiplier = 0,
+					decceleration = 0,
+					time = 0
+				})
 			end
-		end
-		_Game.session:destroyAllSpheres(true)
+        end
+		self:spawnFloatingText("TIME'S UP!", Vec2(380,285), "fonts/score0.json")
+		--TODO: Implement the Last Hurrah
+        _Game:playSound("sound_events/time_up.json")
 	end
 
 
