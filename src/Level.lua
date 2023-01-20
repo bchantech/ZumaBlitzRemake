@@ -931,6 +931,9 @@ function Level:destroy()
 	end
 	for i, path in ipairs(self.map.paths) do
 		path:destroy()
+    end
+	if self.target then
+		self.target:destroy()
 	end
 
 	if self.ambientMusicName then
