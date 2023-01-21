@@ -43,7 +43,7 @@ function Power:getLeveledDisplayName(value)
     if self.levels and self.levels[value] and self.levels[value].displayName then
         return self.levels[value].displayName
     else
-        return self.displayName..string.format(" %s", romanNums[value])
+        return string.format("%s %s", self.displayName, romanNums[value])
     end
 end
 
