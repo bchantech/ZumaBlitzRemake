@@ -25,7 +25,8 @@ end
 
 ---Updates the currentLevel value.
 function Power:updateCurrentLevel()
-    self.currentLevel = _Game:getCurrentProfile():getPowerLevel(self._name)
+    local profile = _Game:getCurrentProfile()
+    self.currentLevel = (profile and profile:getPowerLevel(self._name)) or 1
 end
 
 
