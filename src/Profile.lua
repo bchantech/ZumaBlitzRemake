@@ -17,12 +17,22 @@ function Profile:new(data, name)
 	self.levels = {}
 	self.checkpoints = {}
 	self.variables = {}
+    self.equippedPowers = {}
+    self.powerCatalog = {}
+	self.equippedFood = nil
+	self.foodInventory = {}
 
 	if data then
 		self:deserialize(data)
 	else
 		for i, checkpoint in ipairs(_Game.configManager.levelSet.startCheckpoints) do
 			self.checkpoints[i] = checkpoint
+        end
+		for power, v in pairs(_Game.configManager.powers) do
+            self.powerCatalog[power] = {
+                level = 1,
+				amount = 0 -- if this is 0 then pay up
+			}
 		end
 	end
 end
@@ -501,6 +511,171 @@ function Profile:writeHighscore()
 end
 
 
+-- Powers
+
+---Equips a Power.
+---@param power string
+function Profile:equipPower(power)
+	if not _Game.configManager.powers[power] then
+		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+		return
+	end
+	if not self:isPowerEquipped(power) then
+		if #self.equippedPowers <= 3 then
+			table.insert(self.equippedPowers, power)
+		else
+			_Log:printt("Profile", string.format("Equipped powers is already 3", power))
+        end
+	else
+		_Log:printt("Profile", string.format("Power ID %s is already equipped", power))
+	end
+end
+
+
+
+---Unequips a Power.
+---@param power string
+function Profile:unequipPower(power)
+	if not _Game.configManager.powers[power] then
+		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+		return
+	end
+	if self:isPowerEquipped(power) then
+		for i, v in ipairs(self.equippedPowers) do
+			if self.equippedPowers[i] == power then
+				table.remove(self.equippedPowers, i)
+			end
+		end
+	else
+		_Log:printt("Profile", string.format("Power ID %s is already unequipped", power))
+	end
+end
+
+
+
+---Gets a power's level.
+---@param power string
+---@return number|nil
+function Profile:getPowerLevel(power)
+	if not _Game.configManager.powers[power] then
+		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+		return
+	end
+	return self.powerCatalog[power] and self.powerCatalog[power].level or 1
+end
+
+
+
+---Returns true if a Power is already equipped.
+---@param power string
+---@return boolean
+function Profile:isPowerEquipped(power)
+	for i, value in ipairs(self.equippedPowers) do
+		if value == power then
+			return true
+		end
+	end
+	return false
+end
+
+
+
+---Returns the specified Power if it is equipped or `nil`.
+---
+---Use this instead of `Profile:isPowerEquipped` and `_Game.configManager:getPower()`.
+---This will then let you use `Power:getCurrentLevelData()`.
+---@return Power|nil
+function Profile:getEquippedPower(power)
+	if not _Game.configManager.powers[power] then
+		_Log:printt("Profile", string.format("Power ID %s does not exist", power))
+		return
+	end
+	for i, value in ipairs(self.equippedPowers) do
+		if value == power then
+			return _Game.configManager:getPower(power)
+		end
+	end
+end
+
+
+
+-- Food items
+
+
+
+---Equips a Food Item.
+---@param foodItem string
+function Profile:equipFoodItem(foodItem)
+	if not _Game.configManager.foodItems[foodItem] then
+		_Log:printt("Profile", string.format("Food ID %s does not exist", foodItem))
+		return
+	end
+	if not self:isFoodItemEquipped(foodItem) then
+		self.equippedFood = foodItem
+	else
+		_Log:printt("Profile", string.format("Food ID %s is already equipped", foodItem))
+	end
+end
+
+
+
+---Unequips a Food Item.
+---@param foodItem string
+function Profile:unequipFoodItem(foodItem)
+	if not _Game.configManager.powers[foodItem] then
+		_Log:printt("Profile", string.format("Food ID %s does not exist", foodItem))
+		return
+	end
+	if self:isPowerEquipped(foodItem) then
+		self.equippedFood = nil
+	else
+		_Log:printt("Profile", string.format("Food ID %s is already unequipped", foodItem))
+	end
+end
+
+
+
+---Returns true if a Food Item is already equipped.
+---@param foodItem string
+---@return boolean
+function Profile:isFoodItemEquipped(foodItem)
+	if self.equippedFood == foodItem then
+		return true
+	end
+	return false
+end
+
+
+
+---Returns the specified Food Item if it is equipped or `nil`.
+---
+---This should only be used for UI related functions.
+---If you wish to get the gameplay effects, use `Profile:getEquippedFoodItemEffects()`.
+---@return FoodItem|nil
+function Profile:getEquippedFoodItem(foodItem)
+	if not _Game.configManager.foodItems[foodItem] then
+		_Log:printt("Profile", string.format("Food ID %s does not exist", foodItem))
+		return
+    end
+	if self.equippedFood == foodItem then
+		return _Game.configManager:getFoodItem(foodItem)
+	end
+end
+
+
+
+---Returns the specified Food Item's effects if it is equipped or `nil`.
+---
+---Use this instead of `Profile:isFoodItemEquipped` and `_Game.configManager:getFoodItem()`.
+---@return table|nil
+function Profile:getEquippedFoodItemEffects()
+	if not self.equippedFood then
+		return
+	end
+	return self:getEquippedFoodItem(self.equippedFood).effects or nil
+end
+
+
 
 -- Serialization
 
@@ -511,7 +686,11 @@ function Profile:serialize()
 		session = self.session,
 		levels = self.levels,
 		checkpoints = self.checkpoints,
-		variables = self.variables,
+        variables = self.variables,
+		equippedPowers = self.equippedPowers,
+        equippedFood = self.equippedFood,
+        powerCatalog = self.powerCatalog,
+		foodInventory = self.foodInventory,
 		ultimatelySatisfyingMode = self.ultimatelySatisfyingMode
 	}
 	return t
@@ -528,7 +707,28 @@ function Profile:deserialize(t)
 	if t.variables then
 		self.variables = t.variables
 	end
-	self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
+    self.equippedPowers = t.equippedPowers
+	self.powerCatalog = t.powerCatalog
+	self.foodInventory = t.foodInventory
+	self.equippedFood = t.equippedFood
+    self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
+
+	-- Equipped Powers routines
+    local hash = {}
+    local res = {}
+	-- 1. Handle duplicates
+	for i, v in ipairs(self.equippedPowers) do
+		if (not hash[v]) then
+            res[#res + 1] = v
+			hash[v] = true
+		end
+    end
+    -- 2. Handle equippedPowers[>=4]
+	if #self.equippedPowers >= 4 then
+		for i = #self.equippedPowers, 4, -1 do
+            table.remove(self.equippedPowers, i)
+		end
+	end
 end
 
 

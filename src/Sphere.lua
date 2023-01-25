@@ -28,7 +28,11 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 	-- these two are filled by the sphere group object
 	self.prevSphere = nil
 	self.nextSphere = nil
-	self.offset = 0
+    self.offset = 0
+    -- Temporary value.
+    -- In the future this should be customizable per-level, and in case of ZBR
+	-- this shall be linked to a Power/Food.
+	self.powerupTimeout = 20
 
 	if deserializationTable then
 		self:deserialize(deserializationTable)
@@ -38,6 +42,7 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 		self.boostCombo = false
 		self.shootOrigin = nil
 		self.shootTime = nil
+        self.powerup = nil
 		self.effects = {}
 		self.gaps = gaps or {}
 		self.ghostTime = nil
@@ -45,7 +50,7 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 
 	self.entity = sphereEntity or SphereEntity(self:getPos(), self.color)
 
-	self:loadConfig()
+    self.config = _Game.configManager.spheres[self.color]
 
 	if shootOrigin then
 		self.shootOrigin = shootOrigin
@@ -54,15 +59,13 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 	end
 
 	self.animationPrevOffset = self:getOffset()
-	self.animationFrame = math.random() * self.frameCount
+	self.animationFrame = math.random() * self:getFrameCount()
 
 	if not self.map.isDummy then
 		_Game.session.colorManager:increment(self.color)
 	end
 
 	self.danger = false
-
-	self.entity = sphereEntity or SphereEntity(self:getPos(), self.color)
 
 	self.delQueue = false
 end
@@ -125,6 +128,14 @@ function Sphere:update(dt)
 		if self:isGhostForDeletion() then
 			self:deleteGhost()
 		end
+    end
+
+    -- Update powerup timeout.
+	if self.powerup then
+        self.powerupTimeout = self.powerupTimeout - dt
+        if self.powerupTimeout < 0 then
+			self:removePowerup()
+		end
 	end
 
 	-- if the sphere was flagged as it was a part of a combo but got obstructed then it's unflagged
@@ -150,9 +161,11 @@ function Sphere:update(dt)
 	end
 
 	-- animation
-	local dist = self:getOffset() - self.animationPrevOffset
-	self.animationPrevOffset = self:getOffset()
-	self.animationFrame = (self.animationFrame + dist * (self.config.spriteRollingSpeed or 1)) % self.frameCount
+	if self.entity then
+		local dist = self:getOffset() - self.animationPrevOffset
+		self.animationPrevOffset = self:getOffset()
+		self.animationFrame = (self.animationFrame + dist * (self.config.spriteRollingSpeed or 1)) % self:getFrameCount()
+	end
 end
 
 
@@ -173,9 +186,41 @@ function Sphere:changeColor(color, particle)
 	_Game.session.colorManager:increment(color)
 	self.color = color
 	self.entity:setColor(color)
-	self:loadConfig()
+    self.config = _Game.configManager.spheres[self.color]
 	if particle then
 		_Game:spawnParticle(particle, self:getPos())
+	end
+end
+
+
+
+---Adds a powerup to the current Sphere.
+---@param powerup string
+function Sphere:addPowerup(powerup)
+    if not powerup then
+		_Log:printt("Sphere", "No powerup defined when calling Sphere:addPowerup()")
+		return
+	end
+	if not (self:isGhost() or self:isOffscreen()) then
+        self.powerup = powerup
+		if powerup == "multiplier" then
+			_Game:playSound("sound_events/multiplier_appear.json")
+        else
+			_Game:playSound("sound_events/spawn_powerup.json")
+		end
+        self.entity:setPowerup(powerup)
+    end
+end
+
+
+
+---Removes any powerups from the current Sphere.
+function Sphere:removePowerup()
+	if not self:isGhost() then
+        self.powerup = nil
+		_Game:playSound("sound_events/despawn_powerup.json")
+        self.entity:setPowerup()
+		self.powerupTimeout = 20
 	end
 end
 
@@ -231,6 +276,36 @@ function Sphere:deleteVisually(ghostTime, crushed)
 		if self.danger then
 			_Game.session.colorManager:decrement(self.color, true)
 		end
+	end
+
+	-- Remove and apply any powerups that this sphere may have.
+    if self.powerup and not self.map.level.finish then
+        local effectTable = {
+            time = function()
+                local secs = 5
+				local sandsOfTime = _Game:getCurrentProfile():getEquippedPower("sands_of_time")
+				if sandsOfTime then
+					secs = secs + sandsOfTime:getCurrentLevelData().additiveAmount
+				end
+				
+				self.map.level:applyEffect({type = "addTime", amount = secs})
+				self.map.level:spawnFloatingText(
+					string.format("+%d SECONDS", secs),
+					Vec2(380, 150),
+					"fonts/score0.json"
+				)
+            end,
+            multiplier = function()
+                self.map.level:applyEffect({ type = "addMultiplier", amount = 1 })
+				self.map.level:spawnFloatingText(
+					string.format("MULTIPLIER x%d", self.map.level.multiplier),
+					Vec2(380, 150),
+					"fonts/score0.json"
+				)
+			end
+		}
+		effectTable[self.powerup]()
+		_Game:playSound("sound_events/sphere_destroy_"..self.powerup..".json")
 	end
 
 	-- Remove the entity.
@@ -438,7 +513,10 @@ end
 ---Returns `true` if this sphere is a ghost, i.e. has no visual representation and no hitbox, but exists.
 ---@return boolean
 function Sphere:isGhost()
-	return self.ghostTime and self.ghostTime >= 0
+	if self.ghostTime then
+		return true
+	end
+	return false
 end
 
 
@@ -446,7 +524,7 @@ end
 ---Returns `true` if this sphere is a ghost and can be now removed entirely from the board.
 ---@return boolean
 function Sphere:isGhostForDeletion()
-	return self.ghostTime and self.ghostTime <= 0
+	return self.ghostTime and self.ghostTime <= 0 or false
 end
 
 
@@ -520,14 +598,18 @@ function Sphere:draw(color, hidden, shadow)
 	if self.config.spriteAnimationSpeed then
 		frame = Vec2(math.floor(self.config.spriteAnimationSpeed * _TotalTime), 1)
 	elseif self.size == 1 then
-		frame = Vec2(math.ceil(self.frameCount - self.animationFrame), 1)
+		frame = Vec2(math.ceil(self:getFrameCount() - self.animationFrame), 1)
 	end
 
 	local colorM = self:getColor()
 
 	-- Update the entity position.
 	self.entity:setPos(pos)
-	self.entity:setAngle(angle)
+	if self.powerup then
+        self.entity:setAngle(0)
+    else
+		self.entity:setAngle(angle)
+	end
 	self.entity:setFrame(frame)
 	self.entity:setColorM(colorM)
 
@@ -550,13 +632,10 @@ end
 
 
 
----Reloads the configuration variables of the current sphere color.
-function Sphere:loadConfig()
-	self.config = _Game.configManager.spheres[self.color]
-	self.sprite = _Game.resourceManager:getSprite(self.config.sprite)
-	-- TODO/DEPRECATED: Remove default value
-	self.shadowSprite = _Game.resourceManager:getSprite(self.config.shadowSprite or "sprites/game/ball_shadow.json")
-	self.frameCount = self.sprite.states[1].frameCount.x
+---Returns the current frame count of this Sphere.
+---@return number
+function Sphere:getFrameCount()
+	return self.entity:getSprite().states[1].frameCount.x
 end
 
 
@@ -636,6 +715,7 @@ function Sphere:deserialize(t)
 	self.shootOrigin = t.shootOrigin and Vec2(t.shootOrigin.x, t.shootOrigin.y) or nil
 	self.shootTime = t.shootTime
 	self.ghostTime = t.ghostTime
+	self.powerup = t.currentPowerup
 
 	self.effects = {}
 	if t.effects then

@@ -130,9 +130,14 @@ function SphereGroup:update(dt)
 	end
 
 	-- stop spheres when away from board and rolling back
-	if self.speed < 0 and self:getFrontPos() < 0 then
+	if self.speed < 0 and self:getFrontPos() < 0 and not self:isMagnetizing() then
 		self.speed = 0
 		self.speedTime = nil
+	end
+
+	-- FORK-SPECIFIC-CODE: Teleport the group to the spawn point if behind and nothing obstructs it.
+	if self:getFrontPos() < 0 and not self:isMagnetizing() and (not self.nextGroup or (self.nextGroup:getBackPos() >= 0 and not self.nextGroup:isMagnetizing())) then
+		self.offset = self.offset - self:getLastSphereOffset()
 	end
 
 	self:move(self.speed * dt)
@@ -662,6 +667,19 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 
 	-- Play a sound.
+    if effectConfig.destroySound == "hardcoded" then
+		local destroySoundParams = MOD_GAME.matchSound(length, self.map.level.combo, self.sphereChain.combo, boostCombo)
+		_Game:playSound(destroySoundParams.name, destroySoundParams.pitch, pos)
+		local chainSoundParams = MOD_GAME.chainSound(self.sphereChain.combo)
+        _Game:playSound(chainSoundParams.name, chainSoundParams.pitch, pos)
+	else
+		_Game:playSound(effectConfig.destroySound, 1, pos)
+    end
+    if #gaps > 0 then
+        -- NOTE: Zuma Blitz does not pitch/repeat the Gap Bonus sound in case of double+ gap bonuses.
+		_Game:playSound("sound_events/gap_bonus.json")
+	end
+	
 	if effectConfig.destroySound == "hardcoded" then
 		local soundParams = MOD_GAME.matchSound(length, self.map.level.combo, self.sphereChain.combo, boostCombo)
 		_Game:playSound(soundParams.name, soundParams.pitch, pos)
@@ -674,28 +692,58 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 	if boostCombo then
 		self.map.level.combo = self.map.level.combo + 1
+    end
+	-- Place this below chain and combo value boosting.
+    if boostCombo and self.map.level.combo > 5 then
+		local comboSoundParams = MOD_GAME.comboSound(self.map.level.combo)
+		_Game:playSound(comboSoundParams.name, comboSoundParams.pitch, pos)
 	end
 
 	-- Calculate and grant score.
-	local score = length * 100
+	local score = length * 10
 	if boostCombo then
-		score = score + math.max(self.map.level.combo - 3, 0) * 100
+        if self.map.level.combo > 5 then
+            score = score + 100 + ((self.map.level.combo - 6) * 10)
+            -- Starting from Chain x10, grant +500 to score,
+			-- then add +250 every 5th chain
+            if self.map.level.combo == 10 then
+                score = score + 500
+			elseif self.map.level.combo > 10 and score % 5 == 0 then
+				score = score + 250
+			end
+		end
 	end
 	if effectConfig.applyChainMultiplier then
-		score = score * self.sphereChain.combo
-	end
+        -- Combos give score + 1000 x combo
+		score = score + (1000 * (self.sphereChain.combo - 1))
+    end
+    local gapbonus
+	local largestGap = math.max(unpack(gaps))
+	if #gaps > 0 then
+		if largestGap < 20 --[[or not preOct2012GapScoring]] then
+			gapbonus = math.ceil(((1-(largestGap-0.5)/9.5)*1000)*math.min(1, #gaps) / 10) * 10 -- interpolate from 100,000 pts at 0,5 ball gap to 0 at 10 ball gap
+		else
+			gapbonus = math.ceil(((largestGap-22.5)*200)*math.min(1, #gaps) / 10) * 10 -- 0,000 pts per half a ball of a gap after 22,5 balls
+		end
+		score = score + gapbonus
+    end
+
 	self.map.level:grantScore(score)
 	self.sphereChain.comboScore = self.sphereChain.comboScore + score
 
-	-- Determine and display the floating text.
-	local scoreText = _NumStr(score)
-	if boostCombo and self.map.level.combo > 2 then
-		scoreText = scoreText .. "\n COMBO X" .. tostring(self.map.level.combo)
+    -- Determine and display the floating text.
+	-- Level:grantScore() already multiplies our score for us, so let's multiply here.
+    local scoreText = "+".._NumStr(score * self.map.level.multiplier)
+    -- Zuma's meanings of "Combo" and "Chain" is reverse from Luxor's.
+    -- Keep this in mind when modifying code as OpenSMCE is based off Luxor.
+	-- Start counting chains from Chain x6.
+	if boostCombo and self.map.level.combo > 5 then
+		scoreText = scoreText .. "\n CHAIN x" .. tostring(self.map.level.combo)
 	end
 	if effectConfig.applyChainMultiplier and self.sphereChain.combo ~= 1 then
-		scoreText = scoreText .. "\n CHAIN X" .. tostring(self.sphereChain.combo)
+        scoreText = scoreText .. "\n COMBO x" .. tostring(self.sphereChain.combo - 1)
 	end
-	local scoreGapTexts = {"GAP BONUS!", "DOUBLE GAP BONUS!", "TRIPLE GAP BONUS!", "QUADRUPLE GAP BONUS!", "QUINTUPLE GAP BONUS!"}
+	local scoreGapTexts = {"GAP SHOT", "DOUBLE GAP", "TRIPLE GAP", "QUADRUPLE GAP", "QUINTUPLE GAP"}
 	if #gaps > 0 then
 		scoreText = scoreText .. "\n" .. scoreGapTexts[#gaps]
 	end
@@ -717,14 +765,15 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	-- Update max combo and max chain stats.
 	self.map.level.maxCombo = math.max(self.map.level.combo, self.map.level.maxCombo)
 	self.map.level.maxChain = math.max(self.sphereChain.combo, self.map.level.maxChain)
+
+    -- Update Hot Frog meter
+	self.map.level:incrementBlitzMeter(0.055)
 end
 
 
 
 -- Only removes the already destroyed spheres which have been ghosts.
 function SphereGroup:deleteGhost(position)
-	-- Prepare a list of spheres to be destroyed.
-	local spheres = {}
 	local position1, position2 = self:getGhostBounds(position)
 	self:destroySpheres(position1, position2)
 end
@@ -761,6 +810,59 @@ function SphereGroup:isMagnetizing()
 
 
 	return byColor or byScarab
+end
+
+
+
+function SphereGroup:willBeMagnetizingAfterGhostDeletion()
+	-- Returns true if there will be magnetization processes happening after all ghost spheres in this chain are deleted.
+	local position = 1
+	while position <= #self.spheres do
+		local sphere = self.spheres[position]
+		if sphere:isGhost() then
+			-- Get ghost boundaries.
+			local position1, position2 = self:getGhostBounds(position)
+			-- Get spheres we will be comparing. Only non-ghost and mature spheres are counted.
+			local sphere1 = self:getSphereInChain(position1 - 1)
+			local sphere2 = self:getSphereInChain(position2 + 1)
+			-- Abort if there are no spheres on either end of the ghost segment.
+			if not sphere1 or not sphere2 then
+				return false
+			end
+			while sphere1:isGhost() or sphere1.size < 1 do
+				position1 = position1 - 1
+				sphere1 = self:getSphereInChain(position1)
+				if not sphere1 then
+					-- There are no more spheres, so nothing will be magnetized to. Abort the whole operation.
+					return false
+				end
+			end
+			while sphere2:isGhost() or sphere2.size < 1 do
+				position2 = position2 + 1
+				sphere2 = self:getSphereInChain(position2)
+				if not sphere2 then
+					-- There are no more spheres, so nothing will be magnetized to. Abort the whole operation.
+					return false
+				end
+			end
+
+			-- Now the actual part.
+			-- Check if on each side of the empty area there's the same color.
+			local byColor = _Game.session:colorsMatch(sphere1.color, sphere2.color)
+			-- The scarab can magnetize any color.
+			local byScarab = sphere1.color == 0
+			-- If any of these checks has passed, return true. else, keep on searching.
+			if byColor or byScarab then
+				return true
+			end
+
+			-- Skip all remaining ghost spheres.
+			position = position2
+		end
+		position = position + 1
+	end
+
+	return false
 end
 
 

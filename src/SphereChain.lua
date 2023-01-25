@@ -86,7 +86,7 @@ function SphereChain:update(dt)
 			while self:getLastSphereGroup().offset >= 0 do
 				self:generateSphere()
 			end
-			if _Game:levelExists() and (self.map.level:areAllObjectivesReached() or self.map.level.lost) then
+			if _Game:levelExists() and self.map.level.lost then
 				self:concludeGeneration()
 			end
 		end
@@ -152,7 +152,7 @@ function SphereChain:isMatchPredicted()
 			sphereGroup:isMagnetizing() or
 			sphereGroup:hasShotSpheres() or
 			sphereGroup:hasKeepComboSpheres() or
-			sphereGroup:hasGhostSpheres() or
+			sphereGroup:willBeMagnetizingAfterGhostDeletion() or
 			(_Game.configManager.gameplay.sphereBehaviour.luxorized and sphereGroup.speed < 0)
 		) then
 			return true

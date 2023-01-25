@@ -36,6 +36,8 @@ function ShooterConfig:new(data, path)
         local nextBall = {
             ---@type Sprite
             sprite = _Game.resourceManager:getSprite(nextBallData.sprite),
+            ---@type Sprite?
+            colorblindSprite = nextBallData.colorblindSprite and _Game.resourceManager:getSprite(nextBallData.colorblindSprite),
             ---@type number
             spriteAnimationSpeed = nextBallData.spriteAnimationSpeed
         }

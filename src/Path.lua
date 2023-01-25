@@ -56,6 +56,7 @@ function Path:new(map, pathData, pathBehavior)
 	self.bonusScarab = nil
 	self.scorpions = {}
 	self.sphereEffectGroups = {}
+	self.pathClearGranted = false
 end
 
 
@@ -121,15 +122,43 @@ function Path:update(dt)
 			sphereChain:update(dt)
 		end
 	end
+
+	-- Sphere chain spawning
 	if self:shouldSpawn() then self:spawnChain() end
+
+	-- Bonus Scarab
 	if self.bonusScarab then self.bonusScarab:update(dt) end
 
+	-- Scorpions
 	for i, scorpion in ipairs(self.scorpions) do
 		scorpion:update(dt)
 	end
 	for i = #self.scorpions, 1, -1 do
 		local scorpion = self.scorpions[i]
 		if scorpion.delQueue then table.remove(self.scorpions, i) end
+	end
+
+	-- Path Clears
+	if self:isValidForCurveClear() then
+		self.pathClearGranted = true
+        -- Curve Clears in Kroakatoa grant 1000 + total time elapsed.
+        -- Reference: http://bchantech.dreamcrafter.com/zumablitz/scoringmechanics_relaunch.php
+		local score = 1000 + math.floor(self.map.level.stateCount)
+        self.map.level:grantScore(score)
+		self.map.level:spawnFloatingText(
+            string.format("CURVE CLEARED\n+%s", _NumStr(score * self.map.level.multiplier)),
+			Vec2(380, 236),
+			"fonts/score0.json"
+        )
+		_Game:playSound("sound_events/curve_clear.json")
+
+		local shouldGiveOneSecond = _Game:getCurrentProfile():getEquippedFoodItemEffects() and _Game:getCurrentProfile():getEquippedFoodItemEffects().curveClearsGiveOneSecond
+		if not self.map.level.finish and shouldGiveOneSecond then
+			self.map.level:applyEffect({type = "addTime", amount = 1})
+		end
+	-- 10% of this path's length to be able to reclaim path clear bonus
+	elseif self:getMaxOffset() > self.length * 0.1 then
+		self.pathClearGranted = false
 	end
 end
 
@@ -170,7 +199,6 @@ function Path:spawnChain()
 	table.insert(self.sphereChains, sphereChain)
 	if not self.map.isDummy then
 		self.map.level.sphereChainsSpawned = self.map.level.sphereChainsSpawned + 1
-		_Game:playSound(_Game.configManager.gameplay.sphereBehaviour.newGroupSound)
 	end
 end
 
@@ -449,6 +477,13 @@ end
 ---@return boolean
 function Path:getDanger(pixels)
 	return pixels / self.length >= self.dangerDistance
+end
+
+
+---Returns `true` if the given path should give a Curve Clear bonus.
+---@return boolean
+function Path:isValidForCurveClear()
+	return not self.map.isDummy and not self.map.level.controlDelay and self:getMaxOffset() <= 0 and not self.pathClearGranted and #self.sphereChains > 0
 end
 
 

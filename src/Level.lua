@@ -9,6 +9,7 @@ local Vec2 = require("src/Essentials/Vector2")
 local Map = require("src/Map")
 local Shooter = require("src/Shooter")
 local ShotSphere = require("src/ShotSphere")
+local Target = require("src/Target")
 local Collectible = require("src/Collectible")
 local FloatingText = require("src/FloatingText")
 
@@ -17,8 +18,8 @@ local FloatingText = require("src/FloatingText")
 ---Constructs a new Level.
 ---@param data table The level data, specified in a level config file.
 function Level:new(data)
-	self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
-	self.shooter = Shooter(data.shooter)
+    self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
+	self.shooter = Shooter(data.shooter or self.map.shooter)
 
 	self.matchEffect = data.matchEffect
 
@@ -34,6 +35,29 @@ function Level:new(data)
 		table.insert(self.objectives, {type = objective.type, target = objective.target, progress = 0, reached = false})
 	end
 
+	self.stateCount = 0
+
+    self.powerupFrequency = data.powerupFrequency or 15
+    self.individualPowerupFrequencies = data.individualPowerupFrequencies or nil
+	self.powerupList = {"time", "multiplier"} -- this should prob be replaced with a function when powers are implemented
+    self.lastPowerupDeltas = {}
+	for i, powerup in ipairs(self.powerupList) do
+        self.lastPowerupDeltas[powerup] = self.stateCount - 600
+    end
+    for powerup, v in pairs(self.lastPowerupDeltas) do
+		if self.individualPowerupFrequencies and #self.individualPowerupFrequencies ~= 0 then
+			self.individualPowerupFrequencies[powerup] = data.individualPowerupFrequencies[powerup]
+		end
+	end
+
+    self.targetFrequency = data.targetFrequency
+    self.targetInitialDelaySecondsElapsed = false
+
+	self.targetHitBases = {3000, 4500, 6750, 10150, 15200, 22800}
+    self.targetHitScore = 0
+    -- TODO: Additions to targetHitScore once Spirit Animals and Food are implemented
+    -- (Kiwi Kebab, to be exact)
+
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
 
@@ -43,7 +67,8 @@ function Level:new(data)
 
 	self.dangerSoundName = data.dangerSound or "sound_events/warning.json"
 	self.dangerLoopSoundName = data.dangerLoopSound or "sound_events/warning_loop.json"
-
+    self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
+	
 	-- Additional variables come from this method!
 	self:reset()
 end
@@ -76,7 +101,9 @@ end
 ---@param dt number Delta time in seconds.
 function Level:updateLogic(dt)
 	self.map:update(dt)
-	self.shooter:update(dt)
+    self.shooter:update(dt)
+    self.stateCount = self.stateCount + dt
+	self.targetHitScore = self.targetHitBases[math.min(self.targets+1, 6)]
 
 	-- Danger sound
 	local d1 = self:getDanger() and not self.lost
@@ -172,6 +199,114 @@ function Level:updateLogic(dt)
 	-- Time counting
 	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
 		self.time = self.time + dt
+    end
+
+
+
+    -- Hot Frog handling
+	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
+		if self.blitzMeter == 1 then
+			-- We're in hot frog mode, reset once the shooter has a ball other than the fireball.
+			if self.shooter.color > 0 then
+				self.blitzMeter = 0
+				self.blitzMeterCooldown = 0
+			end
+		else
+			if self.blitzMeterCooldown == 0 then
+				self.blitzMeter = math.max(self.blitzMeter - 0.03 * dt, 0)
+			else
+				self.blitzMeterCooldown = math.max(self.blitzMeterCooldown - dt, 0)
+			end
+		end
+    end
+
+
+
+    -- Zuma style powerups
+    if self.started and not self.finish and not self:areAllObjectivesReached() and not self:getEmpty() then
+        local powerups = { "time", "multiplier" }
+        local powerupToAdd = powerups[math.random(1, #powerups)]
+        local frequencies = {
+            all = self.powerupFrequency
+        }
+        for i, powerup in ipairs(self.powerupList) do
+            frequencies[powerup] = (self.individualPowerupFrequencies and self.individualPowerupFrequencies[powerup]) or frequencies.all
+		end
+        for powerup, v in pairs(self.lastPowerupDeltas) do
+			for k, w in pairs(frequencies) do
+				if frequencies[powerup] > 0 and (math.random() < 1 / frequencies[powerup]) and frequencies[powerup] < self.stateCount - self.lastPowerupDeltas[powerup] then
+					local sphere = _Game.session:getRandomSphere()
+                    if sphere then
+                        local cap = 10
+						local raiseCap = _Game:getCurrentProfile():getEquippedFoodItemEffects() and _Game:getCurrentProfile():getEquippedFoodItemEffects().multiplierCapAdditiveModifier
+						if raiseCap then
+    					    cap = cap + raiseCap
+                        end
+						if powerupToAdd == "multiplier" and self.multiplier < cap then
+							sphere:addPowerup("multiplier")
+						elseif powerupToAdd ~= "multiplier" then
+							sphere:addPowerup(powerupToAdd)
+						end
+					end
+					self.lastPowerupDeltas[powerup] = self.stateCount
+				end
+			end
+		end
+	end
+
+
+
+    -- Targets
+    if self.started and not self.finish then
+		if not self.target and self.map.targetPoints and self.targetFrequency then
+            local validPoints = {}
+			if self.targetFrequency.type == "seconds" then
+				self.targetSecondsCooldown = self.targetSecondsCooldown - dt
+				if self.targetSecondsCooldown < 0 then
+					if not self.targetInitialDelaySecondsElapsed then
+						self.targetInitialDelaySecondsElapsed = true
+                        self.targetSecondsCooldown = self.targetFrequency.delay
+						local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
+						if fruitMaster then
+							self.targetSecondsCooldown = self.targetSecondsCooldown - fruitMaster:getCurrentLevelData().subtractiveSeconds
+						end
+					end
+					for i, point in ipairs(self.map.targetPoints) do
+						for j, path in ipairs(self.map.paths) do
+							local d = path:getMaxOffset() / path.length
+							if d > point.distance then
+								table.insert(validPoints, Vec2(point.pos.x, point.pos.y))
+							end
+						end
+					end
+				end
+			elseif self.targetFrequency.type == "frequency" then
+				-- we won't be implementing this for ZBR, but this is here for
+				-- flexibility of OpenSMCE
+			end
+			if #validPoints > 0 then
+				self.target = Target(
+					_Game.configManager.targetSprites.random[math.random(1, #_Game.configManager.targetSprites.random)],
+					validPoints[math.random(1, #validPoints)],
+					false -- no slot machine yet!
+                )
+				_Game:playSound("sound_events/target_spawn.json")
+			end
+		else
+			-- don't tick the timer down if there's fruit present
+            self.targetSecondsCooldown = self.targetFrequency.delay
+			local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
+			if fruitMaster then
+				self.targetSecondsCooldown = self.targetSecondsCooldown - fruitMaster:getCurrentLevelData().subtractiveSeconds
+			end
+			if self.target.delQueue then
+				self.target = nil
+            end
+            if self.target then
+				-- this may get called after target gets nil'd
+				self.target:update(dt)
+			end
+		end
 	end
 
 
@@ -181,12 +316,40 @@ function Level:updateLogic(dt)
 
 
 
+	-- Stop the board once target time reached
+	if not self.finish and self:areAllObjectivesReached() and not self:hasShotSpheres() and not self:areMatchesPredicted() then
+		self.shooter:empty()
+		self.finish = true
+		self.wonDelay = _Game.configManager.gameplay.level.wonDelay
+
+        for i, path in ipairs(self.map.paths) do
+			for j, chain in ipairs(path.sphereChains) do
+                chain:concludeGeneration()
+				self:applyEffect({
+                    type = "speedOverride",
+					speedBase = 0,
+					speedMultiplier = 0,
+					decceleration = 0,
+					time = 0
+				})
+			end
+        end
+		self:spawnFloatingText("TIME'S UP!", Vec2(380,285), "fonts/score0.json")
+		--TODO: Implement the Last Hurrah
+        _Game:playSound("sound_events/time_up.json")
+	end
+
+
+
 	-- Level start
 	-- TODO: HARDCODED - make it more flexible
 	if self.controlDelay then
 		self.controlDelay = self.controlDelay - dt
 		if self.controlDelay <= 0 then
-			self.controlDelay = nil
+            self.controlDelay = nil
+			if self.rollingSound then
+				self.rollingSound:stop()
+			end
 		end
 	end
 
@@ -233,7 +396,10 @@ function Level:updateLogic(dt)
 
 
 	-- Level lose
-	if self.lost and self:getEmpty() and not self.ended then
+    if self.lost and self:getEmpty() and not self.ended then
+		if self.rollingSound then
+			self.rollingSound:stop()
+		end
 		_Game.uiManager:executeCallback("levelLost")
 		self.ended = true
 	end
@@ -319,6 +485,7 @@ end
 ---Adds score to the current Profile, as well as to level's statistics.
 ---@param score integer The score to be added.
 function Level:grantScore(score)
+	score = score * self.multiplier
 	self.score = self.score + score
 	_Game:getCurrentProfile():grantScore(score)
 end
@@ -422,6 +589,10 @@ function Level:applyEffect(effect, TMP_pos)
 		self:grantCoin()
 	elseif effect.type == "incrementGemStat" then
 		self:grantGem()
+	elseif effect.type == "addTime" then
+        self.objectives[1].target = self.objectives[1].target + effect.amount
+    elseif effect.type == "addMultiplier" then
+		self.multiplier = self.multiplier + effect.amount
 	end
 end
 
@@ -440,8 +611,8 @@ function Level:spawnLightningStormPiece()
 
 	-- spawn a particle, add points etc
 	local pos = sphere:getPos()
-	self:grantScore(100)
-	self:spawnFloatingText(_NumStr(100), pos, _Game.configManager.spheres[sphere.color].matchFont)
+	self:grantScore(10)
+	self:spawnFloatingText(_NumStr(10), pos, _Game.configManager.spheres[sphere.color].matchFont)
 	_Game:spawnParticle("particles/lightning_beam.json", pos)
 	_Game:playSound("sound_events/lightning_storm_destroy.json")
 	-- destroy it
@@ -500,7 +671,7 @@ function Level:generateColor(data)
 		-- Make a pool with colors which are on the board.
 		local pool = {}
 		for i, color in ipairs(data.colors) do
-			if not data.has_to_exist or _Game.session.colorManager:isColorExistent(color) then
+			if not data.hasToExist or _Game.session.colorManager:isColorExistent(color) then
 				table.insert(pool, color)
 			end
 		end
@@ -648,6 +819,23 @@ end
 
 
 
+---Increments the level's Blitz Meter by a given amount and launches the Hot Frog if reaches 1.
+---@param amount any
+function Level:incrementBlitzMeter(amount)
+	if self.blitzMeter == 1 then
+		return
+	end
+	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
+	if self.blitzMeter == 1 then
+        -- hot frog
+		local infernoFrog = _Game:getCurrentProfile():getEquippedPower("inferno_frog")
+		local additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
+		self.shooter:getMultiSphere(-2, (3 + additiveAmount))
+	end
+end
+
+
+
 ---Returns `true` when there are no more spheres on the board and no more spheres can spawn, too.
 ---@return boolean
 function Level:hasNoMoreSpheres()
@@ -668,6 +856,21 @@ end
 ---@return boolean
 function Level:hasNewScoreRecord()
 	return _Game:getCurrentProfile():getLevelHighscoreInfo(self.score)
+end
+
+
+
+---Returns `true` if there are any matches predicted (spheres that magnetize to each other), `false` otherwise.
+---@return boolean
+function Level:areMatchesPredicted()
+	for i, path in ipairs(self.map.paths) do
+		for j, chain in ipairs(path.sphereChains) do
+			if chain:isMatchPredicted() then
+				return true
+			end
+		end
+	end
+	return false
 end
 
 
@@ -745,6 +948,9 @@ function Level:destroy()
 	end
 	for i, path in ipairs(self.map.paths) do
 		path:destroy()
+    end
+	if self.target then
+		self.target:destroy()
 	end
 
 	if self.ambientMusicName then
@@ -764,7 +970,29 @@ function Level:reset()
 	self.gems = 0
 	self.combo = 0
 	self.destroyedSpheres = 0
-	self.time = 0
+	self.targets = 0
+    self.time = 0
+	self.stateCount = 0
+
+    self.target = nil
+	if self.targetFrequency.type == "seconds" then
+        self.targetSecondsCooldown = self.targetFrequency.initialDelay
+		local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
+		if fruitMaster then
+			self.targetSecondsCooldown = self.targetSecondsCooldown - fruitMaster:getCurrentLevelData().subtractiveSeconds
+		end
+	end
+
+    self.blitzMeter = 0
+	self.blitzMeterCooldown = 0
+    self.multiplier = 1
+	-- TODO: Fix this unless this is the only way.
+    -- For some stupid reason, _Game:getCurrentProfile() doesn't work here.
+	-- Yet, the value that returns from that function works fine??
+    local multiMultiplier = _Game.runtimeManager.profileManager:getCurrentProfile():getEquippedPower("multi_multiplier")
+	if multiMultiplier then
+		self.multiplier = self.multiplier + multiMultiplier:getCurrentLevelData().additiveAmount
+	end
 
 	self.spheresShot = 0
 	self.sphereChainsSpawned = 0
@@ -814,7 +1042,8 @@ function Level:lose()
 		shotSphere:destroy()
 	end
 	self.shotSpheres = {}
-	_Game:playSound("sound_events/level_lose.json")
+	self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
+    _Game:playSound("sound_events/level_lose.json")
 end
 
 
@@ -881,6 +1110,9 @@ function Level:draw()
 	end
 	for i, floatingText in ipairs(self.floatingTexts) do
 		floatingText:draw()
+    end
+	if self.target then
+		self.target:draw()
 	end
 
 	-- local p = posOnScreen(Vec2(20, 500))
@@ -899,11 +1131,22 @@ function Level:serialize()
 			coins = self.coins,
 			gems = self.gems,
 			spheresShot = self.spheresShot,
-			sphereChainsSpawned = self.sphereChainsSpawned,
+            sphereChainsSpawned = self.sphereChainsSpawned,
+			targets = self.targets,
 			maxChain = self.maxChain,
 			maxCombo = self.maxCombo
 		},
-		time = self.time,
+        time = self.time,
+        stateCount = self.stateCount,
+		powerupList = self.powerupList,
+		lastPowerupDeltas = self.lastPowerupDeltas,
+        target = (self.target and self.target:serialize()) or {},
+        targetSecondsCooldown = self.targetSecondsCooldown,
+        targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
+		targetHitScore = self.targetHitScore,
+		blitzMeter = self.blitzMeter,
+		blitzMeterCooldown = self.blitzMeterCooldown,
+		multiplier = self.multiplier,
 		controlDelay = self.controlDelay,
 		finish = self.finish,
 		finishDelay = self.finishDelay,
@@ -941,12 +1184,24 @@ function Level:deserialize(t)
 	self.coins = t.stats.coins
 	self.gems = t.stats.gems
 	self.spheresShot = t.stats.spheresShot
-	self.sphereChainsSpawned = t.stats.sphereChainsSpawned
+    self.sphereChainsSpawned = t.stats.sphereChainsSpawned
+	self.targets = t.stats.targets
 	self.maxChain = t.stats.maxChain
 	self.maxCombo = t.stats.maxCombo
 	self.combo = t.combo
 	self.destroyedSpheres = t.destroyedSpheres
 	self.time = t.time
+    self.stateCount = t.stateCount
+	self.powerupList = t.powerupList
+	self.lastPowerupDeltas = t.lastPowerupDeltas
+	self.target = t.target
+    self.targetSecondsCooldown = t.targetSecondsCooldown
+    self.targetFrequency = t.targetFrequency
+	self.targetHitScore = t.targetHitScore
+	self.targetInitialDelaySecondsElapsed = t.targetInitialDelaySecondsElapsed
+	self.blitzMeter = t.blitzMeter
+	self.blitzMeterCooldown = t.blitzMeterCooldown
+	self.multiplier = t.multiplier
 	self.lost = t.lost
 	-- Utils
 	self.controlDelay = t.controlDelay

@@ -29,9 +29,11 @@ function Shooter:new(data)
     self.speedShotTime = 0
     self.speedShotAnim = 0
     self.speedShotParticle = nil
-
     self.multiColorColor = nil
     self.multiColorCount = 0
+    self.knockbackAngle = 0
+    self.knockbackTime = 0
+
 
     -- memorizing the pressed keys for keyboard control of the shooter
     self.moveKeys = {left = false, right = false}
@@ -59,8 +61,6 @@ function Shooter:changeTo(name)
     self.reticleNextSprite = self.config.reticle.nextBallSprite
     self.radiusReticleSprite = self.config.reticle.radiusSprite
 end
-
-
 
 
 
@@ -111,10 +111,26 @@ function Shooter:update(dt)
         end
     end
 
+    -- knockback
+    if self.knockbackTime > 0 then
+        self.knockbackTime = self.knockbackTime - dt
+
+        if self.knockbackTime > 0 then
+            if self.knockbackTime > 0.1 then
+                self.pos = self.pos + Vec2(0, 1.15):rotate(self.knockbackAngle)
+            else
+                self.pos = self.pos + Vec2(0, -1.15):rotate(self.knockbackAngle)
+            end
+        else
+            self.knockbackTime = 0
+            self.pos = Vec2(self.movement.x, self.movement.y)
+        end
+    end
+
     -- filling
     if self:isActive() then
         -- remove nonexistent colors, but only if the current color generator allows removing these colors
-        local remTable = _Game.session.level:getCurrentColorGenerator().colors_remove_if_nonexistent
+        local remTable = _Game.session.level:getCurrentColorGenerator().colorsRemoveIfNonexistent
         if _MathIsValueInTable(remTable, self.color) and not _Game.session.colorManager:isColorExistent(self.color) then
             self:setColor(0)
         end
@@ -123,6 +139,8 @@ function Shooter:update(dt)
         end
         self:fill()
     end
+
+
 
     -- speed shot time counting
     if self.speedShotTime > 0 then
@@ -247,6 +265,10 @@ function Shooter:isActive()
     if self.shotCooldown then
         return false
     end
+    -- FORK-RELATED CHANGE: If the time's up, don't allow to shoot more spheres.
+    if level:areAllObjectivesReached() then
+        return false
+    end
     -- Otherwise, allow.
     return true
 end
@@ -268,6 +290,12 @@ function Shooter:shoot()
     else
         _Game.session.level:spawnShotSphere(self, self:getSpherePos(), self.angle, self.color, self:getShootingSpeed())
         self.sphereEntity = nil
+        --self.active = false
+        -- knockback
+        if self.knockbackTime == 0 then
+            self.knockbackTime = 0.2
+            self.knockbackAngle = self.angle
+        end
     end
     if sphereConfig.shootEffects then
         for i, effect in ipairs(sphereConfig.shootEffects) do
@@ -279,7 +307,6 @@ function Shooter:shoot()
     self.shotCooldown = self.config.shotCooldown
     _Game.session.level.spheresShot = _Game.session.level.spheresShot + 1
 end
-
 
 
 ---Deinitialization function.
@@ -338,7 +365,12 @@ function Shooter:draw()
         self.sphereEntity:draw()
     end
     -- next color
-    local sprite = self.config.nextBallSprites[self.nextColor].sprite
+    local sprite
+    if _Game.runtimeManager.options:getColorblindMode() and self.config.nextBallSprites[self.nextColor].colorblindSprite then
+        sprite = self.config.nextBallSprites[self.nextColor].colorblindSprite
+    else
+		sprite = self.config.nextBallSprites[self.nextColor].sprite
+    end
     sprite:draw(self.pos + self.config.nextBallOffset:rotate(self.angle), self.config.nextBallAnchor, nil, self:getNextSphereFrame(), self.angle)
 
     --local p4 = posOnScreen(self.pos)
@@ -454,6 +486,9 @@ end
 ---Returns the primary sphere color.
 ---@return table
 function Shooter:getReticalColor()
+    if not self:getSphereConfig() then
+        return Color(1, 1, 1)
+    end
     local color = self:getSphereConfig().color
     if type(color) == "string" then
         return _Game.resourceManager:getColorPalette(color):getColor(_TotalTime * self:getSphereConfig().colorSpeed)
@@ -502,7 +537,8 @@ end
 ---Returns the center position of the primary sphere.
 ---@return Vector2
 function Shooter:getSpherePos()
-    return self.pos + self.config.ballPos:rotate(self.angle)
+    -- FORK-SPECIFIC CODE: Sphere position roughly fit to Kroakatoa Frog's mouth
+    return self.pos - Vec2(0, 30):rotate(self.angle)
 end
 
 
@@ -533,7 +569,13 @@ function Shooter:getShootingSpeed()
     elseif self.speedShotTime > 0 then
         return self.speedShotSpeed
     end
-    return self.config.shootSpeed
+    local speedShot = _Game:getCurrentProfile():getEquippedPower("speed_shot")
+    local powerMultiplier = (speedShot and speedShot:getCurrentLevelData().additiveMultiplier) or 0
+
+    local foodSpeedShot = (_Game:getCurrentProfile():getEquippedFoodItemEffects() and _Game:getCurrentProfile():getEquippedFoodItemEffects().shotSpeedModifier) or 0
+    -- TODO: What's the order of speed shot multipliers?
+    -- Is it Speed Shot power > Food Item? And am I doing this one-liner right?
+    return self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier + (self.config.shootSpeed * foodSpeedShot))
 end
 
 

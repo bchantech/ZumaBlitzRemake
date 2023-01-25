@@ -24,6 +24,7 @@ function Map:new(level, path, pathsBehavior, isDummy)
 	self.paths = {}
 	self.sprites = {}
 
+
 	local data = _LoadJson(_ParsePath(path .. "/config.json"))
 	self.name = data.name
 	for i, spriteData in ipairs(data.sprites) do
@@ -39,6 +40,8 @@ function Map:new(level, path, pathsBehavior, isDummy)
 		local pathBehavior = pathsBehavior[(i - 1) % #pathsBehavior + 1]
 		table.insert(self.paths, Path(self, pathData, pathBehavior))
 	end
+    self.shooter = data.shooter
+	self.targetPoints = data.targetPoints
 end
 
 

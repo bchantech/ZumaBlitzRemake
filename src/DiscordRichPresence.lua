@@ -136,16 +136,32 @@ end
 ---@param line1 string The first line.
 ---@param line2 string The second line.
 ---@param countTime boolean? Whether to count time. If set to `true`, the timer will start at 00:00 and will be counting up.
-function DiscordRichPresence:setStatus(line1, line2, countTime)
+---@param largeImageKey string? The asset key for the large image displayed on the Rich Presence.
+---@param largeImageText string? Text that appears in the large image's tooltip displayed on the Rich Presence.
+---@param smallImageKey string? The asset key for the small image displayed on the Rich Presence.
+---@param smallImageText string? Text that appears in the small image's tooltip displayed on the Rich Presence.
+function DiscordRichPresence:setStatus(line1, line2, countTime, largeImageKey, largeImageText, smallImageKey, smallImageText)
 	self.status = {details = line1, state = line2}
 	if countTime then
 		self.status.startTimestamp = os.time(os.date("*t"))
 	else
 		self.status.startTimestamp = nil
-	end
-	self.status.largeImageKey = "icon_rpc"
-	if self.egg then
-		self.status.largeImageText = self.egg
+    end
+    if largeImageKey then
+        self.status.largeImageKey = largeImageKey
+		self.status.largeImageText = largeImageText
+    else
+		self.status.largeImageKey = "main"
+		if self.egg then
+			self.status.largeImageText = self.egg
+		end
+    end
+	if smallImageKey then
+		self.status.smallImageKey = smallImageKey
+        self.status.smallImageText = smallImageText
+    else
+		self.status.smallImageKey = nil
+        self.status.smallImageText = nil
 	end
 end
 

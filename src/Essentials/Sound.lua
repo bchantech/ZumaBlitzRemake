@@ -14,7 +14,7 @@ function Sound:new(path)
 	self.instances = {}
 	local sounds = _LoadSounds(path, "static", self.INSTANCE_COUNT)
 	for i = 1, self.INSTANCE_COUNT do
-		self.instances[i] = SoundInstance(nil, sounds[i])
+		self.instances[i] = SoundInstance(path, sounds[i])
 	end
 end
 

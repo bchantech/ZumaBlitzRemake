@@ -17,10 +17,10 @@ function BootMain:new(bootScreen)
 	self.fontBig = love.graphics.newFont(18)
 
 	-- github url link
-	self.url = "https://github.com/jakubg1/OpenSMCE"
+	self.url = "https://github.com/ShamblesSM/OpenSMCE/tree/zuma-blitz-remake"
 	self.urlHovered = false
 	self.urlHoverPos = Vec2(35, 174)
-	self.urlHoverSize = Vec2(365, 25)
+	self.urlHoverSize = Vec2(self.fontBig:getWidth(self.url) + 20, 25)
 
 	-- game list
 	self.gameButtons = {}
@@ -163,7 +163,21 @@ function BootMain:draw()
 	-- Warning contents
 	love.graphics.setColor(1, 1, 0.2)
 	love.graphics.setFont(self.font)
-	love.graphics.print("This engine is in BETA DEVELOPMENT.\nThis version is dedicated to people who want to test the engine and examine it.\nThis version should not be treated like a full version yet, as the inner workings still may change heavily!\nRemember to post issues and feature suggestions at the following Github repository link.\nThank you for your support!", 45, 100)
+	--[[local text = [[
+This engine is in BETA DEVELOPMENT.
+This version is dedicated to people who want to test the engine and examine it.
+This version should not be treated like a full version yet, as the inner workings still may change heavily!
+Remember to post issues and feature suggestions at the following Github repository link.
+Thank you for your support!
+	]]
+	local text = [[
+This is an unofficial part of OpenSMCE!
+This version is dedicated to Zuma Blitz remake development.
+As such, it contains a lot of hardcoded stuff and dirty code. This is a sandbox, really.
+Don't worry, this fork remains open-source and the original engine will eventually get all of the changes implemented!
+Thank you for your support!
+	]]
+	love.graphics.print(text, 45, 100)
 	-- Github link
 	love.graphics.setColor(1, 1, 1)
 	love.graphics.setFont(self.fontBig)
@@ -224,7 +238,7 @@ function BootMain:draw()
 	-----------------------------
 	love.graphics.setFont(self.font)
 	love.graphics.print("OpenSMCE is a short for Open-Source Sphere Matcher Community Engine.", 30, 525)
-	love.graphics.print("Copyright (C) 2020-2023 jakubg1 & contributors\nThis software is licensed under MIT license.", 30, 555)
+	love.graphics.print("Copyright (C) 2020-2023 jakubg1. Collaborators: ShamblesSM, Nxgi\nThis software is licensed under MIT license.", 30, 555)
 
 	-----------------------------
 	-- BUTTONS

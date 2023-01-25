@@ -358,7 +358,28 @@ end
 function Debug:runCommand(command)
 	local words = _StrSplit(command, " ")
 
-	if words[1] == "p" then
+    if words[1] == "help" then
+        local muchoTexto = {
+			"b: Boost spheres",
+			"crash: Manually crashes the game",
+			"e: Toggle background cheat mode",
+			"fs: Toggle fullscreen",
+			"help: Show this list",
+			"n: Nuke all spheres",
+			"s: Spawn a new chain",
+			"sp <num>: Set destroyedSpheres level count to num",
+			"t <scale>: Set time scale",
+			"test: Particle test",
+			"p <powerup>: Gives a powerup. Powerup can be: fire, ligh, wild, bomb, slow, stop, rev, shot",
+			"ppp: Spawn a scorpion",
+			"expr <expression>: Evaluate an expression",
+			"exprt <expression>: Evaluate an expression",
+			"ex: Evaluate an expression",
+        }
+		for i, line in ipairs(muchoTexto) do
+			self.console:print(line)
+		end
+	elseif words[1] == "p" then
 		local t = {fire = "bomb", ligh = "lightning", wild = "wild", bomb = "colorbomb", slow = "slow", stop = "stop", rev = "reverse", shot = "shotspeed"}
 		for word, name in pairs(t) do
 			if words[2] == word then

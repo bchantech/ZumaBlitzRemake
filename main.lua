@@ -1,14 +1,3 @@
--- Remove all potentially malicious OS functions, to prevent any external scripts
--- from causing damage by, for example, loading a game with a os.execute("format c:") line
--- in its UI script.
-
-os = {
-	time = os.time,
-	date = os.date
-}
-
-
-
 -- INCLUDE ZONE
 
 -- custom error handler
@@ -37,9 +26,9 @@ local DiscordRichPresence = require("src/DiscordRichPresence")
 
 
 -- CONSTANT ZONE
-_VERSION = "v0.47.0"
-_VERSION_NAME = "Beta 4.7.0"
-_DISCORD_APPLICATION_ID = "797956172539887657"
+_VERSION = "vZB"
+_VERSION_NAME = "Zuma Blitz Remake Fork"
+_DISCORD_APPLICATION_ID = "1059347284623638609"
 _BUILD_NUMBER = "unknown"
 _START_TIME = love.timer.getTime()
 
@@ -90,9 +79,6 @@ _DiscordRPC = nil
 
 
 -- CALLBACK ZONE
-
--- Warning! If this function fails, it can cause a "failed to initialize filesystem: already initialized" error.
--- I don't know why this happens yet.
 function love.load()
 	--local s = loadFile("test.txt")
 	--print(s)
@@ -114,7 +100,6 @@ function love.load()
     else
 		_LoadBootScreen()
 	end
-	--for k, v in pairs(love.graphics.getSystemLimits()) do print(k, v) end
 end
 
 function love.update(dt)

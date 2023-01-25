@@ -57,6 +57,18 @@ function Options:getSoundVolume()
 	return self.data.soundVolume
 end
 
+---Sets the colorblind mode flag.
+---@param value boolean Whether Colorblind Mode should be turned on; used for sphere colors.
+function Options:setColorblindMode(value)
+	self.data.colorblindMode = value
+end
+
+---Returns the current status of the Colorblind Mode flag.
+---@return boolean
+function Options:getColorblindMode()
+	return self.data.colorblindMode
+end
+
 ---Sets the fullscreen flag.
 ---@param value boolean Whether the fullscreen should be active.
 function Options:setFullscreen(value)
