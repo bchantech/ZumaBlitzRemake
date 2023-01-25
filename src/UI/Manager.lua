@@ -4,12 +4,14 @@ local class = require "com/class"
 ---@overload fun():UIManager
 local UIManager = class:derive("UIManager")
 
+local strmethods = require("src/strmethods")
+
 local UIWidget = require("src/UI/Widget")
 
 
 
 function UIManager:new()
-  self.widgets = {splash = nil, root = nil}
+  self.widgets = {splash = nil, main = nil}
 
   self.script = nil
   self.scriptFunctions = {
@@ -126,6 +128,23 @@ function UIManager:update(dt)
 end
 
 function UIManager:draw()
+  --[[
+  -- APPROACHES 1, 2
+  for widgetN, widget in pairs(self.widgets) do
+    widget:generateDrawData()
+  end
+
+  dbg.uiWidgetCount = 0
+  for i, layer in ipairs(game.configManager.hudLayerOrder) do
+    for widgetN, widget in pairs(self.widgets) do
+      widget:draw(layer)
+    end
+  end
+  ]]--
+
+
+
+  -- APPROACH 3
   -- This table will contain the order in which widgets will be drawn.
   local layers = {}
 	for i, layer in ipairs(_Game.configManager.hudLayerOrder) do
@@ -234,6 +253,22 @@ function UIManager:optionsSave()
   _Game.runtimeManager.options:setSoundVolume(self:getWidget({"root", "Menu_Options", "Frame", "Slot_sfx", "Slider_Effects"}).widget.value)
   _Game.runtimeManager.options:setFullscreen(self:getWidget({"root", "Menu_Options", "Frame", "Toggle_Fullscreen"}).widget.state)
   _Game.runtimeManager.options:setMute(self:getWidget({"root", "Menu_Options", "Frame", "Toggle_Mute"}).widget.state)
+end
+
+function UIManager:checkCondition(condition)
+	if condition.type == "widget" then
+		if condition.property == "visible" then
+			return self:getWidget(condition.widget):isVisible() == condition.value
+		elseif condition.property == "buttonActive" then
+			return self:getWidget(condition.widget):isActive() == condition.value
+		end
+	elseif condition.type == "level" then
+		if condition.property == "paused" then
+			return _Game.session.level.pause == condition.value
+		elseif condition.property == "started" then
+			return _Game.session.level.started == condition.value
+		end
+	end
 end
 
 

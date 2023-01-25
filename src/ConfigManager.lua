@@ -19,8 +19,8 @@ function ConfigManager:new()
 	-- Load all game resources.
 	-- The load list is loaded to ensure that no resource will be loaded twice.
 	self.loadList = _LoadJson(_ParsePath("config/loadlist.json"))
-	local resourceTypes = {"images", "sprites", "sounds", "sound_events", "music", "particles", "fonts", "ui2AnimationConfigs", "ui2NodeConfigs", "ui2SequenceConfigs"}
-	local resourcePaths = {"images", "sprites", "sounds", "sound_events", "music", "particles", "fonts", "ui2/animations", "ui2/layouts", "ui2/sequences"}
+	local resourceTypes = {"images", "sprites", "sounds", "sound_events", "music", "particles", "fonts"}
+	local resourcePaths = {"images", "sprites", "sounds", "sound_events", "music", "particles", "fonts"}
 	self.resourceList = {}
 	for i, type in ipairs(resourceTypes) do
 		-- For each type...
@@ -81,14 +81,6 @@ end
 
 
 
----Loads config files which are implemented the new way so that they require to be loaded before the resources.
-function ConfigManager:loadStuffBeforeResources()
-	-- Load some stuff the new way.
-	-- Or actually none?
-end
-
-
-
 ---Loads config files which are implemented the new way so that they require to be loaded after the resources.
 function ConfigManager:loadStuffAfterResources()
     self.shooters = self:loadFolder("config/shooters", "shooter", false, ShooterConfig)
@@ -139,7 +131,7 @@ function ConfigManager:loadFolder(folderPath, name, isNumbers, constructor)
 		_Log:printt("ConfigManager", string.format("Loading %s %s, %s", name, id, path))
 		local item = _LoadJson(_ParsePath(folderPath .. "/" .. path))
 		if constructor then
-			item = constructor(item, folderPath .. "/" .. path)
+			item = constructor(item)
 		end
 		t[id] = item
 	end
@@ -149,8 +141,8 @@ end
 
 
 
----Returns a Shooter Config with a given name.
----@param name string The name of the Config.
+---Returns a shooter config for a given shooter name.
+---@param name string The name of the shooter.
 ---@return ShooterConfig
 function ConfigManager:getShooter(name)
 	return self.shooters[name]
