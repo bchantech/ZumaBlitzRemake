@@ -3,6 +3,14 @@ If you would like to contribute to the project, please contact me on
 Discord: `Shambles#3117`. You can also join the [Sphere Matchers](https://discord.gg/gJgy5x5)
 Discord server, verify yourself, and find the "Zuma Blitz Remake" thread.
 
+## Cloning
+If you are new to Git, or are uncomfortable with command-line,
+it is recommended to download [GitHub Desktop](https://desktop.github.com/).
+
+1. Fork the repository.
+2. Clone your fork.
+2. Start testing, or editing code/assets.
+
 ## Code
 Since ZBR will be implementing features from Zuma Blitz that OpenSMCE does not
 have, you may want to edit the codebase in order for things to, well... work!
