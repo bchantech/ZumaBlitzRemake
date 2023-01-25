@@ -258,7 +258,7 @@ function Level:updateLogic(dt)
 
     -- Targets
     if self.started and not self.finish then
-		if not self.target and self.map.targetPoints and self.targetFrequency then
+		if not self.target and (self.map.targetPoints and self.targetFrequency) then
             local validPoints = {}
 			if self.targetFrequency.type == "seconds" then
 				self.targetSecondsCooldown = self.targetSecondsCooldown - dt
@@ -292,7 +292,7 @@ function Level:updateLogic(dt)
                 )
 				_Game:playSound("sound_events/target_spawn.json")
 			end
-		else
+		elseif self.target then
 			-- don't tick the timer down if there's fruit present
             self.targetSecondsCooldown = self.targetFrequency.delay
 			local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
@@ -975,7 +975,7 @@ function Level:reset()
 	self.stateCount = 0
 
     self.target = nil
-	if self.targetFrequency.type == "seconds" then
+	if self.targetFrequency and self.targetFrequency.type == "seconds" then
         self.targetSecondsCooldown = self.targetFrequency.initialDelay
 		local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
 		if fruitMaster then
