@@ -1,0 +1,23 @@
+{
+    "displayName": "Baco Bouquet",
+    "sprite": "",
+    "effects": {
+        "powerupCooldownModifier": {
+            "time": {
+                "reduceBySeconds": 2
+            },
+            "multiplier": {
+                "reduceBySeconds": 2
+            },
+            "bomb": {
+                "reduceBySeconds": 3
+            },
+            "cannon": {
+                "reduceBySeconds": 3
+            },
+            "color_nuke": {
+                "reduceBySeconds": 3
+            }
+        }
+    }
+}

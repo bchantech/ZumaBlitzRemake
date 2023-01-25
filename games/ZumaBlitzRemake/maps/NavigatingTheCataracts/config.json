@@ -1,0 +1,497 @@
+{
+    "name": "NAVIGATING THE CATARACTS",
+    "paths": [
+        [
+            {
+                "x": -26.0,
+                "y": 40.0,
+                "hidden": false
+            },
+            {
+                "x": 156.0,
+                "y": 40.0,
+                "hidden": false
+            },
+            {
+                "x": 160.0,
+                "y": 40.0,
+                "hidden": false
+            },
+            {
+                "x": 163.4,
+                "y": 40.8,
+                "hidden": false
+            },
+            {
+                "x": 305.8,
+                "y": 78.6,
+                "hidden": true
+            },
+            {
+                "x": 496.3,
+                "y": 130.1,
+                "hidden": false
+            },
+            {
+                "x": 570.0,
+                "y": 149.0,
+                "hidden": false
+            },
+            {
+                "x": 574.0,
+                "y": 149.0,
+                "hidden": false
+            },
+            {
+                "x": 744.0,
+                "y": 149.0,
+                "hidden": false
+            },
+            {
+                "x": 748.0,
+                "y": 149.0,
+                "hidden": false
+            },
+            {
+                "x": 754.888,
+                "y": 150.37,
+                "hidden": false
+            },
+            {
+                "x": 760.728,
+                "y": 154.272,
+                "hidden": false
+            },
+            {
+                "x": 764.63,
+                "y": 160.112,
+                "hidden": false
+            },
+            {
+                "x": 766.0,
+                "y": 167.0,
+                "hidden": false
+            },
+            {
+                "x": 766.0,
+                "y": 191.0,
+                "hidden": false
+            },
+            {
+                "x": 764.63,
+                "y": 197.888,
+                "hidden": false
+            },
+            {
+                "x": 760.728,
+                "y": 203.728,
+                "hidden": false
+            },
+            {
+                "x": 754.888,
+                "y": 207.63,
+                "hidden": false
+            },
+            {
+                "x": 748.0,
+                "y": 209.0,
+                "hidden": false
+            },
+            {
+                "x": 744.0,
+                "y": 209.0,
+                "hidden": false
+            },
+            {
+                "x": 574.0,
+                "y": 209.0,
+                "hidden": false
+            },
+            {
+                "x": 570.0,
+                "y": 209.0,
+                "hidden": false
+            },
+            {
+                "x": 230.0,
+                "y": 301.0,
+                "hidden": false
+            },
+            {
+                "x": 226.0,
+                "y": 301.0,
+                "hidden": false
+            },
+            {
+                "x": 56.0,
+                "y": 301.0,
+                "hidden": false
+            },
+            {
+                "x": 52.0,
+                "y": 301.0,
+                "hidden": false
+            },
+            {
+                "x": 45.1117,
+                "y": 302.37,
+                "hidden": false
+            },
+            {
+                "x": 39.2721,
+                "y": 306.272,
+                "hidden": false
+            },
+            {
+                "x": 35.3702,
+                "y": 312.112,
+                "hidden": false
+            },
+            {
+                "x": 34.0,
+                "y": 319.0,
+                "hidden": false
+            },
+            {
+                "x": 34.0,
+                "y": 343.0,
+                "hidden": false
+            },
+            {
+                "x": 35.3702,
+                "y": 349.888,
+                "hidden": false
+            },
+            {
+                "x": 39.2721,
+                "y": 355.728,
+                "hidden": false
+            },
+            {
+                "x": 45.1117,
+                "y": 359.63,
+                "hidden": false
+            },
+            {
+                "x": 52.0,
+                "y": 361.0,
+                "hidden": false
+            },
+            {
+                "x": 56.0,
+                "y": 361.0,
+                "hidden": false
+            },
+            {
+                "x": 226.0,
+                "y": 361.0,
+                "hidden": false
+            },
+            {
+                "x": 230.0,
+                "y": 361.0,
+                "hidden": false
+            },
+            {
+                "x": 305.3,
+                "y": 381.1,
+                "hidden": true
+            },
+            {
+                "x": 494.8,
+                "y": 432.1,
+                "hidden": false
+            },
+            {
+                "x": 528.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 532.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 715.46,
+                "y": 441.0,
+                "hidden": true
+            },
+            {
+                "x": 755.0,
+                "y": 441.0,
+                "hidden": true
+            }
+        ],
+        [
+            {
+                "x": 826.0,
+                "y": 40.0,
+                "hidden": false
+            },
+            {
+                "x": 644.0,
+                "y": 40.0,
+                "hidden": false
+            },
+            {
+                "x": 640.0,
+                "y": 40.0,
+                "hidden": false
+            },
+            {
+                "x": 637.0,
+                "y": 40.8,
+                "hidden": false
+            },
+            {
+                "x": 230.0,
+                "y": 149.0,
+                "hidden": false
+            },
+            {
+                "x": 226.0,
+                "y": 149.0,
+                "hidden": false
+            },
+            {
+                "x": 56.0,
+                "y": 149.0,
+                "hidden": false
+            },
+            {
+                "x": 52.0,
+                "y": 149.0,
+                "hidden": false
+            },
+            {
+                "x": 45.1117,
+                "y": 150.37,
+                "hidden": false
+            },
+            {
+                "x": 39.2721,
+                "y": 154.272,
+                "hidden": false
+            },
+            {
+                "x": 35.3702,
+                "y": 160.112,
+                "hidden": false
+            },
+            {
+                "x": 34.0,
+                "y": 167.0,
+                "hidden": false
+            },
+            {
+                "x": 34.0,
+                "y": 191.0,
+                "hidden": false
+            },
+            {
+                "x": 35.3702,
+                "y": 197.888,
+                "hidden": false
+            },
+            {
+                "x": 39.2721,
+                "y": 203.728,
+                "hidden": false
+            },
+            {
+                "x": 45.1117,
+                "y": 207.63,
+                "hidden": false
+            },
+            {
+                "x": 52.0,
+                "y": 209.0,
+                "hidden": false
+            },
+            {
+                "x": 56.0,
+                "y": 209.0,
+                "hidden": false
+            },
+            {
+                "x": 226.0,
+                "y": 209.0,
+                "hidden": false
+            },
+            {
+                "x": 230.0,
+                "y": 209.0,
+                "hidden": false
+            },
+            {
+                "x": 306.8,
+                "y": 229.1,
+                "hidden": true
+            },
+            {
+                "x": 495.8,
+                "y": 280.6,
+                "hidden": false
+            },
+            {
+                "x": 570.0,
+                "y": 301.0,
+                "hidden": false
+            },
+            {
+                "x": 574.0,
+                "y": 301.0,
+                "hidden": false
+            },
+            {
+                "x": 744.0,
+                "y": 301.0,
+                "hidden": false
+            },
+            {
+                "x": 748.0,
+                "y": 301.0,
+                "hidden": false
+            },
+            {
+                "x": 754.888,
+                "y": 302.37,
+                "hidden": false
+            },
+            {
+                "x": 760.728,
+                "y": 306.272,
+                "hidden": false
+            },
+            {
+                "x": 764.63,
+                "y": 312.112,
+                "hidden": false
+            },
+            {
+                "x": 766.0,
+                "y": 319.0,
+                "hidden": false
+            },
+            {
+                "x": 766.0,
+                "y": 343.0,
+                "hidden": false
+            },
+            {
+                "x": 764.63,
+                "y": 349.888,
+                "hidden": false
+            },
+            {
+                "x": 760.728,
+                "y": 355.728,
+                "hidden": false
+            },
+            {
+                "x": 754.888,
+                "y": 359.63,
+                "hidden": false
+            },
+            {
+                "x": 748.0,
+                "y": 361.0,
+                "hidden": false
+            },
+            {
+                "x": 744.0,
+                "y": 361.0,
+                "hidden": false
+            },
+            {
+                "x": 574.0,
+                "y": 361.0,
+                "hidden": false
+            },
+            {
+                "x": 570.0,
+                "y": 361.0,
+                "hidden": false
+            },
+            {
+                "x": 272.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 268.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 81.479,
+                "y": 441.0,
+                "hidden": true
+            },
+            {
+                "x": 44.0,
+                "y": 441.0,
+                "hidden": true
+            }
+        ]
+    ],
+    "sprites": [
+        {
+            "x": 0,
+            "y": 0,
+            "path": "background.json",
+            "internal": true,
+            "background": true
+        },
+        {
+            "x": 300,
+            "y": 68,
+            "path": "mask1_path1.json",
+            "internal": true,
+            "background": false
+        },
+        {
+            "x": 300,
+            "y": 220,
+            "path": "mask2_path1.json",
+            "internal": true,
+            "background": false
+        },
+        {
+            "x": 300,
+            "y": 371,
+            "path": "mask3_path1.json",
+            "internal": true,
+            "background": false
+        },
+        {
+            "x": 7,
+            "y": 402,
+            "path": "sprites/game/pyramid_shadow.json",
+            "internal": false,
+            "background": true
+        },
+        {
+            "x": 7,
+            "y": 402,
+            "path": "sprites/game/pyramid_right.json",
+            "internal": false,
+            "background": false
+        },
+        {
+            "x": 716,
+            "y": 403,
+            "path": "sprites/game/pyramid_shadow.json",
+            "internal": false,
+            "background": true
+        },
+        {
+            "x": 714,
+            "y": 401,
+            "path": "sprites/game/pyramid_left.json",
+            "internal": false,
+            "background": false
+        }
+    ]
+}

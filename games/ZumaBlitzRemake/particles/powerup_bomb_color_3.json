@@ -1,0 +1,195 @@
+[
+    {
+        "name": "shadow",
+        "pos": {
+            "x": 12.0,
+            "y": 12.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 0.5,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": 0.04,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": null,
+            "sprite": "sprites/particles/gem_shadow.json",
+            "animationFrameCount": 1,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 1.0,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    },
+    {
+        "name": "gem",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 1.0,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": null,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": null,
+            "sprite": "sprites/powerups/gem.json",
+            "animationFrameCount": 1,
+            "animationSpeed": 30.0,
+            "animationLoop": false,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 1.0,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    },
+    {
+        "name": "cartouche",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 2.0,
+        "spawnCount": 1,
+        "spawnMax": 1,
+        "spawnDelay": 0.2,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "lifespan": null,
+            "sprite": "sprites/powerups/bomb_color_3.json",
+            "animationFrameCount": 1,
+            "animationSpeed": 30.0,
+            "animationLoop": true,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 1.0,
+            "posRelative": true,
+            "rainbow": false,
+            "rainbowSpeed": 0,
+            "colorPaletteSpeed": 33.333333333333336
+        }
+    },
+    {
+        "name": "sparks",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": null,
+        "spawnCount": 7,
+        "spawnMax": 15,
+        "spawnDelay": 0.04,
+        "particleData": {
+            "speedMode": "loose",
+            "spawnScale": {
+                "x": {
+                    "type": "randomFloat",
+                    "min": -16.0,
+                    "max": 16.0
+                },
+                "y": {
+                    "type": "randomFloat",
+                    "min": -16.0,
+                    "max": 16.0
+                }
+            },
+            "speed": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "acceleration": {
+                "x": 0.0,
+                "y": -200.0
+            },
+            "lifespan": {
+                "type": "randomFloat",
+                "min": 0.75,
+                "max": 1.0
+            },
+            "sprite": "sprites/particles/spark_ball_3.json",
+            "animationFrameCount": 16,
+            "animationSpeed": 60.0,
+            "animationLoop": true,
+            "animationFrameRandom": false,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.5,
+            "posRelative": false,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    }
+]

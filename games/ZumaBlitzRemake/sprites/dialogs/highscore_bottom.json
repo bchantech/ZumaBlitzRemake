@@ -1,0 +1,21 @@
+{
+    "path": "images/dialogs/highscore_bottom.png",
+    "frame_size": {
+        "x": 800,
+        "y": 43
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

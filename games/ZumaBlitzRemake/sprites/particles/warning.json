@@ -1,0 +1,21 @@
+{
+    "path": "images/particles/warning.png",
+    "frame_size": {
+        "x": 45,
+        "y": 45
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 8,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

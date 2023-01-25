@@ -1,0 +1,9 @@
+{
+    "displayName": "The Last Bite",
+    "sprite": "",
+    "effects": {
+        "hurrahExplosionRadiusModifier": 0.30,
+        "hurrahPowerupExplosionScore": 10000,
+        "lastHurrahPointsPerBall": 1000
+    }
+}

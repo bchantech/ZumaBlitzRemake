@@ -1,0 +1,41 @@
+{
+    "path": "images/main/button_changeplayer.png",
+    "frame_size": {
+        "x": 31,
+        "y": 24
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 24
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 48
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

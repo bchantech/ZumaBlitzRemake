@@ -1,0 +1,10 @@
+{
+    "displayName": "Color Nuke",
+    "type": "addPowerup",
+    "powerup": "colorNuke",
+    "levels": [
+        {"frequency": 20},
+        {"frequency": 16},
+        {"targetBothCurves": true}
+    ]
+}

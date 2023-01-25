@@ -1,0 +1,40 @@
+{
+    "$schema": "../../../../schemas/config/Sphere.json",
+	"spriteRollingSpeed": 1.15,
+    "sprite": "sprites/game/ball_3.json",
+    "destroyParticle": "particles/collapse_ball_3.json",
+    "powerupSprites": {
+        "time": "sprites/game/time_ball_3.json",
+        "multiplier": "sprites/game/multiplier_ball_3.json"
+    },
+    "multiplierOverlaySprites": {
+        "2": "sprites/game/multiplier_overlay_x2.json",
+        "3": "sprites/game/multiplier_overlay_x3.json",
+        "4": "sprites/game/multiplier_overlay_x4.json",
+        "5": "sprites/game/multiplier_overlay_x5.json",
+        "6": "sprites/game/multiplier_overlay_x6.json",
+        "7": "sprites/game/multiplier_overlay_x7.json",
+        "8": "sprites/game/multiplier_overlay_x8.json",
+        "9": "sprites/game/multiplier_overlay_x9.json",
+        "10": "sprites/game/multiplier_overlay_x10.json"
+    },
+    "color": {
+        "r": 1,
+        "g": 0,
+        "b": 0
+    },
+    "interchangeable": true,
+    "shootBehavior": {
+        "type": "normal"
+    },
+    "shootSound": "sound_events/sphere_shoot_normal.json",
+    "hitBehavior": {
+        "type": "normal"
+    },
+    "hitSound": "sound_events/sphere_hit_normal.json",
+    "matches": [
+        -1,
+        3
+    ],
+    "matchFont": "fonts/score3.json"
+}

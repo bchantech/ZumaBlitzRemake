@@ -1,0 +1,9 @@
+{
+    "displayName": "Sands of Time",
+    "type": "timeBallAmount",
+    "levels": [
+        {"additiveAmount": 1},
+        {"additiveAmount": 2},
+        {"additiveAmount": 3}
+    ]
+}

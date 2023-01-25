@@ -1,0 +1,8 @@
+{
+    "displayName": "Pyro Pig",
+    "sprite": "",
+    "effects": {
+        "speedAdditiveModifier": 0.22,
+        "explosionRadiusModifier": 0.40
+    }
+}

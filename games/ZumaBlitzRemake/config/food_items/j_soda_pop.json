@@ -1,0 +1,9 @@
+{
+    "displayName": "J $oda Pop",
+    "sprite": "",
+    "effects": {
+        "shotSpeedModifier": 0.22,
+        "powerupExplosionRadiusModifier": 0.40,
+        "fireballScoreModifier": 2
+    }
+}

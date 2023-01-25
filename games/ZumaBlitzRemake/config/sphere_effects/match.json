@@ -1,0 +1,18 @@
+{
+    "$schema": "../../../../schemas/config/sphere_effect.json",
+    "time": 0,
+    "infectionSize": 0,
+    "infectionTime": 0,
+    "destroySound": "hardcoded",
+    "destroyFont": "hardcoded",
+    "destroyCollectible": null,
+    "levelLossProtection": true,
+    "immobile": false,
+    "fragile": false,
+    "canBoostCombo": true,
+    "canBoostChain": true,
+    "applyChainMultiplier": true,
+    "canKeepCombo": true,
+    "causeCheck": true,
+    "ghostTime": 0.3
+}

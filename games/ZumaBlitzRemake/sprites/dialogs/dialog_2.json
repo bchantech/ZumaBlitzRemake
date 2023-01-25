@@ -1,0 +1,21 @@
+{
+    "path": "images/dialogs/dialog_2.png",
+    "frame_size": {
+        "x": 350,
+        "y": 250
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

@@ -1,0 +1,9 @@
+{
+    "displayName": "Fruit Master",
+    "type": "targetCooldownModifier",
+    "levels": [
+        {"subtractiveSeconds": 3},
+        {"subtractiveSeconds": 5},
+        {"subtractiveSeconds": 7}
+    ]
+}

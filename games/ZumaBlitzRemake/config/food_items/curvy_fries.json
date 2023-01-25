@@ -1,0 +1,8 @@
+{
+    "displayName": "Curvy Fries",
+    "sprite": "",
+    "effects": {
+        "curveClearsGiveOneSecond": true,
+        "curveClearPointModifier": 500
+    }
+}

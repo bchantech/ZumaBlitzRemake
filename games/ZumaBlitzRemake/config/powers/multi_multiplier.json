@@ -1,0 +1,14 @@
+{
+    "displayName": "Multi-Multiplier",
+    "type": "startingMultiplierModifier",
+    "levels": [
+        {
+            "displayName": "Doubler",
+            "additiveAmount": 1
+        },
+        {
+            "displayName": "Tripler",
+            "additiveAmount": 2
+        }
+    ]
+}

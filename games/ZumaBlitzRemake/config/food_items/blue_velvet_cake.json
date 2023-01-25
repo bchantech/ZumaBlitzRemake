@@ -1,0 +1,15 @@
+{
+    "displayName": "Blue Velvet Cake",
+    "sprite": "",
+    "variants": {
+        "progressive": {
+            "displayName": "Flo's Cupcakes",
+            "sprite": ""
+        }
+    },
+    "effects": {
+        "fireballBaseScoreModifier": 500,
+        "fireballScorePerBallModifier": 50,
+        "fireballSprite": ""
+    }
+}

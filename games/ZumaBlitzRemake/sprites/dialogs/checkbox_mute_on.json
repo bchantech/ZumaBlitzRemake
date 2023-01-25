@@ -1,0 +1,51 @@
+{
+    "path": "images/dialogs/checkbox_mute_on.png",
+    "frame_size": {
+        "x": 27,
+        "y": 27
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        },
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

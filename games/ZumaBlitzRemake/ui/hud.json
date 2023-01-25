@@ -1,0 +1,253 @@
+{
+	"inheritShow":false,
+	"inheritHide":true,
+    "type": "none",
+    "pos": {
+        "x": 0,
+        "y": 0
+    },
+    "alpha": 1,
+    "children": {
+        "Frame": {
+			"inheritShow":true,
+			"inheritHide":true,
+            "type": "none",
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "alpha": 1,
+            "children": {
+                "Hud": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "Hud",
+                    "sprite": "sprites/game/hud.json"
+                },
+                "Text_Stage": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "text",
+                    "pos": {
+                        "x": 120,
+                        "y": 543
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "HudControls",
+                    "font": "fonts/hud2.json",
+                    "align": {
+                        "x": 0.5,
+                        "y": 0
+                    },
+                    "text": ""
+                },
+                "Text_Lives": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "text",
+                    "pos": {
+                        "x": 178,
+                        "y": 504
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "HudControls",
+                    "font": "fonts/hud.json",
+                    "align": {
+                        "x": 0.5,
+                        "y": 0
+                    },
+                    "text": ""
+                },
+                "Text_Coins": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "text",
+                    "pos": {
+                        "x": 229,
+                        "y": 544
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "HudControls",
+                    "font": "fonts/hud2.json",
+                    "align": {
+                        "x": 0.5,
+                        "y": 0
+                    },
+                    "text": ""
+                },
+                "Text_Score": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "text",
+                    "pos": {
+                        "x": 589,
+                        "y": 526
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "HudControls",
+                    "font": "fonts/hud.json",
+                    "align": {
+                        "x": 0.5,
+                        "y": 0
+                    },
+                    "text": ""
+                },
+                "Psys_NewLife": {
+					"inheritShow":false,
+					"inheritHide":false,
+					"type": "particle",
+					"pos": {
+						"x": 61,
+						"y": 7
+					},
+					"alpha": 1,
+					"children": {},
+					"animations": {},
+					"sounds":{
+						"in_":"sound_events/ui_extra_life.json"
+					},
+					"layer": "HudControls3",
+					"path": "particles/extra_life.json",
+					"hideDelay":0
+				},
+                "Progress": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "spriteProgressBlitz",
+                    "pos": {
+                        "x": 300.5,
+                        "y": 469
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "HudControls",
+                    "sprite": "sprites/game/progress.json",
+					"value":0,
+					"smooth":true
+                },
+                "Blitz_Meter": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 378,
+                        "y": 551
+                    },
+                    "align": {
+                        "x": 48,
+                        "y": 109
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "HudControls2",
+                    "sprite": "sprites/game/blitzmeter.json",
+					"value":0,
+					"smooth":true
+                },
+                "Button_Menu": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "spriteButton",
+                    "pos": {
+                        "x": 715,
+                        "y": 521
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "sprite": "sprites/game/button_menu.json",
+                    "layer": "HudControls",
+					"hotkey": "escape",
+					"callbacks": {
+						"buttonClick": "hudMenu"
+					}
+                },
+                "Button_Pause": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "spriteButton",
+                    "pos": {
+                        "x": 800,
+                        "y": 600
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "sprite": "sprites/game/button_menu.json",
+                    "layer": "HudControls",
+					"hotkey": "space",
+					"callbacks": {
+						"buttonClick": "hudPause"
+					}
+                },
+                "Button_AdvanceFrame": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "spriteButton",
+                    "pos": {
+                        "x": 800,
+                        "y": 600
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "sprite": "sprites/game/button_menu.json",
+                    "layer": "HudControls"
+                }
+            },
+            "sounds": {}
+        },
+		"Banner_GameOver":"ui/banner_gameover.json",
+		"Banner_HighScore":"ui/banner_highscore.json",
+		"Banner_Intro":"ui/banner_intro.json",
+		"Banner_LevelComplete":"ui/banner_levelcomplete.json",
+		"Banner_LevelLose":"ui/banner_levellose.json",
+		"Banner_Paused":"ui/banner_paused.json",
+		"Banner_QuitBackground":"ui/banner_quitbackground.json",
+		"Banner_StageMap":"ui/banner_stagemap.json",
+		"Banner_StageMapTrans":"ui/banner_stagemaptrans.json"
+	},
+	"animations": {
+		"in_": {
+			"type": "move",
+			"time": 0.5,
+			"startPos": {"x":0,"y":0},
+			"endPos": {"x":0,"y":0}
+		},
+		"out": {
+			"type": "move",
+			"time": 0.5,
+			"startPos": {"x":0,"y":0},
+			"endPos": {"x":0,"y":0}
+		}
+	},
+    "sounds": {}
+}

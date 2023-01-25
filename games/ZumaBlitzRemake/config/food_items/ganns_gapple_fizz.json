@@ -1,0 +1,11 @@
+{
+    "displayName": "Gann's Gapple Fizz",
+    "sprite": "",
+    "effects": {
+        "shotSpeedModifier": 0.22,
+        "maximumGapShotScoreModifier": 3000,
+        "$comment": "The two value below are temporary since B.Chan's guide doesnt exactly tell how how much",
+        "largeGapScoreThreshold": 10,
+        "extraLargeGapScoreThreshold": 20
+    }
+}

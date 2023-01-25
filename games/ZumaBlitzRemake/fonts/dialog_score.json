@@ -1,0 +1,54 @@
+{
+    "type": "image",
+    "image": "images/fonts/dialog_score.png",
+    "characters": {
+        "0": {
+            "offset": 0,
+            "width": 33
+        },
+        "1": {
+            "offset": 33,
+            "width": 14
+        },
+        "2": {
+            "offset": 47,
+            "width": 25
+        },
+        "3": {
+            "offset": 72,
+            "width": 24
+        },
+        "4": {
+            "offset": 96,
+            "width": 30
+        },
+        "5": {
+            "offset": 126,
+            "width": 23
+        },
+        "6": {
+            "offset": 149,
+            "width": 27
+        },
+        "7": {
+            "offset": 176,
+            "width": 25
+        },
+        "8": {
+            "offset": 201,
+            "width": 27
+        },
+        "9": {
+            "offset": 228,
+            "width": 28
+        },
+        ",": {
+            "offset": 256,
+            "width": 15
+        },
+        " ": {
+            "offset": 271,
+            "width": 12
+        }
+    }
+}

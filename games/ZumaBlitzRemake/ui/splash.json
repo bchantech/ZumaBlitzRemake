@@ -1,0 +1,16 @@
+{
+	"inheritShow":true,
+	"inheritHide":true,
+    "type": "none",
+    "pos": {
+        "x": 0,
+        "y": 0
+    },
+    "alpha": 1,
+    "children": {
+        "Disclaimer": "ui/splash_disclaimer.json",
+        "Main": "ui/splash_main.json"
+    },
+    "animations": {},
+    "sounds": {}
+}

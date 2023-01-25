@@ -1,0 +1,9 @@
+{
+    "displayName": "Chain Blast",
+    "type": "chainBlast",
+    "levels": [
+        {"initialChain": 10, "consecutiveChains": 5},
+        {"initialChain": 9, "consecutiveChains": 4},
+        {"radius": 40}
+    ]
+}

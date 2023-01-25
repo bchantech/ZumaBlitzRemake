@@ -1,0 +1,7 @@
+{
+    "displayName": "Sticky Apple",
+    "sprite": "",
+    "effects": {
+        "speedSubtractiveModifier": 0.15
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "displayName": "Inferno Frog",
+    "type": "hotFrogShotModifier",
+    "levels": [
+        {"additiveAmount": 1},
+        {"additiveAmount": 2}
+    ]
+}

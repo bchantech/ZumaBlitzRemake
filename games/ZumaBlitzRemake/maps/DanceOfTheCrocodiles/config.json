@@ -1,0 +1,590 @@
+{
+    "name": "DANCE OF THE CROCODILES",
+    "paths": [
+        [
+            {
+                "x": 382.2,
+                "y": -17.5,
+                "hidden": false
+            },
+            {
+                "x": 382.2,
+                "y": 15.5,
+                "hidden": false
+            },
+            {
+                "x": 380.982,
+                "y": 21.6229,
+                "hidden": false
+            },
+            {
+                "x": 377.514,
+                "y": 26.8137,
+                "hidden": false
+            },
+            {
+                "x": 372.323,
+                "y": 30.2821,
+                "hidden": false
+            },
+            {
+                "x": 366.2,
+                "y": 31.5,
+                "hidden": false
+            },
+            {
+                "x": 362.0,
+                "y": 31.5,
+                "hidden": false
+            },
+            {
+                "x": 116.5,
+                "y": 31.5,
+                "hidden": false
+            },
+            {
+                "x": 112.5,
+                "y": 31.5,
+                "hidden": false
+            },
+            {
+                "x": 106.377,
+                "y": 32.7179,
+                "hidden": false
+            },
+            {
+                "x": 101.186,
+                "y": 36.1863,
+                "hidden": false
+            },
+            {
+                "x": 97.7179,
+                "y": 41.3771,
+                "hidden": false
+            },
+            {
+                "x": 96.5,
+                "y": 47.5,
+                "hidden": false
+            },
+            {
+                "x": 96.5,
+                "y": 51.5,
+                "hidden": false
+            },
+            {
+                "x": 96.5,
+                "y": 125.5,
+                "hidden": false
+            },
+            {
+                "x": 96.5,
+                "y": 129.5,
+                "hidden": false
+            },
+            {
+                "x": 97.7179,
+                "y": 135.623,
+                "hidden": false
+            },
+            {
+                "x": 101.186,
+                "y": 140.814,
+                "hidden": false
+            },
+            {
+                "x": 106.377,
+                "y": 144.282,
+                "hidden": false
+            },
+            {
+                "x": 112.5,
+                "y": 145.5,
+                "hidden": false
+            },
+            {
+                "x": 116.5,
+                "y": 145.5,
+                "hidden": false
+            },
+            {
+                "x": 563.7,
+                "y": 145.5,
+                "hidden": false
+            },
+            {
+                "x": 567.7,
+                "y": 145.5,
+                "hidden": true
+            },
+            {
+                "x": 573.823,
+                "y": 146.718,
+                "hidden": true
+            },
+            {
+                "x": 579.014,
+                "y": 150.186,
+                "hidden": true
+            },
+            {
+                "x": 582.482,
+                "y": 155.377,
+                "hidden": true
+            },
+            {
+                "x": 583.7,
+                "y": 161.5,
+                "hidden": true
+            },
+            {
+                "x": 583.7,
+                "y": 243.5,
+                "hidden": true
+            },
+            {
+                "x": 582.482,
+                "y": 249.623,
+                "hidden": true
+            },
+            {
+                "x": 579.014,
+                "y": 254.814,
+                "hidden": true
+            },
+            {
+                "x": 573.823,
+                "y": 258.282,
+                "hidden": true
+            },
+            {
+                "x": 567.7,
+                "y": 259.5,
+                "hidden": true
+            },
+            {
+                "x": 563.7,
+                "y": 259.5,
+                "hidden": false
+            },
+            {
+                "x": 148.5,
+                "y": 259.5,
+                "hidden": false
+            },
+            {
+                "x": 144.5,
+                "y": 259.5,
+                "hidden": false
+            },
+            {
+                "x": 140.673,
+                "y": 260.261,
+                "hidden": false
+            },
+            {
+                "x": 137.429,
+                "y": 262.429,
+                "hidden": false
+            },
+            {
+                "x": 135.261,
+                "y": 265.673,
+                "hidden": false
+            },
+            {
+                "x": 134.5,
+                "y": 269.5,
+                "hidden": false
+            },
+            {
+                "x": 135.261,
+                "y": 273.327,
+                "hidden": false
+            },
+            {
+                "x": 137.429,
+                "y": 276.571,
+                "hidden": false
+            },
+            {
+                "x": 139.429,
+                "y": 278.571,
+                "hidden": false
+            },
+            {
+                "x": 264.849,
+                "y": 403.151,
+                "hidden": false
+            },
+            {
+                "x": 266.849,
+                "y": 405.151,
+                "hidden": false
+            },
+            {
+                "x": 271.401,
+                "y": 411.964,
+                "hidden": false
+            },
+            {
+                "x": 273.0,
+                "y": 420.0,
+                "hidden": false
+            },
+            {
+                "x": 271.401,
+                "y": 428.036,
+                "hidden": false
+            },
+            {
+                "x": 266.849,
+                "y": 434.849,
+                "hidden": false
+            },
+            {
+                "x": 260.036,
+                "y": 439.401,
+                "hidden": false
+            },
+            {
+                "x": 252.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 248.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 84.3412,
+                "y": 441.0,
+                "hidden": true
+            },
+            {
+                "x": 46.0,
+                "y": 441.0,
+                "hidden": true
+            }
+        ],
+        [
+            {
+                "x": 416.8,
+                "y": -17.5,
+                "hidden": false
+            },
+            {
+                "x": 416.8,
+                "y": 15.5,
+                "hidden": false
+            },
+            {
+                "x": 418.018,
+                "y": 21.6229,
+                "hidden": false
+            },
+            {
+                "x": 421.486,
+                "y": 26.8137,
+                "hidden": false
+            },
+            {
+                "x": 426.677,
+                "y": 30.2821,
+                "hidden": false
+            },
+            {
+                "x": 432.8,
+                "y": 31.5,
+                "hidden": false
+            },
+            {
+                "x": 436.5,
+                "y": 31.5,
+                "hidden": false
+            },
+            {
+                "x": 686.0,
+                "y": 31.5,
+                "hidden": false
+            },
+            {
+                "x": 687.5,
+                "y": 31.5,
+                "hidden": false
+            },
+            {
+                "x": 693.623,
+                "y": 32.7179,
+                "hidden": false
+            },
+            {
+                "x": 698.814,
+                "y": 36.1863,
+                "hidden": false
+            },
+            {
+                "x": 702.282,
+                "y": 41.3771,
+                "hidden": false
+            },
+            {
+                "x": 703.5,
+                "y": 47.5,
+                "hidden": false
+            },
+            {
+                "x": 703.5,
+                "y": 49.0,
+                "hidden": false
+            },
+            {
+                "x": 703.5,
+                "y": 72.5,
+                "hidden": false
+            },
+            {
+                "x": 703.5,
+                "y": 73.5,
+                "hidden": false
+            },
+            {
+                "x": 702.282,
+                "y": 79.6229,
+                "hidden": false
+            },
+            {
+                "x": 698.814,
+                "y": 84.8137,
+                "hidden": false
+            },
+            {
+                "x": 693.623,
+                "y": 88.2821,
+                "hidden": false
+            },
+            {
+                "x": 687.5,
+                "y": 89.5,
+                "hidden": false
+            },
+            {
+                "x": 686.0,
+                "y": 89.5,
+                "hidden": false
+            },
+            {
+                "x": 183.8,
+                "y": 89.5,
+                "hidden": false
+            },
+            {
+                "x": 182.3,
+                "y": 89.5,
+                "hidden": true
+            },
+            {
+                "x": 176.177,
+                "y": 90.7179,
+                "hidden": true
+            },
+            {
+                "x": 170.986,
+                "y": 94.1863,
+                "hidden": true
+            },
+            {
+                "x": 167.518,
+                "y": 99.3771,
+                "hidden": true
+            },
+            {
+                "x": 166.3,
+                "y": 105.5,
+                "hidden": true
+            },
+            {
+                "x": 166.3,
+                "y": 187.1,
+                "hidden": true
+            },
+            {
+                "x": 167.518,
+                "y": 193.223,
+                "hidden": true
+            },
+            {
+                "x": 170.986,
+                "y": 198.414,
+                "hidden": true
+            },
+            {
+                "x": 176.177,
+                "y": 201.882,
+                "hidden": true
+            },
+            {
+                "x": 182.3,
+                "y": 203.1,
+                "hidden": true
+            },
+            {
+                "x": 183.8,
+                "y": 203.1,
+                "hidden": false
+            },
+            {
+                "x": 685.91,
+                "y": 203.09,
+                "hidden": false
+            },
+            {
+                "x": 687.51,
+                "y": 203.09,
+                "hidden": false
+            },
+            {
+                "x": 690.954,
+                "y": 203.775,
+                "hidden": false
+            },
+            {
+                "x": 693.874,
+                "y": 205.726,
+                "hidden": false
+            },
+            {
+                "x": 695.825,
+                "y": 208.646,
+                "hidden": false
+            },
+            {
+                "x": 696.51,
+                "y": 212.09,
+                "hidden": false
+            },
+            {
+                "x": 695.825,
+                "y": 215.534,
+                "hidden": false
+            },
+            {
+                "x": 693.874,
+                "y": 218.454,
+                "hidden": false
+            },
+            {
+                "x": 693.074,
+                "y": 219.454,
+                "hidden": false
+            },
+            {
+                "x": 509.151,
+                "y": 403.151,
+                "hidden": false
+            },
+            {
+                "x": 507.151,
+                "y": 405.151,
+                "hidden": false
+            },
+            {
+                "x": 502.599,
+                "y": 411.964,
+                "hidden": false
+            },
+            {
+                "x": 501.0,
+                "y": 420.0,
+                "hidden": false
+            },
+            {
+                "x": 502.599,
+                "y": 428.036,
+                "hidden": false
+            },
+            {
+                "x": 507.151,
+                "y": 434.849,
+                "hidden": false
+            },
+            {
+                "x": 513.964,
+                "y": 439.401,
+                "hidden": false
+            },
+            {
+                "x": 522.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 523.5,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 716.038,
+                "y": 441.0,
+                "hidden": true
+            },
+            {
+                "x": 753.0,
+                "y": 441.0,
+                "hidden": true
+            }
+        ]
+    ],
+    "sprites": [
+        {
+            "x": 0,
+            "y": 0,
+            "path": "background.json",
+            "internal": true,
+            "background": true
+        },
+        {
+            "x": 150,
+            "y": 105,
+            "path": "mask_path1.json",
+            "internal": true,
+            "background": false
+        },
+        {
+            "x": 527,
+            "y": 161,
+            "path": "mask_path2.json",
+            "internal": true,
+            "background": false
+        },
+        {
+            "x": 715,
+            "y": 403,
+            "path": "sprites/game/pyramid_shadow.json",
+            "internal": false,
+            "background": true
+        },
+        {
+            "x": 713,
+            "y": 401,
+            "path": "sprites/game/pyramid_left.json",
+            "internal": false,
+            "background": false
+        },
+        {
+            "x": 9,
+            "y": 401,
+            "path": "sprites/game/pyramid_shadow.json",
+            "internal": false,
+            "background": true
+        },
+        {
+            "x": 9,
+            "y": 401,
+            "path": "sprites/game/pyramid_right.json",
+            "internal": false,
+            "background": false
+        }
+    ]
+}

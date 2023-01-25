@@ -1,0 +1,10 @@
+{
+    "displayName": "Ivan's Last Call",
+    "sprite": "",
+    "effects": {
+        "shotSpeedModifier": 0.22,
+        "hurrahExplosionRadiusModifier": 0.30,
+        "hurrahPowerupExplosionScore": 10000,
+        "lastHurrahPointsPerBall": 1000
+    }
+}

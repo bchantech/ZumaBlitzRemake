@@ -1,0 +1,21 @@
+{
+    "path": "images/game/time_balls.png",
+    "frame_size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 96,
+                "y": 32
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

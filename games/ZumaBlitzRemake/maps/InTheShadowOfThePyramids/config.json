@@ -1,0 +1,340 @@
+{
+    "name": "IN THE SHADOW OF THE PYRAMIDS",
+    "paths": [
+        [
+            {
+                "x": -17.9268,
+                "y": 377.939,
+                "hidden": false
+            },
+            {
+                "x": 45.5,
+                "y": 378.0,
+                "hidden": false
+            },
+            {
+                "x": 49.3268,
+                "y": 377.239,
+                "hidden": false
+            },
+            {
+                "x": 52.5711,
+                "y": 375.071,
+                "hidden": false
+            },
+            {
+                "x": 383.833,
+                "y": 43.8327,
+                "hidden": false
+            },
+            {
+                "x": 389.186,
+                "y": 40.256,
+                "hidden": false
+            },
+            {
+                "x": 395.5,
+                "y": 39.0,
+                "hidden": false
+            },
+            {
+                "x": 401.814,
+                "y": 40.256,
+                "hidden": false
+            },
+            {
+                "x": 407.167,
+                "y": 43.8327,
+                "hidden": false
+            },
+            {
+                "x": 712.097,
+                "y": 347.363,
+                "hidden": false
+            },
+            {
+                "x": 714.438,
+                "y": 350.867,
+                "hidden": false
+            },
+            {
+                "x": 715.26,
+                "y": 355.0,
+                "hidden": false
+            },
+            {
+                "x": 714.438,
+                "y": 359.133,
+                "hidden": false
+            },
+            {
+                "x": 712.097,
+                "y": 362.637,
+                "hidden": false
+            },
+            {
+                "x": 689.137,
+                "y": 386.097,
+                "hidden": false
+            },
+            {
+                "x": 685.633,
+                "y": 388.438,
+                "hidden": false
+            },
+            {
+                "x": 681.5,
+                "y": 389.26,
+                "hidden": false
+            },
+            {
+                "x": 677.367,
+                "y": 388.438,
+                "hidden": false
+            },
+            {
+                "x": 673.863,
+                "y": 386.097,
+                "hidden": false
+            },
+            {
+                "x": 407.167,
+                "y": 119.833,
+                "hidden": false
+            },
+            {
+                "x": 401.814,
+                "y": 116.256,
+                "hidden": false
+            },
+            {
+                "x": 395.5,
+                "y": 115.0,
+                "hidden": false
+            },
+            {
+                "x": 389.186,
+                "y": 116.256,
+                "hidden": false
+            },
+            {
+                "x": 383.833,
+                "y": 119.833,
+                "hidden": false
+            },
+            {
+                "x": 78.9289,
+                "y": 424.429,
+                "hidden": false
+            },
+            {
+                "x": 76.7612,
+                "y": 427.673,
+                "hidden": false
+            },
+            {
+                "x": 76.0,
+                "y": 431.5,
+                "hidden": false
+            },
+            {
+                "x": 76.7612,
+                "y": 435.327,
+                "hidden": false
+            },
+            {
+                "x": 78.9289,
+                "y": 438.571,
+                "hidden": false
+            },
+            {
+                "x": 82.1732,
+                "y": 440.739,
+                "hidden": false
+            },
+            {
+                "x": 86.0,
+                "y": 441.5,
+                "hidden": false
+            },
+            {
+                "x": 503.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 505.0,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 510.74,
+                "y": 439.858,
+                "hidden": false
+            },
+            {
+                "x": 515.607,
+                "y": 436.607,
+                "hidden": false
+            },
+            {
+                "x": 518.858,
+                "y": 431.74,
+                "hidden": false
+            },
+            {
+                "x": 520.0,
+                "y": 426.0,
+                "hidden": false
+            },
+            {
+                "x": 520.0,
+                "y": 424.0,
+                "hidden": false
+            },
+            {
+                "x": 520.0,
+                "y": 403.0,
+                "hidden": false
+            },
+            {
+                "x": 520.0,
+                "y": 401.0,
+                "hidden": false
+            },
+            {
+                "x": 518.858,
+                "y": 395.26,
+                "hidden": false
+            },
+            {
+                "x": 515.607,
+                "y": 390.393,
+                "hidden": false
+            },
+            {
+                "x": 510.74,
+                "y": 387.142,
+                "hidden": false
+            },
+            {
+                "x": 505.0,
+                "y": 386.0,
+                "hidden": false
+            },
+            {
+                "x": 503.0,
+                "y": 386.0,
+                "hidden": false
+            },
+            {
+                "x": 218.0,
+                "y": 386.5,
+                "hidden": false
+            },
+            {
+                "x": 214.173,
+                "y": 385.739,
+                "hidden": false
+            },
+            {
+                "x": 210.929,
+                "y": 383.571,
+                "hidden": false
+            },
+            {
+                "x": 208.761,
+                "y": 380.327,
+                "hidden": false
+            },
+            {
+                "x": 208.0,
+                "y": 376.5,
+                "hidden": false
+            },
+            {
+                "x": 208.761,
+                "y": 372.673,
+                "hidden": false
+            },
+            {
+                "x": 210.929,
+                "y": 369.429,
+                "hidden": false
+            },
+            {
+                "x": 383.833,
+                "y": 197.833,
+                "hidden": false
+            },
+            {
+                "x": 389.186,
+                "y": 194.256,
+                "hidden": false
+            },
+            {
+                "x": 395.5,
+                "y": 193.0,
+                "hidden": false
+            },
+            {
+                "x": 401.814,
+                "y": 194.256,
+                "hidden": false
+            },
+            {
+                "x": 407.167,
+                "y": 197.833,
+                "hidden": false
+            },
+            {
+                "x": 650.0,
+                "y": 439.5,
+                "hidden": false
+            },
+            {
+                "x": 651.5,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 653.5,
+                "y": 441.0,
+                "hidden": false
+            },
+            {
+                "x": 716.266,
+                "y": 441.0,
+                "hidden": true
+            },
+            {
+                "x": 753.0,
+                "y": 441.0,
+                "hidden": true
+            }
+        ]
+    ],
+    "sprites": [
+        {
+            "x": 0,
+            "y": 0,
+            "path": "background.json",
+            "internal": true,
+            "background": true
+        },
+        {
+            "x": 715,
+            "y": 402,
+            "path": "sprites/game/pyramid_shadow.json",
+            "internal": false,
+            "background": true
+        },
+        {
+            "x": 713,
+            "y": 400,
+            "path": "sprites/game/pyramid_left.json",
+            "internal": false,
+            "background": false
+        }
+    ]
+}
