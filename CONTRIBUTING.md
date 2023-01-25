@@ -1,107 +1,102 @@
-This is a set of contribution guidelines that should be followed by contributors in order to create a well-readable and consistent code.
+# Contributing to Zuma Blitz Remake
+If you would like to contribute to the project, please contact me on
+Discord: `Shambles#3117`. You can also join the [Sphere Matchers](https://discord.gg/gJgy5x5)
+Discord server, verify yourself, and find the "Zuma Blitz Remake" thread.
 
-Due to IDE changes throughout the lifecycle of this project (Notepad++ -> Atom -> VS Code) and constant improvements of my coding style :'), these guidelines may not apply to already existing code.
-However, it is strongly recommended that all new code is following the rules below.
-Over time, improvements over already existing code in order for it to support these standards as well are expected and everyone's welcome to take a step in that direction.
+## Code
+Since ZBR will be implementing features from Zuma Blitz that OpenSMCE does not
+have, you may want to edit the codebase in order for things to, well... work!
 
-This is a WIP document, [you can submit an issue](https://github.com/jakubg1/OpenSMCE/issues/new/choose) if you want to help.
+As this project is based on OpenSMCE, please look at [OpenSMCE's contribution
+guidelines](https://github.com/jakubg1/OpenSMCE/blob/master/CONTRIBUTING.md).
 
+Keep in mind that you should mark any code that is only useful for Zuma Blitz
+Remake, like so:
+```lua
+-- FORK-SPECIFIC CODE: My code that only makes sense on this fork.
+_Game:getCurrentProfile():getPowerLevel("sands_of_time")
+```
 
+## Assets
+> **See also:** [ZumaBlitzRemake/ZumaBlitzAssetRetrieval](https://github.com/ZumaBlitzRemake/ZumaBlitzAssetRetrieval)
 
-## Editing
-The recommended IDE to use is **Visual Studio Code**. It offers a set of plugins which can massively enhance development experience.
+This will be argurably **the hardest part of contributing to the project**, as
+little to no assets have been found for the game.
 
-We recommend you to use the following plugins:
-- **Lua** plugin by **sumneko**
-- **Love2D support** plugin by **Pixelbyte Studios**
+### Asset Lists
+**List of assets that we currently have in possession:**
+- These board backgrounds in particular have been found, edited and/or
+  upscaled:
+  - Journey to Kroakatoa
+  - Journey to Kroakatoa (Easter variant)
+  - Zulu Bravado
+  - Crab Board
+  - Bronze Board
+  - Clockwork Board
+  - Octupus Board
+  - Splish Splash
+  - Christmas Kroakatoa Creeper Copse
+  - Smooth Creamy
+  - Summer Solstice
+  - FALLing Skies
+  - Journey to Kroakatoa (Easter variant)
+  - Life's A Beach
+  - Major Mouthful
+  - Mine Board
+  - Platter Board
+  - Reef Madness
+  - Sea Queen
+  - Sea Turtles Board
+  - Snakes Board
+- In-game HUD
+- Spirit Animals (bar their Hot Frog & hot frog transition states)
 
-Any other plugins are optional.
+**List of assets we are in need of are the following:**
+- Shooter `eyeblink` images; these will differ from the Frogatar, the Spirit
+  Animal, Cannons powerup state, and Hot Frog state.
+- Classic Frog's hot frog transition states
+- These board backgrounds in particular have been found either only with
+  balls/UI/frogs blocking the image, no edits done for them yet and/or
+  low-quality:
+  - **Many** boards, both Kroakatoa and Beta, including but not limited to:
+    - [One Giant Leap](https://www.youtube.com/watch?v=PSgFs_DSl54)
+    - [Valentine's Day](https://www.youtube.com/watch?v=szaGw8xbW4k)
+    - [Sweet Shot](https://www.youtube.com/watch?v=LxtixkwukP8)
+    - Eagle Wings
+    - Progressive Board
+    - Shamrock Board
+    - Trailblazer <!-- Ew, it's the Autism Speaks board. Why, PopCap? -->
+    - Inward Falls
+    - Hot Springs
+    - Kroakatoa Lava Board
+    - [Thanksgiving Board](https://www.youtube.com/watch?v=gFyCgHN3oMU)
+    - Spiral Gateway
+    - **These boards will be ported and edited accordingly in order to be
+      playable, if they are from the Beta/Pre-Kroakatoa version.**
+- UI assets (buttons, dialog boxes...)
 
-## Source code format
-### Bare basics
-- All variables, class names or other structures should be named in a camelCase, unless stated otherwise.
-- All global variables should be defined in `main.lua` and their names should start with an underscore and the first character should be a capital letter.
-  For example: `_MousePos`
-- If you're using Visual Studio Code, try to keep the number of warnings in the *Problems* tab as low as possible.
-  - Don't be too pathetic about it though, sometimes it's not easy to fix a warning due to bugs or unfinished/imperfect documentation. In such cases, it's best to just leave them as they are.
-- As you're writing the code, try to keep the number of hardcoded variables down and make some parameters configurable to enhance the flexibility of the engine!
-  - Adding a parameter to an existing file needs to perform the following steps:
-    - Add the parameter to the schema, if it exists. If it's not, you can try to create one, it'll be helpful for other people!
-    - Add the parameter to the file structure class. Remember to prepend a default value or logic to obtain one for backwards compatibility!
-    - Finally, hook it up to your code.
-  - Avoid making changes to the engine which modify existing behavior in a way that the old behavior cannot be reproduced. Unless the change is temporary.
-    - If you want to make such one, open a ticket on the issue list first and talk about it with other developers!
+If you have any doubts or questions regarding the status of a specific
+asset, please contact us.
 
-### Overall file format
-- This is the general structure of a class:
-  ```lua
-  -- we are going to use the com/class.lua file to access class-related methods and be able to create classes
-  local class = require "com/class"
-  
-  -- derive the class and add some documentation parameters
-  ---@class <name>
-  ---@overload fun(<args>):<name>
-  local <name> = class:derive("<name>")
-  
-  -- include any needed classes
-  local <class1> = require("src/<class1>")
-  local <class2> = require("src/<class2>")
-  local <class3> = require("src/<class3>")
-  ...
-  
-  -- three line gap
-  
-  -- constructor function
-  ---Constructs an instance of <name>.
-  ---@param <pname1> <ptype2> first argument
-  ---@param <pname1> <ptype2> second argument
-  function <name>:new(<args>)
-    -- do something
-  end
-  
-  -- another three line gap
-  
-  ---Another function belonging to this class.
-  ---@param <pname> <ptype> first argument
-  ---@return string
-  function <name>:doSomething(<args>)
-    -- do something else
-    return "done"
-  end
-  
-  -- another three line gap
-  
-  ---Yet another function.
-  ---@ ...
-  function ... end
-  
-  -- final three line gap
-  
-  -- return class info (used in require)
-  return <name>
-  ```
+### Regarding AI Tools & Asset Recreation
+While AI **upscalers** are accepted, such as Waifu2x and ESRGAN,
+please refrain from using inpainters or outpainters. The model you may have
+used may have sampled from works that was taken without permission.
 
-- You don't have to memorize this whole structure - just look around in the code and you'll get the hang of it!
-  - When creating a new file, it's a good practice to use the provided `!class` and `!classn` snippets.
-- All functions should be documented.
+Regardless, manually outpainting via using the Photoshop brush strokes and
+the Content Aware tools (fill, healing brush, patch, etc) may be more of an
+appropriate and "accurate" approach since the AI won't get much context
+around what should be outpainted, beyond prompts and the image source.
+Furthermore, the resulting images may have unwanted artifacts and may be of
+lower resolution, assuming you are using a site that hosts the AI tool and
+not a powerful computer that you own.
 
-### Tabs, spaces and other whitespace
-- The recommended indentation is 4 spaces. Note that not all files support that yet.
-- There should be exactly three empty lines between each function.
-  - An exception to this rule is a gap between two closely related functions with short bodies; in that case, one empty line is enough.
-- Avoid creating scopes or putting multiple statements in the same line.
-  For example, instead of writing code like this:
-  ```lua
-  for i, item in ipairs(items) do if item.nonexistent then return end end
-  ```
-  write it like this:
-  ```lua
-  for i, item in ipairs(items) do
-      if item.nonexistent then
-          return
-      end
-  end
-  ```
+## Gameplay Mechanics
+These have been researched mostly on [Brendan Chan's Zuma Blitz blog](http://bchantech.dreamcrafter.com/zumablitz/)
+and [PopCap's ZB Customer Support page](https://web.archive.org/web/20130130103017/http://support.popcap.com/facebook/zuma-blitz).
 
-- Math operators should always have a single space on each side for readability.
-  - Redundant brackets are okay.
+You are free to refine what we currently have right now via these and gameplay
+footage on YouTube.
+
+We will be following the mechanics from Kroakatoa, so if you are going to
+suggest something such as crits or Mastery, forget about it.
