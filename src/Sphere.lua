@@ -279,7 +279,7 @@ function Sphere:deleteVisually(ghostTime, crushed)
 	end
 
 	-- Remove and apply any powerups that this sphere may have.
-    if self.powerup and not self.map.level.finish then
+    if self.powerup and not (self.map.level.finish or self.map.level.lost) then
         local effectTable = {
             time = function()
                 local secs = 5
