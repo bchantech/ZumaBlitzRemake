@@ -975,7 +975,7 @@ function Level:reset()
 	self.stateCount = 0
 
     self.target = nil
-	if self.targetFrequency and self.targetFrequency.type == "seconds" then
+	if _MathAreKeysInTable(self, "targetFrequency", "type") == "seconds" then
         self.targetSecondsCooldown = self.targetFrequency.initialDelay
 		local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
 		if fruitMaster then
