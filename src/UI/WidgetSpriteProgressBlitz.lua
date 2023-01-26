@@ -50,7 +50,7 @@ function UIWidgetSpriteProgressBlitz:draw(variables)
 	-- mark only these pixels as the pixels which can be affected
 	love.graphics.setStencilTest("equal", 1)
 	-- draw the circle
-	self.sprite:draw(self.parent:getPos(), nil, nil, nil, nil, nil, self.parent:getAlpha())
+	self.sprite:draw(self.parent:getPos(), nil, nil, nil, nil, nil, self.parent:getAlpha(), nil, self.parent.blendMode)
 	-- reset the mask
 	love.graphics.setStencilTest()
 end

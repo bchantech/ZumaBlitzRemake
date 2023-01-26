@@ -77,6 +77,7 @@ function UIWidget:new(name, data, parent)
 			self.children[childN] = UIWidget(childN, child, self)
 		end
 	end
+	self.blendMode = data.blendMode
 
 	self.inheritShow = data.inheritShow
 	self.inheritHide = data.inheritHide
