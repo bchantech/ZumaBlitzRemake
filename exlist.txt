@@ -1,0 +1,13 @@
+assets\
+dll\
+doc\
+doc2\
+engine\
+games\
+.git\
+*.bat
+*.md
+*.ld
+*.txt
+LICENSE
+.gitignore
