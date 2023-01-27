@@ -17,7 +17,7 @@ function BootMain:new(bootScreen)
 	self.fontBig = love.graphics.newFont(18)
 
 	-- github url link
-	self.url = "https://github.com/ShamblesSM/OpenSMCE/tree/zuma-blitz-remake"
+	self.url = "https://github.com/ZumaBlitzRemake/ZumaBlitzRemake"
 	self.urlHovered = false
 	self.urlHoverPos = Vec2(35, 174)
 	self.urlHoverSize = Vec2(self.fontBig:getWidth(self.url) + 20, 25)
@@ -171,10 +171,10 @@ Remember to post issues and feature suggestions at the following Github reposito
 Thank you for your support!
 	]]
 	local text = [[
-This is an unofficial part of OpenSMCE!
-This version is dedicated to Zuma Blitz remake development.
-As such, it contains a lot of hardcoded stuff and dirty code. This is a sandbox, really.
-Don't worry, this fork remains open-source and the original engine will eventually get all of the changes implemented!
+This is a project made in OpenSMCE. As OpenSMCE is still in development, features here may or may not be added to
+the original OpenSMCE's master branch. Any features deemed fit for the OpenSMCE project will be eventually have
+said changes implemented.
+This fork may have dirty, hardcoded and fork-specific code; you are still free to contribute to the project, regardless.
 Thank you for your support!
 	]]
 	love.graphics.print(text, 45, 100)
