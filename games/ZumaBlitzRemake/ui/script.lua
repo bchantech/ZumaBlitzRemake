@@ -554,14 +554,8 @@ function c.mainStart(f)
     function()
       c.Main:clean()
       f.musicVolume("menu", 0)
-      if not f.profileGetVariable("dontShowInstructions") then
-        c.newGameStarting = true
-        c.Menu_Instructions:show()
-        c.Menu_Instructions:setActive()
-        c.Menu_Instructions_Toggle_DontShow.widget:setState(f.profileGetVariable("dontShowInstructions"))
-      else
-        c.startGame(f)
-      end
+      c.newGameStarting = true
+      c.startGame(f)
     end
     )
   end
@@ -755,14 +749,8 @@ function c.mainContinueNew(f)
     function()
       c.Main:clean()
       f.musicVolume("menu", 0)
-      if not f.profileGetVariable("dontShowInstructions") then
-        c.newGameStarting = true
-        c.Menu_Instructions:show()
-        c.Menu_Instructions:setActive()
-        c.Menu_Instructions_Toggle_DontShow.widget:setState(f.profileGetVariable("dontShowInstructions"))
-      else
-        c.startGame(f)
-      end
+      c.newGameStarting = true
+      c.startGame(f)
     end
     )
   end
@@ -811,14 +799,7 @@ function c.mainMapStart(f)
   c.Menu_StageSelect_Frame:scheduleFunction("hideEnd",
   function()
     f.musicVolume("menu", 0)
-    if not f.profileGetVariable("dontShowInstructions") then
-      c.newGameStarting = true
-      c.Menu_Instructions:show()
-      c.Menu_Instructions:setActive()
-      c.Menu_Instructions_Toggle_DontShow.widget:setState(f.profileGetVariable("dontShowInstructions"))
-    else
-      c.startGame(f)
-    end
+    c.startGame(f)
   end
   )
 end
