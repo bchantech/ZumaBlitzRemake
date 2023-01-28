@@ -37,6 +37,10 @@ function SoundInstance:play()
 	self.sound:play()
 end
 
+function SoundInstance:pause()
+  self.sound:pause()
+end
+
 function SoundInstance:stop()
 	self.sound:stop()
 end

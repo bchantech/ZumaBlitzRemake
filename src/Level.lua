@@ -90,6 +90,14 @@ function Level:update(dt)
 
 	if not self.pause then
 		self:updateLogic(dt * self.gameSpeed)
+    end
+	-- Rolling sound
+	if self.rollingSound then
+		if self.pause then
+            self.rollingSound:pause()
+        elseif (not self.pause) and self.controlDelay then
+			self.rollingSound:play()
+		end
 	end
 
 	self:updateMusic()
@@ -953,6 +961,9 @@ function Level:destroy()
     end
 	if self.target then
 		self.target:destroy()
+    end
+	if self.rollingSound then
+		self.rollingSound:stop()
 	end
 
 	if self.ambientMusicName then
