@@ -139,11 +139,16 @@ function Path:update(dt)
 	end
 
 	-- Path Clears
-	if self:isValidForCurveClear() then
+    if self:isValidForCurveClear() then
 		self.pathClearGranted = true
         -- Curve Clears in Kroakatoa grant 1000 + total time elapsed.
         -- Reference: http://bchantech.dreamcrafter.com/zumablitz/scoringmechanics_relaunch.php
-		local score = 1000 + math.floor(self.map.level.stateCount)
+        local score = 1000 + math.floor(self.map.level.stateCount)
+		local extraPoints = _MathIsValueInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearPointModifier")
+		if extraPoints then
+			score = score + extraPoints
+		end
+
         self.map.level:grantScore(score)
 		self.map.level:spawnFloatingText(
             string.format("CURVE CLEARED\n+%s", _NumStr(score * self.map.level.multiplier)),
@@ -152,7 +157,7 @@ function Path:update(dt)
         )
 		_Game:playSound("sound_events/curve_clear.json")
 
-		local shouldGiveOneSecond = _Game:getCurrentProfile():getEquippedFoodItemEffects() and _Game:getCurrentProfile():getEquippedFoodItemEffects().curveClearsGiveOneSecond
+		local shouldGiveOneSecond = _MathIsValueInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearsGiveOneSecond")
 		if not self.map.level.finish and shouldGiveOneSecond then
 			self.map.level:applyEffect({type = "addTime", amount = 1})
 		end
