@@ -1,9 +1,8 @@
 {
-    "path": "images/game/shooter.png",
-
+    "path": "images/game/shooters/frogatar_basic/next_ball_7.png",
     "frame_size": {
-        "x": 125,
-        "y": 111
+        "x": 108,
+        "y": 99
     },
     "states": [
         {
