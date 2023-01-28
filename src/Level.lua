@@ -19,7 +19,15 @@ local FloatingText = require("src/FloatingText")
 ---@param data table The level data, specified in a level config file.
 function Level:new(data)
     self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
-	self.shooter = Shooter(data.shooter or self.map.shooter)
+    self.shooter = Shooter(data.shooter or self.map.shooter)
+
+    -- FORK-SPECIFIC CHANGE: Change to frogatar, then spirit animal if any
+	-- Yes this is the order and there should be an animation soon
+    self.shooter:changeTo(_Game:getCurrentProfile():getFrogatar())
+	if _Game:getCurrentProfile():getActiveMonument() then
+		---@diagnostic disable-next-line: param-type-mismatch
+		self.shooter:changeTo(_Game:getCurrentProfile():getActiveMonument())
+	end
 
 	self.matchEffect = data.matchEffect
 

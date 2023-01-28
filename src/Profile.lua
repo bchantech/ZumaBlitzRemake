@@ -17,10 +17,12 @@ function Profile:new(data, name)
 	self.levels = {}
 	self.checkpoints = {}
 	self.variables = {}
+	self.frogatar = "basic"
+	self.monument = nil
     self.equippedPowers = {}
     self.powerCatalog = {}
 	self.equippedFood = nil
-	self.foodInventory = {}
+    self.foodInventory = {}
 
 	if data then
 		self:deserialize(data)
@@ -511,6 +513,40 @@ function Profile:writeHighscore()
 end
 
 
+
+-- FORK-SPECIFIC CODE GOES HERE
+-- Frogatars
+
+---@return string
+function Profile:getFrogatar()
+	return "frogatar_"..(self.frogatar or "basic")
+end
+
+function Profile:setFrogatar(frogatar)
+	self.frogatar = frogatar
+end
+
+
+
+-- Spirit Animals
+
+function Profile:setActiveMonument(animal)
+	if animal then
+		self.monument = animal
+		return
+    end
+	self.monument = nil
+end
+
+---@return string|nil
+function Profile:getActiveMonument()
+	if self.monument then
+		return "spirit_"..(self.monument)
+	end
+end
+
+
+
 -- Powers
 
 ---Equips a Power.
@@ -683,6 +719,8 @@ function Profile:serialize()
 		levels = self.levels,
 		checkpoints = self.checkpoints,
         variables = self.variables,
+		frogatar = self.frogatar or "basic", -- Reverse compatibility with older profiles
+        monument = self.monument,
 		equippedPowers = self.equippedPowers,
         equippedFood = self.equippedFood,
         powerCatalog = self.powerCatalog,
@@ -703,6 +741,8 @@ function Profile:deserialize(t)
 	if t.variables then
 		self.variables = t.variables
 	end
+	self.frogatar = t.frogatar
+	self.monument = t.monument
     self.equippedPowers = t.equippedPowers
 	self.powerCatalog = t.powerCatalog
 	self.foodInventory = t.foodInventory
