@@ -237,8 +237,8 @@ function Level:updateLogic(dt)
 				if frequencies[powerup] > 0 and (math.random() < 1 / frequencies[powerup]) and frequencies[powerup] < self.stateCount - self.lastPowerupDeltas[powerup] then
 					local sphere = _Game.session:getRandomSphere()
                     if sphere then
-                        local cap = 10
-						local raiseCap = _Game:getCurrentProfile():getEquippedFoodItemEffects() and _Game:getCurrentProfile():getEquippedFoodItemEffects().multiplierCapAdditiveModifier
+                        local cap = 10 --9
+						local raiseCap = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "multiplierCapAdditiveModifier")
 						if raiseCap then
     					    cap = cap + raiseCap
                         end

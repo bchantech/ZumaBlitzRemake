@@ -572,7 +572,7 @@ function Shooter:getShootingSpeed()
     local speedShot = _Game:getCurrentProfile():getEquippedPower("speed_shot")
     local powerMultiplier = (speedShot and speedShot:getCurrentLevelData().additiveMultiplier) or 0
 
-    local foodSpeedShot = (_Game:getCurrentProfile():getEquippedFoodItemEffects() and _Game:getCurrentProfile():getEquippedFoodItemEffects().shotSpeedModifier) or 0
+    local foodSpeedShot = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "shotSpeedModifier") or 0
     -- TODO: What's the order of speed shot multipliers?
     -- Is it Speed Shot power > Food Item? And am I doing this one-liner right?
     return self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier + (self.config.shootSpeed * foodSpeedShot))

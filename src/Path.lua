@@ -144,7 +144,7 @@ function Path:update(dt)
         -- Curve Clears in Kroakatoa grant 1000 + total time elapsed.
         -- Reference: http://bchantech.dreamcrafter.com/zumablitz/scoringmechanics_relaunch.php
         local score = 1000 + math.floor(self.map.level.stateCount)
-		local extraPoints = _MathIsValueInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearPointModifier")
+		local extraPoints = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearPointModifier")
 		if extraPoints then
 			score = score + extraPoints
 		end
