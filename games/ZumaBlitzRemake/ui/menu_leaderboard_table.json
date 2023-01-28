@@ -1,0 +1,90 @@
+{
+    "inheritShow": true,
+    "inheritHide": true,
+    "type": "none",
+    "pos": {
+        "x": 482,
+        "y": 86
+    },
+    "alpha": 1,
+    "children": {
+        "Row1": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "none",
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "alpha": 1,
+            "children": {
+				"LB_Row":"ui/menu_leaderboard_row.json"
+			},
+            "animations": {},
+            "sounds": {}
+        },
+        "Row2": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "none",
+            "pos": {
+                "x": 0,
+                "y": 78
+            },
+            "alpha": 1,
+            "children": {
+				"LB_Row":"ui/menu_leaderboard_row.json"
+			},
+            "animations": {},
+            "sounds": {}
+        },
+        "Row3": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "none",
+            "pos": {
+                "x": 0,
+                "y": 156
+            },
+            "alpha": 1,
+            "children": {
+				"LB_Row":"ui/menu_leaderboard_row.json"
+			},
+            "animations": {},
+            "sounds": {}
+        },
+        "Row4": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "none",
+            "pos": {
+                "x": 0,
+                "y": 234
+            },
+            "alpha": 1,
+            "children": {
+				"LB_Row":"ui/menu_leaderboard_row.json"
+			},
+            "animations": {},
+            "sounds": {}
+        },
+        "Row5": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "none",
+            "pos": {
+                "x": 0,
+                "y": 312
+            },
+            "alpha": 1,
+            "children": {
+				"LB_Row":"ui/menu_leaderboard_row.json"
+			},
+            "animations": {},
+            "sounds": {}
+        }
+    },
+    "animations": {},
+    "sounds": {},
+    "layer": "MenuControls"
+}

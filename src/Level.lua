@@ -388,7 +388,9 @@ function Level:updateLogic(dt)
 		self.wonDelay = self.wonDelay - dt
 		if self.wonDelay <= 0 then
 			self.wonDelay = nil
-			_Game.uiManager:executeCallback("levelComplete")
+			-- FORK-SPECIFIC CODE: Add a highscore after the board
+			_Game:getCurrentProfile():writeHighscore()
+            _Game.uiManager:executeCallback("levelComplete")
 			self.ended = true
 		end
 	end

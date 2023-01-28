@@ -168,6 +168,7 @@ function c.splashEnd(f)
 
 
 
+  --[[
   c.HighscoreRows = {}
   local i = 1
   while f.getWidgetN("root/Menu_Highscores/Frame/HS_Table/Row" .. tostring(i - 1)) do
@@ -181,6 +182,22 @@ function c.splashEnd(f)
     c.HighscoreRows[i] = row
     i = i + 1
   end
+  ]]
+
+  c.LeaderboardRows = {}
+  local i = 1
+  while f.getWidgetN("root/Main/Menu/Leaderboards/Row" .. tostring(i)) do
+    local path = "root/Main/Menu/Leaderboards/Row" .. tostring(i) .. "/LB_Row"
+    local row = {}
+    --row.rank = f.getWidgetN(path .. "/Rank")
+    row.name = f.getWidgetN(path .. "/Name")
+    --row.name2 = f.getWidgetN(path .. "/Name2")
+    --row.level = f.getWidgetN(path .. "/Level")
+    row.score = f.getWidgetN(path .. "/Score")
+    c.LeaderboardRows[i] = row
+    i = i + 1
+  end
+
   c.ProfileRows = {}
   local i = 1
   while f.getWidgetN("root/Main/Profile_Manage/Frame/Listbox/Button_" .. tostring(i)) do
@@ -985,15 +1002,22 @@ function c.tick(f)
 
 
     c.Main_Text_PlayerE.widget.text = player
-    c.Main_Text_PlayerH.widget.text = player
     c.Main_Text_Version.widget.text = "Running on OpenSMCE " .. _VERSION
 
+    --[[
     for i, row in ipairs(c.HighscoreRows) do
       local entry = f.highscoreGetEntry(i)
       row.rank.widget.text = tostring(i)
       row.name.widget.text = entry.name
       row.name2.widget.text = entry.name
       row.level.widget.text = entry.level
+      row.score.widget.text = _NumStr(entry.score)
+    end
+    ]]
+    for i, row in ipairs(c.LeaderboardRows) do
+      local entry = f.highscoreGetEntry(i)
+      --row.rank.widget.text = tostring(i)
+      row.name.widget.text = entry.name
       row.score.widget.text = _NumStr(entry.score)
     end
 

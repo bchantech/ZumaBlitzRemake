@@ -1,0 +1,56 @@
+{
+    "inheritShow": true,
+    "inheritHide": true,
+    "type": "sprite",
+    "pos": {
+        "x": 0,
+        "y": 0
+    },
+    "alpha": 1,
+    "children": {
+        "Name": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "text",
+            "pos": {
+                "x": 117,
+                "y": 24
+            },
+            "alpha": 1,
+            "children": {},
+            "animations": {},
+            "sounds": {},
+            "layer": "MenuControls2",
+            "font": "fonts/dialog_body.json",
+            "align": {
+                "x": 0,
+                "y": 0.5
+            },
+            "text": "Dummy"
+        },
+        "Score": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "text",
+            "pos": {
+                "x": 117,
+                "y": 48
+            },
+            "alpha": 1,
+            "children": {},
+            "animations": {},
+            "sounds": {},
+            "layer": "MenuControls2",
+            "font": "fonts/dialog_body.json",
+            "align": {
+                "x": 0,
+                "y": 0.5
+            },
+            "text": "100,000,000"
+        }
+    },
+    "animations": {},
+    "sounds": {},
+    "layer": "MenuControls",
+    "sprite": "sprites/main/score_bar.json"
+}

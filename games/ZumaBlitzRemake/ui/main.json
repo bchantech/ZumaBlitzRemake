@@ -85,26 +85,6 @@
                     },
                     "text": ""
                 },
-                "Text_PlayerH": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "text",
-                    "pos": {
-                        "x": 644,
-                        "y": 145
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuControls",
-                    "font": "fonts/dialog_cartouche.json",
-                    "align": {
-                        "x": 0.5,
-                        "y": 0
-                    },
-                    "text": ""
-                },
                 "Text_Version": {
                     "inheritShow": true,
                     "inheritHide": true,
@@ -214,7 +194,8 @@
 					"callbacks": {
 						"buttonClick": "mainQuit"
 					}
-                }
+                },
+                "Leaderboards": "ui/menu_leaderboard_table.json"
             },
             "sprite": "sprites/main/background.json",
             "animations": {},
