@@ -1,0 +1,21 @@
+{
+    "path": "images/game/shooters/spirit_turtle/next_ball_5.png",
+    "frame_size": {
+        "x": 128,
+        "y": 126
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}
