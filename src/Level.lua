@@ -1142,7 +1142,7 @@ function Level:serialize()
         stateCount = self.stateCount,
 		powerupList = self.powerupList,
 		lastPowerupDeltas = self.lastPowerupDeltas,
-        target = (self.target and self.target:serialize()) or {},
+        target = (self.target and self.target:serialize()),
         targetSecondsCooldown = self.targetSecondsCooldown,
         targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
 		targetHitScore = self.targetHitScore,
