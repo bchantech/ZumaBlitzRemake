@@ -11,6 +11,10 @@
     },
     "speedShotParticle": "particles/speed_shot_beam.json",
     "shootSpeed": 770,
+    "ballPos": {
+        "x": 0,
+        "y": -30
+    },
     "multishot": true,
     "shotCooldown": 0.2,
     "hitboxSize": {
