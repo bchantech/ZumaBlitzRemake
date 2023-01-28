@@ -647,32 +647,28 @@ end
 
 
 
----Returns the specified Food Item if it is equipped or `nil`.
+---Returns the equipped Food Item or `nil`.
 ---
 ---This should only be used for UI related functions.
 ---If you wish to get the gameplay effects, use `Profile:getEquippedFoodItemEffects()`.
 ---@return FoodItem|nil
-function Profile:getEquippedFoodItem(foodItem)
-	if not _Game.configManager.foodItems[foodItem] then
-		_Log:printt("Profile", string.format("Food ID %s does not exist", foodItem))
-		return
-    end
-	if self.equippedFood == foodItem then
-		return _Game.configManager:getFoodItem(foodItem)
+function Profile:getEquippedFoodItem()
+	if self.equippedFood then
+		return _Game.configManager:getFoodItem(self.equippedFood)
 	end
 end
 
 
 
----Returns the specified Food Item's effects if it is equipped or `nil`.
+---Returns the specified Food Item's effects if it is equipped or an empty table.
 ---
----Use this instead of `Profile:isFoodItemEquipped` and `_Game.configManager:getFoodItem()`.
----@return table|nil
+---Use this instead of `Profile:getEquippedFoodItem()`.
+---@return table
 function Profile:getEquippedFoodItemEffects()
 	if not self.equippedFood then
-		return
+		return {}
 	end
-	return self:getEquippedFoodItem(self.equippedFood).effects or nil
+	return self:getEquippedFoodItem().effects or {}
 end
 
 
