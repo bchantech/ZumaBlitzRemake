@@ -185,20 +185,20 @@ function Game:updateRichPresence()
         end
 		
         local monumentStrings = {
-			spirit_beetle = function() return "Beetle" end,
-			spirit_weasel = function() return "Weasel" end,
-			spirit_eagle = function() return "Eagle" end,
-			spirit_cat = function() return "Cat" end,
-			spirit_turtle = function() return "Turtle" end
+			spirit_beetle = "Beetle",
+			spirit_weasel = "Weasel",
+			spirit_eagle = "Eagle",
+			spirit_cat = "Cat",
+			spirit_turtle = "Turtle"
         }
         local frogatarStrings = {
-			frogatar_basic = function() return "Basic" end
+			frogatar_basic = "Basic"
         }
 		
 		if profile.monument then
-			smallImageText = "Spirit "..monumentStrings[profile:getActiveMonument()]()
+			smallImageText = "Spirit "..monumentStrings[profile:getActiveMonument()]
         else
-			smallImageText = frogatarStrings[profile:getFrogatar()]().." Frog"
+			smallImageText = frogatarStrings[profile:getFrogatar()].." Frog"
 		end
 
         line1 = string.format(
