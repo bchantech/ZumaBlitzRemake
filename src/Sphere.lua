@@ -41,7 +41,11 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 		self.size = 1
 		self.boostCombo = false
 		self.shootOrigin = nil
-		self.shootTime = nil
+        self.shootTime = nil
+        ---Do **NOT** set this to `nil` if you are removing a Sphere's powerup.
+		---Use `Sphere:removePowerup()` instead.
+		---
+		---@see Sphere.removePowerup
         self.powerup = nil
 		self.effects = {}
 		self.gaps = gaps or {}

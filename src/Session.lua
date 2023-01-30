@@ -395,11 +395,11 @@ end
 ---@return Sphere
 function Session:getRandomSphere()
 	local allSpheres = {}
-	for i, path in ipairs(self.level.map.paths) do
-		for j, sphereChain in ipairs(path.sphereChains) do
-			for k, sphereGroup in ipairs(sphereChain.sphereGroups) do
-				for l, sphere in ipairs(sphereGroup.spheres) do
-					local sphereHidden = sphereGroup:getSphereHidden(l)
+	for _, path in pairs(self.level.map.paths) do
+		for _, sphereChain in pairs(path.sphereChains) do
+			for _, sphereGroup in pairs(sphereChain.sphereGroups) do
+				for i, sphere in pairs(sphereGroup.spheres) do
+					local sphereHidden = sphereGroup:getSphereHidden(i)
 					if not sphere:isGhost() and not sphereHidden then
 						table.insert(allSpheres, sphere)
 					end

@@ -241,6 +241,23 @@ function Level:updateLogic(dt)
     -- Zuma style powerups
     if self.started and not self.finish and not self:areAllObjectivesReached() and not self:getEmpty() then
         local powerups = { "time", "multiplier" }
+
+		local multiplierCap = 9
+		local raiseCap = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "multiplierCapAdditiveModifier")
+		if raiseCap then
+			multiplierCap = multiplierCap + raiseCap
+        end
+		-- Don't spawn multipliers if we've hit the cap
+		if self.multiplier >= multiplierCap-1 then
+			local pCount = 1
+			for _,v in pairs(powerups) do
+				if v == "multiplier" then
+					table.remove(powerups, pCount)
+                end
+				pCount = pCount + 1
+			end
+		end
+
         local powerupToAdd = powerups[math.random(1, #powerups)]
         local frequencies = {
             all = self.powerupFrequency
@@ -253,18 +270,29 @@ function Level:updateLogic(dt)
 				if frequencies[powerup] > 0 and (math.random() < 1 / frequencies[powerup]) and frequencies[powerup] < self.stateCount - self.lastPowerupDeltas[powerup] then
 					local sphere = _Game.session:getRandomSphere()
                     if sphere then
-                        local cap = 10 --9
-						local raiseCap = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "multiplierCapAdditiveModifier")
-						if raiseCap then
-    					    cap = cap + raiseCap
-                        end
-						if powerupToAdd == "multiplier" and self.multiplier < cap then
-							sphere:addPowerup("multiplier")
+                        if powerupToAdd == "multiplier" then
+                            sphere:addPowerup("multiplier")
 						elseif powerupToAdd ~= "multiplier" then
 							sphere:addPowerup(powerupToAdd)
 						end
 					end
 					self.lastPowerupDeltas[powerup] = self.stateCount
+				end
+			end
+        end
+		-- Traverse through all the spheres one more time and remove any multiplier powerups if
+        -- we've reached the cap
+		-- TODO: Is there a better way to traverse every sphere? Might need to add a new function
+		if self.multiplier >= multiplierCap-1 then
+			for _, path in pairs(self.map.paths) do
+				for _, sphereChain in pairs(path.sphereChains) do
+					for _, sphereGroup in pairs(sphereChain.sphereGroups) do
+						for i, sphere in pairs(sphereGroup.spheres) do
+							if not sphere:isGhost() and sphere.powerup == "multiplier" then
+								sphere:removePowerup()
+							end
+						end
+					end
 				end
 			end
 		end
