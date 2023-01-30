@@ -224,6 +224,7 @@ function Level:updateLogic(dt)
 		if self.blitzMeter == 1 then
 			-- We're in hot frog mode, reset once the shooter has a ball other than the fireball.
 			if self.shooter.color > 0 then
+				self.shotLastHotFrogBall = true
 				self.blitzMeter = 0
                 self.blitzMeterCooldown = 0
 
@@ -232,7 +233,8 @@ function Level:updateLogic(dt)
 					self.shooter:changeTo(skin)
 				end
 			end
-		else
+        else
+			self.shotLastHotFrogBall = false
 			if self.blitzMeterCooldown == 0 then
 				self.blitzMeter = math.max(self.blitzMeter - 0.03 * dt, 0)
 			else
@@ -872,12 +874,14 @@ end
 
 ---Increments the level's Blitz Meter by a given amount and launches the Hot Frog if reaches 1.
 ---@param amount any
-function Level:incrementBlitzMeter(amount)
-	if self.blitzMeter == 1 then
+---@param chain? boolean used for spirit turtle
+function Level:incrementBlitzMeter(amount, chain)
+	if not chain and self.blitzMeter == 1 then
 		return
-	end
+    end
+	
 	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
-	if self.blitzMeter == 1 then
+    if (not chain and self.blitzMeter == 1) or (chain and self.blitzMeter >= 1) then
         -- hot frog
 		local infernoFrog = _Game:getCurrentProfile():getEquippedPower("inferno_frog")
 		local additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
@@ -1044,6 +1048,7 @@ function Level:reset()
 
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
+	self.shotLastHotFrogBall = false
     self.multiplier = 1
 	-- TODO: Fix this unless this is the only way.
     -- For some stupid reason, _Game:getCurrentProfile() doesn't work here.
@@ -1204,7 +1209,8 @@ function Level:serialize()
         targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
 		targetHitScore = self.targetHitScore,
 		blitzMeter = self.blitzMeter,
-		blitzMeterCooldown = self.blitzMeterCooldown,
+        blitzMeterCooldown = self.blitzMeterCooldown,
+		shotLastHotFrogBall = self.shotLastHotFrogBall,
 		multiplier = self.multiplier,
 		controlDelay = self.controlDelay,
 		finish = self.finish,
@@ -1260,6 +1266,7 @@ function Level:deserialize(t)
 	self.targetInitialDelaySecondsElapsed = t.targetInitialDelaySecondsElapsed
 	self.blitzMeter = t.blitzMeter
 	self.blitzMeterCooldown = t.blitzMeterCooldown
+	self.shotLastHotFrogBall = t.shotLastHotFrogBall
 	self.multiplier = t.multiplier
 	self.lost = t.lost
 	-- Utils
