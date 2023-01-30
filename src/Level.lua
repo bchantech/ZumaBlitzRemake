@@ -885,7 +885,8 @@ function Level:incrementBlitzMeter(amount, chain)
         -- hot frog
 		local infernoFrog = _Game:getCurrentProfile():getEquippedPower("inferno_frog")
 		local additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
-		self.shooter:getMultiSphere(-2, (3 + additiveAmount))
+        self.shooter:getMultiSphere(-2, (3 + additiveAmount))
+		_Game:playSound("sound_events/hot_frog_activate.json")
 
 		local hotFrogSkin = (_Game:getCurrentProfile():getActiveMonument() and _Game:getCurrentProfile():getActiveMonument().."_hot") or _Game:getCurrentProfile():getFrogatar().."_hot"
 		if _Game.configManager:getShooter(hotFrogSkin) then
