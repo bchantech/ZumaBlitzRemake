@@ -225,7 +225,12 @@ function Level:updateLogic(dt)
 			-- We're in hot frog mode, reset once the shooter has a ball other than the fireball.
 			if self.shooter.color > 0 then
 				self.blitzMeter = 0
-				self.blitzMeterCooldown = 0
+                self.blitzMeterCooldown = 0
+
+				local skin = _Game:getCurrentProfile():getActiveMonument() or _Game:getCurrentProfile():getFrogatar()
+				if _Game.configManager:getShooter(skin) then
+					self.shooter:changeTo(skin)
+				end
 			end
 		else
 			if self.blitzMeterCooldown == 0 then
@@ -877,6 +882,11 @@ function Level:incrementBlitzMeter(amount)
 		local infernoFrog = _Game:getCurrentProfile():getEquippedPower("inferno_frog")
 		local additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
 		self.shooter:getMultiSphere(-2, (3 + additiveAmount))
+
+		local hotFrogSkin = (_Game:getCurrentProfile():getActiveMonument() and _Game:getCurrentProfile():getActiveMonument().."_hot") or _Game:getCurrentProfile():getFrogatar().."_hot"
+		if _Game.configManager:getShooter(hotFrogSkin) then
+			self.shooter:changeTo(hotFrogSkin)
+		end
 	end
 end
 

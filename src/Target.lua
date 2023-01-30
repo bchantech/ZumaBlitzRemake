@@ -59,6 +59,12 @@ function Target:onShot()
         self.pos,
         "fonts/score0.json"
     )
+
+    -- Activate Hot Frog if we're using the Spirit Turtle
+    if _Game:getCurrentProfile():getActiveMonument() == "spirit_turtle" then
+        _Game.session.level:incrementBlitzMeter(1)
+    end
+
     _Game.session.level.targets = _Game.session.level.targets + 1
 end
 
