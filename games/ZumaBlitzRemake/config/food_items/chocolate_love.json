@@ -3,6 +3,6 @@
     "sprite": "",
     "effects": {
         "targetsGiveOneSecond": true,
-        "fruitValueModifier": 750
+        "targetValueModifier": 750
     }
 }

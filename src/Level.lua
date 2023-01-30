@@ -119,7 +119,7 @@ function Level:updateLogic(dt)
 	self.map:update(dt)
     self.shooter:update(dt)
     self.stateCount = self.stateCount + dt
-	self.targetHitScore = self.targetHitBases[math.min(self.targets+1, 6)]
+	self.targetHitScore = self.targetHitBases[math.min(self.targets+1, 6)] + (_MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "targetValueModifier") or 0)
 
 	-- Danger sound
 	local d1 = self:getDanger() and not self.lost
@@ -1208,7 +1208,7 @@ function Level:serialize()
         target = (self.target and self.target:serialize()),
         targetSecondsCooldown = self.targetSecondsCooldown,
         targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
-		targetHitScore = self.targetHitScore,
+        targetHitScore = self.targetHitScore,
 		blitzMeter = self.blitzMeter,
         blitzMeterCooldown = self.blitzMeterCooldown,
 		shotLastHotFrogBall = self.shotLastHotFrogBall,
