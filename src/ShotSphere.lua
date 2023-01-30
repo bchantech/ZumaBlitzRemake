@@ -80,7 +80,7 @@ function ShotSphere:moveStep()
 					table.insert(self.gapsTraversed, {size = size, group = group})
 					local pos = path:getPos(offset)
 					--_Game:spawnParticle("particles/collapse_vise.json", pos)
-					_Debug.console:print(size)
+					--_Debug.console:print(size)
 				end
 			end
 		end
