@@ -2,8 +2,8 @@
     "path": "images/game/shooters/spirit_turtle/shooter.png",
 
     "frame_size": {
-        "x": 128,
-        "y": 126
+        "x": 118,
+        "y": 116
     },
     "states": [
         {
