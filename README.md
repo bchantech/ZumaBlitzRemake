@@ -31,7 +31,26 @@ system, create a terminal script:
 ```
 
 ## Building
-See [jakubg1/OpenSMCE/README.md#building-instructions](https://github.com/jakubg1/OpenSMCE#building-instructions).
+### Windows
+Make sure you have [LÖVE2D 11.3](https://github.com/love2d/love/releases/tag/11.3)
+installed on your machine. 32-bit or 64-bit doesn't matter - although the build
+script can detect both 32-bit and 64-bit EXE installation directories.
+
+You will also need [7-zip](https://www.7-zip.org/download.html) installed
+and it's directory added in `%PATH%`.
+
+Then, simply run `build.bat`. You will see a new folder named `build` after
+it's finished.
+
+### macOS
+I unfortunately don't have a Mac, so someone else has to build these.
+
+Follow [the instructions on the LÖVE2D wiki.](https://love2d.org/wiki/Game_Distribution#Creating_a_macOS_Application)
+
+### Linux
+As OpenSMCE uses LÖVE2D 11.3 due to 11.4's stability issues, AppImages
+aren't an option. The only option for now is to run from source or
+distributing a `.love` file.
 
 ## Contributing
 See [CONTRIBUTING.md](/CONTRIBUTING.md).
