@@ -11,6 +11,10 @@
             "type": "string",
             "description": "The sprite for the shooter to be used."
         },
+        "hotFrogTransitionSprite": {
+            "type": "string",
+            "description": "The sprite for the shooter overlay to be used while the Blitz Meter is rising. Optional fork-specific property."
+        },
         "spriteOffset": {
             "$ref": "../_structures/Vector2.json",
             "description": "The offset of the shooter sprite."

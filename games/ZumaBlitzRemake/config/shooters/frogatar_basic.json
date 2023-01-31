@@ -1,6 +1,7 @@
 {
     "$schema": "../../../../schemas/config/shooter.json",
     "sprite": "sprites/game/shooters/frogatar_basic/shooter.json",
+    "hotFrogTransitionSprite": "sprites/game/shooters/frogatar_basic/hot_frog_transition.json",
     "shadowSprite": "sprites/game/shooters/frogatar_basic/shooter_shadow.json",
     "reticle": {},
     "speedShotBeam": {

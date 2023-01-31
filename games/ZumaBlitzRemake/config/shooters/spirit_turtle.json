@@ -1,6 +1,7 @@
 {
     "$schema": "../../../../schemas/config/shooter.json",
     "sprite": "sprites/game/shooters/spirit_turtle/shooter.json",
+    "hotFrogTransitionSprite": "sprites/game/shooters/spirit_turtle/hot_frog_transition.json",
     "shadowSprite": "sprites/game/shooters/spirit_turtle/shooter_shadow.json",
     "reticle": {},
     "speedShotBeam": {
