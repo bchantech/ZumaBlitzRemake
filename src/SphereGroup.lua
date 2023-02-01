@@ -718,7 +718,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		score = score + (1000 * (self.sphereChain.combo - 1))
     end
     local gapbonus
-	local largestGap = math.max(unpack(gaps))
+	local largestGap = gaps and math.max(unpack(gaps))
 	if #gaps > 0 then
 		if largestGap and largestGap < 20 --[[or not preOct2012GapScoring]] then
 			gapbonus = math.ceil(((1-(largestGap-0.5)/9.5)*1000)*math.min(1, #gaps) / 10) * 10 -- interpolate from 100,000 pts at 0,5 ball gap to 0 at 10 ball gap
