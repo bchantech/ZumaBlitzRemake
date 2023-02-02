@@ -17,7 +17,6 @@ for %%a in (%*) do (
         set NOPACKAGES=1
     )
 )
-pause
 
 if exist ".\build" (
     echo Deleting previous build folder.
