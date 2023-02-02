@@ -59,7 +59,7 @@
                     "type": "number",
                     "description": "Multiplies the chance of Free Spin targets appearing by this amount."
                 },
-                "activate_power": {
+                "activatePower": {
                     "type": "string",
                     "description": "Activates this specific Power, independed of the current profile's equipped Power slots."
                 },
