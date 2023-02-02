@@ -1,0 +1,120 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "$schema": true,
+        "displayName": {
+            "type": "string",
+            "description": "The display name of this Food Item."
+        },
+        "sprite": {
+            "type": "string",
+            "description": "A path to the sprite to use for this Food Item."
+        },
+        "effects": {
+            "type": "object",
+            "description": "An object full of gameplay effects.",
+            "properties": {
+                "multiplierCapAdditiveModifier": {
+                    "type": "number",
+                    "description": "Increase the Multiplier cap by this amount."
+                },
+                "spiritBlastPointsModifier": {
+                    "type": "number",
+                    "description": "Increases the Spirit Blast points by this amount."
+                },
+                "spiritBlastPointsPerBallModifier": {
+                    "type": "number",
+                    "description": "Increases the Spirit Blast points per ball by this amount."
+                },
+                "powerupCooldownModifier": {
+                    "type": "object",
+                    "description": "(DESCRIPTION TO BE CHANGED) I'm still not sure if ZB uses the classic powerup algo or use seconds."
+                },
+                "fireballBaseScoreModifier": {
+                    "type": "number",
+                    "description": "Increases the fireball explosion base score by this amount."
+                },
+                "fireballBaseScorePerBallModifier": {
+                    "type": "number",
+                    "description": "Increases the fireball explosion score per ball by this amount."
+                },
+                "spawnStreakModifier": {
+                    "type": "number",
+                    "description": "Increases the spawnStreak by this amount by this amount."
+                },
+                "curveClearSpeedDistanceModifier": {
+                    "type": "number",
+                    "description": "Decreases the distance reached by the spheres once a Curve Clear has been achieved by this amount."
+                },
+                "alwaysHaveMatches": {
+                    "type": "boolean",
+                    "description": "If true, the sphere generation algorithm will never generate singles and will always generate at least 2 spheres of the same color."
+                },
+                "maxSpinTargetsAdditiveModifier": {
+                    "type": "number",
+                    "description": "Increases the amount of times targets that reward Free Spins on hit can appear by this amount."
+                },
+                "spinTargetChanceMultiplier": {
+                    "type": "number",
+                    "description": "Multiplies the chance of Free Spin targets appearing by this amount."
+                },
+                "activate_power": {
+                    "type": "string",
+                    "description": "Activates this specific Power, independed of the current profile's equipped Power slots."
+                },
+                "chainBlastPointsModifier": {
+                    "type": "number",
+                    "description": "Increases the points of each Chain Blast explosions by this amount."
+                },
+                "chainBlastExplosionRadiusModifier": {
+                    "type": "number",
+                    "description": "Increases the radius of Chain Blast's explosion by this amount."
+                },
+                "chainBonusPointsModifier": {
+                    "type": "number",
+                    "description": "Increases the points of each Chain Bonus by this amount."
+                },
+                "targetsGiveOneSecond": {
+                    "type": "boolean",
+                    "description": "If true, targets will give 1 second on shot."
+                },
+                "targetValueModifier": {
+                    "type": "number",
+                    "description": "Increases the value of shot targets by this amount."
+                },
+                "curveClearsGiveOneSecond": {
+                    "type": "boolean",
+                    "description": "If true, Curve Clears give 1 second."
+                },
+                "curveClearPointModifier": {
+                    "type": "number",
+                    "description": "Increases the amount of Curve Clear points by this amount."
+                },
+                "shotSpeedModifier": {
+                    "type": "number",
+                    "description": "Increases the shot speed of the shooter by this amount."
+                },
+                "minSpeedDistanceModifier": {
+                    "type": "number",
+                    "description": "Increases the distance of the slowest speed by this amount."
+                },
+                "comboPointModifier": {
+                    "type": "number",
+                    "description": "Increases the amount of points given by Combos by comboPoints + (comboPoints + amount)."
+                },
+                "tenFiveChainBonusMultiplier": {
+                    "type": "number",
+                    "description": "Multiplies Chain Bonuses by this amount at x10 chain and every x5 chain after."
+                }
+            }
+        }
+    },
+    "required": [
+        "particle",
+        "pickupParticle",
+        "spawnSound",
+        "pickupSound"
+    ],
+    "additionalProperties": false
+}

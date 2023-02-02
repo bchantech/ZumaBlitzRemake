@@ -1,4 +1,5 @@
 {
+    "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Hog Wild Sliders",
     "sprite": "",
     "effects": {

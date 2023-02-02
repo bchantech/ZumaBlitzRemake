@@ -1,4 +1,5 @@
 {
+    "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Blue Velvet Cake",
     "sprite": "",
     "variants": {
@@ -8,7 +9,7 @@
         }
     },
     "effects": {
-        "fireballBaseScoreModifier": 500,
+        "fireballBaseScoreModifier": 200,
         "fireballScorePerBallModifier": 50,
         "fireballSprite": ""
     }

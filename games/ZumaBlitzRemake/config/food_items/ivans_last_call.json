@@ -1,4 +1,5 @@
 {
+    "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Ivan's Last Call",
     "sprite": "",
     "effects": {
