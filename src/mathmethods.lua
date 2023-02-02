@@ -34,3 +34,9 @@ function _MathAreKeysInTable(tbl, ...)
     end
     return tbl
 end
+
+
+
+function _MathRoundToNearest(value, roundTo)
+	return math.ceil(value / roundTo) * roundTo
+end
