@@ -753,12 +753,14 @@ function Profile:deserialize(t)
     local hash = {}
     local res = {}
 	-- 1. Handle duplicates
-	for i, v in ipairs(self.equippedPowers) do
+	for _, v in pairs(self.equippedPowers) do
 		if (not hash[v]) then
             res[#res + 1] = v
 			hash[v] = true
 		end
     end
+    self.equippedPowers = res
+	
     -- 2. Handle equippedPowers[>=4]
 	if #self.equippedPowers >= 4 then
 		for i = #self.equippedPowers, 4, -1 do
