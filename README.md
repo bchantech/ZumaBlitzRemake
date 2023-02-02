@@ -36,11 +36,12 @@ Make sure you have [LÖVE2D 11.3](https://github.com/love2d/love/releases/tag/11
 installed on your machine. 32-bit or 64-bit doesn't matter - although the build
 script can detect both 32-bit and 64-bit EXE installation directories.
 
-You will also need [7-zip](https://www.7-zip.org/download.html) installed
+You will also need [7-zip](https://www.7-zip.org/download.html) and
+ installed
 and it's directory added in `%PATH%`.
 
 Then, simply run `build.bat`. You will see a new folder named `build` after
-it's finished.
+it's finished. To skip creation of `*.zip` files, pass `--no-packages`.
 
 ### macOS
 I unfortunately don't have a Mac, so someone else has to build these.
