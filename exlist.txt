@@ -4,6 +4,7 @@ doc\
 doc2\
 engine\
 games\
+build\
 .git\
 *.bat
 *.md
