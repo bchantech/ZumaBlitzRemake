@@ -141,7 +141,7 @@ function Path:update(dt)
 	-- Path Clears
     if self:isValidForCurveClear() then
 		self.pathClearGranted = true
-        -- Curve Clears in Kroakatoa grant 1000 + total time elapsed.
+        -- Curve Clears in Kroakatoa grant 1000 + (total time elapsed * 100).
         -- Reference: http://bchantech.dreamcrafter.com/zumablitz/scoringmechanics_relaunch.php
         local score = 1000 + (math.floor(self.map.level.time) * 100)
 		local extraPoints = _Game:getCurrentProfile():getEquippedFoodItemEffects().curveClearPointModifier
