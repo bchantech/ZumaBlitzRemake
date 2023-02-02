@@ -1,3 +1,4 @@
+.vscode\
 assets\
 dll\
 doc\
@@ -10,5 +11,7 @@ build\
 *.md
 *.ld
 *.txt
+*.res
+*.ico
 LICENSE
 .gitignore
