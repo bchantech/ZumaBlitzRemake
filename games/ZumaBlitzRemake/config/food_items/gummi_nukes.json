@@ -3,6 +3,7 @@
     "displayName": "Gummi Nukes",
     "sprite": "",
     "effects": {
+        "requiredPower": "color_nuke",
         "powerupFrequencyModifier": {
             "powerup": "color_nuke",
             "value": 7

@@ -93,7 +93,7 @@
                 },
                 "shotSpeedModifier": {
                     "type": "number",
-                    "description": "Increases the shot speed of the shooter by this amount."
+                    "description": "Increases the shot speed of the shooter by shotSpeed + (shotSpeed * amount)."
                 },
                 "minSpeedDistanceModifier": {
                     "type": "number",
@@ -106,6 +106,50 @@
                 "tenFiveChainBonusMultiplier": {
                     "type": "number",
                     "description": "Multiplies Chain Bonuses by this amount at x10 chain and every x5 chain after."
+                },
+                "maximumGapShotScoreModifier": {
+                    "type": "number",
+                    "description": "Increases the amount of maximum points a Gap Shot can give by this amount."
+                },
+                "largeGapScoreThreshold": {
+                    "type": "number",
+                    "description": "'Decreases score lost from larger gaps'"
+                },
+                "extraLargeGapScoreThreshold": {
+                    "type": "number",
+                    "description": "'Decreases score lost from larger gaps'"
+                },
+                "smallGapShotScoreModifier": {
+                    "type": "number",
+                    "description": "'...improves the value of small gap shots...'"
+                },
+                "largeGapShotScorePenaltyModifier": {
+                    "type": "number",
+                    "description": "'...and decreases the score penalty for larger gaps.'"
+                },
+                "dontDecreaseBlitzMeter": {
+                    "type": "boolean",
+                    "description": "If true, the Blitz Meter does not decrease over time. This does not apply to Speed Bonuses."
+                },
+                "powerupFrequencyModifier": {
+                    "type": "object",
+                    "description": "Increases the frequency of a specified powerup.",
+                    "properties": {
+                        "powerup": {
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "requiredPower": {
+                    "type": "string",
+                    "description": "If this Power is not equipped, any other defined effects will not take place."
+                },
+                "colorNukeUsagePoints": {
+                    "type": "number",
+                    "description": "Increases the amount of points per Color Nuke used."
                 }
             }
         }
