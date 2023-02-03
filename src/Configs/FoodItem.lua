@@ -20,7 +20,7 @@ function FoodItem:new(data, path)
 
     for _, v in pairs({ "displayName", "sprite", "effects" }) do
         if not self[v] then
-            error(string.format("[FoodItem] %s: missing required value \"%s\"", v))
+            error(string.format("[FoodItem] %s: missing required value \"%s\"", self._path, v))
         end
     end
     if type(data.effects) ~= "table" then
