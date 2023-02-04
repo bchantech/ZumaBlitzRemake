@@ -179,7 +179,7 @@ function Game:updateRichPresence()
 			powerString = "None"
         end
 		if profile.equippedFood then
-			foodString = profile:getEquippedFoodItem(profile.equippedFood).displayName
+			foodString = profile:getEquippedFoodItem().displayName
         else
 			foodString = "None"
         end
