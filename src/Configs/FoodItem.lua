@@ -17,15 +17,6 @@ function FoodItem:new(data, path)
     self.variants = data.variants
     self.variantBase = nil
     self.effects = data.effects
-
-    for _, v in pairs({ "displayName", "sprite", "effects" }) do
-        if not self[v] then
-            error(string.format("[FoodItem] %s: missing required value \"%s\"", self._path, v))
-        end
-    end
-    if type(data.effects) ~= "table" then
-        error(string.format("[FoodItem] %s: invalid value for \"powers\" (must be table)", self._path))
-    end
 end
 
 
