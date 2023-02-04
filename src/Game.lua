@@ -192,13 +192,29 @@ function Game:updateRichPresence()
 			spirit_turtle = "Turtle"
         }
         local frogatarStrings = {
-			frogatar_basic = "Basic"
+            frogatar_basic = "Basic Frog",
+            frogatar_cobalt = "Cobalt Frog",
+            frogatar_werewolf = "Werefrog",
+            frogatar_dracula = "Count Frogula",
+			frogatar_skeleton = "Skelefrog",
+            frogatar_hunter = "Hunter Frog",
+            frogatar_gatherer = "Gatherer Frog",
+            frogatar_mystic = "Mystic Frog",
+            frogatar_wild = "Wild Frog",
+            frogatar_winter = "Winter Frog",
+            frogatar_patricks = "St. Patricks' Day Frog",
+            frogatar_bunny = "Bunny Frog",
+            frogatar_dragon = "Dragon Frog",
+            frogatar_cat = "Hathaway Cat",
+			frogatar_pink = "Pink Frog",
+			frogatar_progressive = "Progressive Frog",
+			frogatar_golden = "Golden Frog"
         }
 		
 		if profile.monument then
 			smallImageText = "Spirit "..monumentStrings[profile:getActiveMonument()]
         else
-			smallImageText = frogatarStrings[profile:getFrogatar()].." Frog"
+			smallImageText = frogatarStrings[profile:getFrogatar()]
 		end
 
         line1 = string.format(
