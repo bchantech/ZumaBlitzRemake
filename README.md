@@ -21,16 +21,23 @@ This project uses [OpenSMCE](https://github.com/jakubg1/OpenSMCE) as it's
 framework. You will then need to install [LÖVE2D 11.3](https://github.com/love2d/love/releases/tag/11.3)
 on your machine.
 
-## Installation
+## Running from source
 Fetch the repository, as you would any other, or download the repository.
 
-You will then need to run `start.bat`. If you are on a non-Windows operating
-system, create a terminal script:
-```
-(Directory to where the LOVE executable is) ./ --console
+### Windows
+Run `start.bat`.
+
+### macOS
+Experimental. Do the following in a terminal:
+```sh
+cd ZumaBlitzRemake
+chmod +x ./start-macos.command
 ```
 
+After that, you can double-click on `start-macos.command`.
+
 ## Building
+
 ### Windows
 Make sure you have [LÖVE2D 11.3](https://github.com/love2d/love/releases/tag/11.3)
 installed on your machine. 32-bit or 64-bit doesn't matter - although the build
