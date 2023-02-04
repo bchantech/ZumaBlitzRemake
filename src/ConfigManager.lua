@@ -105,7 +105,8 @@ function ConfigManager:loadStuffAfterResources()
                     price = data.price or food.price,
                 }
                 local instance = FoodItem(foodVariant, food._path)
-				instance.variantBase = food._name
+                instance.variantBase = food._name
+				instance:syncVariantEffects()
 				self.foodItems[internalName] = instance
 			end
 		end

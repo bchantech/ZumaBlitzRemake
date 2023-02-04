@@ -21,4 +21,12 @@ end
 
 
 
+function FoodItem:syncVariantEffects()
+    if self.variantBase then
+        self.effects = _Game.configManager.foodItems[self.variantBase].effects
+    end
+end
+
+
+
 return FoodItem
