@@ -261,7 +261,7 @@ function c.splashEnd(f)
   c.profileOffset = 0
   c.foodtempOffset = 0
   c.foodtempSelectID = 0
-  if f.profileGetEquippedFood() then
+  if f.profileGetExists() and f.profileGetEquippedFood() then
     for food, v in pairs(f.getFoodItems()) do
       if f.profileGetEquippedFood() == food then
         c.foodSelectID = i
@@ -1108,10 +1108,10 @@ function c.tick(f)
     else
       c.Main_Text_PlayerItems.widget.text = string.format(
         "Equipped Food: %s\nEquipped Powers: %s\nFrogatar: %s\nSpirit Animal: %s",
-        f.profileGetEquippedFood(),
+        f.profileGetEquippedFood() or "none",
         table.concat(f.profileGetEquippedPowers(), ", "),
         f.profileGetFrogatar(),
-        f.profileGetMonument()
+        f.profileGetMonument() or "none"
       )
     end
 
