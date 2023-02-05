@@ -105,6 +105,26 @@
                     },
                     "text": "If you can read this then you're smart boi"
                 },
+                "Text_PlayerItems": {
+                    "inheritShow": true,
+                    "inheritHide": true,
+                    "type": "text",
+                    "pos": {
+                        "x": 12,
+                        "y": 96
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "MenuControls",
+                    "font": "fonts/dialog_body.json",
+                    "align": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "text": "hi"
+                },
                 "Button_Start": {
                     "inheritShow": true,
                     "inheritHide": true,
@@ -195,6 +215,24 @@
 						"buttonClick": "mainQuit"
 					}
                 },
+                "Button_Food": {
+                    "inheritShow": true,
+                    "inheritHide": true,
+                    "type": "spriteButton",
+                    "pos": {
+                        "x": 12,
+                        "y": 64
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "MenuControls",
+                    "sprite": "sprites/main/button_food.json",
+					"callbacks": {
+						"buttonClick": "mainFoodTemp"
+					}
+                },
                 "Leaderboards": "ui/menu_leaderboard_table.json"
             },
             "sprite": "sprites/main/background.json",
@@ -205,7 +243,9 @@
 		"Profile_Manage":"ui/profile_manage.json",
 		"Profile_Create":"ui/profile_create.json",
 		"Profile_Duplicate":"ui/profile_dup.json",
-		"Profile_Delete":"ui/profile_delete.json"
+		"Profile_Delete":"ui/profile_delete.json",
+
+		"FoodTemp_Manage":"ui/foodtemp_manage.json"
     },
     "animations": {},
     "sounds": {}

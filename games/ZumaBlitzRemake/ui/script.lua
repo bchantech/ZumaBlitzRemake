@@ -75,6 +75,14 @@ function c.splashEnd(f)
   c.Profile_Manage_Button_Down = f.getWidgetN("root/Main/Profile_Manage/Frame/Listbox/Button_Down")
   c.Profile_Manage_Button_Delete = f.getWidgetN("root/Main/Profile_Manage/Frame/Button_Delete")
   c.Profile_Manage_Button_Select = f.getWidgetN("root/Main/Profile_Manage/Frame/Button_Select")
+  
+  c.FoodTemp_Manage = f.getWidgetN("root/Main/FoodTemp_Manage")
+  c.FoodTemp_Manage_Frame = f.getWidgetN("root/Main/FoodTemp_Manage/Frame")
+  c.FoodTemp_Manage_Button_Up = f.getWidgetN("root/Main/FoodTemp_Manage/Frame/Listbox/Button_Up")
+  c.FoodTemp_Manage_Button_Down = f.getWidgetN("root/Main/FoodTemp_Manage/Frame/Listbox/Button_Down")
+  c.FoodTemp_Manage_Button_Delete = f.getWidgetN("root/Main/FoodTemp_Manage/Frame/Button_Delete")
+  c.FoodTemp_Manage_Button_Select = f.getWidgetN("root/Main/FoodTemp_Manage/Frame/Button_Select")
+
   c.Profile_Create = f.getWidgetN("root/Main/Profile_Create")
   c.Profile_Create_Button_Cancel = f.getWidgetN("root/Main/Profile_Create/Frame/Button_Cancel")
   c.Profile_Create_Button_Ok = f.getWidgetN("root/Main/Profile_Create/Frame/Button_Ok")
@@ -210,6 +218,18 @@ function c.splashEnd(f)
     i = i + 1
   end
 
+  c.FoodTempRows = {}
+  local i = 1
+  while f.getWidgetN("root/Main/FoodTemp_Manage/Frame/Listbox/Button_" .. tostring(i)) do
+    local path = "root/Main/FoodTemp_Manage/Frame/Listbox/Button_" .. tostring(i)
+    local row = {}
+    row.button = f.getWidgetN(path)
+    row.name = f.getWidgetN(path .. "/Text_E")
+    row.name2 = f.getWidgetN(path .. "/Text_H")
+    c.FoodTempRows[i] = row
+    i = i + 1
+  end
+
   c.stageNames = {
     "THE QUEST BEGINS",
     "CHASING THE CARAVAN",
@@ -239,12 +259,23 @@ function c.splashEnd(f)
     end
   end
   c.profileOffset = 0
+  c.foodtempOffset = 0
+  c.foodtempSelectID = 0
+  if f.profileGetEquippedFood() then
+    for food, v in pairs(f.getFoodItems()) do
+      if f.profileGetEquippedFood() == food then
+        c.foodSelectID = i
+        break
+      end
+    end
+  end
 
 
 
   c.Main_Text_PlayerE = f.getWidgetN("root/Main/Menu/Text_PlayerE")
   c.Main_Text_PlayerH = f.getWidgetN("root/Main/Menu/Text_PlayerH")
   c.Main_Text_Version = f.getWidgetN("root/Main/Menu/Text_Version")
+  c.Main_Text_PlayerItems = f.getWidgetN("root/Main/Menu/Text_PlayerItems")
   c.Menu_Continue_Text_Stage = f.getWidgetN("root/Menu_Continue/Frame/Text_Stage")
   c.Menu_Continue_Text_Score = f.getWidgetN("root/Menu_Continue/Frame/Text_Score")
   c.Menu_StageSelect_Text_StageName = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Text_StageName")
@@ -626,6 +657,74 @@ end
 
 
 
+-- WHEN CLICKED "FOOD" ON MAIN MENU
+function c.mainFoodTemp(f)
+  c.foodUpdateButtons(f)
+  c.FoodTemp_Manage:show()
+  c.FoodTemp_Manage:setActive()
+end
+
+
+
+-- WHEN CLICKED AN ENTRY ON TEMP FOOD MENU
+function c.foodChange(f, params)
+  local id = params[1]
+  c.foodtempSelectID = id + c.foodtempOffset
+  c.foodUpdateButtons(f)
+end
+
+
+
+-- WHEN CLICKED "SELECT" ON TEMP FOOD MENU
+function c.foodTempSelect(f)
+  local food
+  for i, row in ipairs(c.FoodTempRows) do
+    local n = c.foodtempOffset + i
+    if n == c.foodtempSelectID then
+      food = row.name.widget.text
+    end
+  end
+  
+  f.profileSetEquippedFood(food)
+  c.FoodTemp_Manage:hide()
+  c.Main:setActive()
+end
+
+
+
+-- WHEN CLICKED "CANCEL" ON TEMP FOOD MENU
+function c.foodTempCancel(f)
+  c.FoodTemp_Manage:hide()
+  c.Main:setActive()
+end
+
+
+
+-- WHEN CLICKED "DELETE" ON TEMP FOOD MENU
+function c.foodTempDelete(f)
+  f.profileSetEquippedFood()
+  c.FoodTemp_Manage:hide()
+  c.Main:setActive()
+end
+
+
+
+-- WHEN SCROLLED UP ON TEMP FOOD MENU
+function c.foodtempScrollUp(f)
+  c.foodtempOffset = c.foodtempOffset - 1
+  c.foodUpdateButtons(f)
+end
+
+
+
+-- WHEN SCROLLED DOWN ON TEMP FOOD MENU
+function c.foodtempScrollDown(f)
+  c.foodtempOffset = c.foodtempOffset + 1
+  c.foodUpdateButtons(f)
+end
+
+
+
 -- WHEN CLICKED "CREATE" ON PROFILE MENU
 function c.profilesCreate(f)
   c.Profile_Create:show()
@@ -1003,6 +1102,13 @@ function c.tick(f)
 
     c.Main_Text_PlayerE.widget.text = player
     c.Main_Text_Version.widget.text = "Running on OpenSMCE " .. _VERSION
+    c.Main_Text_PlayerItems.widget.text = string.format(
+      "Equipped Food: %s\nEquipped Powers: %s\nFrogatar: %s\nSpirit Animal: %s",
+      f.profileGetEquippedFood(),
+      table.concat(f.profileGetEquippedPowers(), ", "),
+      f.profileGetFrogatar(),
+      f.profileGetMonument()
+    )
 
     --[[
     for i, row in ipairs(c.HighscoreRows) do
@@ -1297,6 +1403,36 @@ function c.profileManagerUpdateButtons(f)
   c.Profile_Manage_Button_Down:buttonSetEnabled(c.profileOffset < #names - #c.ProfileRows)
   c.Profile_Manage_Button_Delete:buttonSetEnabled(c.profileSelectID > 0)
   c.Profile_Manage_Button_Select:buttonSetEnabled(c.profileSelectID > 0)
+end
+
+
+
+function c.foodUpdateButtons(f)
+  local names = {}
+  for k, v in pairs(f.getFoodItems()) do
+    table.insert(names, k)
+  end
+
+  if c.foodtempSelectID > #names then
+    c.foodtempSelectID = #names
+  end
+  if c.foodtempOffset > 0 and c.profileOffset > #names - #c.FoodTempRows then
+    c.foodtempOffset = #names - #c.FoodTempRows
+  end
+
+  local s = c.foodtempSelectID
+  for i, row in ipairs(c.FoodTempRows) do
+    local n = c.foodtempOffset + i
+    local name = names[n] or ""
+    row.name.widget.text = name
+    row.button:buttonSetEnabled(names[n])
+    row.button.widget.clickedV = n == s
+  end
+
+  c.FoodTemp_Manage_Button_Up:buttonSetEnabled(c.foodtempOffset > 0)
+  c.FoodTemp_Manage_Button_Down:buttonSetEnabled(c.foodtempOffset < #names - #c.ProfileRows)
+  c.FoodTemp_Manage_Button_Delete:buttonSetEnabled(c.foodtempSelectID > 0)
+  c.FoodTemp_Manage_Button_Select:buttonSetEnabled(c.foodtempSelectID > 0)
 end
 
 

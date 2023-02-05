@@ -79,19 +79,21 @@ function UIManager:new()
     
     getPower = function(power) return _Game.configManager:getPower(power) end,
     getFoodItem = function(foodItem) return _Game.configManager:getFoodItem(foodItem) end,
+    getFoodItems = function() return _Game.configManager.foodItems end,
 
     profileGetPowerCatalog = function(power) return _Game:getCurrentProfile().powerCatalog end,
     profileGetPowerLevel = function(power) return _Game:getCurrentProfile():getPowerLevel(power) end,
     profileGetEquippedPowers = function() return _Game:getCurrentProfile().equippedPowers end,
     
     profileGetFoodInventory = function(power) return _Game:getCurrentProfile().foodInventory end,
+    profileSetEquippedFood = function(food) _Game:getCurrentProfile().equippedFood = food end,
     profileGetEquippedFood = function() return _Game:getCurrentProfile().equippedFood end,
     profileGetEquippedFoodData = function() return _Game.configManager:getFoodItem(_Game:getCurrentProfile().equippedFood) end,
     
     profileGetFrogatar = function() return _Game:getCurrentProfile():getFrogatar() end,
-    profileSetFrogatar = function(frogatar) return _Game:getCurrentProfile():setFrogatar(frogatar) end,
+    profileSetFrogatar = function(frogatar) _Game:getCurrentProfile():setFrogatar(frogatar) end,
     profileGetMonument = function() return _Game:getCurrentProfile():getActiveMonument() end,
-    profileSetMonument = function(monument) return _Game:getCurrentProfile():setActiveMonument(monument) end,
+    profileSetMonument = function(monument) _Game:getCurrentProfile():setActiveMonument(monument) end,
 
     -- END FORK-SPECIFIC FUNCTIONS --
 
