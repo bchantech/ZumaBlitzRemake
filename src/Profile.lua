@@ -530,6 +530,8 @@ end
 
 -- Spirit Animals
 
+---Sets this Profile's Spirit Monument (`"spirit_"..animal`).
+---Pass `nil` to clear it.
 function Profile:setActiveMonument(animal)
 	if animal then
 		self.monument = animal

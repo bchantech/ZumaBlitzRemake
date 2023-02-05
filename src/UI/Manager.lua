@@ -74,6 +74,27 @@ function UIManager:new()
     profileIsCheckpointUnlocked = function(n) return _Game:getCurrentProfile():isCheckpointUnlocked(n) end,
     profileIsCheckpointUpcoming = function() return _Game:getCurrentProfile():isCheckpointUpcoming() end,
 
+    -- BEGIN FORK-SPECIFIC FUNCTIONS --
+    -- TODO: Migrate these to UI2 once implemented
+    
+    getPower = function(power) return _Game.configManager:getPower(power) end,
+    getFoodItem = function(foodItem) return _Game.configManager:getFoodItem(foodItem) end,
+
+    profileGetPowerCatalog = function(power) return _Game:getCurrentProfile().powerCatalog end,
+    profileGetPowerLevel = function(power) return _Game:getCurrentProfile():getPowerLevel(power) end,
+    profileGetEquippedPowers = function() return _Game:getCurrentProfile().equippedPowers end,
+    
+    profileGetFoodInventory = function(power) return _Game:getCurrentProfile().foodInventory end,
+    profileGetEquippedFood = function() return _Game:getCurrentProfile().equippedFood end,
+    profileGetEquippedFoodData = function() return _Game.configManager:getFoodItem(_Game:getCurrentProfile().equippedFood) end,
+    
+    profileGetFrogatar = function() return _Game:getCurrentProfile():getFrogatar() end,
+    profileSetFrogatar = function(frogatar) return _Game:getCurrentProfile():setFrogatar(frogatar) end,
+    profileGetMonument = function() return _Game:getCurrentProfile():getActiveMonument() end,
+    profileSetMonument = function(monument) return _Game:getCurrentProfile():setActiveMonument(monument) end,
+
+    -- END FORK-SPECIFIC FUNCTIONS --
+
     profileSetVariable = function(name, value) _Game:getCurrentProfile():setVariable(name, value) end,
     profileGetVariable = function(name) return _Game:getCurrentProfile():getVariable(name) end,
 
