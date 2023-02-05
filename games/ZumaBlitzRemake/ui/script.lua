@@ -1102,13 +1102,18 @@ function c.tick(f)
 
     c.Main_Text_PlayerE.widget.text = player
     c.Main_Text_Version.widget.text = "Running on OpenSMCE " .. _VERSION
-    c.Main_Text_PlayerItems.widget.text = string.format(
-      "Equipped Food: %s\nEquipped Powers: %s\nFrogatar: %s\nSpirit Animal: %s",
-      f.profileGetEquippedFood(),
-      table.concat(f.profileGetEquippedPowers(), ", "),
-      f.profileGetFrogatar(),
-      f.profileGetMonument()
-    )
+
+    if not f.profileGetExists() then
+      c.Main_Text_PlayerItems.widget.text = ""
+    else
+      c.Main_Text_PlayerItems.widget.text = string.format(
+        "Equipped Food: %s\nEquipped Powers: %s\nFrogatar: %s\nSpirit Animal: %s",
+        f.profileGetEquippedFood(),
+        table.concat(f.profileGetEquippedPowers(), ", "),
+        f.profileGetFrogatar(),
+        f.profileGetMonument()
+      )
+    end
 
     --[[
     for i, row in ipairs(c.HighscoreRows) do
