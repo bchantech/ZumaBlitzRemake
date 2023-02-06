@@ -177,8 +177,8 @@ function ShotSphere:moveStep()
             end
 			if not sphereConfig.hitBehavior.type == "pierce" then
 				self:destroy()
+				_Game:spawnParticle(sphereConfig.destroyParticle, self.pos)
 			end
-			_Game:spawnParticle(sphereConfig.destroyParticle, self.pos)
 		end
 	end
 
