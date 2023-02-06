@@ -5,7 +5,8 @@
         "type": {
             "enum": [
                 "normal",
-                "lightning"
+                "lightning",
+                "multishot"
             ]
         }
     },
@@ -59,6 +60,33 @@
                 },
                 "required": [
                     "range"
+                ],
+                "additionalProperties": false
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "multishot",
+                        "description": "The sphere is launched alongside clones of itself that is evenly spread."
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "then": {
+                "properties": {
+                    "type": true,
+                    "amount": {
+                        "type": "number",
+                        "exclusiveMinimum": 0,
+                        "description": "The total amount of spheres that will be shot from the shooter."
+                    }
+                },
+                "required": [
+                    "amount"
                 ],
                 "additionalProperties": false
             }

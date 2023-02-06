@@ -8,7 +8,8 @@
                 "destroySphere",
                 "fireball",
                 "colorCloud",
-                "replaceColor"
+                "replaceColor",
+                "pierce"
             ]
         }
     },
@@ -145,6 +146,25 @@
                     "particle",
                     "color"
                 ],
+                "additionalProperties": false
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "pierce",
+                        "description": "The sphere pierces through all spheres it can destroy, similar to Luxor's Lightning powerup."
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "then": {
+                "properties": {
+                    "type": true
+                },
                 "additionalProperties": false
             }
         }

@@ -289,7 +289,20 @@ function Shooter:shoot()
         _Game:spawnParticle(sphereConfig.destroyParticle, self:getSpherePos())
         _Game.session:destroyVerticalColor(self.pos.x, sphereConfig.shootBehavior.range, self.color)
     else
-        _Game.session.level:spawnShotSphere(self, self:getSpherePos(), self.angle, self.color, self:getShootingSpeed())
+        if sphereConfig.shootBehavior.type == "multishot" then
+            local spread_max = 30.0
+            local orbs_per_shot = sphereConfig.shootBehavior.amount
+            local shot_angle_offset = -(spread_max / 2)
+            local shot_angle = spread_max / orbs_per_shot
+    
+            for i = 1, orbs_per_shot do
+                local fire_angle = self.angle + math.rad(shot_angle_offset + (shot_angle * i))
+                _Game.session.level:spawnShotSphere(self, self:getSpherePos(), fire_angle, self.color, self:getShootingSpeed())
+            end
+        else
+            _Game.session.level:spawnShotSphere(self, self:getSpherePos(), self.angle, self.color, self:getShootingSpeed())
+        end
+        
         self.sphereEntity = nil
         --self.active = false
         -- knockback

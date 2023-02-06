@@ -127,6 +127,9 @@ function ShotSphere:moveStep()
 				_Game.session:replaceColor(hitColor, sphereConfig.hitBehavior.color, sphereConfig.hitBehavior.particle)
 				self:destroy()
 				_Game:spawnParticle(sphereConfig.destroyParticle, self.pos)
+            elseif sphereConfig.hitBehavior.type == "pierce" then
+				_Game.session:destroySingleSphere(nearestSphere.sphere)
+				self.hitSphere = nil
 			else
 				if self.hitSphere.half then
 					self.hitSphere.sphereID = self.hitSphere.sphereID + 1
@@ -171,8 +174,10 @@ function ShotSphere:moveStep()
 			if sphereConfig.hitBehavior.type == "fireball" then
                 _Game.session:destroyRadiusColor(self.pos, sphereConfig.hitBehavior.range, self.color)
 				_Game:playSound(sphereConfig.hitSound, 1, self.pos)
+            end
+			if not sphereConfig.hitBehavior.type == "pierce" then
+				self:destroy()
 			end
-			self:destroy()
 			_Game:spawnParticle(sphereConfig.destroyParticle, self.pos)
 		end
 	end
