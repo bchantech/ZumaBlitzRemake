@@ -160,6 +160,15 @@ function Path:update(dt)
 		local shouldGiveOneSecond = _MathIsValueInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearsGiveOneSecond")
 		if not self.map.level.finish and shouldGiveOneSecond then
 			self.map.level:applyEffect({type = "addTime", amount = 1})
+        end
+		
+        -- Accelerate spheres on Curve Clear.
+        -- TODO: Is there a better way to do this? Especially when determining
+		-- a set distance for the spheres to reach after it's triggered.
+		for _, sphereChain in pairs(self.sphereChains) do
+            for _, sphereGroup in pairs(sphereChain.sphereGroups) do
+                sphereGroup.speed = 1200
+			end
 		end
 	-- 10% of this path's length to be able to reclaim path clear bonus
 	elseif self:getMaxOffset() > self.length * 0.1 then
