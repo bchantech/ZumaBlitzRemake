@@ -1083,7 +1083,7 @@ end
 
 
 function SphereGroup:getSphereOffset(sphereID)
-	return self.offset + self.spheres[sphereID].offset
+	return self.offset + ((_MathAreKeysInTable(self.spheres, sphereID) and self.spheres[sphereID].offset) or 0)
 end
 
 
