@@ -1,0 +1,33 @@
+{
+    "$schema": "../../../../schemas/config/Sphere.json",
+    "sprite": "sprites/game/ball_cannon.json",
+    "destroyParticle": "particles/collapse_ball_5.json",
+    "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+    },
+    "interchangeable": false,
+    "shootBehavior": {
+        "type": "multishot",
+        "amount": 3
+    },
+    "shootSound": "sound_events/sphere_shoot_cannons.json",
+    "hitBehavior": {
+        "type": "pierce"
+    },
+    "hitSound": "sound_events/sphere_destroy_4.json",
+    "matches": [
+        -1,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+    ],
+    "matchFont": "fonts/score0.json"
+}
