@@ -54,6 +54,7 @@ function Shooter:changeTo(name)
     self.movement = self.levelMovement or self.config.movement
 
     self.sprite = self.config.sprite
+    self.hotFrogTransitionLowerSprite = self.config.hotFrogTransitionLowerSprite
     self.hotFrogTransitionSprite = self.config.hotFrogTransitionSprite
     self.shadowSprite = self.config.shadowSprite
     self.speedShotSprite = self.config.speedShotBeam.sprite
@@ -371,6 +372,28 @@ function Shooter:draw()
         self:drawReticle()
     end
 
+    --[[
+    i probably want to refine it so that the ordering is this:
+    - shadow
+    - bottom layer/shooter
+    - hot frog underlay (for mouth)
+    - current ball
+    - next ball
+    - upper layer
+    - hot frog overlay
+    
+    not sure if jakub will like that tho
+    but the way the ball masks are being handled is so messy right now
+    ]]
+
+    -- FORK-SPECIFIC CODE:
+    -- hot frog transition (lower)
+    ---@type Sprite?
+    local hotfroglowertr = self.config.hotFrogTransitionLowerSprite or nil
+    if hotfroglowertr then
+        hotfroglowertr:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle, nil, _Game.session.level.blitzMeter)
+    end
+
     -- this color
     if self.sphereEntity then
         self.sphereEntity:setPos(self:getSpherePos())
@@ -594,9 +617,13 @@ function Shooter:getShootingSpeed()
     local powerMultiplier = (speedShot and speedShot:getCurrentLevelData().additiveMultiplier) or 0
 
     local foodSpeedShot = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "shotSpeedModifier") or 0
+    -- Brendan's blog says that the speed boost in Kroakatoa is 175% but it's
+    -- clearly way too fast! We're using the old 75% boost.
+    -- src: http://bchantech.dreamcrafter.com/zumablitz/spiritanimals.php
+    local eagleSpeedShot = (_Game:getCurrentProfile():getActiveMonument() == "spirit_eagle" and 0.75) or 0
     -- TODO: What's the order of speed shot multipliers?
-    -- Is it Speed Shot power > Food Item? And am I doing this one-liner right?
-    return self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier + (self.config.shootSpeed * foodSpeedShot))
+    -- Would it also be ideal to set a max speed bonus cap?
+    return self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier) + (self.config.shootSpeed * foodSpeedShot) + (self.config.shootSpeed * eagleSpeedShot)
 end
 
 

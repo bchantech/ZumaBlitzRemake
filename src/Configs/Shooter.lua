@@ -20,6 +20,8 @@ function ShooterConfig:new(data, path)
     self.sprite = _Game.resourceManager:getSprite(data.sprite)
     ---@type Sprite?
     self.hotFrogTransitionSprite = (data.hotFrogTransitionSprite and _Game.resourceManager:getSprite(data.hotFrogTransitionSprite)) or nil
+    ---@type Sprite?
+    self.hotFrogTransitionLowerSprite = (data.hotFrogTransitionLowerSprite and _Game.resourceManager:getSprite(data.hotFrogTransitionLowerSprite)) or nil
     ---@type Vector2
     self.spriteOffset = _ParseVec2(data.spriteOffset) or Vec2()
     ---@type Vector2

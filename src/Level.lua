@@ -48,7 +48,9 @@ function Level:new(data)
     self.powerupFrequency = data.powerupFrequency or 15
     self.individualPowerupFrequencies = data.individualPowerupFrequencies or nil
 	self.powerupList = {"time", "multiplier"} -- this should prob be replaced with a function when powers are implemented
-    self.lastPowerupDeltas = {}
+    -- Apparently Multiplier balls appear faster as Spirit Turtle, but by how much?
+    -- src: http://bchantech.dreamcrafter.com/zumablitz/spiritanimals.php
+	self.lastPowerupDeltas = {}
 	for i, powerup in ipairs(self.powerupList) do
         self.lastPowerupDeltas[powerup] = self.stateCount - 600
     end
@@ -61,10 +63,7 @@ function Level:new(data)
     self.targetFrequency = data.targetFrequency
     self.targetInitialDelaySecondsElapsed = false
 
-	self.targetHitBases = {3000, 4500, 6750, 10150, 15200, 22800}
-    self.targetHitScore = 0
-    -- TODO: Additions to targetHitScore once Spirit Animals and Food are implemented
-    -- (Kiwi Kebab, to be exact)
+	self.targetHitBases = self:getTargetScoreValues()
 
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
@@ -868,6 +867,33 @@ function Level:getRandomPath(notEmpty, inDanger)
 	else
 		return self:getRandomPath()
 	end
+end
+
+
+
+---FORK-SPECIFIC CODE:
+---Get the Target score values that changes depending on the Fruit and Spirit Animal.
+---@return number[]
+function Level:getTargetScoreValues()
+	local currentScore = 3000 + (_Game:getCurrentProfile():getActiveMonument() == "spirit_eagle" and 3000) + (_Game:getCurrentProfile():getEquippedFoodItemEffects().fruitValueModifier or 0)
+	local useFilter = false
+	local filterScore = 0
+	local tbl = {}
+
+	for _ = 1, 6 do
+		table.insert(tbl, (useFilter and filterScore) or currentScore)
+		useFilter = false
+		currentScore = _MathRoundToNearest((currentScore + (currentScore * 0.5)), 25)
+		local odd = tostring(currentScore):match("[27]5$")
+		if odd == "25" then
+			filterScore = currentScore + 25
+			useFilter = true
+		elseif odd == "75" then
+			filterScore = currentScore - 25
+			useFilter = true
+		end
+    end
+	return tbl
 end
 
 

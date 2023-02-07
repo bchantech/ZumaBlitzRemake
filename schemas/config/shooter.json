@@ -11,6 +11,10 @@
             "type": "string",
             "description": "The sprite for the shooter to be used."
         },
+        "hotFrogTransitionLowerSprite": {
+            "type": "string",
+            "description": "The sprite for the shooter overlay to be used while the Blitz Meter is rising, UNDER the current ball. Optional fork-specific property."
+        },
         "hotFrogTransitionSprite": {
             "type": "string",
             "description": "The sprite for the shooter overlay to be used while the Blitz Meter is rising. Optional fork-specific property."

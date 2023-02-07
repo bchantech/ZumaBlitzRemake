@@ -28,7 +28,11 @@ end
 ---@param dt number Delta time in seconds.
 function Target:update(dt)
     if _Game:levelExists() and _Game.session.level.target then
-        self.duration = self.duration - dt
+        if not _Game:getCurrentProfile():getActiveMonument() == "spirit_eagle" then
+            -- don't tick down if we're using spirit eagle
+            -- src: http://bchantech.dreamcrafter.com/zumablitz/spiritanimals.php
+            self.duration = self.duration - dt
+        end
         if self.duration < 0 then
             self:destroy()
             _Game:playSound("sound_events/target_despawn.json")
