@@ -175,7 +175,7 @@ function ShotSphere:moveStep()
                 _Game.session:destroyRadiusColor(self.pos, sphereConfig.hitBehavior.range, self.color)
 				_Game:playSound(sphereConfig.hitSound, 1, self.pos)
             end
-			if not sphereConfig.hitBehavior.type == "pierce" then
+			if sphereConfig.hitBehavior.type ~= "pierce" then
 				self:destroy()
 				_Game:spawnParticle(sphereConfig.destroyParticle, self.pos)
 			end
