@@ -1,9 +1,8 @@
 {
     "path": "images/game/shooters/spirit_eagle/hot_frog_transition.png",
-
     "frame_size": {
         "x": 119,
-        "y": 96
+        "y": 120
     },
     "states": [
         {
