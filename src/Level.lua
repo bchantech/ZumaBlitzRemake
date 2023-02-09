@@ -63,7 +63,7 @@ function Level:new(data)
     self.targetFrequency = data.targetFrequency
     self.targetInitialDelaySecondsElapsed = false
 
-	self.targetHitBases = self:getTargetScoreValues()
+	self.targetHitScores = self:getTargetHitScoreValues()
 
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
@@ -118,7 +118,7 @@ function Level:updateLogic(dt)
 	self.map:update(dt)
     self.shooter:update(dt)
     self.stateCount = self.stateCount + dt
-	self.targetHitScore = self.targetHitBases[math.min(self.targets+1, 6)] + (_MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "targetValueModifier") or 0)
+	self.targetHitScore = self.targetHitScores[math.min(self.targets+1, 6)] + (_MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "targetValueModifier") or 0)
 
 	-- Danger sound
 	local d1 = self:getDanger() and not self.lost
@@ -874,8 +874,15 @@ end
 ---FORK-SPECIFIC CODE:
 ---Get the Target score values that changes depending on the Fruit and Spirit Animal.
 ---@return number[]
-function Level:getTargetScoreValues()
-	local currentScore = 3000 + (_Game:getCurrentProfile():getActiveMonument() == "spirit_eagle" and 3000) + (_Game:getCurrentProfile():getEquippedFoodItemEffects().fruitValueModifier or 0)
+function Level:getTargetHitScoreValues()
+    local currentScore = 3000
+	local profile = _Game:getCurrentProfile()
+    if profile:getActiveMonument() == "spirit_eagle" then
+        currentScore = currentScore + 3000
+    end
+	if profile:getEquippedFoodItemEffects().fruitValueModifier then
+		currentScore = currentScore + profile:getEquippedFoodItemEffects().fruitValueModifier
+	end
 	local useFilter = false
 	local filterScore = 0
 	local tbl = {}
