@@ -207,10 +207,11 @@ function Sphere:addPowerup(powerup)
 	end
 	if not (self:isGhost() or self:isOffscreen()) then
         self.powerup = powerup
-		if powerup == "multiplier" then
-			_Game:playSound("sound_events/multiplier_appear.json")
+		local spawnSound = "sound_events/spawn_powerup_"..self.powerup..".json"
+		if _LoadFile(spawnSound) then
+            _Game:playSound(spawnSound)
         else
-			_Game:playSound("sound_events/spawn_powerup.json")
+			_Game:playSound("sound_events/spawn_powerup_bomb.json")
 		end
         self.entity:setPowerup(powerup)
     end
@@ -220,9 +221,14 @@ end
 
 ---Removes any powerups from the current Sphere.
 function Sphere:removePowerup()
-	if not self:isGhost() then
+    if not self:isGhost() then
+		local removeSound = "sound_events/despawn_powerup_"..self.powerup..".json"
+		if _LoadFile(removeSound) then
+            _Game:playSound(removeSound)
+        else
+			_Game:playSound("sound_events/despawn_powerup.json")
+		end
         self.powerup = nil
-		_Game:playSound("sound_events/despawn_powerup.json")
         self.entity:setPowerup()
 		self.powerupTimeout = 20
 	end
@@ -285,7 +291,7 @@ function Sphere:deleteVisually(ghostTime, crushed)
 	-- Remove and apply any powerups that this sphere may have.
     if self.powerup and not (self.map.level.finish or self.map.level.lost) then
         local effectTable = {
-            time = function()
+            timeball = function()
                 local secs = 5
 				local sandsOfTime = _Game:getCurrentProfile():getEquippedPower("sands_of_time")
 				if sandsOfTime then

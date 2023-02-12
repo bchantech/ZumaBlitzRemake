@@ -4,7 +4,7 @@
     "sprite": "sprites/game/ball_2.json",
     "destroyParticle": "particles/collapse_ball_2.json",
     "powerupSprites": {
-        "time": "sprites/game/time_ball_2.json",
+        "timeball": "sprites/game/time_ball_2.json",
         "multiplier": "sprites/game/multiplier_ball_2.json"
     },
     "multiplierOverlaySprites": {

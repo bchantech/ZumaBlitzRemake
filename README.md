@@ -79,6 +79,8 @@ Any new features added in this fork may be added for OpenSMCE in general.
   - Discord: Shambles#3117
 
 ### Contributors
+- **Brendan Chan** - Zuma Blitz SWF file contribution
+  - GitHub: [bchantech](https://github.com/bchantech)
 - **Cat Warrior** - Asset contributions
   - GitHub: [CatWarriorOfficial](https://github.com/CatWarriorOfficial)
   - Discord: Cta warrior#4126
@@ -96,5 +98,3 @@ Any new features added in this fork may be added for OpenSMCE in general.
 - **Oreztov** - Wild Ball 3d cube recreation
   - GitHub: [Oreztov](https://github.com/Oreztov)
   - Discord: Oreztov#2411
-- **JeffMakesGames** - ZB Kroakatoa Music
-  - [YouTube playlist](https://www.youtube.com/playlist?list=PLEdhomj1r33983BrSBOdUrh0lpAFC-sQ-)

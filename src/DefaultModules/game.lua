@@ -40,16 +40,16 @@ end
 -- FORK-SPECIFIC CODE: Supplemental to f.matchSound() to emulate Zuma combo chime pitching
 function f.chainSound(chainLv)
   return {
-    name = "sound_events/sphere_destroy_chime.json",
-    pitch = 1 + 0.06 * math.min(chainLv, 28)
+    name = "sound_events/sphere_destroy_chime_"..math.min(chainLv+1, 10)..".json",
+    pitch = 1
   }
 end
 
 -- FORK-SPECIFIC CODE: Supplemental to f.matchSound() to emulate Zuma chain bonus chime pitching
 function f.comboSound(comboLv)
   return {
-    name = "sound_events/chain_bonus.json",
-    pitch = 1 + 0.1 * (math.min(comboLv, 16) - 6)
+    name = "sound_events/chain_bonus_"..(math.min(comboLv-5, 10))..".json",
+    pitch = 1
   }
 end
 

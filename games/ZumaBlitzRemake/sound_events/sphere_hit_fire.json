@@ -1,4 +1,8 @@
 {
-    "path": "sounds/collapse_fireball.ogg",
-    "flat": true
+    "random": true,
+    "paths": [
+        "sounds/bombexplode1.ogg",
+        "sounds/bombexplode2.ogg",
+        "sounds/bombexplode3.ogg"
+    ]
 }

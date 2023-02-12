@@ -11,7 +11,13 @@ function SoundEvent:new(path)
   local data = _LoadJson(path)
 
   self.sound = nil
-  if data.path then
+  self.sounds = {}
+  self.random = data.random
+  if data.random and data.paths then
+    for _,v in pairs(data.paths) do
+      table.insert(self.sounds, _Game.resourceManager:getSound(v))
+    end
+  elseif data.path then
     self.sound = _Game.resourceManager:getSound(data.path)
   end
   self.volume = data.volume or 1
@@ -21,13 +27,17 @@ function SoundEvent:new(path)
 end
 
 function SoundEvent:play(pitch, pos)
+  if self.random then
+    self.sound = self.sounds[math.random(1, #self.sounds)]
+  end
   if not self.sound then
     return self
   end
   pitch = pitch or 1
   local eventVolume = _ParseNumber(self.volume)
   local eventPitch = _ParseNumber(self.pitch)
-	local eventPos = not self.flat and pos
+  local eventPos = not self.flat and pos
+  
   return self.sound:play(eventVolume, pitch * eventPitch, eventPos, self.loop)
 end
 

@@ -5,11 +5,11 @@
     "colorblindSprite": "sprites/game/ball_5_cb.json",
     "destroyParticle": "particles/collapse_ball_5.json",
     "powerupSprites": {
-        "time": "sprites/game/time_ball_5.json",
+        "timeball": "sprites/game/time_ball_5.json",
         "multiplier": "sprites/game/multiplier_ball_5.json"
     },
     "colorblindPowerupSprites": {
-        "time": "sprites/game/time_ball_5_cb.json",
+        "timeball": "sprites/game/time_ball_5_cb.json",
         "multiplier": "sprites/game/multiplier_ball_5_cb.json"
     },
     "multiplierOverlaySprites": {

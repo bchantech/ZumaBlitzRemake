@@ -47,7 +47,7 @@ function Level:new(data)
 
     self.powerupFrequency = data.powerupFrequency or 15
     self.individualPowerupFrequencies = data.individualPowerupFrequencies or nil
-	self.powerupList = {"time", "multiplier"} -- this should prob be replaced with a function when powers are implemented
+	self.powerupList = {"timeball", "multiplier"} -- this should prob be replaced with a function when powers are implemented
     -- Apparently Multiplier balls appear faster as Spirit Turtle, but by how much?
     -- src: http://bchantech.dreamcrafter.com/zumablitz/spiritanimals.php
 	self.lastPowerupDeltas = {}
@@ -246,7 +246,7 @@ function Level:updateLogic(dt)
 
     -- Zuma style powerups
     if self.started and not self.finish and not self:areAllObjectivesReached() and not self:getEmpty() then
-        local powerups = { "time", "multiplier" }
+        local powerups = self.powerupList
 
 		local multiplierCap = 9
 		local raiseCap = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "multiplierCapAdditiveModifier")
