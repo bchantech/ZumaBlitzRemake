@@ -159,7 +159,6 @@ function Path:update(dt)
 
 		local shouldGiveOneSecond = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearsGiveOneSecond")
 		if (not self.map.level.finish) and shouldGiveOneSecond then
-			print("eep")
 			self.map.level:applyEffect({type = "addTime", amount = 1})
         end
 		

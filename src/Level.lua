@@ -261,7 +261,7 @@ function Level:updateLogic(dt)
 		if self.multiplier >= multiplierCap then
 			local pCount = 1
 			for _,v in pairs(powerups) do
-				if v == "multiplier" then
+                if v == "multiplier" then
 					table.remove(powerups, pCount)
                 end
 				pCount = pCount + 1
@@ -293,7 +293,8 @@ function Level:updateLogic(dt)
 		-- Traverse through all the spheres one more time and remove any multiplier powerups if
         -- we've reached the cap
 		-- TODO: Is there a better way to traverse every sphere? Might need to add a new function
-		if self.multiplier >= multiplierCap-1 then
+		if self.multiplier >= multiplierCap then
+			self.multiplier = multiplierCap
 			for _, path in pairs(self.map.paths) do
 				for _, sphereChain in pairs(path.sphereChains) do
 					for _, sphereGroup in pairs(sphereChain.sphereGroups) do
