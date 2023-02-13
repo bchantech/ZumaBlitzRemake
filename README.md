@@ -87,9 +87,9 @@ Any new features added in this fork may be added for OpenSMCE in general.
 - **Nagi** - Asset contributions
   - GitHub: [Nxgi](https://github.com/Nxgi)
   - Discord: nagi#1547
-- **cuteio14** - Asset fixes
-  - GitHub: [cuteio14](https://github.com/cuteio14)
-  - Discord: cuteio14#7664
+- **FREN-ZC** - Asset fixes
+  - GitHub: [FREN-ZC](https://github.com/FREN-ZC)
+  - Discord: FREN-Z\C#7664
 - **Tacos** - Sound ripping from videos
   - Discord: Tacos#8810
 - **Glows Lythos** - Board backgrounds
