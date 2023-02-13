@@ -77,6 +77,8 @@ function UIManager:new()
     -- BEGIN FORK-SPECIFIC FUNCTIONS --
     -- TODO: Migrate these to UI2 once implemented
     
+    openURL = function(url) love.system.openURL(url) end,
+
     getPower = function(power) return _Game.configManager:getPower(power) end,
     getFoodItem = function(foodItem) return _Game.configManager:getFoodItem(foodItem) end,
     getFoodItems = function() return _Game.configManager.foodItems end,

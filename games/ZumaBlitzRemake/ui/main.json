@@ -233,6 +233,27 @@
 						"buttonClick": "mainFoodTemp"
 					}
                 },
+                "Button_Discord": {
+                    "inheritShow": true,
+                    "inheritHide": true,
+                    "type": "spriteButton",
+                    "pos": {
+                        "x": 478,
+                        "y": 488
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "MenuControls",
+                    "sprite": "sprites/main/button_discord.json",
+					"callbacks": {
+						"buttonClick": {
+                            "name": "openURL",
+                            "parameters": ["https://discord.gg/gJgy5x5"]
+                        }
+					}
+                },
                 "Leaderboards": "ui/menu_leaderboard_table.json"
             },
             "sprite": "sprites/main/background.json",

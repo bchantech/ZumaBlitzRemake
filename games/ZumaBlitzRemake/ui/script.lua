@@ -657,6 +657,14 @@ end
 
 
 
+-- URL OPEN
+function c.openURL(f, params)
+  local url = params[1]
+  f.openURL(url)
+end
+
+
+
 -- WHEN CLICKED "FOOD" ON MAIN MENU
 function c.mainFoodTemp(f)
   c.foodUpdateButtons(f)
