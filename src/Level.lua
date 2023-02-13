@@ -60,6 +60,7 @@ function Level:new(data)
 		end
 	end
 
+	---@type Sprite
 	self.targetSprite = _Game.configManager.targetSprites.random[math.random(1, #_Game.configManager.targetSprites.random)]
     self.targetFrequency = data.targetFrequency
     self.targetInitialDelaySecondsElapsed = false
@@ -1244,6 +1245,7 @@ function Level:serialize()
 		powerupList = self.powerupList,
 		lastPowerupDeltas = self.lastPowerupDeltas,
         target = (self.target and self.target:serialize()),
+		targetSprite = self.targetSprite.path,
         targetSecondsCooldown = self.targetSecondsCooldown,
         targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
         targetHitScore = self.targetHitScore,
@@ -1297,7 +1299,8 @@ function Level:deserialize(t)
 	self.time = t.time
     self.stateCount = t.stateCount
 	self.powerupList = t.powerupList
-	self.lastPowerupDeltas = t.lastPowerupDeltas
+    self.lastPowerupDeltas = t.lastPowerupDeltas
+	self.targetSprite = _Game.resourceManager:getSprite(t.targetSprite)
 	if t.target then
 		self.target = Target(self.targetSprite, Vec2(t.target.pos.x, t.target.pos.y), false)
 	end
