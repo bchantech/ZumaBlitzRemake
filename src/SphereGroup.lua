@@ -671,7 +671,10 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		local destroySoundParams = MOD_GAME.matchSound(length, self.map.level.combo, self.sphereChain.combo, boostCombo)
         _Game:playSound(destroySoundParams.name, destroySoundParams.pitch, pos)
 		-- FORK-SPECIFIC CODE: match chime
-		local chainSoundParams = MOD_GAME.chainSound(self.sphereChain.combo)
+        local chainSoundParams = MOD_GAME.chainSound(self.sphereChain.combo)
+		-- I'm not sure why this keeps crashing people even though math.max(x, 7) is already present
+		-- so I'm adding this in, it's not crashing on my end
+		chainSoundParams = math.min(chainSoundParams, 7)
 		_Game:playSound(chainSoundParams.name, chainSoundParams.pitch, pos)
 	else
 		_Game:playSound(effectConfig.destroySound, 1, pos)
