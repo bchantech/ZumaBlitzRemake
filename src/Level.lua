@@ -247,15 +247,18 @@ function Level:updateLogic(dt)
 
     -- Zuma style powerups
     if self.started and not self.finish and not self:areAllObjectivesReached() and not self:getEmpty() then
-        local powerups = self.powerupList
+        local powerups = {}
+		for _,v in pairs(self.powerupList) do
+			table.insert(powerups, v)
+		end
 
 		local multiplierCap = 9
 		local raiseCap = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "multiplierCapAdditiveModifier")
-		if raiseCap then
-			multiplierCap = multiplierCap + raiseCap
+        if raiseCap then
+            multiplierCap = multiplierCap + raiseCap
         end
 		-- Don't spawn multipliers if we've hit the cap
-		if self.multiplier >= multiplierCap-1 then
+		if self.multiplier >= multiplierCap then
 			local pCount = 1
 			for _,v in pairs(powerups) do
 				if v == "multiplier" then
