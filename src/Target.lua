@@ -85,6 +85,7 @@ end
 
 function Target:serialize()
     local t = {
+        sprite = self.sprite,
         pos = self.pos,
         isFreeSpin = self.isFreeSpin,
         delQueue = self.delQueue,
@@ -96,6 +97,7 @@ end
 
 
 function Target:deserialize(t)
+    self.sprite = t.sprite
     self.pos = t.pos
     self.isFreeSpin = t.isFreeSpin
     self.delQueue = t.delQueue

@@ -60,6 +60,7 @@ function Level:new(data)
 		end
 	end
 
+	self.targetSprite = _Game.configManager.targetSprites.random[math.random(1, #_Game.configManager.targetSprites.random)]
     self.targetFrequency = data.targetFrequency
     self.targetInitialDelaySecondsElapsed = false
 
@@ -336,7 +337,7 @@ function Level:updateLogic(dt)
 			end
 			if #validPoints > 0 then
 				self.target = Target(
-					_Game.configManager.targetSprites.random[math.random(1, #_Game.configManager.targetSprites.random)],
+					self.targetSprite,
 					validPoints[math.random(1, #validPoints)],
 					false -- no slot machine yet!
                 )
@@ -1293,9 +1294,10 @@ function Level:deserialize(t)
     self.stateCount = t.stateCount
 	self.powerupList = t.powerupList
 	self.lastPowerupDeltas = t.lastPowerupDeltas
-	self.target = t.target
+	if t.target then
+		self.target = Target(self.targetSprite, Vec2(t.target.pos.x, t.target.pos.y), false)
+	end
     self.targetSecondsCooldown = t.targetSecondsCooldown
-    self.targetFrequency = t.targetFrequency
 	self.targetHitScore = t.targetHitScore
 	self.targetInitialDelaySecondsElapsed = t.targetInitialDelaySecondsElapsed
 	self.blitzMeter = t.blitzMeter
