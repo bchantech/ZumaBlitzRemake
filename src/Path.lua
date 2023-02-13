@@ -157,8 +157,9 @@ function Path:update(dt)
         )
 		_Game:playSound("sound_events/curve_clear.json")
 
-		local shouldGiveOneSecond = _MathIsValueInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearsGiveOneSecond")
-		if not self.map.level.finish and shouldGiveOneSecond then
+		local shouldGiveOneSecond = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearsGiveOneSecond")
+		if (not self.map.level.finish) and shouldGiveOneSecond then
+			print("eep")
 			self.map.level:applyEffect({type = "addTime", amount = 1})
         end
 		
