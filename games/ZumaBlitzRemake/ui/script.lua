@@ -318,6 +318,14 @@ function c.splashEnd(f)
     end
     )
   end
+
+  c.Main_Button_FoodTemp = f.getWidgetN("root/Main/Menu/Button_Food")
+
+  --Comment out these lines if you want (not so helpful) debug functionality
+  c.Main_Text_PlayerItems:hide()
+  c.Main_Button_FoodTemp:hide()
+  c.Main_Text_PlayerItems.alpha = 0
+  c.Main_Button_FoodTemp.alpha = 0
 end
 
 
