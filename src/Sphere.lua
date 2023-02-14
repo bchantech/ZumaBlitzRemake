@@ -207,12 +207,7 @@ function Sphere:addPowerup(powerup)
 	end
 	if not (self:isGhost() or self:isOffscreen()) then
         self.powerup = powerup
-		local spawnSound = "sound_events/spawn_powerup_"..self.powerup..".json"
-		if _LoadFile(spawnSound) then
-            _Game:playSound(spawnSound)
-        else
-			_Game:playSound("sound_events/spawn_powerup_bomb.json")
-		end
+		_Game:playSound("sound_events/spawn_powerup_"..self.powerup..".json")
         self.entity:setPowerup(powerup)
     end
 end
@@ -222,12 +217,7 @@ end
 ---Removes any powerups from the current Sphere.
 function Sphere:removePowerup()
     if not self:isGhost() then
-		local removeSound = "sound_events/despawn_powerup_"..self.powerup..".json"
-		if _LoadFile(removeSound) then
-            _Game:playSound(removeSound)
-        else
-			_Game:playSound("sound_events/despawn_powerup.json")
-		end
+		_Game:playSound("sound_events/despawn_powerup_"..self.powerup..".json")
         self.powerup = nil
         self.entity:setPowerup()
 		self.powerupTimeout = 20
