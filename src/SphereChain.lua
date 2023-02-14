@@ -8,8 +8,10 @@ local SphereGroup = require("src/SphereGroup")
 
 
 
+---@param path Path
+---@param deserializationTable table?
 function SphereChain:new(path, deserializationTable)
-	self.path = path
+    self.path = path
 	self.map = path.map
 
 	if deserializationTable then

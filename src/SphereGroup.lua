@@ -12,6 +12,8 @@ local Sphere = require("src/Sphere")
 
 
 
+---@param sphereChain SphereChain
+---@param deserializationTable table?
 function SphereGroup:new(sphereChain, deserializationTable)
 	self.sphereChain = sphereChain
 	self.map = sphereChain.map
@@ -378,7 +380,7 @@ function SphereGroup:move(offset)
 		not self:isMagnetizing() and
 		not self:hasShotSpheres() and
 		not self:hasLossProtectedSpheres() and
-		not self:hasGhostSpheres() and
+        not self:hasGhostSpheres() and
 		not self.map.isDummy
 	then
 		self.map.level:lose()
