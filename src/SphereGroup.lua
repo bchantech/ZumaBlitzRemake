@@ -381,6 +381,7 @@ function SphereGroup:move(offset)
 		not self:hasShotSpheres() and
 		not self:hasLossProtectedSpheres() and
         not self:hasGhostSpheres() and
+		not self.map.level:areMatchesPredicted() and
 		not self.map.isDummy
 	then
 		self.map.level:lose()
