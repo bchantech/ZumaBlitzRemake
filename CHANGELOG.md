@@ -12,7 +12,7 @@ until stable release builds are available.
 - [`d759264`][unreleased-a1] Offline leaderboards
 - [`30d72da`][unreleased-a2] Implement Spirit Turtle
 - [`b23be0e`][unreleased-a3] Implement Spirit Eagle
-- [`9cb0291`][unreleased-a4] Add Roots Board
+- [`9cb0291`][unreleased-a4] Add Roots Board (tentative: Back to your Roots)
 - [`6f14add`][unreleased-a5] Implement Hot Frog transition
 - [`a9dea16`][unreleased-a6] Food variants now have the same effects as their base
 - [`abe7b54`][unreleased-a7] Add temporary/debug player info and food selection
@@ -20,12 +20,15 @@ until stable release builds are available.
 - [`bb43eef`][unreleased-a9] Add Discord button
 
 ### Changes
-- [`0b9726c`][unreleased-c1] Use sounds from the SWF file
-- [`19c9951`][unreleased-c2] Use frog from the SWF file
-- [`58fbc48`][unreleased-c3] Food now grants extra points on Curve Clear
-- [`27ed4cd`][unreleased-c4] Hot Frog fireballs are no longer swappable
-- [`3491416`][unreleased-c5] Accelerate spheres on Curve Clear
-- [`80a6ddc`][unreleased-c6] Ensure multiplier doesn't go above cap
+- [`0b9726c`][unreleased-c1] Use sounds from SWF file
+- [`19c9951`][unreleased-c2] Use frog from SWF file
+- [`4683b13`][unreleased-c3] Use HUD from SWF file
+- [`5936215`][unreleased-c4] Use Blitz Meter pointer from SWF file
+- [`58fbc48`][unreleased-c5] Food now grants extra points on Curve Clear
+- [`27ed4cd`][unreleased-c6] Hot Frog fireballs are no longer swappable
+- [`3491416`][unreleased-c7] Accelerate spheres on Curve Clear
+- [`80a6ddc`][unreleased-c8] Ensure multiplier doesn't go above cap
+- [`2d4a287`][unreleased-c9] Prevent losing if matches are predicted
 
 ### Bugfixes
 - [`dd73b31`][unreleased-b1] Fix rolling sound not pausing
@@ -54,10 +57,13 @@ until stable release builds are available.
 
 [unreleased-c1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0b9726c
 [unreleased-c2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/19c9951
-[unreleased-c3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/58fbc48
-[unreleased-c4]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/27ed4cd
-[unreleased-c5]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/3491416
-[unreleased-c6]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/80a6ddc
+[unreleased-c3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/4683b13
+[unreleased-c4]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/5936215
+[unreleased-c5]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/58fbc48
+[unreleased-c6]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/27ed4cd
+[unreleased-c7]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/3491416
+[unreleased-c8]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/80a6ddc
+[unreleased-c9]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/2d4a287
 
 [unreleased-b1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/dd73b31
 [unreleased-b2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/12a4a4b
