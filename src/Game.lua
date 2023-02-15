@@ -57,7 +57,7 @@ function Game:init()
 
 	-- Step 2. Initialize the window
 	local res = self.configManager.config.nativeResolution
-	love.window.setMode(res.x, res.y, {resizable = true})
+	love.window.setMode(res.x, res.y, {resizable = false})
 	love.window.setTitle(self.configManager:getWindowTitle())
 
 	-- Step 3. Initialize RNG and timer
@@ -410,14 +410,15 @@ end
 ---Enables or disables fullscreen.
 ---@param fullscreen boolean Whether the fullscreen mode should be active.
 function Game:setFullscreen(fullscreen)
+	local res = Game.configManager.config.nativeResolution
 	if fullscreen == love.window.getFullscreen() then return end
 	if fullscreen then
 		local _, _, flags = love.window.getMode()
 		_DisplaySize = Vec2(love.window.getDesktopDimensions(flags.display))
 	else
-		_DisplaySize = _NATIVE_RESOLUTION
+		_DisplaySize = Vec2(res.x, res.y)
 	end
-	love.window.setMode(_DisplaySize.x, _DisplaySize.y, {fullscreen = fullscreen, resizable = true})
+	love.window.setMode(_DisplaySize.x, _DisplaySize.y, {fullscreen = fullscreen, resizable = false})
 end
 
 

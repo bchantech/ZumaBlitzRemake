@@ -178,14 +178,14 @@
                     "sprite": "sprites/dialogs/slider_slot.json"
                 },
                 "Toggle_Fullscreen": {
-                    "inheritShow": true,
+                    "inheritShow": false,
                     "inheritHide": true,
                     "type": "spriteButtonCheckbox",
                     "pos": {
                         "x": 170,
                         "y": 230
                     },
-                    "alpha": 1,
+                    "alpha": 0,
                     "children": {},
                     "animations": {},
                     "sounds": {},
