@@ -2,7 +2,7 @@
 <div align="center">
 </div>
 
-![Discord](https://img.shields.io/discord/315202394118029314?color=%235865F2&label=Discord%20&logo=discord&style=flat-square)
+[![Discord](https://img.shields.io/discord/315202394118029314?color=%235865F2&label=Discord%20&logo=discord&style=flat-square)](https://discord.gg/gJgy5x5)
 
 > A preservation & recreation project for **Zuma Blitz** - an old Facebook game
 from 2010-2017, specifically the *Kroakatoa Island* update
