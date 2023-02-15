@@ -122,7 +122,8 @@ function Level:updateLogic(dt)
     self.stateCount = self.stateCount + dt
 	self.targetHitScore = self.targetHitScores[math.min(self.targets+1, 6)] + (_MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "targetValueModifier") or 0)
 
-	-- Danger sound
+    -- Danger sound
+	--[[
 	local d1 = self:getDanger() and not self.lost
 	local d2 = self.danger
 	if d1 and not d2 then
@@ -131,6 +132,7 @@ function Level:updateLogic(dt)
 		self.dangerSound:stop()
 		self.dangerSound = nil
 	end
+	]]
 
 	self.danger = self:getDanger() and not self.lost
 
@@ -204,7 +206,7 @@ function Level:updateLogic(dt)
 				end
 			end
 			--game:playSound(self.dangerSoundName, 1 + (4 - self.warningDelayMax) / 6)
-			_Game:playSound(self.dangerSoundName)
+			--_Game:playSound(self.dangerSoundName)
 			self.warningDelay = 0
 		end
 	else
