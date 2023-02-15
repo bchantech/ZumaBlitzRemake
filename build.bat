@@ -159,6 +159,13 @@ for %%a in (32 64) do (
         for %%g in (dll engine games schemas) do (
             robocopy "%%g" "build\x%%a\%%g" *.* /s
         )
+        :: I CAN'T BELIEVE I FORGOT THIS AND ONLY REALIZED THIS NOW AFTER
+        :: RELEASING ALPHA v0.1.1 AHHH
+        del /s /q ".\build\x%%a\games\ZumaBlitzRemake\runtime.json"
+        del /s /q ".\build\x%%a\games\ZumaBlitzRemake\*.py"
+        del /s /q ".\build\x%%a\games\ZumaBlitzRemake\.gitignore"
+        del /s /q ".\build\x%%a\games\ZumaBlitzRemake\.gitattributes"
+        del /s /q ".\build\x%%a\games\ZumaBlitzRemake\*.md"
     )
 )
 
@@ -185,7 +192,7 @@ echo.
 echo Creating packages... (6/7)
 for %%a in (32 64) do ( 
     if exist "build\x%%a" (
-        %SVZ% a "build\ZumaBlitzRemake-x%%a.zip" .\build\x%%a\*
+        %SVZ% a "build\ZumaBlitzRemake-windows-x%%a.zip" .\build\x%%a\*
     )
 )
 
