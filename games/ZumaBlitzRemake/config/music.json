@@ -1,5 +1,8 @@
 {
-    "menu": "music/Giza-Music-Menu.ogg",
-    "level": "music/Giza-Music-Level.ogg",
-    "danger": "music/Giza-Music-Danger.ogg"
+    "menu": "music/MenuMusic.ogg",
+    "game1": "music/GameMusic1.ogg",
+    "game2": "music/GameMusic2.ogg",
+    "game3": "music/GameMusic3.ogg",
+    "danger1": "music/15toGoMusic_1.ogg",
+    "danger2": "music/15toGoMusic_2.ogg"
 }

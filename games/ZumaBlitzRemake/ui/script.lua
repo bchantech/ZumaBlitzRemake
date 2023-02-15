@@ -43,7 +43,6 @@ function c.disclaimerEnd(f)
   f.getWidgetN("splash/Disclaimer"):clean()
   f.getWidgetN("splash/Main"):show()
   f.getWidgetN("splash/Main"):setActive()
-  f.musicVolume("menu", 1)
 end
 
 
@@ -63,6 +62,7 @@ end
 function c.splashEnd(f)
   f.initSession()
   f.getWidgetN("root/Main"):show()
+  f.musicVolume("menu", 1)
 
   -- initSession() initializes all the UI, so from this point we can initialize all the modules.
   c.root = f.getWidgetN("root")

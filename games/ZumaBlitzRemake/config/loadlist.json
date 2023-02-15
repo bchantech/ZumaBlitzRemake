@@ -22,7 +22,12 @@
         "sound_events/button_hover.json"
     ],
     "music": [
-        "music/Giza-Music-Menu.ogg"
+        "music/MenuMusic.ogg",
+        "music/GameMusic1.ogg",
+        "music/GameMusic2.ogg",
+        "music/GameMusic3.ogg",
+        "music/15toGoMusic_1.ogg",
+        "music/15toGoMusic_2.ogg"
     ],
     "colorPalettes": [
         "images/powerups/fire_pal.png",

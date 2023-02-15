@@ -471,6 +471,8 @@ end
 function Level:updateMusic()
 	local music = _Game:getMusic(self.musicName)
 
+    local time = math.floor(math.max(self.objectives[1].target - self.objectives[1].progress, 0))
+	
 	if self.dangerMusicName then
 		local dangerMusic = _Game:getMusic(self.dangerMusicName)
 
@@ -481,7 +483,7 @@ function Level:updateMusic()
 			dangerMusic:setVolume(0)
 		else
 			-- Play the music accordingly to the danger flag.
-			if self.danger then
+			if time < 15 then
 				music:setVolume(0)
 				dangerMusic:setVolume(1)
 			else

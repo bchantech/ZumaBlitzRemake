@@ -1,7 +1,7 @@
 {
     "map": "fossilfood_roots",
-    "music": "level",
-    "dangerMusic": "danger",
+    "music": "game3",
+    "dangerMusic": "danger2",
     "powerupFrequency": 15,
     "individualPowerupFrequencies": {
         "timeball": 16,
