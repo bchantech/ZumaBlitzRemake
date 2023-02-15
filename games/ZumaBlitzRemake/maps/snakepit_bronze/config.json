@@ -2146,6 +2146,24 @@
             }
         ]
     ],
+    "targetPoints": [
+        {
+            "path": 1,
+            "distance": 0.25,
+            "pos": {
+                "x": 602,
+                "y": 154
+            }
+        },
+        {
+            "path": 2,
+            "distance": 0.25,
+            "pos": {
+                "x": 132,
+                "y": 302
+            }
+        }
+    ],
     "sprites": [
         {
             "x": 0,
