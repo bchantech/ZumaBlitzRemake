@@ -149,9 +149,12 @@ for %%a in (32 64) do (
             )
         )
         :: doc files
-        for %%h in (README.md CREDITS.md autoload.txt LICENSE) do (
+        for %%h in (autoload.txt LICENSE) do (
             copy /b ".\%%h" "build\x%%a\%%h"
         )
+        :: doc files that need to be specifiically renamed
+        copy /b ".\README-RELEASEVER.txt" "build\x%%a\README.txt"
+        copy /b ".\CHANGELOG-RELEASEVER.txt" "build\x%%a\CHANGELOG.txt"
         :: folders
         for %%g in (dll engine games schemas) do (
             robocopy "%%g" "build\x%%a\%%g" *.* /s

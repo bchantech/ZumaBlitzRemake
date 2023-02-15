@@ -6,79 +6,83 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 Keep in mind that this project may not adhere to [Semantic Versioning](http://semver.org/)
 until stable release builds are available.
 
-## (unreleased) - 2023-02-14
+## alpha v0.1.1 - 2023-02-15
 
 ### Additions
-- [`d759264`][unreleased-a1] Offline leaderboards
-- [`30d72da`][unreleased-a2] Implement Spirit Turtle
-- [`b23be0e`][unreleased-a3] Implement Spirit Eagle
-- [`9cb0291`][unreleased-a4] Add Roots Board (tentative: Back to your Roots)
-- [`6f14add`][unreleased-a5] Implement Hot Frog transition
-- [`a9dea16`][unreleased-a6] Food variants now have the same effects as their base
-- [`abe7b54`][unreleased-a7] Add temporary/debug player info and food selection
-- [`be22de0`][unreleased-a8] Add Cannons functionality
-- [`bb43eef`][unreleased-a9] Add Discord button
+- [`d759264`][a-v.0.1.1-a1] Offline leaderboards
+- [`30d72da`][a-v.0.1.1-a2] Implement Spirit Turtle
+- [`b23be0e`][a-v.0.1.1-a3] Implement Spirit Eagle
+- [`9cb0291`][a-v.0.1.1-a4] Add Roots Board (tentative: Back to your Roots)
+- [`6f14add`][a-v.0.1.1-a5] Implement Hot Frog transition
+- [`a9dea16`][a-v.0.1.1-a6] Food variants now have the same effects as their base
+- [`abe7b54`][a-v.0.1.1-a7] Add temporary/debug player info and food selection
+- [`be22de0`][a-v.0.1.1-a8] Add Cannons functionality
+- [`bb43eef`][a-v.0.1.1-a9] Add Discord button
 
 ### Changes
-- [`0b9726c`][unreleased-c1] Use sounds from SWF file
-- [`19c9951`][unreleased-c2] Use frog from SWF file
-- [`4683b13`][unreleased-c3] Use HUD from SWF file
-- [`5936215`][unreleased-c4] Use Blitz Meter pointer from SWF file
-- [`58fbc48`][unreleased-c5] Food now grants extra points on Curve Clear
-- [`27ed4cd`][unreleased-c6] Hot Frog fireballs are no longer swappable
-- [`3491416`][unreleased-c7] Accelerate spheres on Curve Clear
-- [`80a6ddc`][unreleased-c8] Ensure multiplier doesn't go above cap
-- [`2d4a287`][unreleased-c9] Prevent losing if matches are predicted
+- [`0b9726c`][a-v.0.1.1-c1] Use sounds from SWF file
+- [`19c9951`][a-v.0.1.1-c2] Use frog from SWF file
+- [`4683b13`][a-v.0.1.1-c3] Use HUD from SWF file
+- [`5936215`][a-v.0.1.1-c4] Use Blitz Meter pointer from SWF file
+- [`58fbc48`][a-v.0.1.1-c5] Food now grants extra points on Curve Clear
+- [`27ed4cd`][a-v.0.1.1-c6] Hot Frog fireballs are no longer swappable
+- [`3491416`][a-v.0.1.1-c7] Accelerate spheres on Curve Clear
+- [`80a6ddc`][a-v.0.1.1-c8] Ensure multiplier doesn't go above cap
+- [`2d4a287`][a-v.0.1.1-c9] Prevent losing if matches are predicted
+- [`cf28b32`][a-v.0.1.1-c10] Temporarily disable fullscreen and resizing
+- [`0a36570`][a-v.0.1.1-c11] Add Targets to Bronze Board
 
 ### Bugfixes
-- [`dd73b31`][unreleased-b1] Fix rolling sound not pausing
-- [`12a4a4b`][unreleased-b2] Fix largestGap crash on LOVE 11.4
-- [`54c4e5c`][unreleased-b3] Fix Curve Clears scoring 1000 + time instead of 1000 + (100 * time)
-- [`5c83131`][unreleased-b4] Fix profiles having more than 3 powers
-- [`836ddda`][unreleased-b5] Fix powers over max level crashing the game
-- [`f4e6a7a`][unreleased-b6] Fix powers crashing the game on profileless launches
-- [`9929a05`][unreleased-b7] Fix rare Curve Clear bug
-- [`5757470`][unreleased-b8] Fix crashes not saving the log
-- [`0058351`][unreleased-b9] Fix Targets crashing the game on load
-- [`0e9c196`][unreleased-b10] Fix Multiplier undercap
+- [`dd73b31`][a-v.0.1.1-b1] Fix rolling sound not pausing
+- [`12a4a4b`][a-v.0.1.1-b2] Fix largestGap crash on LOVE 11.4
+- [`54c4e5c`][a-v.0.1.1-b3] Fix Curve Clears scoring 1000 + time instead of 1000 + (100 * time)
+- [`5c83131`][a-v.0.1.1-b4] Fix profiles having more than 3 powers
+- [`836ddda`][a-v.0.1.1-b5] Fix powers over max level crashing the game
+- [`f4e6a7a`][a-v.0.1.1-b6] Fix powers crashing the game on profileless launches
+- [`9929a05`][a-v.0.1.1-b7] Fix rare Curve Clear bug
+- [`5757470`][a-v.0.1.1-b8] Fix crashes not saving the log
+- [`0058351`][a-v.0.1.1-b9] Fix Targets crashing the game on load
+- [`0e9c196`][a-v.0.1.1-b10] Fix Multiplier undercap
 
 ### Removed
-- [`6ef7f44`][unreleased-r1] Remove leftover Luxor 1 maps
+- [`6ef7f44`][a-v.0.1.1-r1] Remove leftover Luxor 1 maps
 
-[unreleased-a1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/d759264
-[unreleased-a2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/30d72da
-[unreleased-a3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/b23be0e
-[unreleased-a4]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/9cb0291
-[unreleased-a5]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/6f14add
-[unreleased-a6]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/a9dea16
-[unreleased-a7]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/abe7b54
-[unreleased-a8]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/be22de0
-[unreleased-a9]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/bb43eef
+[a-v.0.1.1-a1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/d759264
+[a-v.0.1.1-a2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/30d72da
+[a-v.0.1.1-a3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/b23be0e
+[a-v.0.1.1-a4]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/9cb0291
+[a-v.0.1.1-a5]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/6f14add
+[a-v.0.1.1-a6]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/a9dea16
+[a-v.0.1.1-a7]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/abe7b54
+[a-v.0.1.1-a8]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/be22de0
+[a-v.0.1.1-a9]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/bb43eef
 
-[unreleased-c1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0b9726c
-[unreleased-c2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/19c9951
-[unreleased-c3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/4683b13
-[unreleased-c4]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/5936215
-[unreleased-c5]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/58fbc48
-[unreleased-c6]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/27ed4cd
-[unreleased-c7]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/3491416
-[unreleased-c8]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/80a6ddc
-[unreleased-c9]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/2d4a287
+[a-v.0.1.1-c1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0b9726c
+[a-v.0.1.1-c2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/19c9951
+[a-v.0.1.1-c3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/4683b13
+[a-v.0.1.1-c4]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/5936215
+[a-v.0.1.1-c5]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/58fbc48
+[a-v.0.1.1-c6]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/27ed4cd
+[a-v.0.1.1-c7]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/3491416
+[a-v.0.1.1-c8]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/80a6ddc
+[a-v.0.1.1-c9]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/2d4a287
+[a-v.0.1.1-c10]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0e9c196
+[a-v.0.1.1-c11]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0a36570
 
-[unreleased-b1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/dd73b31
-[unreleased-b2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/12a4a4b
-[unreleased-b3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/54c4e5c
-[unreleased-b4]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/5c83131
-[unreleased-b5]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/836ddda
-[unreleased-b6]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/f4e6a7a
-[unreleased-b7]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/9929a05
-[unreleased-b8]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/5757470
-[unreleased-b9]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0058351
-[unreleased-b10]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0e9c196
+[a-v.0.1.1-b1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/dd73b31
+[a-v.0.1.1-b2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/12a4a4b
+[a-v.0.1.1-b3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/54c4e5c
+[a-v.0.1.1-b4]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/5c83131
+[a-v.0.1.1-b5]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/836ddda
+[a-v.0.1.1-b6]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/f4e6a7a
+[a-v.0.1.1-b7]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/9929a05
+[a-v.0.1.1-b8]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/5757470
+[a-v.0.1.1-b9]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0058351
+[a-v.0.1.1-b10]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/0e9c196
 
-[unreleased-r1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/6ef7f44
+[a-v.0.1.1-r1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/6ef7f44
 
-## alpha v0.1.0 - 2022-12-31
+## alpha v0.1.0 - 2023-01-27
 
 ### Additions
 - [`e54b493`][a-v0.1.0-a1] Play sounds on gap and chain bonuses

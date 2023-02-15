@@ -29,7 +29,7 @@ local DiscordRichPresence = require("src/DiscordRichPresence")
 _VERSION = "vZB"
 _VERSION_NAME = "Zuma Blitz Remake Fork"
 _DISCORD_APPLICATION_ID = "1059347284623638609"
-_BUILD_NUMBER = "27 Jan 2023 Facebook group demo build"
+_BUILD_NUMBER = "2023-02-15"
 _START_TIME = love.timer.getTime()
 
 

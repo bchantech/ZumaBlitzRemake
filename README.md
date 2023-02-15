@@ -94,7 +94,7 @@ Any new features added in this fork may be added for OpenSMCE in general.
   - Discord: Tacos#8810
 - **Glows Lythos** - Board backgrounds
   - GitHub: [glowslythos](https://github.com/glowslythos)
-  - Discord: glowslythos#0001
+  - Discord: glowslythos#0002
 - **Oreztov** - Wild Ball 3d cube recreation
   - GitHub: [Oreztov](https://github.com/Oreztov)
   - Discord: Oreztov#2411

@@ -9,22 +9,22 @@
   - Discord: Shambles#3117
 
 ## Contributors
+- **Brendan Chan** - Zuma Blitz SWF file contribution
+  - GitHub: [bchantech](https://github.com/bchantech)
 - **Cat Warrior** - Asset contributions
   - GitHub: [CatWarriorOfficial](https://github.com/CatWarriorOfficial)
   - Discord: Cta warrior#4126
 - **Nagi** - Asset contributions
   - GitHub: [Nxgi](https://github.com/Nxgi)
   - Discord: nagi#1547
-- **cuteio14** - Asset fixes
-  - GitHub: [cuteio14](https://github.com/cuteio14)
-  - Discord: cuteio14#7664
+- **FREN-ZC** - Asset fixes
+  - GitHub: [FREN-ZC](https://github.com/FREN-ZC)
+  - Discord: FREN-Z\C#7664
 - **Tacos** - Sound ripping from videos
   - Discord: Tacos#8810
 - **Glows Lythos** - Board backgrounds
   - GitHub: [glowslythos](https://github.com/glowslythos)
-  - Discord: glowslythos#0001
+  - Discord: glowslythos#0002
 - **Oreztov** - Wild Ball 3d cube recreation
   - GitHub: [Oreztov](https://github.com/Oreztov)
   - Discord: Oreztov#2411
-- **JeffMakesGames** - ZB Kroakatoa Music
-  - [YouTube playlist](https://www.youtube.com/playlist?list=PLEdhomj1r33983BrSBOdUrh0lpAFC-sQ-)

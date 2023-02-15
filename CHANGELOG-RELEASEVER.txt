@@ -1,0 +1,115 @@
+Zuma Blitz Remake Changelog
+==========
+
+All notable changes to this project will be documented in this file.
+
+The format is based on Keep a Changelog (http://keepachangelog.com).
+Keep in mind that this project may not adhere to Semantic Versioning (http://semver.org/)
+until stable release builds are available.
+
+All dates are in YYYY-MM-DD format.
+
+==========
+
+Alpha v0.1.1 - 2023-02-15
+
+Additions:
+- Offline leaderboards
+- Implement Spirit Turtle
+- Implement Spirit Eagle
+- Add Roots Board (tentative: Back to your Roots)
+- Implement Hot Frog transition
+- Food variants now have the same effects as their base
+- Add temporary/debug player info and food selection
+- Add Cannons functionality
+- Add Discord button
+
+Changes:
+- Use sounds from SWF file
+- Use frog from SWF file
+- Use HUD from SWF file
+- Use Blitz Meter pointer from SWF file
+- Food now grants extra points on Curve Clear
+- Hot Frog fireballs are no longer swappable
+- Accelerate spheres on Curve Clear
+- Ensure multiplier doesn't go above cap
+- Prevent losing if matches are predicted
+- Temporarily disable fullscreen and resizing
+- Add Targets to Bronze Board
+
+Bugfixes:
+- Fix rolling sound not pausing
+- Fix largestGap crash on LOVE 11.4
+- Fix Curve Clears scoring 1000 + time instead of 1000 + (100 * time)
+- Fix profiles having more than 3 powers
+- Fix powers over max level crashing the game
+- Fix powers crashing the game on profileless launches
+- Fix rare Curve Clear bug
+- Fix crashes not saving the log
+- Fix Targets crashing the game on load
+- Fix Multiplier undercap
+
+Removed:
+- Remove leftover Luxor 1 maps
+
+==========
+
+Alpha v0.1.0 - 2023-01-27
+
+Additions:
+- Play sounds on gap and chain bonuses
+- Add combo pitching
+- Add Bronze Board (tentative: Bronze Age)
+- Add Crab Board (tentative: Crab Snap)
+- Add Powers
+- Add Targets (Fruits)
+- Add rolling sound
+- Add Food items
+
+Bugfixes:
+- Fix crash on non-Windows OSes
+
+Changes:
+- Graceful end on time up
+- Use placeholder Zuma sounds from a Luxor mod
+- Change score strings
+- Change scoring to +10 per sphere
+- Replace Fireball sounds
+- Implement Curve Clears
+- Replace Luxor music with Zuma Blitz music
+- Implement Colorblind Mode
+- Change Wild Ball asset
+- Losing causes a win
+- Replicate Zuma sphere physics
+- Replicate Zuma powerup logic
+- Replicate Blitz Meter arc
+- Fix window resolution
+- Notify when the time's up
+
+Removed:
+- Remove Luxor collectibles from the game
+- Remove Luxor scarabs
+- Remove colon key debug functionality
+
+==========
+
+Alpha v0.0.8 - 2023-01-01
+
+Additions:
+- Add shooter knockback
+- Add level timers
+- Add disclaimer screen
+- Implement Hot Frog
+
+Changes:
+- Remove intro banner
+- Replace HUD with placeholder
+- Replace loading screen with placeholder
+- Replace Fireball with Blitz fireball
+
+==========
+
+Alpha v0.0.1 - 2023-01-01
+
+Additions:
+- Add Journey to Kroakatoa
