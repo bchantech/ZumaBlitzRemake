@@ -1,17 +1,19 @@
 {
     "images": [
         "images/splash/background.png",
-        "images/splash/button_play.png",
         "images/splash/disclaimer.png",
-        "images/splash/disclaimer_clickanywhere.png",
-        "images/splash/progressbar.png"
+        "images/splash/loadingpie_unfilled.png",
+        "images/splash/loadingpie_filled.png",
+        "images/splash/loadingpie_overlay.png",
+        "images/splash/logo.png"
     ],
     "sprites": [
         "sprites/splash/background.json",
-        "sprites/splash/button_play.json",
         "sprites/splash/disclaimer.json",
-        "sprites/splash/disclaimer_clickanywhere.json",
-        "sprites/splash/progressbar.json"
+        "sprites/splash/loadingpie_unfilled.json",
+        "sprites/splash/loadingpie_filled.json",
+        "sprites/splash/loadingpie_overlay.json",
+        "sprites/splash/logo.json"
     ],
     "sounds": [
         "sounds/button_highlight.ogg"

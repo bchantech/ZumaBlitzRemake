@@ -51,20 +51,66 @@
             },
             "alpha": 1,
             "children": {
+                "Progress_Bg": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 305,
+                        "y": 310
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "LoadingControls",
+                    "sprite": "sprites/splash/loadingpie_unfilled.json"
+                },
                 "Progress": {
 					"inheritShow":true,
 					"inheritHide":true,
                     "type": "spriteProgress",
                     "pos": {
-                        "x": 293,
-                        "y": 299
+                        "x": 305,
+                        "y": 310
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "LoadingControls2",
+                    "sprite": "sprites/splash/loadingpie_filled.json",
+					"value": 0.5
+                },
+                "Progress_Overlay": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 289,
+                        "y": 295
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "LoadingControls3",
+                    "sprite": "sprites/splash/loadingpie_overlay.json"
+                },
+                "Logo": {
+					"inheritShow":true,
+					"inheritHide":true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 145,
+                        "y": 91
                     },
                     "alpha": 1,
                     "children": {},
                     "animations": {},
                     "sounds": {},
                     "layer": "MenuControls",
-                    "sprite": "sprites/splash/progressbar.json",
+                    "sprite": "sprites/splash/logo.json",
 					"value": 0.5
                 }
             },

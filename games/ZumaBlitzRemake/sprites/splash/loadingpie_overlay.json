@@ -1,8 +1,8 @@
 {
-    "path": "images/splash/disclaimer_clickanywhere.png",
+    "path": "images/splash/loadingpie_overlay.png",
     "frame_size": {
-        "x": 268,
-        "y": 24
+        "x": 184,
+        "y": 184
     },
     "states": [
         {
