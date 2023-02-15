@@ -410,7 +410,7 @@ end
 ---Enables or disables fullscreen.
 ---@param fullscreen boolean Whether the fullscreen mode should be active.
 function Game:setFullscreen(fullscreen)
-	local res = Game.configManager.config.nativeResolution
+	local res = _Game.configManager.config.nativeResolution
 	if fullscreen == love.window.getFullscreen() then return end
 	if fullscreen then
 		local _, _, flags = love.window.getMode()
