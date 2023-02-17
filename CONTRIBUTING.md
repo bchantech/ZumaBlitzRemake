@@ -28,8 +28,9 @@ _Game:getCurrentProfile():getPowerLevel("sands_of_time")
 ## Assets
 > **See also:** [ZumaBlitzRemake/ZumaBlitzAssetRetrieval](https://github.com/ZumaBlitzRemake/ZumaBlitzAssetRetrieval)
 
-This will be argurably **the hardest part of contributing to the project**, as
-little to no assets have been found for the game.
+This will be argurably **the hardest part of contributing to the project**.
+While we have found the initial release SWF of Kroakatoa Island, there is
+still much to be found...
 
 ### Asset Lists
 **List of assets that we currently have in possession:**
@@ -47,7 +48,6 @@ little to no assets have been found for the game.
   - Smooth Creamy
   - Summer Solstice
   - FALLing Skies
-  - Journey to Kroakatoa (Easter variant)
   - Life's A Beach
   - Major Mouthful
   - Mine Board
@@ -57,12 +57,16 @@ little to no assets have been found for the game.
   - Sea Turtles Board
   - Snakes Board
 - In-game HUD
-- Spirit Animals (bar their Hot Frog & hot frog transition states)
+- Spirit Animals (only from Customer Support page; bar their Hot Frog
+  & hot frog transition states and `eyeblink`s)
+- Shooter `eyeblink` images; these differ from the Frogatar, the Spirit
+  Animal, Cannons powerup state, and Hot Frog state.
+- Sound effects
+- Majority of UI assets (buttons, dialog boxes...)
+- Release/scrapped frogatars
 
 **List of assets we are in need of are the following:**
-- Shooter `eyeblink` images; these will differ from the Frogatar, the Spirit
-  Animal, Cannons powerup state, and Hot Frog state.
-- Classic Frog's hot frog transition states
+- Raw Spirit Animal assets
 - These board backgrounds in particular have been found either only with
   balls/UI/frogs blocking the image, no edits done for them yet and/or
   low-quality:
@@ -81,7 +85,29 @@ little to no assets have been found for the game.
     - Spiral Gateway
     - **These boards will be ported and edited accordingly in order to be
       playable, if they are from the Beta/Pre-Kroakatoa version.**
-- UI assets (buttons, dialog boxes...)
+- [Other lost assets][lost]
+  - Lost SWF files
+    - `Congrats`
+    - `DailySpin`
+    - `ExchangeDialog`
+    - `LockedPowers`
+    - `Migration` SWFs (Arriving, Packing, Splash, Travelling)
+    - `Promotion`
+    - `PurchaseDialog`
+    - `Shop`
+    - `Shrines`
+    - `SkillClass`
+    - `Splash`
+    - `Stats`
+  - Frogatars (Cobalt Frog, Werefrog, Pink Frog, etc.) were added circa
+    2014 and was loaded from their servers, assumedly directly instead
+    of dedicated SWF files.
+  - Boards were loaded server-side and not as SWF files. [Likely because
+    a Fiddler session from March 2011 revealed that the level files (and
+    levels.xml) were outside SWF files.][2011]
+
+[lost]: https://twitter.com/shambles_sm/status/1625491062344273924
+[2011]: https://twitter.com/shambles_sm/status/1625888194578481153
 
 If you have any doubts or questions regarding the status of a specific
 asset, please contact us.
