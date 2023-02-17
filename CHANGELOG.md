@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 Keep in mind that this project may not adhere to [Semantic Versioning](http://semver.org/)
 until stable release builds are available.
 
+## (unreleased) - 2023-02-17
+
+### Changes
+- [`08842c5`][unreleased-c1] Document manual Power upgrades & equipping
+
+[unreleased-c1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/08842c5
+
 ## alpha v0.1.1 - 2023-02-15
 
 ### Additions
