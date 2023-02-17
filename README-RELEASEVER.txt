@@ -98,6 +98,73 @@ Valid values:
 
 To stop using Food, simply remove the line that says "food".
 
+To upgrade Powers:
+Make sure you already have a profile.
+
+- Double click on the games folder
+- Double click on the ZumaBlitzRemake folder
+- Double click on "runtime.json"
+- Scroll down until you're inside your profile:
+
+  "selected": "YourName",
+  "profiles": {
+      "YourName": {
+          ...
+          "equippedFood": "chocolate_love",
+          "powerCatalog": {
+              "bombs": {
+                  "level": 3, <-- EDIT THIS
+                  "amount": 0
+              },
+              "wild_shot": {
+                  "level": 3, <--
+                  "amount": 0
+              },
+              ...
+          }
+          ...
+      }
+  }
+
+Each "key" (the label) has 2 fields: "level" and "amount". You will want
+to edit "level". ("amount" isn't used yet)
+
+All Powers have a level cap of 3, except "multi_multiplier" (Doubler/Tripler)
+and "inferno_frog". Don't worry about overleveling them though, as the game
+will take care of that for you.
+
+To apply Powers:
+
+- Double click on the games folder
+- Double click on the ZumaBlitzRemake folder
+- Double click on "runtime.json"
+- Scroll down until you're inside your profile:
+
+  "selected": "YourName",
+  "profiles": {
+      "YourName": {
+          ...
+          "foodInventory": [],
+          "equippedPowers": [ "power_1", "power_2", "power_3" ], <-- ADD IT HERE
+                                                                     MAKE SURE IT HAS A COMMA
+                                                                     AFTER THAT
+          "levels" {
+              ...
+          }
+          ...
+      }
+  }
+
+This takes an array of 0-3 strings (text). Make sure each entry is encapsulated
+in quotation marks - and they are completely facing down "" quotation marks
+and NOT curly ones such as these: “” or else the game won't read it and potentially
+crash. Every entry must have a comma after them except the last one.
+
+Each string must be a valid powerup (seen in powerCatalog). For example:
+"equippedPowers": [ "multi_multiplier", "sands_of_time", "fruit_master" ]
+
+This equips Doubler/Tripler, Sands of Time and Fruit Master.
+
 ==========
 
 If you want to run the game from it's source code and contribute, check out the GitHub repository:
