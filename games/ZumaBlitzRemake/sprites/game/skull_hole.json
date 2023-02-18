@@ -1,0 +1,21 @@
+{
+    "path": "images/game/skull_hole.png",
+    "frame_size": {
+        "x": 56,
+        "y": 56
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

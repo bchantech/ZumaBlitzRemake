@@ -41,7 +41,31 @@ function Map:new(level, path, pathsBehavior, isDummy)
 		table.insert(self.paths, Path(self, pathData, pathBehavior))
 	end
     self.shooter = data.shooter
-	self.targetPoints = data.targetPoints
+    self.targetPoints = data.targetPoints
+	
+	-- FORK-SPECIFIC CODE:
+	-- Skulls. SPRITES ARE HARDCODED, DE-HARDCODE FIRST AND ALLOW FOR
+    -- CUSTOMIZATION BY THE MODDER IF THIS IS TO BE IMPLEMENTED TO UPSTREAM.
+	self.skullHoleSprite = _Game.resourceManager:getSprite("sprites/game/skull_hole.json")
+	self.skullMaskSprite = _Game.resourceManager:getSprite("sprites/game/skull_mask.json")
+	self.skullFrameSprite = _Game.resourceManager:getSprite("sprites/game/skull_frame.json")
+	self.skullTopSprite = _Game.resourceManager:getSprite("sprites/game/skull_top.json")
+	self.skullBottomSprite = _Game.resourceManager:getSprite("sprites/game/skull_bottom.json")
+	self.skullMaskShader = love.graphics.newShader[[
+		vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
+			if (Texel(texture, texture_coords).rgb == vec3(0.0)) {
+				// a discarded pixel wont be applied as the stencil.
+				discard;
+			}
+			return vec4(1.0);
+		}
+		]]
+
+    self.skullPoints = {}
+    for _, path in pairs(self.paths) do
+		local lastPoint = path.nodes[#path.nodes].pos
+        table.insert(self.skullPoints, Vec2.round(lastPoint))
+    end
 end
 
 
@@ -98,13 +122,35 @@ function Map:draw()
 	end
 
 	-- Objects that will be drown when the BCM is off
-	if not _Debug.e then
-		for i, sprite in ipairs(self.sprites) do
-			if not sprite.background then
-				sprite.sprite:draw(sprite.pos)
-			end
-		end
+    if not _Debug.e then
+        for i, sprite in ipairs(self.sprites) do
+            if not sprite.background then
+                sprite.sprite:draw(sprite.pos)
+            end
+        end
+    end
+	
+	-- FORK-SPECIFIC CODE: skull rendering goes here
+	-- i took this from the love2d page is this a dirty way to do it
+	for i, pos in pairs(self.skullPoints) do
+		self.skullHoleSprite:draw(pos, Vec2(0.5,0.5))
+		love.graphics.stencil(function()
+			love.graphics.setShader(self.skullMaskShader)
+			self.skullMaskSprite:draw(pos, Vec2(0.5,0.5))
+			love.graphics.setShader()
+		end, "replace", 1)
+        love.graphics.setStencilTest("greater", 0)
+
+		local skullTopPos = Vec2(pos.x, (pos.y-3) - (self.paths[i]:getDangerProgress()*20))
+        local skullBotPos = Vec2(pos.x, pos.y+10)
+		
+		self.skullTopSprite:draw(skullTopPos, Vec2(0.5,0.5))
+        self.skullBottomSprite:draw(skullBotPos, Vec2(0.5, 0.5))
+		
+        love.graphics.setStencilTest()
+		self.skullFrameSprite:draw(pos, Vec2(0.5,0.5))
 	end
+	-- END FORK-SPECIFIC CODE
 end
 
 

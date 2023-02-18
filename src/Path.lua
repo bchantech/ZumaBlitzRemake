@@ -432,11 +432,16 @@ end
 ---Returns 0 if this path is not in danger, and linearly interpolates from 0 (danger point) to 1 (end of the path).
 ---@return number
 function Path:getDangerProgress()
-	local maxOffset = self:getMaxOffset()
-	if not self:getDanger(maxOffset) then
-		return 0
-	end
-	return ((maxOffset / self.length) - self.dangerDistance) / (1 - self.dangerDistance)
+    local maxOffset = self:getMaxOffset()
+    -- FORK-SPECIFIC CHANGE:
+    -- Return 1 if the level is lost so the skull is wide open on failure.
+	-- Also, math.min the return value since it messes with the skull rendering.
+    if self.map.level.lost then
+        return 1
+    elseif not self:getDanger(maxOffset) then
+        return 0
+    end
+	return math.min(1, ((maxOffset / self.length) - self.dangerDistance) / (1 - self.dangerDistance))
 end
 
 
