@@ -50,6 +50,7 @@ end
 
 
 ---Sets the current powerup to be displayed on this Sphere Entity.
+---DO NOT CALL THIS OUTSIDE `Sphere.lua` - call `Sphere:addPowerup()` instead.
 ---@param powerup? string The powerup to be displayed, or `nil` if none.
 function SphereEntity:setPowerup(powerup)
 	self.powerup = powerup

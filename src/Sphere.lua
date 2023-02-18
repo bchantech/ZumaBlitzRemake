@@ -29,9 +29,6 @@ function Sphere:new(sphereGroup, deserializationTable, color, shootOrigin, shoot
 	self.prevSphere = nil
 	self.nextSphere = nil
     self.offset = 0
-    -- Temporary value.
-    -- In the future this should be customizable per-level, and in case of ZBR
-	-- this shall be linked to a Power/Food.
 	self.powerupTimeout = 20
 
 	if deserializationTable then
@@ -200,14 +197,17 @@ end
 
 ---Adds a powerup to the current Sphere.
 ---@param powerup string
-function Sphere:addPowerup(powerup)
+---@param noSound boolean?
+function Sphere:addPowerup(powerup, noSound)
     if not powerup then
 		_Log:printt("Sphere", "No powerup defined when calling Sphere:addPowerup()")
 		return
 	end
 	if not (self:isGhost() or self:isOffscreen()) then
         self.powerup = powerup
-		_Game:playSound("sound_events/spawn_powerup_"..self.powerup..".json")
+		if not noSound then
+			_Game:playSound("sound_events/spawn_powerup_"..self.powerup..".json")
+		end
         self.entity:setPowerup(powerup)
     end
 end
@@ -668,7 +668,9 @@ end
 ---@return table
 function Sphere:serialize()
 	local t = {
-		color = self.color,
+        color = self.color,
+        powerup = self.powerup,
+		powerupTimeout = self.powerupTimeout,
 		--animationFrame = self.animationFrame, -- who cares about that, you can uncomment this if you do
 		shootOrigin = self.shootOrigin and {x = self.shootOrigin.x, y = self.shootOrigin.y} or nil,
 		shootTime = self.shootTime,
@@ -715,7 +717,8 @@ function Sphere:deserialize(t)
 	self.shootOrigin = t.shootOrigin and Vec2(t.shootOrigin.x, t.shootOrigin.y) or nil
 	self.shootTime = t.shootTime
 	self.ghostTime = t.ghostTime
-	self.powerup = t.currentPowerup
+	self.powerup = t.powerup
+	self.powerupTimeout = t.powerupTimeout
 
 	self.effects = {}
 	if t.effects then

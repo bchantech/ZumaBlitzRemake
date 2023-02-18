@@ -1339,6 +1339,7 @@ function SphereGroup:deserialize(t)
 	self.spheres = {}
 	local offset = 0
 	for i, sphere in ipairs(t.spheres) do
+		---@type Sphere
 		local s = Sphere(self, sphere)
 		s.offset = offset
 		-- links are mandatory!!!
@@ -1346,7 +1347,13 @@ function SphereGroup:deserialize(t)
 			s.prevSphere = self.spheres[i - 1]
 			self.spheres[i - 1].nextSphere = s
 		end
-		table.insert(self.spheres, s)
+        table.insert(self.spheres, s)
+		if sphere.powerup then
+            s:addPowerup(sphere.powerup, true)
+            -- idk why it's nil by default when it's always defined as 20
+			-- until a powerup is given
+			s.powerupTimeout = sphere.powerupTimeout or 0
+		end
 		offset = offset + 29 * s.size
 	end
 	self.matchCheck = t.matchCheck
