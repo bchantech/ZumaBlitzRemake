@@ -49,19 +49,6 @@ end
 
 
 
----Returns the overlay Sprite, if any. For now used only with Multiplier Balls.
----@return Sprite?
-function SphereEntity:getOverlaySprite()
-	if self.powerup == "multiplier" then
-		local name = self.config.multiplierOverlaySprites and self.config.multiplierOverlaySprites[tostring(_Game.session.level.multiplier + 1)]
-		if name then
-			return _Game.resourceManager:getSprite(name)
-		end
-	end
-end
-
-
-
 ---Sets the current powerup to be displayed on this Sphere Entity.
 ---@param powerup? string The powerup to be displayed, or `nil` if none.
 function SphereEntity:setPowerup(powerup)
@@ -145,12 +132,12 @@ end
 function SphereEntity:draw(shadow)
 	if shadow then
 		self.shadowSprite:draw(self.pos + Vec2(4), Vec2(0.5))
-	else
-		self:getSprite():draw(self.pos, Vec2(0.5), nil, self.frame, self.angle, self.colorM)
-		local overlaySprite = self:getOverlaySprite()
-		if overlaySprite then
-			overlaySprite:draw(self.pos, Vec2(0.5), nil, self.frame, self.angle, self.colorM)
+    else
+        local multiplierState = nil
+		if self.powerup == "multiplier" then
+			multiplierState = _Game.session.level.multiplier
 		end
+		self:getSprite():draw(self.pos, Vec2(0.5), multiplierState, self.frame, self.angle, self.colorM)
 	end
 end
 
