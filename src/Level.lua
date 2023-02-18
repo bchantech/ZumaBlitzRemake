@@ -900,7 +900,7 @@ function Level:getTargetHitScoreValues()
 	for _ = 1, 6 do
 		table.insert(tbl, (useFilter and filterScore) or currentScore)
 		useFilter = false
-		currentScore = _MathRoundToNearest((currentScore + (currentScore * 0.5)), 25)
+		currentScore = _MathRoundUp((currentScore + (currentScore * 0.5)), 25)
 		local odd = tostring(currentScore):match("[27]5$")
 		if odd == "25" then
 			filterScore = currentScore + 25
