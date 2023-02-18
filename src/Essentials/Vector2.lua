@@ -53,6 +53,11 @@ function Vec2.floor(o) return Vec2(math.floor(o.x), math.floor(o.y)) end
 ---@return Vector2
 function Vec2.ceil(o) return Vec2(math.ceil(o.x), math.floor(o.y)) end
 
+---Returns this Vector with its components rounded down or up depending on the X and Y values.
+---@param o Vector2
+---@return Vector2
+function Vec2.round(o) return Vec2(_MathRound(o.x), _MathRound(o.y)) end
+
 ---Returns this Vector with its components swapped.
 ---@param o Vector2
 ---@return Vector2
