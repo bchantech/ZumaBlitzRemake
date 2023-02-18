@@ -1249,7 +1249,7 @@ function Level:serialize()
 		powerupList = self.powerupList,
 		lastPowerupDeltas = self.lastPowerupDeltas,
         target = (self.target and self.target:serialize()),
-		targetSprite = self.targetSprite.path,
+		targetSprite = self.targetSprite,
         targetSecondsCooldown = self.targetSecondsCooldown,
         targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
         targetHitScore = self.targetHitScore,
@@ -1304,7 +1304,7 @@ function Level:deserialize(t)
     self.stateCount = t.stateCount
 	self.powerupList = t.powerupList
     self.lastPowerupDeltas = t.lastPowerupDeltas
-	self.targetSprite = _Game.resourceManager:getSprite(t.targetSprite)
+	self.targetSprite = t.targetSprite
 	if t.target then
 		self.target = Target(self.targetSprite, Vec2(t.target.pos.x, t.target.pos.y), false)
 	end
