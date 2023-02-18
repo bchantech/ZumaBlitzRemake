@@ -460,6 +460,8 @@ function Level:updateLogic(dt)
 		if self.rollingSound then
 			self.rollingSound:stop()
 		end
+		-- FORK-SPECIFIC CODE: Add a highscore after the board
+		_Game:getCurrentProfile():writeHighscore()
 		_Game.uiManager:executeCallback("levelLost")
 		self.ended = true
 	end
