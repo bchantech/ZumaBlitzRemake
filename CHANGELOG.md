@@ -9,9 +9,20 @@ until stable release builds are available.
 ## (unreleased) - 2023-02-17
 
 ### Changes
-- [`08842c5`][unreleased-c1] Document manual Power upgrades & equipping
+- [`029faf1`][unreleased-c1] Change ball sizes to 29x29
+- [`360b496`][unreleased-c2] Use powerup sprites from SWF file
+- [`08842c5`][unreleased-c3] Document manual Power upgrades & equipping
 
-[unreleased-c1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/08842c5
+### Bugfixes
+- [`b594c68`][unreleased-b1] Fix Targets crashing the game on load (again)
+- [`3fc1dd6`][unreleased-b2] Fix Powerups not saving for spheres
+
+[unreleased-c1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/029faf1
+[unreleased-c2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/360b496
+[unreleased-c3]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/08842c5
+
+[unreleased-b1]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/b594c68
+[unreleased-b2]: https://github.com/ZumaBlitzRemake/ZumaBlitzRemake/commit/3fc1dd6
 
 ## alpha v0.1.1 - 2023-02-15
 
