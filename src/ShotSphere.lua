@@ -88,7 +88,7 @@ function ShotSphere:moveStep()
 
 	-- add if there's a sphere nearby
 	local nearestSphere = _Game.session:getNearestSphere(self.pos)
-	if nearestSphere.dist and nearestSphere.dist < 32 then
+	if nearestSphere.dist and nearestSphere.dist < 29 then
 		-- If hit sphere is fragile, destroy the fragile spheres instead of hitting.
 		if nearestSphere.sphere:isFragile() then
 			nearestSphere.sphere:matchEffectFragile()
@@ -142,7 +142,7 @@ function ShotSphere:moveStep()
 					p = self.hitSphere.sphereGroup:getSpherePos(self.hitSphere.sphereID)
 				else
 					-- the inserted ball IS at the end of the group
-					local o = self.hitSphere.sphereGroup:getLastSphereOffset() + 32
+					local o = self.hitSphere.sphereGroup:getLastSphereOffset() + 29
 					p = self.hitSphere.path:getPos(o)
 				end
 				-- calculate length from the current position
@@ -271,7 +271,7 @@ function ShotSphere:drawDebug()
 		local p = _PosOnScreen(Vec2(self.pos.x, i))
 		love.graphics.circle("fill", p.x, p.y, 2)
 		local nearestSphere = _Game.session:getNearestSphere(Vec2(self.pos.x, i))
-		if nearestSphere.dist and nearestSphere.dist < 32 then
+		if nearestSphere.dist and nearestSphere.dist < 29 then
 			love.graphics.setLineWidth(3)
 			local p = _PosOnScreen(nearestSphere.pos)
 			love.graphics.circle("line", p.x, p.y, 16 * _GetResolutionScale())

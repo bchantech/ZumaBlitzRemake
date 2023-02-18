@@ -227,7 +227,7 @@ function SphereGroup:addSphere(color, pos, time, sphereEntity, position, effects
 	end
 	-- if it's a first sphere in the group, lower the offset
 	if position == 1 then
-		self.offset = self.offset - 32
+		self.offset = self.offset - 29
 		self:updateSphereOffsets()
 	end
 	sphere:updateOffset()
@@ -250,7 +250,7 @@ function SphereGroup:destroySphere(position, crushed)
 	if position == 1 then
 		self.spheres[position]:delete(crushed)
 		table.remove(self.spheres, position)
-		self.offset = self.offset + 32
+		self.offset = self.offset + 29
 		self:updateSphereOffsets()
 		self:checkUnfinishedDestructionAtSpawn()
 	elseif position == #self.spheres then
@@ -285,7 +285,7 @@ function SphereGroup:destroySpheres(position1, position2)
 			self.spheres[1]:delete()
 			table.remove(self.spheres, 1)
 		end
-		self.offset = self.offset + position2 * 32
+		self.offset = self.offset + position2 * 29
 		self:updateSphereOffsets()
 		self:checkUnfinishedDestructionAtSpawn()
 	elseif position2 == #self.spheres then -- or maybe on the end?
@@ -1161,7 +1161,7 @@ end
 
 
 function SphereGroup:getBackPos()
-	return self:getSphereOffset(1) - 32 * self.spheres[1].size + 16
+	return self:getSphereOffset(1) - 29 * self.spheres[1].size + 16
 end
 
 
@@ -1347,7 +1347,7 @@ function SphereGroup:deserialize(t)
 			self.spheres[i - 1].nextSphere = s
 		end
 		table.insert(self.spheres, s)
-		offset = offset + 32 * s.size
+		offset = offset + 29 * s.size
 	end
 	self.matchCheck = t.matchCheck
 end

@@ -177,7 +177,7 @@ end
 ---Recalculates the offset this Sphere has from the offset of the Sphere Group it belongs to.
 function Sphere:updateOffset()
 	-- calculate the offset
-	self.offset = self.prevSphere and self.prevSphere.offset + 32 * self.size or 0
+	self.offset = self.prevSphere and self.prevSphere.offset + 29 * self.size or 0
 end
 
 
@@ -573,7 +573,7 @@ end
 ---Returns `true` if this sphere has not escaped the spawn point.
 ---@return boolean
 function Sphere:isOffscreen()
-	return self:getOffset() < 32
+	return self:getOffset() < 29
 end
 
 
