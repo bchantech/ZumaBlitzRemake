@@ -1,10 +1,10 @@
-local class = require "com/class"
+local class = require "com.class"
 
 ---@class Power
 ---@overload fun(data):Power
 local Power = class:derive("Power")
 
-local Profile = require("src/Profile")
+local Profile = require("src.Profile")
 
 
 

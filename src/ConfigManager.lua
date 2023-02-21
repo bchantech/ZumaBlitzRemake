@@ -1,14 +1,14 @@
-local class = require "com/class"
+local class = require "com.class"
 
 ---@class ConfigManager
 ---@overload fun():ConfigManager
 local ConfigManager = class:derive("ConfigManager")
 
-local CollectibleGeneratorManager = require("src/CollectibleGenerator/Manager")
+local CollectibleGeneratorManager = require("src.CollectibleGenerator.Manager")
 
-local ShooterConfig = require("src/Configs/Shooter")
-local Power = require("src/Configs/Power")
-local FoodItem = require("src/Configs/FoodItem")
+local ShooterConfig = require("src.Configs.Shooter")
+local Power = require("src.Configs.Power")
+local FoodItem = require("src.Configs.FoodItem")
 
 
 

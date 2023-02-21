@@ -1,12 +1,12 @@
-local class = require "com/class"
+local class = require "com.class"
 
 ---@class UIManager
 ---@overload fun():UIManager
 local UIManager = class:derive("UIManager")
 
-local strmethods = require("src/strmethods")
+local strmethods = require("src.strmethods")
 
-local UIWidget = require("src/UI/Widget")
+local UIWidget = require("src.UI.Widget")
 
 
 

@@ -1,11 +1,11 @@
-local class = require "com/class"
+local class = require "com.class"
 
 ---@class UI2Manager
 ---@overload fun():UI2Manager
 local UI2Manager = class:derive("UI2Manager")
 
 -- Place your imports here
-local UI2Widget = require("src/UI2/Widget")
+local UI2Widget = require("src.UI2.Widget")
 
 
 

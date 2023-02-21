@@ -1,13 +1,13 @@
 -- FORK-SPECIFIC-CODE: This is a special version of Progress Bar which is circular to mimic the Blitz's Hot Frog meter.
 -- The smoothness also works differently here and that's actually something that could be backported soon.
 
-local class = require "com/class"
+local class = require "com.class"
 
 ---@class UIWidgetSpriteProgressBlitz
 ---@overload fun(parent, sprite, value, smooth):UIWidgetSpriteProgressBlitz
 local UIWidgetSpriteProgressBlitz = class:derive("UIWidgetSpriteProgressBlitz")
 
-local Vec2 = require("src/Essentials/Vector2")
+local Vec2 = require("src.Essentials.Vector2")
 
 
 

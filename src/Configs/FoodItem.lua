@@ -1,4 +1,4 @@
-local class = require "com/class"
+local class = require "com.class"
 
 ---@class FoodItem
 ---@overload fun(data, path):FoodItem

@@ -1,13 +1,13 @@
-local class = require "com/class"
+local class = require "com.class"
 
 ---@class UI2Widget
 ---@overload fun(path):UI2Widget
 local UI2Widget = class:derive("UI2Widget")
 
 -- Place your imports here
-local UIWidgetRectangle = require("src/UI/WidgetRectangle")
+local UIWidgetRectangle = require("src.UI.WidgetRectangle")
 
-local Vec2 = require("src/Essentials/Vector2")
+local Vec2 = require("src.Essentials.Vector2")
 
 
 
