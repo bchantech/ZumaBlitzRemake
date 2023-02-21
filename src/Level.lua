@@ -189,32 +189,6 @@ function Level:updateLogic(dt)
 
 
 
-	-- Warning lights
-	local maxDistance = self:getMaxDangerProgress()
-	if maxDistance > 0 and not self.lost then
-		self.warningDelayMax = math.max((1 - maxDistance) * 3.5 + 0.5, 0.5)
-	else
-		self.warningDelayMax = nil
-	end
-
-	if self.warningDelayMax then
-		self.warningDelay = self.warningDelay + dt
-		if self.warningDelay >= self.warningDelayMax then
-			for i, path in ipairs(self.map.paths) do
-				if path:isInDanger() then
-					_Game:spawnParticle(path.dangerParticle, path:getPos(path.length))
-				end
-			end
-			--game:playSound(self.dangerSoundName, 1 + (4 - self.warningDelayMax) / 6)
-			--_Game:playSound(self.dangerSoundName)
-			self.warningDelay = 0
-		end
-	else
-		self.warningDelay = 0
-	end
-
-
-
 	-- Time counting
 	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
 		self.time = self.time + dt
