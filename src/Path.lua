@@ -138,6 +138,11 @@ function Path:update(dt)
 		if scorpion.delQueue then table.remove(self.scorpions, i) end
 	end
 
+    -- Holes
+	for _, hole in pairs(self.map.holes) do
+		hole:update(dt)
+	end
+
 	-- Path Clears
     if self:isValidForCurveClear() then
 		self.pathClearGranted = true
