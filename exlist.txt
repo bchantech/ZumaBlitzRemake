@@ -13,5 +13,6 @@ build\
 *.txt
 *.res
 *.ico
+*.psd
 LICENSE
 .gitignore
