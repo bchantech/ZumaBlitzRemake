@@ -3,6 +3,9 @@
     "displayName": "Pyro Popcorn",
     "sprite": "",
     "effects": {
-        "totalExplosionRadius": 0.40
+        "bombsExplosionRadius": 22,
+        "chainBlastExplosionRadius": 22,
+        "lastHurrahRadius": 22,
+        "hotFrogRadius": 22
     }
 }

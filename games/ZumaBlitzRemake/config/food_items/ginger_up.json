@@ -3,6 +3,6 @@
     "displayName": "Ginger Up",
     "sprite": "",
     "effects": {
-        "dontDecreaseBlitzMeter": true
+        "hotFrogDecayPerTickBase": -1
     }
 }

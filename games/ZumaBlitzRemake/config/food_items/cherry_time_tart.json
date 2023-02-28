@@ -3,6 +3,6 @@
     "displayName": "Cherry Time Tart",
     "sprite": "",
     "effects": {
-        "targetsGiveOneSecond": true
+        "fruitTicksAdded": 1
     }
 }

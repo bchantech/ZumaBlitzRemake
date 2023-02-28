@@ -3,7 +3,9 @@
     "displayName": "Pyro Pig",
     "sprite": "",
     "effects": {
-        "speedAdditiveModifier": 0.22,
-        "explosionRadiusModifier": 0.40
+        "shotSpeedBase": 175,
+        "bombsExplosionRadius": 22,
+        "chainBlastExplosionRadius": 22,
+        "hotFrogRadius": 22
     }
 }

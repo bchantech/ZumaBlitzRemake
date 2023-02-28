@@ -3,7 +3,7 @@
     "displayName": "Chocolate Love",
     "sprite": "",
     "effects": {
-        "targetsGiveOneSecond": true,
-        "targetValueModifier": 750
+        "fruitTicksAdded": 1,
+        "fruitPointsBase": 750
     }
 }

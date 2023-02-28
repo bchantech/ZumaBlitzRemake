@@ -4,10 +4,9 @@
     "sprite": "",
     "effects": {
         "$comment": [
-            "Hot Frog meter slowly fills up at 60% the normal decay rate.",
-            "How would I word this better, or make it more flexible?"
+            "Hot Frog meter slowly fills up at 60% the normal decay rate, so a negative value must be used.",
+            "Decay only starts when the meter is above zero, and cannot trigger hot frog automatically."
         ],
-        "blitzMeterFillsUp60Percent": true,
-        "additionalMatchBeforeHotFrog": true
+        "hotFrogDecayPerTickBase": -2.2
     }
 }

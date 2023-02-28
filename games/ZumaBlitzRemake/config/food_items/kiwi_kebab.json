@@ -3,8 +3,8 @@
     "displayName": "Kiwi Kebab",
     "sprite": "",
     "effects": {
-        "persistentTargets": true,
+        "fruitLifetime": 60,
         "fruitValueModifier": 750,
-        "fruitHitboxRadiusModifier": 0.10
+        "fruitRadius": 3
     }
 }

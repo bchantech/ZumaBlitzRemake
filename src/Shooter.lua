@@ -616,14 +616,15 @@ function Shooter:getShootingSpeed()
     local speedShot = _Game:getCurrentProfile():getEquippedPower("speed_shot")
     local powerMultiplier = (speedShot and speedShot:getCurrentLevelData().additiveMultiplier) or 0
 
-    local foodSpeedShot = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "shotSpeedModifier") or 0
+    local foodSpeedShot_add = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "shotSpeedBase") or 0
+    local foodSpeedShot_mult = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "shotSpeedMultiplier") or 0
     -- Brendan's blog says that the speed boost in Kroakatoa is 175% but it's
     -- clearly way too fast! We're using the old 75% boost.
     -- src: http://bchantech.dreamcrafter.com/zumablitz/spiritanimals.php
     local eagleSpeedShot = (_Game:getCurrentProfile():getActiveMonument() == "spirit_eagle" and 0.75) or 0
     -- TODO: What's the order of speed shot multipliers?
     -- Would it also be ideal to set a max speed bonus cap?
-    return self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier) + (self.config.shootSpeed * foodSpeedShot) + (self.config.shootSpeed * eagleSpeedShot)
+    return self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier) + (self.config.shootSpeed * foodSpeedShot_mult) + foodSpeedShot_add + (self.config.shootSpeed * eagleSpeedShot)
 end
 
 

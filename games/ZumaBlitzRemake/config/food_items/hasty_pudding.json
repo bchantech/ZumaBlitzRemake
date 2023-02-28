@@ -9,8 +9,8 @@
         }
     },
     "effects": {
-        "speedModifier": 0.33,
-        "initialChainPointsAdditive": 250,
-        "consequentChainPointsAdditive": 100
+        "shotSpeedBase": 250,
+        "chainBonusJackpotPoints": 250,
+        "chainBonusJackpotEachPoints": 100
     }
 }

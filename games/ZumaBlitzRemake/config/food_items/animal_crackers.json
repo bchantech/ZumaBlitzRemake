@@ -3,7 +3,7 @@
     "displayName": "Animal Crackers",
     "sprite": "",
     "effects": {
-        "spiritBlastPointsModifier": 750,
-        "spiritBlastPointsPerBallModifier": 25
+        "spiritBlastPointsBase": 750,
+        "spiritBlastPointsIncrement": 25
     }
 }

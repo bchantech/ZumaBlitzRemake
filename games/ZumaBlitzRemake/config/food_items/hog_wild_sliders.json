@@ -3,6 +3,6 @@
     "displayName": "Hog Wild Sliders",
     "sprite": "",
     "effects": {
-        "wildBallShotSubtractiveModifier": 2
+        "wildBallThreshold": -2
     }
 }

@@ -9,8 +9,8 @@
         }
     },
     "effects": {
-        "fireballBaseScoreModifier": 200,
-        "fireballScorePerBallModifier": 50,
-        "fireballSprite": ""
+        "hotFrogPointsBase": 200,
+        "hotFrogPointsInc": 50,
+        "hotFrogFireballImage": ""
     }
 }

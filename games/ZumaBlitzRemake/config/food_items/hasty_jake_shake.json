@@ -3,9 +3,9 @@
     "displayName": "Hasty Jake Shake",
     "sprite": "",
     "effects": {
-        "shotSpeedModifier": 0.22,
-        "persistentTargets": true,
-        "fruitValueMultiplier": 0.25,
-        "fruitHitboxRadiusModifier": 0.10
+        "shotSpeedBase": 175,
+        "fruitLifetime": 60,
+        "fruitPointsMultiplier": 0.25,
+        "fruitRadius": 3
     }
 }
