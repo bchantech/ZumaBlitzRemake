@@ -32,8 +32,40 @@ function Path:new(map, pathData, pathBehavior)
 	end
 
 	self.colors = pathBehavior.colors
-	self.colorStreak = pathBehavior.colorStreak
-	self.spawnRules = pathBehavior.spawnRules
+	self.colorStreak = pathBehavior.colorStreak or 0.45
+
+	-- FORK-SPECIFIC CHANGE:
+	-- Optional parameters maxSingles, maxClumps per level
+	-- ZB maps sets max singles to 2 and max clump to 5 by default
+	self.maxSingles = pathBehavior.maxSingles or 2
+	self.maxClumps = pathBehavior.maxClumps or 5
+	self.curSingles = 0
+	self.curClump = 0
+	self.spawnRules = pathBehavior.spawnRules or "continuous"
+
+	-- handle adjustments from food effects
+	self.adjustSingles = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveMaxSingleAdj") or 0
+	self.adjustClumps = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveMaxClumpAdj") or 0
+	self.adjustCurveMatchPercent = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveMatchPercentAdj") or 0
+	self.adjustCurveMatchPercent  = self.adjustCurveMatchPercent / 100
+
+--	_Log:printt("Single Adjustment", "-> " .. self.adjustSingles)
+--	_Log:printt("Clump Adjustment", "-> " .. self.adjustClumps)
+--	_Log:printt("Curve Adjustment", "-> " .. self.adjustCurveMatchPercent)
+
+	self.maxSingles = self.maxSingles + self.adjustSingles
+	self.maxClumps = self.maxClumps + self.adjustClumps
+	self.colorStreak = self.colorStreak + self.adjustCurveMatchPercent
+
+	-- handle invalid values
+	self.colorStreak = math.max(self.colorStreak,0)
+	self.colorStreak = math.min(self.colorStreak,1)
+	self.maxSingles = math.max(self.maxSingles,0)
+	self.maxClumps = math.max(self.maxClumps,1)
+
+--	_Log:printt("Max Singles", "-> " .. self.maxSingles)
+--	_Log:printt("Max Clumps", "-> " .. self.maxClumps)
+
 	if _Game.satMode then
 		local n = _Game:getCurrentProfile():getUSMNumber() * 10
 		self.spawnRules = {
@@ -183,10 +215,14 @@ end
 
 
 
----Returns a random entry from the list of sphere types this Path can spawn.
+---Returns a random entry from the list of sphere types this Path can spawn. This cannot return the same color.
 ---@return integer
-function Path:newSphereColor()
-	return self.colors[math.random(1, #self.colors)]
+function Path:newSphereColor(curColor)
+	repeat
+		pendingColor = math.random(1, #self.colors)
+	until curColor ~= pendingColor
+	
+	return self.colors[pendingColor]
 end
 
 
