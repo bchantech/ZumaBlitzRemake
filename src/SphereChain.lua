@@ -27,7 +27,8 @@ function SphereChain:new(path, deserializationTable)
 
 		self.sphereGroups = {}
 		self.generationAllowed = self.path.spawnRules.type == "continuous"
-		self.generationColor = self.path:newSphereColor()
+		-- not sure how to do this one.
+		self.generationColor = self.path:newSphereColor(0)
 
 
 		-- Generate the first group.
@@ -232,8 +233,17 @@ function SphereChain:generateSphere()
 	-- Add a new sphere.
 	self:getLastSphereGroup():pushSphereBack(self.generationColor)
 	-- Each sphere: check whether we should generate a fresh new color (chance is colorStreak).
-	if math.random() >= self.path.colorStreak then
-		self.generationColor = self.path:newSphereColor()
+	-- If this exceeds max singles the same color will be forced, and if it exceeds max clump then a new color will be forced.
+
+	if (math.random() >= self.path.colorStreak and self.path.curSingles < self.path.maxSingles+1) or self.path.curClump >= self.path.maxClumps then
+		self.generationColor = self.path:newSphereColor(self.generationColor)
+		self.path.curClump = 1
+		self.path.curSingles = self.path.curSingles + 1
+		--_Log:printt("Cur Singles", "-> " .. self.path.curSingles)
+	else	
+		self.path.curClump = self.path.curClump + 1
+		self.path.curSingles = 0
+		--_Log:printt("Cur Clumps", "-> " .. self.path.curClump)
 	end
 end
 
