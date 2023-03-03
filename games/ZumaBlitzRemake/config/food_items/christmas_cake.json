@@ -3,7 +3,7 @@
     "displayName": "Christmas Cake",
     "sprite": "",
     "effects": {
-        "minSpeedDistanceModifier": 0.75,
-        "alwaysHaveMatches": true
+        "curveMinimumBallSpeedupCount": 5,
+        "curveMaxSingleAdj": -2
     }
 }

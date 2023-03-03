@@ -3,7 +3,7 @@
     "displayName": "The Nickler",
     "sprite": "",
     "effects": {
-        "shotSpeedModifier": 0.22,
-        "startingTimeModifier": 5
+        "shotSpeedBase": 175,
+        "startingTime": 5
     }
 }

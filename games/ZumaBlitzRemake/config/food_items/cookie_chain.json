@@ -3,6 +3,7 @@
     "displayName": "Cookie Chain",
     "sprite": "",
     "effects": {
-        "tenFiveChainBonusMultiplier": 2
+        "chainBonusJackpotPoints": 1000,
+        "chainBonusJackpotEachPoints": 500
     }
 }

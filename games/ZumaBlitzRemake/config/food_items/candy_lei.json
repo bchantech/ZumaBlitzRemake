@@ -3,8 +3,9 @@
     "displayName": "Candy Lei",
     "sprite": "",
     "effects": {
-        "spawnStreakModifier": 0.30,
-        "curveClearSpeedDistanceModifier": 0.10,
-        "alwaysHaveMatches": true
+        "curveMatchPercentAdj": 10,
+        "curveMaxClumpAdj": 2,
+        "curveMaxSingleAdj": -2,
+        "curveMinimumBallSpeedupCount": -5
     }
 }

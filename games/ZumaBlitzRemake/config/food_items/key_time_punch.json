@@ -3,8 +3,9 @@
     "displayName": "Key Time Punch",
     "sprite": "",
     "effects": {
-        "shotSpeedModifier": 0.22,
-        "startingTimeModifier": 5,
-        "quintupleTimeBallAdditiveModifier": 1
+        "shotSpeedBase": 175,
+        "startingTime": 5,
+        "timeBallsExtraBonusCount": 5,
+        "timeBallsExtraBonusTime": 1
     }
 }

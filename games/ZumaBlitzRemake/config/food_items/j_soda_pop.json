@@ -3,8 +3,11 @@
     "displayName": "J $oda Pop",
     "sprite": "",
     "effects": {
-        "shotSpeedModifier": 0.22,
-        "powerupExplosionRadiusModifier": 0.40,
-        "fireballScoreModifier": 2
+        "shotSpeedBase": 175,
+        "bombsExplosionRadius": 22,
+        "chainBlastExplosionRadius": 22,
+        "hotFrogPointsBase": 1000,
+        "hotFrogPointsInc": 100,
+        "hotFrogRadius": 22
     }
 }

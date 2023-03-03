@@ -194,7 +194,8 @@ function Path:update(dt)
         )
 		_Game:playSound("sound_events/curve_clear.json")
 
-		local shouldGiveOneSecond = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearsGiveOneSecond")
+		-- TODO: Use the value of curveClearTicksAdded for adding time instead of 1
+		local shouldGiveOneSecond = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "curveClearTicksAdded")
 		if (not self.map.level.finish) and shouldGiveOneSecond then
 			self.map.level:applyEffect({type = "addTime", amount = 1})
         end

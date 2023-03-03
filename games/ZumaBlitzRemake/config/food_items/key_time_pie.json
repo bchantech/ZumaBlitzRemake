@@ -9,6 +9,6 @@
         }
     },
     "effects": {
-        "startingTimeModifier": 5
+        "startingTime": 5
     }
 }

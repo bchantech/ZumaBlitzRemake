@@ -3,6 +3,6 @@
     "displayName": "Whipped Taters",
     "sprite": "",
     "effects": {
-        "maxSpeedDistance": 0.5
+        "speedUpShotsTotalIncrease": 400
     }
 }

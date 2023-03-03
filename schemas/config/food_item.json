@@ -15,141 +15,626 @@
             "type": "object",
             "description": "An object full of gameplay effects.",
             "properties": {
-                "multiplierCapAdditiveModifier": {
+
+                "fruitEnabled": {
                     "type": "number",
-                    "description": "Increase the Multiplier cap by this amount."
+                    "description": "Enables fruit."
                 },
-                "spiritBlastPointsModifier": {
+                "fruitFrequency": {
                     "type": "number",
-                    "description": "Increases the Spirit Blast points by this amount."
+                    "description": "Determines how often fruit will appear at minimum (in seconds)."
                 },
-                "spiritBlastPointsPerBallModifier": {
+                "fruitFrequencyRange": {
                     "type": "number",
-                    "description": "Increases the Spirit Blast points per ball by this amount."
+                    "description": "Increases fruit spawn delay by a random number between 0 and this value (in seconds)."
                 },
-                "powerupCooldownModifier": {
-                    "type": "object",
-                    "description": "(DESCRIPTION TO BE CHANGED) I'm still not sure if ZB uses the classic powerup algo or use seconds."
-                },
-                "fireballBaseScoreModifier": {
+                "fruitLifetime": {
                     "type": "number",
-                    "description": "Increases the fireball explosion base score by this amount."
+                    "description": "Determines how long fruit will appear."
                 },
-                "fireballBaseScorePerBallModifier": {
+                "fruitLifetimeRange": {
                     "type": "number",
-                    "description": "Increases the fireball explosion score per ball by this amount."
+                    "description": "Increases fruit lifespan by a random number between 0 and this value (in seconds)."
                 },
-                "spawnStreakModifier": {
+                "fruitPointsBase": {
                     "type": "number",
-                    "description": "Increases the spawnStreak by this amount by this amount."
+                    "description": "Increases the base value of fruit."
                 },
-                "curveClearSpeedDistanceModifier": {
+                "fruitRadius": {
                     "type": "number",
-                    "description": "Decreases the distance reached by the spheres once a Curve Clear has been achieved by this amount."
+                    "description": "Increases the collection radius of fruit (in px)."
                 },
-                "alwaysHaveMatches": {
+                "fruitPointsMultiplier": {
+                    "type": "number",
+                    "description": "Increases the point multiplier of fruit by a constant amount."
+                },
+                "fruitTicksAdded": {
+                    "type": "number",
+                    "description": "Adds extra seconds to the time upon fruit collection."
+                },
+                "fruitFactor": {
+                    "type": "number",
+                    "description": "For each fruit collected multiply fruit value by (1 + this value)."
+                },
+                "fruitCap": {
+                    "type": "number",
+                    "description": "Increase the max amount of times fruitFactor can multiply itself."
+                },
+                "fruitRoundingValue": {
+                    "type": "number",
+                    "description": "Round the value of fruit down to the next multiple of x."
+                },
+                "comboBonusPointsBase": {
+                    "type": "number",
+                    "description": "Base combo score."
+                },
+                "comboBonusPointsInc": {
+                    "type": "number",
+                    "description": "Increase the combo score by this amount."
+                },
+                "matchPointsBase": {
+                    "type": "number",
+                    "description": "Increases base points for matching balls"
+                },
+                "gapGapMax": {
+                    "type": "number",
+                    "description": "Increase the max gap size before gap value = 0."
+                },
+                "gapPointMin": {
+                    "type": "number",
+                    "description": "Increase minimum points from a gap shot."
+                },
+                "gapPointsBase": {
+                    "type": "number",
+                    "description": "Increase the max points from a gap shot."
+                },
+                "gapPointsRounding": {
+                    "type": "number",
+                    "description": "Round the value of gaps down to the next multiple of x."
+                },
+                "gapMultSingle": {
+                    "type": "number",
+                    "description": "Increases the multiplier for single gap shots."
+                },
+                "gapMultDouble": {
+                    "type": "number",
+                    "description": "Increases the multiplier for double gap shots."
+                },
+                "gapMultTriple": {
+                    "type": "number",
+                    "description": "Increases the multiplier for triple gap shots and above."
+                },
+                "gapMinAdjustment": {
+                    "type": "number",
+                    "description": "Decreases the effective gap size by x pixels for determining the score."
+                },
+                "chainBonusChainMin": {
+                    "type": "number",
+                    "description": "Increases the minimum chain required for a bonus to be granted."
+                },
+                "chainBonusPointsBase": {
+                    "type": "number",
+                    "description": "Increases the base score for chains by this amount."
+                },
+                "chainBonusPointsInc": {
+                    "type": "number",
+                    "description": "Increases the score gained for each chain after by this amount."
+                },
+                "chainBonusJackpotStart": {
+                    "type": "number",
+                    "description": "Further increases the minimum chain required for an additional chain bonus to be granted."
+                },
+                "chainBonusJackpotPoints": {
+                    "type": "number",
+                    "description": "Increases the base score for the additional chain bonus."
+                },
+                "chainBonusJackpotEach": {
+                    "type": "number",
+                    "description": "Increases the interval which this chain bonus is granted."
+                },
+                "chainBonusJackpotEachPoints": {
+                    "type": "number",
+                    "description": "Increases the interval score for this chain bonus."
+                },
+                "curveSpeedFactor": {
+                    "type": "number",
+                    "description": "Increases the base curve speed by this amount."
+                },
+                "curveMaxSingleAdj": {
+                    "type": "number",
+                    "description": "Increases the amount of singles allowed before a clump is guaranteed to spawn. Min 0"
+                },
+                "curveMaxClumpAdj": {
+                    "type": "number",
+                    "description": "Increases the max amount of same colored balls allowed to spawn at once. Min 2."
+                },
+                "curveMatchPercentAdj": {
+                    "type": "number",
+                    "description": "Increases the probability the next ball will be the same color."
+                },
+                "curveMinimumBallSpeedupCount": {
+                    "type": "number",
+                    "description": "Increases the speed by SpeedupAmount until x balls appears on the curve."
+                },
+                "curveMinimumBallSpeedupAmount": {
+                    "type": "number",
+                    "description": "Increase the speed of the curve when below a minimum amount of balls."
+                },
+                "wildBallEnabled": {
                     "type": "boolean",
-                    "description": "If true, the sphere generation algorithm will never generate singles and will always generate at least 2 spheres of the same color."
+                    "description": "Enables wild balls."
                 },
-                "maxSpinTargetsAdditiveModifier": {
+                "wildBallThreshold": {
                     "type": "number",
-                    "description": "Increases the amount of times targets that reward Free Spins on hit can appear by this amount."
+                    "description": "Increases the number of balls before a wild ball spawns."
                 },
-                "spinTargetChanceMultiplier": {
+                "wildBallPointsBase": {
                     "type": "number",
-                    "description": "Multiplies the chance of Free Spin targets appearing by this amount."
+                    "description": "Increases the base score for a wild ball."
                 },
-                "activatePower": {
+                "spiritShotEnabled": {
+                    "type": "boolean",
+                    "description": "Enables spirit shots."
+                },
+                "spiritShotShots": {
+                    "type": "number",
+                    "description": "Increases the number of balls before a spirit shot fireball spawns."
+                },
+                "spiritShotRadius": {
+                    "type": "number",
+                    "description": "Increases the blast radius of spirit shot."
+                },
+                "spiritShotPointsBase": {
+                    "type": "number",
+                    "description": "Increases the base score for spirit shot."
+                },
+                "spiritShotPointsEach": {
+                    "type": "number",
+                    "description": "Increases the base score for each ball destroyed from a spirit shot."
+                },
+                "spiritShotPointsMult": {
+                    "type": "number",
+                    "description": "Increases the score multiplier for points gained from a spirit shot."
+                },
+                "spiritShotSpeed": {
+                    "type": "number",
+                    "description": "Increases the speed of a spirit shot."
+                },
+                "shotSpeedBase": {
+                    "type": "number",
+                    "description": "Increase the base shot speed."
+                },
+                "shotSpeedMultiplier": {
+                    "type": "number",
+                    "description": "Increases the shot speed by a multiplier (1+x)."
+                },
+                "shotSpeedMax": {
+                    "type": "number",
+                    "description": "Increases the max speed a shot can travel (Warning - High values may cause shots to pass through curves)"
+                },
+                "multiplierStarting": {
+                    "type": "number",
+                    "description": "Increases the starting multiplier."
+                },
+                "multiplierMaximum": {
+                    "type": "number",
+                    "description": "Increases the maximum multiplier (Warning - multipliers past 10 do not have a graphic)."
+                },
+                "chainBlastEnabled": {
+                    "type": "boolean",
+                    "description": "Enables chain blast."
+                },
+                "chainBlastMinimum": {
+                    "type": "number",
+                    "description": "Increases the minimum chain amount to trigger a chain blast."
+                },
+                "chainBlastIncrement": {
+                    "type": "number",
+                    "description": "Increases the increment before another chain blast triggers."
+                },
+                "chainBlastExplosionRadius": {
+                    "type": "number",
+                    "description": "Increases the explosion radius of chain blast."
+                },
+                "chainBlastScoreBase": {
+                    "type": "number",
+                    "description": "Increases the base score from chain blast."
+                },
+                "chainBlastScoreEach": {
+                    "type": "number",
+                    "description": "Increases the base score from each ball destroyed in a chain bast."
+                },
+                "chainBlastScoreMult": {
+                    "type": "number",
+                    "description": "Increases the score multiplier for points gained from a chain blast."
+                },
+                "chainBonusEnabled": {
+                    "type": "boolean",
+                    "description": "Enables chain bonus. (default - true)"
+                },
+                "comboBonusEnabled": {
+                    "type": "boolean",
+                    "description": "Enables combo bonus. (default - true)"
+                },
+                "curveClearEnabled": {
+                    "type": "boolean",
+                    "description": "Enables the bonus from curve clears."
+                },
+                "curveClearPointsBase": {
+                    "type": "number",
+                    "description": "Increase the base score from curve clears."
+                },
+                "curveClearTicksAdded": {
+                    "type": "number",
+                    "description": "Increases time gain from a curve clear by this amount (in seconds)."
+                },
+                "treasureEnabled": {
+                    "type": "boolean",
+                    "description": "Allows fruit to be replaced with free daily spins."
+                },
+                "treasureSpawnMax": {
+                    "type": "number",
+                    "description": "Increases the maximum daily spins that can be collected in a game."
+                },
+                "treasurePercentChance": {
+                    "type": "number",
+                    "description": "Increases the chance of a daily spin bonus spawning instead of a fruit."
+                },
+                "hotFrogEnabled": {
+                    "type": "boolean",
+                    "description": "Enables hot frog"
+                },
+                "hotFrogShots": {
+                    "type": "number",
+                    "description": "Increases the amount of shots that can be fired in hot frog mode."
+                },
+                "hotFrogRadius": {
+                    "type": "number",
+                    "description": "Increases the explosion radius of hot frog shots"
+                },
+                "hotFrogPointsBase": {
+                    "type": "number",
+                    "description": "Increases the base score of hot frog shots."
+                },
+                "hotFrogPointsInc": {
+                    "type": "number",
+                    "description": "Increase the score gained from each ball destroyed in a hot frog shot."
+                },
+                "hotFrogMatchValue": {
+                    "type": "number",
+                    "description": "Increases the amount of points given when a hot frog explosion causes balls to slide back and make a match."
+                },
+                "hotFrogDecayPerTickBase": {
+                    "type": "number",
+                    "description": "Increases the rate the hot frog meter decreases (per second). Negative values will slowly increase the meter."
+                },
+                "hotFrogGoal": {
+                    "type": "number",
+                    "description": "Increases the amount required before a hot frog triggers. (Note - a match is needed to trigger)"
+                },
+                "hotFrogShotSpeed": {
+                    "type": "number",
+                    "description": "Increases the shot speed of hot frog."
+                },
+                "hotFrogDecayDeltaPerTick": {
+                    "type": "number",
+                    "description": "Increases the delta rate which the hot frog meter decreases. Delta resets to 0 after a match."
+                },
+                "hotFrogGapInc": {
+                    "type": "number",
+                    "description": "Increases the amount of hot frog meter gained from a gap shot."
+                },
+                "hotFrogFruitInc": {
+                    "type": "number",
+                    "description": "Increases the amount of hot frog meter gained from collecting fruit."
+                },
+                "hotFrogExplosionInc": {
+                    "type": "number",
+                    "description": "Increases the amount of hot frog meter gained from triggering an explosion."
+                },
+                "hotFrogComboBreaker": {
+                    "type": "number",
+                    "description": "Increases the amount of hot frog meter gained from breaking a combo."
+                },
+                "hotFrogGoalInc": {
+                    "type": "number",
+                    "description": "Increases the amount of hot frog meter gained per match."
+                },
+                "hotFrogGoalCap": {
+                    "type": "number",
+                    "description": "Increases the max capacity of the hot frog meter."
+                },
+                "hotFrogJackpotInc": {
+                    "type": "number",
+                    "description": "Increases the amount of hot frog meter gained from chain bonus jackpots."
+                },
+                "hotFrogDelayFrames": {
+                    "type": "number",
+                    "description": "Increases the minimum amount of frames required between per hot frog shot."
+                },
+                "hotFrogFireballImage": {
                     "type": "string",
-                    "description": "Activates this specific Power, independed of the current profile's equipped Power slots."
+                    "description": "Changes the hot frog fireball image to this string."
                 },
-                "chainBlastPointsModifier": {
-                    "type": "number",
-                    "description": "Increases the points of each Chain Blast explosions by this amount."
-                },
-                "chainBlastExplosionRadiusModifier": {
-                    "type": "number",
-                    "description": "Increases the radius of Chain Blast's explosion by this amount."
-                },
-                "chainBonusPointsModifier": {
-                    "type": "number",
-                    "description": "Increases the points of each Chain Bonus by this amount."
-                },
-                "targetsGiveOneSecond": {
+                "lastHurrahEnabled": {
                     "type": "boolean",
-                    "description": "If true, targets will give 1 second on shot."
+                    "description": "Enables Last Hurrah. (default - on)"
                 },
-                "targetValueModifier": {
+                "lastHurrahMultiplier": {
                     "type": "number",
-                    "description": "Increases the value of shot targets by this amount."
+                    "description": "Increases the score multiplier for balls destroyed from Last Hurrah."
                 },
-                "curveClearsGiveOneSecond": {
+                "lastHurrahRadius": {
+                    "type": "number",
+                    "description": "Increases the explosion radius for powerups destroyed from Last Hurrah."
+                },
+                "lastHurrahPointBase": {
+                    "type": "number",
+                    "description": "Increases the base score for each powerup destroyed."
+                },
+                "lastHurrahPointInc": {
+                    "type": "number",
+                    "description": "Increases the increment score for each powerup destroyed."
+                },
+                "bombsEnabled": {
                     "type": "boolean",
-                    "description": "If true, Curve Clears give 1 second."
+                    "description": "Enables bombs."
                 },
-                "curveClearPointModifier": {
+                "bombsFrequencyBase": {
                     "type": "number",
-                    "description": "Increases the amount of Curve Clear points by this amount."
+                    "description": "Increases time to appear at minimum (in seconds)."
                 },
-                "shotSpeedModifier": {
+                "bombsFrequencyRange": {
                     "type": "number",
-                    "description": "Increases the shot speed of the shooter by shotSpeed + (shotSpeed * amount)."
+                    "description": "Increases bomb spawn delay by a random number between 0 and this value (in seconds)."
                 },
-                "minSpeedDistanceModifier": {
+                "bombsLifetime": {
                     "type": "number",
-                    "description": "Increases the distance of the slowest speed by this amount."
+                    "description": "Increases the lifespan of bombs."
                 },
-                "comboPointModifier": {
+                "bombsLifetimeRange": {
                     "type": "number",
-                    "description": "Increases the amount of points given by Combos by comboPoints + (comboPoints + amount)."
+                    "description": "Increases the lifespan of bombs by a random number between 0 and this value (in seconds)."
                 },
-                "tenFiveChainBonusMultiplier": {
+                "bombsExplosionRadius": {
                     "type": "number",
-                    "description": "Multiplies Chain Bonuses by this amount at x10 chain and every x5 chain after."
+                    "description": "Increases the explosion radius of bombs."
                 },
-                "maximumGapShotScoreModifier": {
+                "bombsMaxBalls": {
                     "type": "number",
-                    "description": "Increases the amount of maximum points a Gap Shot can give by this amount."
+                    "description": "Increases the max number of bombs on the screen at once."
                 },
-                "largeGapScoreThreshold": {
+                "bombsBasePoints": {
                     "type": "number",
-                    "description": "'Decreases score lost from larger gaps'"
+                    "description": "Increases the base score for bombs."
                 },
-                "extraLargeGapScoreThreshold": {
+                "bombsEachPoints": {
                     "type": "number",
-                    "description": "'Decreases score lost from larger gaps'"
+                    "description": "Increases the score gained from each ball destroyed."
                 },
-                "smallGapShotScoreModifier": {
+                "bombsMultPoints": {
                     "type": "number",
-                    "description": "'...improves the value of small gap shots...'"
+                    "description": "Increases the score multiplier for score gained from bombs."
                 },
-                "largeGapShotScorePenaltyModifier": {
-                    "type": "number",
-                    "description": "'...and decreases the score penalty for larger gaps.'"
-                },
-                "dontDecreaseBlitzMeter": {
+                "cannonsEnabled": {
                     "type": "boolean",
-                    "description": "If true, the Blitz Meter does not decrease over time. This does not apply to Speed Bonuses."
+                    "description": "Enables cannons."
                 },
-                "powerupFrequencyModifier": {
-                    "type": "object",
-                    "description": "Increases the frequency of a specified powerup.",
-                    "properties": {
-                        "powerup": {
-                            "type": "string"
-                        },
-                        "value": {
-                            "type": "number"
-                        }
-                    }
-                },
-                "requiredPower": {
-                    "type": "string",
-                    "description": "If this Power is not equipped, any other defined effects will not take place."
-                },
-                "colorNukeUsagePoints": {
+                "cannonsLifetime": {
                     "type": "number",
-                    "description": "Increases the amount of points per Color Nuke used."
+                    "description": "Increases the lifespan for cannon powerups."
+                },
+                "cannonsLifetimeRange": {
+                    "type": "number",
+                    "description": "Increases the lifespan of cannon powerups by a random number between 0 and this value (in seconds)."
+                },
+                "cannonsFrequencyBase": {
+                    "type": "number",
+                    "description": "Increases time to appear at minimum (in seconds)."
+                },
+                "cannonsFrequencyRange": {
+                    "type": "number",
+                    "description": "Increases cannon spawn delay by a random number between 0 and this value (in seconds)."
+                },
+                "cannonsSpread": {
+                    "type": "number",
+                    "description": "Increases how many cannonballs are fired at once."
+                },
+                "cannonsSpreadSpread": {
+                    "type": "number",
+                    "description": "Increases the spread between each cannonball (in degrees)."
+                },
+                "cannonsMaxBalls": {
+                    "type": "number",
+                    "description": "Increases the max number of cannonball powerups at once."
+                },
+                "cannonsPointsBase": {
+                    "type": "number",
+                    "description": "Increases the base score of each ball destroyed using a cannonball."
+                },
+                "cannonsPointsMultiplier": {
+                    "type": "number",
+                    "description": "Increase the score multiplier of balls destroyed using a cannonball."
+                },
+                "colorNukeEnabled": {
+                    "type": "boolean",
+                    "description": "Enables color nuke."
+                },
+                "colorNukeLifetime": {
+                    "type": "number",
+                    "description": "Increases the lifespan of color nuke powerups."
+                },
+                "colorNukeLifetimeRange": {
+                    "type": "number",
+                    "description": "Increases the lifespan of color nukes by a random number between 0 and this value (in seconds)."
+                },
+                "colorNukeFrequencyBase": {
+                    "type": "number",
+                    "description": "Increases time to appear at minimum (in seconds)."
+                },
+                "colorNukeFrequencyRange": {
+                    "type": "number",
+                    "description": "Increases color nuke spawn delay by a random number between 0 and this value (in seconds)."
+                },
+                "colorNukeMaxBalls": {
+                    "type": "number",
+                    "description": "Increases the max number of balls destroyed by a color nuke."
+                },
+                "colorNukePointsBase": {
+                    "type": "number",
+                    "description": "Increases base score for using a color nuke."
+                },
+                "colorNukePointsMultiplier": {
+                    "type": "number",
+                    "description": "Increases the score multiplier of balls destroyed using a color nuke."
+                },
+                "colorNukeCurveCount": {
+                    "type": "number",
+                    "description": "Determines the number of curves the color nuke affects. (1 = curve that was targeted)"
+                },
+                "colorNukePointsEach": {
+                    "type": "number",
+                    "description": "Increases base score of each ball destroyed using a color nuke."
+                },
+                "timeBallsEnabled": {
+                    "type": "boolean",
+                    "description": "Enables time balls. (default - true)"
+                },
+                "timeBallsMaxBalls": {
+                    "type": "number",
+                    "description": "Determines the max number of timeballs that can appear at once."
+                },
+                "timeBallsFrequencyBase": {
+                    "type": "number",
+                    "description": "Increases time to appear at minimum (in seconds)."
+                },
+                "timeBallsFrequencyRange": {
+                    "type": "number",
+                    "description": "Increases time ball spawn delay by a random number between 0 and this value (in seconds)."
+                },
+                "timeBallsLifetime": {
+                    "type": "number",
+                    "description": "Increases the lifespan of time balls."
+                },
+                "timeBallsLifetimeRange": {
+                    "type": "number",
+                    "description": "Increases the lifespan of time balls by a random number between 0 and this value (in seconds)."
+                },
+                "timeBallsTimeBonus": {
+                    "type": "number",
+                    "description": "Increases the time bonus (in seconds)."
+                },
+                "timeBallsExtraBonusCount": {
+                    "type": "number",
+                    "description": "For each x time balls collected grant bonus time"
+                },
+                "timeBallsExtraBonusTime": {
+                    "type": "number",
+                    "description": "Bonus time gained from collecting x time balls."
+                },
+                "multiplierBallsEnabled": {
+                    "type": "boolean",
+                    "description": "Enables multiplier balls. (default - on)"
+                },
+                "multiplierMaxBalls": {
+                    "type": "number",
+                    "description": "Determines max number of multiplier balls on the screen at once."
+                },
+                "multiplierFrequencyBase": {
+                    "type": "number",
+                    "description": "Increases time to appear at minimum (in seconds)."
+                },
+                "multiplierFrequencyRange": {
+                    "type": "number",
+                    "description": "Increases multiplier spawn delay by a random number between 0 and this value (in seconds)."
+                },
+                "multiplierLifetime": {
+                    "type": "number",
+                    "description": "Increases the Multiplier lifespan."
+                },
+                "multiplierLifetimeRange": {
+                    "type": "number",
+                    "description": "Increases the lifespan of multipliers by a random number between 0 and this value (in seconds)."
+                },
+                "multiplierSpawnInCluster": {
+                    "type": "boolean",
+                    "description": "Determines whether multipliers can spawn in ball clusters. (default - true)"
+                },
+                "speedBonusEnabled": {
+                    "type": "boolean",
+                    "description": "Enables the speed bonus."
+                },
+                "speedBonusPointsBase": {
+                    "type": "number",
+                    "description": "Increases the base score of the speed bonus."
+                },
+                "speedBonusTimeBase": {
+                    "type": "number",
+                    "description": "Increases the base time (in seconds) before the speed bonus resets."
+                },
+                "speedBonusMaxMult": {
+                    "type": "number",
+                    "description": "Increases the max number of speed bonuses allowed."
+                },
+                "speedUpShotsEnabled": {
+                    "type": "boolean",
+                    "description": "Enables shots to speed up after a number of matches"
+                },
+                "speedUpShotsTimeBase": {
+                    "type": "number",
+                    "description": "Increases amount of time without a match before shot speed bonus resets (in seconds)."
+                },
+                "speedUpShotsTimeInc": {
+                    "type": "number",
+                    "description": "Increases amount of time speedup lasts based on x number of increases."
+                },
+                "speedUpShotsBeforeIncrease": {
+                    "type": "number",
+                    "description": "Increases matches required before shots starts to speed up."
+                },
+                "speedUpShotsThatIncrease": {
+                    "type": "number",
+                    "description": "Increases number of matches that increase shot speed."
+                },
+                "speedUpShotsTotalIncrease": {
+                    "type": "number",
+                    "description": "Increases max bonus speed that can be attained from matching."
+                },
+                "spiritBlastEnabled": {
+                    "type": "boolean",
+                    "description": "Enables spirit blast."
+                },
+                "spiritBlastColor": {
+                    "type": "number",
+                    "description": "Determines the color of balls removed from a spirit blast."
+                },
+                "spiritBlastPointsBase": {
+                    "type": "number",
+                    "description": "Increases the base score per ball destroyed from a spirit blast."
+                },
+                "spiritBlastRadius": {
+                    "type": "number",
+                    "description": "Increases the blast radius (in px) per ball destroyed from a spirit blast."
+                },
+                "spiritBlastPointsIncrement": {
+                    "type": "number",
+                    "description": "Increases the score gained from each ball destroyed from a spirit blast."
+                },
+                "startingTime": {
+                    "type": "number",
+                    "description": "Increases starting time (in seconds)."
+                },
+                "consolationHotFrog": {
+                    "type": "number",
+                    "description": "Bonus points given when in hot frog mode after time is up."
+                },
+                "consolationCannon": {
+                    "type": "number",
+                    "description": "Bonus points given when in cannon mode after time is up."
+                },
+                "consolationTimeBall": {
+                    "type": "number",
+                    "description": "Bonus points given if a time ball is matched after time is up."
                 }
             }
         }

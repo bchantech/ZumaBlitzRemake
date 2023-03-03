@@ -3,7 +3,7 @@
     "displayName": "Combo Corn",
     "sprite": "",
     "effects": {
-        "comboPointModifier": 0.15,
-        "alwaysHaveMatches": true
+        "comboBonusPointsBase": 150,
+        "curveMaxSingleAdj": -2
     }
 }

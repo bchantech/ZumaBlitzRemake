@@ -3,9 +3,6 @@
     "displayName": "Shoo Fly Pie",
     "sprite": "",
     "effects": {
-        "powerupPersistenceModifier": {
-            "powerup": "time",
-            "value": 60
-        }
+        "timeBallsLifetime": 60
     }
 }

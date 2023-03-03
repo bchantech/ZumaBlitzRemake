@@ -3,6 +3,6 @@
     "displayName": "Gapple Sauce",
     "sprite": "",
     "effects": {
-        "maximumGapShotScoreModifier": 3000
+        "gapPointsBase": 3000
     }
 }

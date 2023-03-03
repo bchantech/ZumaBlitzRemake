@@ -3,6 +3,6 @@
     "displayName": "Sticky Apple",
     "sprite": "",
     "effects": {
-        "speedSubtractiveModifier": 0.15
+        "curveSpeedFactor": -0.15
     }
 }
