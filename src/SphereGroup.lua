@@ -698,8 +698,21 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		_Game:playSound(comboSoundParams.name, comboSoundParams.pitch, pos)
 	end
 
+	-- speed bonus - max x12
+	-- TODO: Variables for food that may affect the speed timer, and speed bonus, as well as max increments allowed
+	if self.map.level.speedTimer <= 0 then
+		self.map.level.speedBonus = 0
+	end
+
+	if self.map.level.speedBonus < (12*10) then
+		self.map.level.speedBonus = self.map.level.speedBonus + 10
+	end
+	
+	self.map.level.speedTimer = 2.75
+		_Log:printt("Speed bonus", "-> " ..  self.map.level.speedBonus)
+
 	-- Calculate and grant score.
-	local score = length * 10
+	local score = length * (10 + self.map.level.speedBonus)
 	if boostCombo then
         if self.map.level.combo > 5 then
             score = score + 100 + ((self.map.level.combo - 6) * 10)

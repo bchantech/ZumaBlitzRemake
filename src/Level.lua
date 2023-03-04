@@ -439,6 +439,12 @@ function Level:updateLogic(dt)
 		_Game.uiManager:executeCallback("levelLost")
 		self.ended = true
 	end
+
+	-- Other variables, such as the speed timer
+	-- timer will not tick down when under hot frog.
+	if self.speedTimer > 0 and self.blitzMeter < 1 then
+		self.speedTimer = self.speedTimer - dt
+	end
 end
 
 
@@ -1056,6 +1062,10 @@ function Level:reset()
 	self.targets = 0
     self.time = 0
 	self.stateCount = 0
+
+	-- add in current speedbonus
+	self.speedBonus = 0
+	self.speedTimer = 0
 
     self.target = nil
 	if _MathAreKeysInTable(self, "targetFrequency", "type") == "seconds" then
