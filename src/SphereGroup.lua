@@ -59,6 +59,20 @@ function SphereGroup:update(dt)
 		self.matchCheck = true
 	end
 
+    -- FORK-SPECIFIC CODE:
+    -- For Zuma sphere physics, immediately stop the next group from sliding back if
+    -- the player blocks a same-colored sphere, preventing magnetization.
+	-- Fixes issue #14
+    if self.nextGroup and self.nextGroup:isMagnetizing() then
+        local gapSize = self.nextGroup:getBackPos() - self:getFrontPos()
+		local nextFirst = self.nextGroup:getFirstSphere().color
+        local thisLast = self:getLastSphere().color
+		-- this doesn't account for scarabs yet, please refactor when adding to OpenSMCE upstream
+		if gapSize > 0 and not (nextFirst == thisLast) then
+			self.nextGroup.speed = 0
+		end
+	end
+
 	-- If this group is the first one, it can push spheres forward.
 	if not self.prevGroup then
 		if self.map.level.lost then
