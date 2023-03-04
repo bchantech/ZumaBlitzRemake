@@ -333,7 +333,7 @@ function Game:keypressed(key)
 		if key == "left" then shooter.moveKeys.left = true end
 		if key == "right" then shooter.moveKeys.right = true end
 		if key == "up" then shooter:shoot() end
-		if key == "down" then shooter:swapColors() end
+		if key == "space" then shooter:swapColors() end
 	end
 end
 

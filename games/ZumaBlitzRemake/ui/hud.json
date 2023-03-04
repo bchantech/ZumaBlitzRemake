@@ -202,7 +202,7 @@
                     "sounds": {},
                     "sprite": "sprites/game/button_menu.json",
                     "layer": "HudControls",
-					"hotkey": "space",
+					"hotkey": "p",
 					"callbacks": {
 						"buttonClick": "hudPause"
 					}
