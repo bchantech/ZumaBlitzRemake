@@ -623,8 +623,22 @@ function Shooter:getShootingSpeed()
     -- src: http://bchantech.dreamcrafter.com/zumablitz/spiritanimals.php
     local eagleSpeedShot = (_Game:getCurrentProfile():getActiveMonument() == "spirit_eagle" and 0.75) or 0
     -- TODO: What's the order of speed shot multipliers?
+
+    -- modify the speed bonus based on the blitz meter
+    -- Food will affect this by an amount. 
+    
+    local foodSpeedBonusVel_add = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "speedUpShotsTotalIncrease") or 0
+    local speedBonusShotSpeed = math.max(_Game.session.level.blitzMeter - 0.5,0) * (1600 + foodSpeedBonusVel_add*2)
+
+    local finalSpeed =  self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier) + foodSpeedShot_add + (self.config.shootSpeed * eagleSpeedShot) + speedBonusShotSpeed
+    finalSpeed = finalSpeed * (1 + foodSpeedShot_mult)
+
+    -- _Log:printt("final speed", "-> " ..  finalSpeed)
+
     -- Would it also be ideal to set a max speed bonus cap?
-    return self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier) + (self.config.shootSpeed * foodSpeedShot_mult) + foodSpeedShot_add + (self.config.shootSpeed * eagleSpeedShot)
+    finalSpeed = math.min(finalSpeed, 2000)
+
+    return finalSpeed
 end
 
 
