@@ -1256,7 +1256,9 @@ function Level:serialize()
 		lightningStormTime = self.lightningStormTime,
 		destroyedSpheres = self.destroyedSpheres,
 		paths = self.map:serialize(),
-		lost = self.lost
+		lost = self.lost,
+		speedBonus = self.speedBonus,
+		speedTimer = self.speedTimer
 	}
 	for i, shotSphere in ipairs(self.shotSpheres) do
 		table.insert(t.shotSpheres, shotSphere:serialize())
@@ -1302,6 +1304,9 @@ function Level:deserialize(t)
 	self.shotLastHotFrogBall = t.shotLastHotFrogBall
 	self.multiplier = t.multiplier
 	self.lost = t.lost
+	-- ingame counters
+	self.speedBonus = t.speedBonus or 0
+	self.speedTimer = t.speedTimer or 0
 	-- Utils
 	self.controlDelay = t.controlDelay
 	self.finish = t.finish
