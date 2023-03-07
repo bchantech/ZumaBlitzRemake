@@ -1,0 +1,11 @@
+{
+    "displayName": "Spirit Weasel",
+    "coinCosts": [45000, 30000, 25000],
+    "shooterConfig": "spirit_weasel",
+    "effects": {
+        "cannonsEnabled": true,
+        "cannonsSpread": 12,
+        "cannonsPointsBase": 400
+    },
+    "spiritBlastColor": 2
+}

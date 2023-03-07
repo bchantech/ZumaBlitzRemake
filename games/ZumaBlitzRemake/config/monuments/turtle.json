@@ -1,0 +1,11 @@
+{
+    "displayName": "Spirit Turtle",
+    "coinCosts": [55000, 25000, 15000],
+    "shooterConfig": "spirit_turtle",
+    "effects": {
+        "fruitsActivateHotFrog": true,
+        "speedBonusModifier": 2,
+        "comboScoringBug": true
+    },
+    "spiritBlastColor": 5
+}

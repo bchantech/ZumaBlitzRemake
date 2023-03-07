@@ -1,0 +1,13 @@
+{
+    "displayName": "Spirit Cat",
+    "coinCosts": [45000, 30000, 25000],
+    "shooterConfig": "spirit_cat",
+    "effects": {
+        "spiritShotEnabled": true,
+        "spiritShotShots": 13,
+        "spiritShotRadius": 56,
+        "spiritShotPointsBase": 0,
+        "spiritShotPointsEach": 10
+    },
+    "spiritBlastColor": 1
+}

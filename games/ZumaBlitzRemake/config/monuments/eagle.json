@@ -1,0 +1,11 @@
+{
+    "displayName": "Spirit Eagle",
+    "coinCosts": [55000, 45000, 40000],
+    "shooterConfig": "spirit_eagle",
+    "effects": {
+        "shotSpeedMultiplier": 1.75,
+        "fruitValueModifier": 3000,
+        "fruitInfiniteLifetime": true
+    },
+    "spiritBlastColor": 4
+}
