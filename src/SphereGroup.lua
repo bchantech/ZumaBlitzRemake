@@ -711,8 +711,11 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	self.map.level.speedTimer = 2.75
 		_Log:printt("Speed bonus", "-> " ..  self.map.level.speedBonus)
 
+		local speedShot = _Game:getCurrentProfile():getEquippedPower("speed_shot")
+		local powerSpeedBonusMultiplier = (speedShot and speedShot:getCurrentLevelData().speedBonusMultiplier) or 1
+
 	-- Calculate and grant score.
-	local score = length * (10 + self.map.level.speedBonus)
+	local score = length * (10 + (self.map.level.speedBonus * powerSpeedBonusMultiplier))
 	if boostCombo then
         if self.map.level.combo > 5 then
             score = score + 100 + ((self.map.level.combo - 6) * 10)
