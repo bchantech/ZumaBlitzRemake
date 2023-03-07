@@ -439,6 +439,12 @@ function Level:updateLogic(dt)
 		_Game.uiManager:executeCallback("levelLost")
 		self.ended = true
 	end
+
+	-- Other variables, such as the speed timer
+	-- timer will not tick down when under hot frog.
+	if self.speedTimer > 0 and self.blitzMeter < 1 then
+		self.speedTimer = self.speedTimer - dt
+	end
 end
 
 
@@ -1057,6 +1063,10 @@ function Level:reset()
     self.time = 0
 	self.stateCount = 0
 
+	-- add in current speedbonus
+	self.speedBonus = 0
+	self.speedTimer = 0
+
     self.target = nil
 	if _MathAreKeysInTable(self, "targetFrequency", "type") == "seconds" then
         self.targetSecondsCooldown = self.targetFrequency.initialDelay
@@ -1246,7 +1256,9 @@ function Level:serialize()
 		lightningStormTime = self.lightningStormTime,
 		destroyedSpheres = self.destroyedSpheres,
 		paths = self.map:serialize(),
-		lost = self.lost
+		lost = self.lost,
+		speedBonus = self.speedBonus,
+		speedTimer = self.speedTimer
 	}
 	for i, shotSphere in ipairs(self.shotSpheres) do
 		table.insert(t.shotSpheres, shotSphere:serialize())
@@ -1292,6 +1304,9 @@ function Level:deserialize(t)
 	self.shotLastHotFrogBall = t.shotLastHotFrogBall
 	self.multiplier = t.multiplier
 	self.lost = t.lost
+	-- ingame counters
+	self.speedBonus = t.speedBonus or 0
+	self.speedTimer = t.speedTimer or 0
 	-- Utils
 	self.controlDelay = t.controlDelay
 	self.finish = t.finish
