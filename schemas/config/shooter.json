@@ -11,17 +11,41 @@
             "type": "string",
             "description": "The sprite for the shooter to be used."
         },
-        "hotFrogTransitionLowerSprite": {
+        "overlaySprite": {
             "type": "string",
-            "description": "The sprite for the shooter overlay to be used while the Blitz Meter is rising, UNDER the current ball. Optional fork-specific property."
+            "description": "The overlay sprite for the shooter to be used."
         },
-        "hotFrogTransitionSprite": {
+        "warmSprite": {
             "type": "string",
             "description": "The sprite for the shooter overlay to be used while the Blitz Meter is rising. Optional fork-specific property."
+        },
+        "warmOverlaySprite": {
+            "type": "string",
+            "description": "The sprite for the shooter overlay to be used while the Blitz Meter is rising for the overlaySprite. Optional fork-specific property."
+        },
+        "hotSprite": {
+            "type": "string",
+            "description": "The sprite for the shooter to be used for Hot Frog."
+        },
+        "hotOverlaySprite": {
+            "type": "string",
+            "description": "The overlay sprite for the shooter to be used for Hot Frog."
+        },
+        "cannonSprite": {
+            "type": "string",
+            "description": "The sprite for the shooter to be used for an active Cannons instance."
+        },
+        "cannonOverlaySprite": {
+            "type": "string",
+            "description": "The overlay sprite for the shooter to be used for an active Cannons instance."
         },
         "spriteOffset": {
             "$ref": "../_structures/Vector2.json",
             "description": "The offset of the shooter sprite."
+        },
+        "overlayOffset": {
+            "$ref": "../_structures/Vector2.json",
+            "description": "The offset of the overlay sprite."
         },
         "spriteAnchor": {
             "$ref": "../_structures/Vector2.json",

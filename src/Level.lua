@@ -204,11 +204,6 @@ function Level:updateLogic(dt)
 				self.shotLastHotFrogBall = true
 				self.blitzMeter = 0
                 self.blitzMeterCooldown = 0
-
-				local skin = _Game:getCurrentProfile():getActiveMonument() or _Game:getCurrentProfile():getFrogatar()
-				if _Game.configManager:getShooter(skin) then
-					self.shooter:changeTo(skin)
-				end
 			end
         else
 			self.shotLastHotFrogBall = false
@@ -906,11 +901,6 @@ function Level:incrementBlitzMeter(amount, chain)
 		local additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
         self.shooter:getMultiSphere(-2, (3 + additiveAmount))
 		_Game:playSound("sound_events/hot_frog_activate.json")
-
-		local hotFrogSkin = (_Game:getCurrentProfile():getActiveMonument() and _Game:getCurrentProfile():getActiveMonument().."_hot") or _Game:getCurrentProfile():getFrogatar().."_hot"
-		if _Game.configManager:getShooter(hotFrogSkin) then
-			self.shooter:changeTo(hotFrogSkin)
-		end
 	end
 end
 
