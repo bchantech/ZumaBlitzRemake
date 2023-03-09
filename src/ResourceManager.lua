@@ -12,6 +12,10 @@ local Music = require("src.Essentials.Music")
 local Font = require("src.Essentials.Font")
 local ColorPalette = require("src.Essentials.ColorPalette")
 
+local UI2AnimationConfig = require("src.Configs.UI2Animation")
+local UI2NodeConfig = require("src.Configs.UI2Node")
+local UI2SequenceConfig = require("src.Configs.UI2Sequence")
+
 
 
 ---Constructs a Resource Manager.

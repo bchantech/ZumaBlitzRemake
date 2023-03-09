@@ -6,8 +6,6 @@ local Game = class:derive("Game")
 
 
 
-local strmethods = require("src.strmethods")
-
 local Vec2 = require("src.Essentials.Vector2")
 
 local Timer = require("src.Timer")
@@ -38,12 +36,11 @@ function Game:new(name)
 	self.session = nil
 
 	self.uiManager = nil
-	self.ui2Manager = nil
 	self.particleManager = nil
 
 
 	-- revert to original font size
-	love.graphics.setFont(love.graphics.newFont())
+	love.graphics.setFont(love.graphics.newFont("assets/dejavusans.ttf"))
 end
 
 
@@ -78,12 +75,9 @@ function Game:init()
 	local p = self:getCurrentProfile()
 	self.satMode = p and p.ultimatelySatisfyingMode
 
-	-- Step 8. Set up the UI Manager
-	self.uiManager = UIManager()
+	-- Step 8. Set up the UI Manager or the experimental UI2 Manager
+	self.uiManager = self.configManager.config.useUI2 and UI2Manager() or UIManager()
 	self.uiManager:initSplash()
-
-	-- Step 9. Set upt the experimental UI2 Manager
-	--self.ui2Manager = UI2Manager()
 end
 
 
@@ -278,7 +272,6 @@ function Game:draw()
 		self.particleManager:draw()
 	end
 	self.uiManager:draw()
-	--self.ui2Manager:draw()
 	_Debug:profDraw2Checkpoint()
 
 	-- Borders

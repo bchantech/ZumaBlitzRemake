@@ -4,8 +4,6 @@ local class = require "com.class"
 ---@overload fun():UIManager
 local UIManager = class:derive("UIManager")
 
-local strmethods = require("src.strmethods")
-
 local UIWidget = require("src.UI.Widget")
 
 

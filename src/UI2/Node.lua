@@ -8,7 +8,9 @@ local UI2Node = class:derive("UI2Node")
 local UI2WidgetRectangle = require("src.UI2.WidgetRectangle")
 local UI2WidgetSprite = require("src.UI2.WidgetSprite")
 local UI2WidgetSpriteButton = require("src.UI2.WidgetSpriteButton")
+local UI2WidgetSpriteProgress = require("src.UI2.WidgetSpriteProgress")
 local UI2WidgetText = require("src.UI2.WidgetText")
+local UI2WidgetLevel = require("src.UI2.WidgetLevel")
 
 
 
@@ -57,8 +59,12 @@ function UI2Node:new(manager, config, name, parent)
             self.widget = UI2WidgetSprite(self, w.align, w.sprite)
         elseif w.type == "spriteButton" then
             self.widget = UI2WidgetSpriteButton(self, w.align, w.sprite, w.shape, w.callbacks)
+        elseif w.type == "spriteProgress" then
+            self.widget = UI2WidgetSpriteProgress(self, w.align, w.sprite, w.value, w.smooth)
         elseif w.type == "text" then
             self.widget = UI2WidgetText(self, w.align, w.font, w.text, w.color)
+        elseif w.type == "level" then
+            self.widget = UI2WidgetLevel(self, w.align, w.level)
         end
     end
 end
@@ -201,6 +207,22 @@ end
 
 
 
+---Returns whether this Node is visible.
+---@return boolean
+function UI2Node:isVisible()
+    return self:getGlobalAlpha() > 0
+end
+
+
+
+---Returns whether this Node is active, i.e. it can be interacted with.
+---@return boolean
+function UI2Node:isActive()
+	return self.widget and self:isVisible() and self.active
+end
+
+
+
 ---Marks this Node and all its children as active. Active Nodes along with the associated Widgets are the only ones which the player can interact with.
 ---@param append boolean? If `true`, the previously active Nodes will remain active. Otherwise, all already active Nodes will be deactivated first.
 function UI2Node:setActive(append)
@@ -225,6 +247,16 @@ end
 
 
 
+---If the Widget attached to this Node is a button, set its enabled state.
+---@param enabled boolean Whether the button should be enabled.
+function UI2Node:buttonSetEnabled(enabled)
+    if self.widget and self.widget.type == "spriteButton" then
+        self.widget:setEnabled(enabled)
+    end
+end
+
+
+
 ---Returns the full path to this Node.
 ---@return string
 function UI2Node:getPath()
@@ -244,7 +276,7 @@ function UI2Node:generateDrawData(layers)
 	end
 	if self.widget then
         -- There's no point to draw widgets with alpha = 0.
-		if self:getGlobalAlpha() > 0 then
+		if self:isVisible() then
 			table.insert(layers[self:getLayer()], self)
 		end
 		--if self.widget.type == "text" then
@@ -259,6 +291,20 @@ end
 function UI2Node:draw()
     if self.widget then
         self.widget:draw()
+    end
+    self:drawDebug()
+end
+
+
+
+---Draws this Node's debug marks, such as the Widget's hitbox.
+function UI2Node:drawDebug()
+    if self.widget then
+        local p = self.widget:getPos()
+        local s = self.widget:getSize()
+        love.graphics.setColor(1, 1, 0, self:getGlobalAlpha())
+        love.graphics.setLineWidth(2)
+        love.graphics.rectangle("line", p.x, p.y, s.x, s.y)
     end
 end
 

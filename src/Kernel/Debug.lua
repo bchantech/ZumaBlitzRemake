@@ -112,27 +112,27 @@ end
 
 
 
-function Debug:getUITreeText(widget, rowTable, indent)
-	widget = widget or _Game.uiManager.widgets["root"] or _Game.uiManager.widgets["splash"]
+function Debug:getUITreeText(node, rowTable, indent)
+	node = node or _Game.uiManager.rootNodes["root"] or _Game.uiManager.rootNodes["splash"]
 	rowTable = rowTable or {}
 	indent = indent or 0
 	--if indent > 1 then return end
 
-	local name = widget.name
+	local name = node.name
 	for i = 1, indent do name = "    " .. name end
-	local visible = widget.visible and "X" or ""
-	local visible2 = widget:isVisible() and "V" or ""
-	local active = widget:isActive() and "A" or ""
-	local alpha = tostring(math.floor(widget.alpha * 10) / 10)
-	local alpha2 = tostring(math.floor(widget:getAlpha() * 10) / 10)
-	local time = widget.time and tostring(math.floor(widget.time * 100) / 100) or "-"
-	local pos = tostring(widget.pos)
-	--if widget:getVisible() then
+	local visible = "" --node.visible and "X" or ""
+	local visible2 = "" --node:isVisible() and "V" or ""
+	local active = node:isActive() and "A" or ""
+	local alpha = tostring(math.floor(node.alpha * 10) / 10)
+	local alpha2 = tostring(math.floor(node:getGlobalAlpha() * 10) / 10)
+	local time = "" --node.time and tostring(math.floor(node.time * 100) / 100) or "-"
+	local pos = tostring(node.pos)
+	--if node:getVisible() then
 		table.insert(rowTable, {name, visible, visible2, active, alpha, alpha2, time, pos})
 	--end
 
 	--if
-	for childN, child in pairs(widget.children) do
+	for childN, child in pairs(node.children) do
 		self:getUITreeText(child, rowTable, indent + 1)
 	end
 
@@ -186,7 +186,10 @@ function Debug:getDebugLevel()
 	local s = ""
 
 	s = s .. "LevelScore = " .. tostring(_Game.session.level.score) .. "\n"
-	s = s .. "LevelProgress = " .. tostring(_Game.session.level.destroyedSpheres) .. "/" .. tostring(_Game.session.level.target) .. "\n"
+	s = s .. "Objectives:\n"
+	for i, objective in ipairs(_Game.session.level.objectives) do
+		s = s .. string.format("  %s: %s %s/%s\n", i, objective.type, objective.progress, objective.target)
+	end
 	s = s .. "\n"
 	s = s .. "Collectible# = " .. tostring(#_Game.session.level.collectibles) .. "\n"
 	s = s .. "FloatingText# = " .. tostring(#_Game.session.level.floatingTexts) .. "\n"
