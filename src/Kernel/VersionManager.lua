@@ -20,7 +20,7 @@ function VersionManager:new(path)
 
 	self.versionData = {
     ["v0.47.0"] = {inconvertible = false},
-		["vZB"] = {inconvertible = true},
+		["vZB"] = {inconvertible = false, supported = true},
 		["v0.40.0"] = {inconvertible = false},
     ["v0.30.0"] = {inconvertible = true},
     ["v0.22.1"] = {inconvertible = false}
