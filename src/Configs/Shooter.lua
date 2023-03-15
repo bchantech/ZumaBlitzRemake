@@ -50,6 +50,9 @@ function ShooterConfig:new(data, path)
     self.shadowSpriteOffset = _ParseVec2(data.shadowSpriteOffset) or Vec2(8, 8)
     ---@type Vector2
     self.shadowSpriteAnchor = _ParseVec2(data.shadowSpriteAnchor) or Vec2(0.5, 0)
+
+    self.spriteAsOverlay = data.spriteAsOverlay
+
     ---@type Vector2
     self.ballPos = _ParseVec2(data.ballPos) or Vec2(0, 5)
     self.nextBallSprites = {}

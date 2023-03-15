@@ -58,6 +58,8 @@ function Shooter:changeTo(name)
     self.hotSprite = self.config.hotSprite
     self.cannonSprite = self.config.cannonSprite
 
+    self.spriteAsOverlay = self.config.spriteAsOverlay
+
     self.overlaySprite = self.config.overlaySprite
     self.warmOverlaySprite = self.config.warmOverlaySprite
     self.hotOverlaySprite = self.config.hotOverlaySprite
@@ -380,10 +382,12 @@ function Shooter:draw()
         self.shadowSprite:draw(self.pos + self.config.shadowSpriteOffset:rotate(self.angle), self.config.shadowSpriteAnchor, nil, nil, self.angle+math.pi)
     end
 
-    if _Game.session.level.blitzMeter >= 1 then
-        self.hotSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
-    else
-        self.sprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+    if not self.spriteAsOverlay then
+        if _Game.session.level.blitzMeter >= 1 then
+            self.hotSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+        else
+            self.sprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+        end
     end
 
     -- retical
@@ -391,9 +395,11 @@ function Shooter:draw()
         self:drawReticle()
     end
 
-    -- Hot frog transitions
-    if (_Game.session.level.blitzMeter < 1) and self.warmSprite then
-        self.warmSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi, nil, _Game.session.level.blitzMeter)
+    if not self.spriteAsOverlay then
+        -- Hot frog transitions
+        if (_Game.session.level.blitzMeter < 1) and self.warmSprite then
+            self.warmSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi, nil, _Game.session.level.blitzMeter)
+        end
     end
 
     -- this color
@@ -413,14 +419,26 @@ function Shooter:draw()
     sprite:draw(self.pos + self.config.nextBallOffset:rotate(self.angle), self.config.nextBallAnchor, nil, self:getNextSphereFrame(), self.angle+math.pi)
 
     -- Overlay sprite goes after colors.
-    if self.overlaySprite then
+    if self.overlaySprite and (not self.spriteAsOverlay) then
         if _Game.session.level.blitzMeter >= 1 then
-            self.hotOverlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle), self.config.overlayAnchor, nil, nil, self.angle+math.pi)
+            self.hotOverlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle), self.config
+            .overlayAnchor, nil, nil, self.angle + math.pi)
         else
-            self.overlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle), self.config.overlayAnchor, nil, nil, self.angle+math.pi)
+            self.overlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle), self.config.overlayAnchor,
+            nil, nil, self.angle + math.pi)
             if self.warmOverlaySprite then
-                self.warmOverlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle), self.config.overlayAnchor, nil, nil, self.angle+math.pi, nil, _Game.session.level.blitzMeter)
+                self.warmOverlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle),
+                self.config.overlayAnchor, nil, nil, self.angle + math.pi, nil, _Game.session.level.blitzMeter)
             end
+        end
+    elseif self.spriteAsOverlay then
+        if _Game.session.level.blitzMeter >= 1 then
+            self.hotSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+        else
+            self.sprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+        end
+        if (_Game.session.level.blitzMeter < 1) and self.warmSprite then
+            self.warmSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi, nil, _Game.session.level.blitzMeter)
         end
     end
 

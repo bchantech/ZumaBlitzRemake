@@ -39,6 +39,10 @@
             "type": "string",
             "description": "The overlay sprite for the shooter to be used for an active Cannons instance."
         },
+        "spriteAsOverlay": {
+            "type": "boolean",
+            "description": "If true, treats /(warm|hot|cannon)?Sprite/s as overlay sprites. Useful for shooter sprites with no undersides."
+        },
         "spriteOffset": {
             "$ref": "../_structures/Vector2.json",
             "description": "The offset of the shooter sprite."
