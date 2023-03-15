@@ -39,7 +39,7 @@ function BootScreen:init()
 	self:setScene("main")
 
 	-- discord rpc connection
-	_DiscordRPC:setStatus(string.format("In OpenSMCE Boot Screen (version: %s, build: %s)", _VERSION_NAME, _BUILD_NUMBER), nil, false)
+	_DiscordRPC:setStatus(string.format("In OpenSMCE Boot Screen (version %s)", _VERSION_NAME), nil, false)
 end
 
 

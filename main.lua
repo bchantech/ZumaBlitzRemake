@@ -30,9 +30,12 @@ local DiscordRichPresence = require("src.DiscordRichPresence")
 -- CONSTANT ZONE
 _VERSION = "vZB"
 _VERSION_NAME = "Zuma Blitz Remake Fork"
-_DISCORD_APPLICATION_ID = "1059347284623638609"
-_BUILD_NUMBER = "2023-02-15"
+_DISCORD_APPLICATION_ID = "797956172539887657"
 _START_TIME = love.timer.getTime()
+
+-- Set this to a string of your choice. This will be only printed in log files and is not used anywhere else.
+-- You can automate this in i.e. a script by simply adding a `_BUILD_NUMBER = "<your number>"` line at the end of this main.lua file.
+_BUILD_NUMBER = "2023-02-15"
 
 
 -- TODO: at some point, get rid of this and make it configurable
@@ -85,7 +88,6 @@ function love.load()
 	--local s = loadFile("test.txt")
 	--print(s)
 	--print(jsonBeautify(s))
-	print(string.format("Your Version Is: %s", _GetNewestVersion()))
 
 	-- Initialize RNG for Boot Screen
 	local _ = math.randomseed(os.time())
