@@ -84,6 +84,13 @@ function Shooter:update(dt)
             -- else, the mouse takes advantage and overwrites the position
             self.pos.x = _MousePos.x
         end
+        if self.movement.bidirectional == true then
+            if self.mousePos.y > self.movement.y then
+                self.angle = math.pi
+            else
+                self.angle = 0
+            end
+        end
         -- clamp to bounds defined in config
         self.pos.x = math.min(math.max(self.pos.x, self.movement.xMin), self.movement.xMax)
     elseif self.movement.type == "circular" then
@@ -125,7 +132,7 @@ function Shooter:update(dt)
             end
         else
             self.knockbackTime = 0
-            self.pos = Vec2(self.movement.x, self.movement.y)
+            self.pos = Vec2(self.movement.x or self.pos.x, self.movement.y or self.pos.y)
         end
     end
 
