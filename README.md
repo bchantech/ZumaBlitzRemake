@@ -28,13 +28,17 @@ Fetch the repository, as you would any other, or download the repository.
 Run `start.bat`.
 
 ### macOS
-Experimental. Do the following in a terminal:
+Do the following in a terminal:
 ```sh
 cd ZumaBlitzRemake
 chmod +x ./start-macos.command
-```
-
 After that, you can double-click on `start-macos.command`.
+```
+### Linux
+Navigate to the main folder in a terminal and type in:
+```
+love .
+```
 
 ## Building
 
