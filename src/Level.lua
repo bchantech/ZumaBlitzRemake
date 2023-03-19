@@ -12,7 +12,11 @@ local ShotSphere = require("src.ShotSphere")
 local Target = require("src.Target")
 local Collectible = require("src.Collectible")
 local FloatingText = require("src.FloatingText")
+local json = require("com.json")
 
+-- send stuff
+local http = require("socket.http")
+local ltn12 = require"ltn12"
 
 
 ---Constructs a new Level.
@@ -259,8 +263,23 @@ function Level:updateLogic(dt)
                     if sphere then
                         if powerupToAdd == "multiplier" then
                             sphere:addPowerup("multiplier")
+							self.multipliersSpawned = self.multipliersSpawned + 1
 						elseif powerupToAdd ~= "multiplier" then
 							sphere:addPowerup(powerupToAdd)
+							-- determine what powerup spawned and increment the respective stat.
+							
+							if powerupToAdd == "timeball" then
+								self.chronoBallsSpawned = self.chronoBallsSpawned + 1
+							end
+							if powerupToAdd == "bomb" then
+								self.bombsSpawned = self.bombsSpawned + 1
+							end
+							if powerupToAdd == "cannon" then
+								self.cannonsSpawned = self.cannonsSpawned + 1
+							end
+							if powerupToAdd == "colornuke" then
+								self.colorNukesSpawned = self.colorNukesSpawned + 1
+							end
 						end
 					end
 					self.lastPowerupDeltas[powerup] = self.stateCount
@@ -323,6 +342,7 @@ function Level:updateLogic(dt)
 					false -- no slot machine yet!
                 )
 				_Game:playSound("sound_events/target_spawn.json")
+				self.fruitSpawned = self.fruitSpawned + 1 
 			end
 		elseif self.target then
 			-- don't tick the timer down if there's fruit present
@@ -417,6 +437,7 @@ function Level:updateLogic(dt)
 	end
 
 	if self.wonDelay then
+		print("wondelay " .. self.wonDelay )
 		self.wonDelay = self.wonDelay - dt
 		if self.wonDelay <= 0 then
 			self.wonDelay = nil
@@ -424,6 +445,7 @@ function Level:updateLogic(dt)
 			_Game:getCurrentProfile():writeHighscore()
             _Game.uiManager:executeCallback("levelComplete")
 			self.ended = true
+			self:saveStats()
 		end
 	end
 
@@ -438,6 +460,7 @@ function Level:updateLogic(dt)
 		_Game:getCurrentProfile():writeHighscore()
 		_Game.uiManager:executeCallback("levelLost")
 		self.ended = true
+		self:saveStats()
 	end
 
 	-- Other variables, such as the speed timer
@@ -635,6 +658,7 @@ function Level:applyEffect(effect, TMP_pos)
 		self:grantGem()
 	elseif effect.type == "addTime" then
         self.objectives[1].target = self.objectives[1].target + effect.amount
+		self.extraTimeAdded = self.extraTimeAdded + effect.amount
     elseif effect.type == "addMultiplier" then
 		self.multiplier = self.multiplier + effect.amount
 	end
@@ -917,6 +941,7 @@ function Level:incrementBlitzMeter(amount, chain)
 		if _Game.configManager:getShooter(hotFrogSkin) then
 			self.shooter:changeTo(hotFrogSkin)
 		end
+		self.hotFrogStarts = self.hotFrogStarts + 1
 	end
 end
 
@@ -1121,6 +1146,55 @@ function Level:reset()
 	self.netTime = 0
 	self.shooter.speedShotTime = 0
 	_Game.session.colorManager:reset()
+
+	-- other in-game statistics
+	self.gapsNum = 0
+	self.combosScore = 0
+	self.gapsScore = 0
+	self.speedScore = 0
+	self.chainScore = 0
+	self.combosNum = 0
+	self.chainsNum = 0
+	self.curveClearsScore = 0
+	self.curveClearsNum = 0
+	self.chronoBallsMatched = 0
+	self.extraTimeAdded = 0
+	self.fruitScore = 0
+	self.fruitCollected = 0
+	self.fruitSpawned = 0
+	self.hotFrogStarts = 0
+	self.ballsMissed = 0
+	self.multipliersSpawned = 0
+	self.chronoBallsSpawned = 0
+	self.bombsSpawned = 0
+	self.cannonsSpawned = 0
+	self.colorNukesSpawned = 0
+	self.hotFrogShots = 0
+	self.bombsMatched = 0
+	self.cannonsMatched = 0
+	self.colorNukesMatched = 0
+	self.hotFrogShotsFired = 0
+
+	-- TODO
+	self.spinnerSpawned = 0
+	self.cannonsScore = 0
+	self.wildShotScore = 0
+	self.hotFrogScore = 0
+	self.chainBlastsNum = 0
+	self.chainBlastsScore = 0
+	self.cannonConsolationScore = 0
+	self.chronoBallsConsolationScore = 0
+	self.spiritBlastScore = 0
+	self.wildShotSpawned = 0
+	self.spiritShotSpawned = 0
+	self.spiritShotScore = 0
+	self.colorNukesScore = 0
+	self.spinnerMatched = 0
+	self.lastHurrahScore = 0
+	self.bombsScore = 0
+	self.hotFrogConsolationScore = 0
+	self.wildShotShots = 0
+
 end
 
 
@@ -1269,6 +1343,93 @@ function Level:serialize()
 	return t
 end
 
+
+---Stores all ingame statistics to be submitted online.
+function Level:saveStats()
+	local s = {
+		destroyedSpheres = self.destroyedSpheres,
+		spheresShot = self.spheresShot,
+		ProductName = "ZumaBlitzRemake",
+		PlatformName = "Social",
+		ClientVersion = "ZBR 0.1.1 alpha",
+		MetricsType = "Gameplay",
+		GapsNum = self.gapsNum,
+		BallsClearedNum = self.destroyedSpheres,
+		MultiplierMax = self.multiplier,
+		XpEarned = (100 + self.targets + self.curveClearsNum + self.hotFrogStarts + self.chronoBallsMatched),
+		ChainMax = self.maxCombo,
+		SNSUserID = "aaa",
+		XpStartingLevel = 80,
+		FruitSpawned = self.fruitSpawned,
+		NukesMatched = self.colorNukesMatched,
+		CombosNum = self.combosNum,
+		CombosScore = self.combosScore,
+		WildShotScore = self.wildShotScore,
+		CombosMax = self.maxChain,
+		CannonsScore = self.cannonsScore,
+		ChainNum = self.chainsNum,
+		HotFrogScore = self.hotFrogScore,
+		ChainScore = self.chainScore,
+		ChainBlastsNum = self.chainBlastsNum,
+		SpeedScore = self.speedScore,
+		CurveClearsScore = self.curveClearsScore,
+		CannonConsolationScore = self.cannonConsolationScore,
+		TimePlayed = self.time,
+		CurveClearsNum = self.curveClearsNum,
+		MultipliersSpawned = self.multipliersSpawned,
+		ChainBlastsScore = self.chainBlastsScore,
+		ChronoBallsSpawned = self.chronoBallsSpawned,
+		NukesSpawned = self.colorNukesSpawned,
+		ChronoBallsMatched = self.chronoBallsMatched,
+		BallsMissed = self.ballsMissed,
+		ChronoBallsConsolationScore = self.chronoBallsConsolationScore,
+		SpiritBlastScore = self.spiritBlastScore,
+		HotFrogShots = self.hotFrogShotsFired,
+		WildShotSpawned = self.wildShotSpawned,
+		SpiritShotSpawned = self.spiritShotSpawned,
+		FruitScore = self.fruitScore,
+		MapName = "test",
+		CoinStartingBalance = 7500000,
+		SpinnerSpawned = self.spinnerSpawned,
+		XpStarting = 500000,
+		NukesScore = self.colorNukesScore,
+		FrogatarID = "1",
+		TierPower = "Bombs=3|Chrono=3|ColorNuke=3|Multiplier=2|Cannon=3|ChainBlast=3|SpeedShot=3|Inferno=2|FruitMaster=3|WildShot=3",
+		SpinnerMatched = self.spinnerMatched,
+		LifeBankStartingNum = 0,
+		SpiritShotScore = self.spiritShotScore,
+		PowerupSlot3 = "0",
+		PowerupSlot2 = "0",
+		LastHurrahScore = self.lastHurrahScore,
+		PowerupSlot1 = "0",
+		FoodID = 0,
+		Score = self.score,
+		BombsSpawned = self.bombsSpawned,
+		BombsMatched = self.bombsMatched,
+		GameFinished = 1,
+		BombsScore = self.bombsScore,
+		GapsScore = self.gapsScore,
+		CannonsSpawned = self.cannonsSpawned,
+		HotFrogConsolationScore = self.hotFrogConsolationScore,
+		CannonsMatched = self.cannonsMatched,
+		HotFrogStarts = self.hotFrogStarts,
+		WildShotShots = self.wildShotShots,
+		FruitMatched = self.targets,
+		ExtraTimeAdded = self.extraTimeAdded,
+		LastPlayed = os.date("%Y-%m-%d %X")
+	}
+	-- set finished to 0 if the game was lost.
+	if self.lost then
+		s.GameFinished = 0
+	end
+	-- TODO: Set XP to zero if the game was aborted, and x2 if a potion was used.
+
+	local post_body = json.encode(s)
+	--print(post_body)
+
+	-- add http post request here
+
+end
 
 
 ---Restores all data that was saved in the serialization method.

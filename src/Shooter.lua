@@ -290,6 +290,10 @@ function Shooter:shoot()
     if _Game.session.level.pause or not self:isActive() or self.color == 0 then
         return
     end
+    -- add to stat if a hot frog shot is fired (-2)
+    if self.color == -2 then
+        _Game.session.level.hotFrogShotsFired = _Game.session.level.hotFrogShotsFired + 1
+    end
 
     local sphereConfig = self:getSphereConfig()
     if sphereConfig.shootBehavior.type == "lightning" then
