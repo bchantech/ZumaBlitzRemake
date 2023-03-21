@@ -1,13 +1,12 @@
-<h1 align="center">Zuma Blitz Remake</h1>
-<div align="center">
-</div>
+<p align="center"><img src="https://raw.githubusercontent.com/ZumaBlitzRemake/ZumaBlitzRemake/master/games/ZumaBlitzRemake/images/splash/logo.png"></p>
+
 
 [![Discord](https://img.shields.io/discord/315202394118029314?color=%235865F2&label=Discord%20&logo=discord&style=flat-square)](https://discord.gg/gJgy5x5)
 
-> A preservation & recreation project for **Zuma Blitz** - an old Facebook game
-from 2010-2017, specifically the *Kroakatoa Island* update
+A preservation & recreation project for **Zuma Blitz** - an old Facebook game
+from 2010-2017, specifically the *Kroakatoa Island* update.
 
---------
+## About
 
 **Zuma Blitz** was a Facebook game that used Adobe Flash, from 2010-2017. It
 released on December 14, 2010. It then had a revamp in 2012, called
@@ -16,13 +15,11 @@ released on December 14, 2010. It then had a revamp in 2012, called
 This project is a collaborative effort in order for past Zuma Blitz players
 to relive their 1-minute ball shooting memories.
 
-## Prerequisites
+## Running from source
+
 This project uses [OpenSMCE](https://github.com/jakubg1/OpenSMCE) as it's
 framework. You will then need to install [LÖVE2D 11.3](https://github.com/love2d/love/releases/tag/11.3)
 on your machine.
-
-## Running from source
-Fetch the repository, as you would any other, or download the repository.
 
 ### Windows
 Run `start.bat`.
