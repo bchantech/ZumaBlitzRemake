@@ -1394,7 +1394,6 @@ function Level:saveStats()
 		XpStarting = 500000,
 		NukesScore = self.colorNukesScore,
 		FrogatarID = "1",
-		TierPower = "Bombs=3|Chrono=3|ColorNuke=3|Multiplier=2|Cannon=3|ChainBlast=3|SpeedShot=3|Inferno=2|FruitMaster=3|WildShot=3",
 		SpinnerMatched = self.spinnerMatched,
 		LifeBankStartingNum = 0,
 		SpiritShotScore = self.spiritShotScore,
