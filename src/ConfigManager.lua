@@ -16,6 +16,9 @@ local FoodItem = require("src.Configs.FoodItem")
 function ConfigManager:new()
 	self.config = _LoadJson(_ParsePath("config.json"))
 
+	-- TODO: make a game config class
+	self.nativeResolution = _ParseVec2(self.config.nativeResolution)
+
 	-- Load all game resources.
 	-- The load list is loaded to ensure that no resource will be loaded twice.
 	self.loadList = _LoadJson(_ParsePath("config/loadlist.json"))
@@ -182,7 +185,13 @@ function ConfigManager:getWindowTitle()
 	return self.config.windowTitle or string.format("OpenSMCE [%s] - %s", _VERSION, self:getGameName())
 end
 
----Returns whether the Discord Rich Presence should be on in this game.
+---Returns the native resolution of this game.
+---@return Vector2
+function ConfigManager:getNativeResolution()
+	return self.nativeResolution
+end
+
+---Returns whether the Discord Rich Presence should be active in this game.
 ---@return boolean
 function ConfigManager:isRichPresenceEnabled()
 	return self.config.richPresence.enabled

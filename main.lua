@@ -8,8 +8,6 @@ require("src.strmethods")
 require("src.mathmethods")
 
 local json = require("com.json")
--- TODO: Remove pcall wrapper once 12.0 is fully supported.
-local httpsw, https = pcall(function() return require("https") end)
 
 local Vec2 = require("src.Essentials.Vector2")
 local Color = require("src.Essentials.Color")
@@ -24,6 +22,8 @@ local ExpressionVariables = require("src.ExpressionVariables")
 local Settings = require("src.Kernel.Settings")
 
 local DiscordRichPresence = require("src.DiscordRichPresence")
+local Network = require("src.Kernel.Network")
+local ThreadManager = require("src.ThreadManager")
 
 
 
@@ -36,10 +36,6 @@ _START_TIME = love.timer.getTime()
 -- Set this to a string of your choice. This will be only printed in log files and is not used anywhere else.
 -- You can automate this in i.e. a script by simply adding a `_BUILD_NUMBER = "<your number>"` line at the end of this main.lua file.
 _BUILD_NUMBER = "2023-02-15"
-
-
--- TODO: at some point, get rid of this and make it configurable
-_NATIVE_RESOLUTION = Vec2(800, 600)
 
 
 
@@ -62,8 +58,9 @@ _Log = nil
 ---@type Debug
 _Debug = nil
 
----@type ExpressionVariables
 _Vars = ExpressionVariables()
+_Network = Network()
+_ThreadManager = ThreadManager()
 
 
 
@@ -116,6 +113,7 @@ function love.update(dt)
 	_Log:update(dt)
 	_Debug:update(dt)
 	_DiscordRPC:update(dt)
+	_ThreadManager:update(dt)
 
 	-- rainbow effect for the shooter and console cursor blink; to be phased out soon
 	_TotalTime = _TotalTime + dt
@@ -203,11 +201,11 @@ end
 
 
 function _GetDisplayOffsetX()
-	return (_DisplaySize.x - _NATIVE_RESOLUTION.x * _GetResolutionScale()) / 2
+	return (_DisplaySize.x - _Game:getNativeResolution().x * _GetResolutionScale()) / 2
 end
 
 function _GetResolutionScale()
-	return _DisplaySize.y / _NATIVE_RESOLUTION.y
+	return _DisplaySize.y / _Game:getNativeResolution().y
 end
 
 function _PosOnScreen(pos)
@@ -240,16 +238,28 @@ end
 ---Checks online and returns the newest engine version tag available (i.e. `v0.47.0`). Returns `nil` on failure (for example, when you go offline).
 ---@return string?
 function _GetNewestVersion()
-	-- TODO: Failsafe for 11.x; remove after 12.0 is fully supported.
-	if not httpsw or not https then
-		return nil
-	end
-	local code, body = https.request("https://api.github.com/repos/jakubg1/OpenSMCE/tags", {headers = {["User-Agent"] = "OpenSMCE"}})
-	if code == 200 and body then
-		body = json.decode(body)
-		return body[1].name
+	local result = _Network:get("https://api.github.com/repos/jakubg1/OpenSMCE/tags")
+	if result.code == 200 and result.body then
+		result.body = json.decode(result.body)
+		return result.body[1].name
 	end
 	return nil
+end
+
+
+
+---Checks online and executes a function with the newest engine version tag available (i.e. `v0.47.0`) as an argument or `nil` on failure (for example, when you go offline).
+---Threaded version: non-blocking call.
+---@param onFinish function A function which will be called once the checking process is finished. A version argument is passed.
+function _GetNewestVersionThreaded(onFinish)
+	_Network:getThreaded("https://api.github.com/repos/jakubg1/OpenSMCE/tags", false, function(result)
+		if result.code == 200 and result.body then
+			result.body = json.decode(result.body)
+			onFinish(result.body[1].name)
+		else
+			onFinish(nil)
+		end
+	end)
 end
 
 
@@ -488,6 +498,35 @@ function _ParseColor(data)
 		return nil
 	end
 	return Color(_ParseNumber(data.r), _ParseNumber(data.g), _ParseNumber(data.b))
+end
+
+
+
+---Parses a number or an Expression which evaluates to a number, enclosed in a `"$expr{...}"` clause.
+---@param data number|string A number or an Expression which evaluates to a number.
+---@return number?
+function _ParseExprNumber(data)
+	if type(data) == "number" then
+		return data
+	end
+	if type(data) == "string" then
+		return _Vars:evaluateExpression(data)
+	end
+	return Vec2(_ParseNumber(data.x), _ParseNumber(data.y))
+end
+
+
+
+---Parses a table of `{x=number, y=number}` format or an Expression which evaluates to a Vector2, enclosed in a `"$expr{...}"` clause.
+---@param data table|string A table or an Expression which evaluates to a number.
+---@return Vector2?
+function _ParseExprVec2(data)
+	if type(data) == "table" then
+		return _ParseVec2(data)
+	end
+	if type(data) == "string" then
+		return _Vars:evaluateExpression(data)
+	end
 end
 
 
