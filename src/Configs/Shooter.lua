@@ -19,18 +19,40 @@ function ShooterConfig:new(data, path)
 
     self.sprite = _Game.resourceManager:getSprite(data.sprite)
     ---@type Sprite?
-    self.hotFrogTransitionSprite = (data.hotFrogTransitionSprite and _Game.resourceManager:getSprite(data.hotFrogTransitionSprite)) or nil
+    self.overlaySprite = (data.overlaySprite and _Game.resourceManager:getSprite(data.overlaySprite))
+
     ---@type Sprite?
-    self.hotFrogTransitionLowerSprite = (data.hotFrogTransitionLowerSprite and _Game.resourceManager:getSprite(data.hotFrogTransitionLowerSprite)) or nil
+    self.warmSprite = (data.warmSprite and _Game.resourceManager:getSprite(data.warmSprite)) or nil
+    ---@type Sprite?
+    self.warmOverlaySprite = (data.warmOverlaySprite and _Game.resourceManager:getSprite(data.warmOverlaySprite)) or nil
+
+    ---@type Sprite?
+    self.hotSprite = (data.hotSprite and _Game.resourceManager:getSprite(data.hotSprite))
+    ---@type Sprite?
+    self.hotOverlaySprite = (data.hotOverlaySprite and _Game.resourceManager:getSprite(data.hotOverlaySprite))
+
+    ---@type Sprite?
+    self.cannonSprite = (data.cannonSprite and _Game.resourceManager:getSprite(data.cannonSprite))
+    ---@type Sprite?
+    self.cannonOverlaySprite = (data.cannonOverlaySprite and _Game.resourceManager:getSprite(data.cannonOverlaySprite))
+
     ---@type Vector2
     self.spriteOffset = _ParseVec2(data.spriteOffset) or Vec2()
     ---@type Vector2
+    self.overlayOffset = _ParseVec2(data.overlayOffset) or Vec2()
+    ---@type Vector2
     self.spriteAnchor = _ParseVec2(data.spriteAnchor) or Vec2(0.5, 0)
-    self.shadowSprite = _Game.resourceManager:getSprite(data.shadowSprite)
+    ---@type Vector2
+    self.overlayAnchor = _ParseVec2(data.overlayAnchor) or Vec2(0.5, 0)
+    ---@type Sprite?
+    self.shadowSprite = (data.shadowSprite and _Game.resourceManager:getSprite(data.shadowSprite)) or nil
     ---@type Vector2
     self.shadowSpriteOffset = _ParseVec2(data.shadowSpriteOffset) or Vec2(8, 8)
     ---@type Vector2
     self.shadowSpriteAnchor = _ParseVec2(data.shadowSpriteAnchor) or Vec2(0.5, 0)
+
+    self.spriteAsOverlay = data.spriteAsOverlay
+
     ---@type Vector2
     self.ballPos = _ParseVec2(data.ballPos) or Vec2(0, 5)
     self.nextBallSprites = {}

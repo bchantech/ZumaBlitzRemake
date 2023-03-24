@@ -54,8 +54,17 @@ function Shooter:changeTo(name)
     self.movement = self.levelMovement or self.config.movement
 
     self.sprite = self.config.sprite
-    self.hotFrogTransitionLowerSprite = self.config.hotFrogTransitionLowerSprite
-    self.hotFrogTransitionSprite = self.config.hotFrogTransitionSprite
+    self.warmSprite = self.config.warmSprite
+    self.hotSprite = self.config.hotSprite
+    self.cannonSprite = self.config.cannonSprite
+
+    self.spriteAsOverlay = self.config.spriteAsOverlay
+
+    self.overlaySprite = self.config.overlaySprite
+    self.warmOverlaySprite = self.config.warmOverlaySprite
+    self.hotOverlaySprite = self.config.hotOverlaySprite
+    self.cannonOverlaySprite = self.config.cannonOverlaySprite
+
     self.shadowSprite = self.config.shadowSprite
     self.speedShotSprite = self.config.speedShotBeam.sprite
 
@@ -364,34 +373,33 @@ end
 
 ---Drawing callback function.
 function Shooter:draw()
-    self.shadowSprite:draw(self.pos + self.config.shadowSpriteOffset:rotate(self.angle), self.config.shadowSpriteAnchor, nil, nil, self.angle)
-    self.sprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle)
+    -- FORK-SPECIFIC CHANGES:
+    -- - shadowSprite is now optional.
+    -- - All sprites are rotated by 180 degrees so they face down.
+    -- - Different states for the shooter (warm overlay/hot/cannons)
+
+    if self.shadowSprite then
+        self.shadowSprite:draw(self.pos + self.config.shadowSpriteOffset:rotate(self.angle), self.config.shadowSpriteAnchor, nil, nil, self.angle+math.pi)
+    end
+
+    if not self.spriteAsOverlay then
+        if _Game.session.level.blitzMeter >= 1 then
+            self.hotSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+        else
+            self.sprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+        end
+    end
 
     -- retical
     if _EngineSettings:getAimingRetical() then
         self:drawReticle()
     end
 
-    --[[
-    i probably want to refine it so that the ordering is this:
-    - shadow
-    - bottom layer/shooter
-    - hot frog underlay (for mouth)
-    - current ball
-    - next ball
-    - upper layer
-    - hot frog overlay
-    
-    not sure if jakub will like that tho
-    but the way the ball masks are being handled is so messy right now
-    ]]
-
-    -- FORK-SPECIFIC CODE:
-    -- hot frog transition (lower)
-    ---@type Sprite?
-    local hotfroglowertr = self.config.hotFrogTransitionLowerSprite or nil
-    if hotfroglowertr then
-        hotfroglowertr:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle, nil, _Game.session.level.blitzMeter)
+    if not self.spriteAsOverlay then
+        -- Hot frog transitions
+        if (_Game.session.level.blitzMeter < 1) and self.warmSprite then
+            self.warmSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi, nil, _Game.session.level.blitzMeter)
+        end
     end
 
     -- this color
@@ -408,14 +416,30 @@ function Shooter:draw()
     else
 		sprite = self.config.nextBallSprites[self.nextColor].sprite
     end
-    sprite:draw(self.pos + self.config.nextBallOffset:rotate(self.angle), self.config.nextBallAnchor, nil, self:getNextSphereFrame(), self.angle)
+    sprite:draw(self.pos + self.config.nextBallOffset:rotate(self.angle), self.config.nextBallAnchor, nil, self:getNextSphereFrame(), self.angle+math.pi)
 
-    -- FORK-SPECIFIC CODE:
-    -- hot frog transition
-    ---@type Sprite?
-    local hotfrogtr = self.config.hotFrogTransitionSprite or nil
-    if hotfrogtr then
-        hotfrogtr:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle, nil, _Game.session.level.blitzMeter)
+    -- Overlay sprite goes after colors.
+    if self.overlaySprite and (not self.spriteAsOverlay) then
+        if _Game.session.level.blitzMeter >= 1 then
+            self.hotOverlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle), self.config
+            .overlayAnchor, nil, nil, self.angle + math.pi)
+        else
+            self.overlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle), self.config.overlayAnchor,
+            nil, nil, self.angle + math.pi)
+            if self.warmOverlaySprite then
+                self.warmOverlaySprite:draw(self.pos + self.config.overlayOffset:rotate(self.angle),
+                self.config.overlayAnchor, nil, nil, self.angle + math.pi, nil, _Game.session.level.blitzMeter)
+            end
+        end
+    elseif self.spriteAsOverlay then
+        if _Game.session.level.blitzMeter >= 1 then
+            self.hotSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+        else
+            self.sprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi)
+        end
+        if (_Game.session.level.blitzMeter < 1) and self.warmSprite then
+            self.warmSprite:draw(self.pos + self.config.spriteOffset:rotate(self.angle), self.config.spriteAnchor, nil, nil, self.angle+math.pi, nil, _Game.session.level.blitzMeter)
+        end
     end
 
     --local p4 = posOnScreen(self.pos)
@@ -618,10 +642,8 @@ function Shooter:getShootingSpeed()
 
     local foodSpeedShot_add = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "shotSpeedBase") or 0
     local foodSpeedShot_mult = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "shotSpeedMultiplier") or 0
-    -- Brendan's blog says that the speed boost in Kroakatoa is 175% but it's
-    -- clearly way too fast! We're using the old 75% boost.
-    -- src: http://bchantech.dreamcrafter.com/zumablitz/spiritanimals.php
-    local eagleSpeedShot = (_Game:getCurrentProfile():getActiveMonument() == "spirit_eagle" and 0.75) or 0
+
+    local frogatarSpeedShot = (_Game:getCurrentProfile():getFrogatarEffects().shotSpeedMultiplier) or 0
     -- TODO: What's the order of speed shot multipliers?
 
     -- modify the speed bonus based on the blitz meter
@@ -630,7 +652,7 @@ function Shooter:getShootingSpeed()
     local foodSpeedBonusVel_add = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "speedUpShotsTotalIncrease") or 0
     local speedBonusShotSpeed = math.max(_Game.session.level.blitzMeter - 0.5,0) * (1600 + foodSpeedBonusVel_add*2)
 
-    local finalSpeed =  self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier) + foodSpeedShot_add + (self.config.shootSpeed * eagleSpeedShot) + speedBonusShotSpeed
+    local finalSpeed =  self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier) + foodSpeedShot_add + (self.config.shootSpeed * frogatarSpeedShot) + speedBonusShotSpeed
     finalSpeed = finalSpeed * (1 + foodSpeedShot_mult)
 
     -- _Log:printt("final speed", "-> " ..  finalSpeed)

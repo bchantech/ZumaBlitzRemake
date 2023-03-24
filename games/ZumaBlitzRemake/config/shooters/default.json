@@ -1,7 +1,13 @@
 {
     "$schema": "../../../../schemas/config/shooter.json",
-    "sprite": "sprites/game/shooters/frogatar_basic/shooter.json",
-    "shadowSprite": "sprites/game/shooters/frogatar_basic/shooter_shadow.json",
+    "sprite": "sprites/game/shooters/frogatar_basic/normal_mouth.json",
+    "overlaySprite": "sprites/game/shooters/frogatar_basic/normal_body.json",
+    "warmSprite": "sprites/game/shooters/frogatar_basic/warm_mouth.json",
+    "warmOverlaySprite": "sprites/game/shooters/frogatar_basic/warm_body.json",
+    "hotSprite": "sprites/game/shooters/frogatar_basic/hot_mouth.json",
+    "hotOverlaySprite": "sprites/game/shooters/frogatar_basic/hot_body.json",
+    "cannonSprite": "sprites/game/shooters/frogatar_basic/cannon_mouth.json",
+    "cannonOverlaySprite": "sprites/game/shooters/frogatar_basic/cannon_body.json",
     "reticle": {},
     "speedShotBeam": {
         "sprite": "sprites/particles/speed_shot_beam.json",
@@ -28,44 +34,45 @@
     },
     "spriteOffset": {
         "x": 0, 
-        "y": -50
+        "y": -18
+    },
+    "overlayOffset": {
+        "x": 0, 
+        "y": 50
     },
     "nextBallOffset": {
-        "x":  0,
-        "y": -50
+        "x": 0,
+        "y": 32
     },
     "nextBallSprites": {
         "-3": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_lightning.json"
+            "sprite": "sprites/game/shooters/next_ball_0.json"
         },
         "-2": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_bomb.json"
+            "sprite": "sprites/game/shooters/next_ball_0.json"
         },
         "-1": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_wild.json"
+            "sprite": "sprites/game/shooters/next_ball_0.json"
         },
         "0": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_0.json"
+            "sprite": "sprites/game/shooters/next_ball_0.json"
         },
         "1": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_1.json"
+            "sprite": "sprites/game/shooters/next_ball_1.json"
         },
         "2": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_2.json"
+            "sprite": "sprites/game/shooters/next_ball_2.json"
         },
         "3": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_3.json"
+            "sprite": "sprites/game/shooters/next_ball_3.json"
         },
         "4": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_4.json",
-            "colorblindSprite": "sprites/game/shooters/frogatar_basic/next_ball_4_cb.json"
+            "sprite": "sprites/game/shooters/next_ball_4.json",
+            "colorblindSprite": "sprites/game/shooters/next_ball_0.json"
         },
         "5": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_5.json",
-            "colorblindSprite": "sprites/game/shooters/frogatar_basic/next_ball_5_cb.json"
-        },
-        "6": {
-            "sprite": "sprites/game/shooters/frogatar_basic/next_ball_5_cb.json"
+            "sprite": "sprites/game/shooters/next_ball_5.json",
+            "colorblindSprite": "sprites/game/shooters/next_ball_5_cb.json"
         }
     }
 }
