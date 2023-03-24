@@ -7,6 +7,7 @@ local ConfigManager = class:derive("ConfigManager")
 local CollectibleGeneratorManager = require("src.CollectibleGenerator.Manager")
 
 local ShooterConfig = require("src.Configs.Shooter")
+local Frogatar = require("src.Configs.Frogatar")
 local Power = require("src.Configs.Power")
 local FoodItem = require("src.Configs.FoodItem")
 
@@ -85,7 +86,10 @@ end
 function ConfigManager:loadStuffAfterResources()
     self.shooters = self:loadFolder("config/shooters", "shooter", false, ShooterConfig)
 	self.targetSprites = _LoadJson(_ParsePath("config/target_sprites.json"))
-	
+
+	---@type Frogatar[]
+    self.frogatars = self:loadFolder("config/frogatars", "Frogatar", false, Frogatar)
+
     self.powers = self:loadFolder("config/powers", "power", false, Power)
     for powerID, power in pairs(self.powers) do
         power._name = powerID -- Only used for self-reference in Powers.lua

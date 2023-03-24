@@ -1,6 +1,7 @@
 {
     "displayName": "Spirit Cat",
     "coinCosts": [45000, 30000, 25000],
+    "isMonument": true,
     "shooterConfig": "spirit_cat",
     "effects": {
         "spiritShotEnabled": true,

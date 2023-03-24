@@ -1,6 +1,7 @@
 {
     "displayName": "Spirit Weasel",
     "coinCosts": [45000, 30000, 25000],
+    "isMonument": true,
     "shooterConfig": "spirit_weasel",
     "effects": {
         "cannonsEnabled": true,

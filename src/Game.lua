@@ -178,44 +178,13 @@ function Game:updateRichPresence()
         else
 			powerString = "None"
         end
-		if profile.equippedFood then
-			foodString = profile:getEquippedFoodItem().displayName
+        if profile.equippedFood then
+            foodString = profile:getEquippedFoodItem().displayName
         else
-			foodString = "None"
+            foodString = "None"
         end
-		
-        local monumentStrings = {
-			spirit_beetle = "Beetle",
-			spirit_weasel = "Weasel",
-			spirit_eagle = "Eagle",
-			spirit_cat = "Cat",
-			spirit_turtle = "Turtle"
-        }
-        local frogatarStrings = {
-            frogatar_basic = "Basic Frog",
-            frogatar_cobalt = "Cobalt Frog",
-            frogatar_werewolf = "Werefrog",
-            frogatar_dracula = "Count Frogula",
-			frogatar_skeleton = "Skelefrog",
-            frogatar_hunter = "Hunter Frog",
-            frogatar_gatherer = "Gatherer Frog",
-            frogatar_mystic = "Mystic Frog",
-            frogatar_wild = "Wild Frog",
-            frogatar_winter = "Winter Frog",
-            frogatar_patricks = "St. Patricks' Day Frog",
-            frogatar_bunny = "Bunny Frog",
-            frogatar_dragon = "Dragon Frog",
-            frogatar_cat = "Hathaway Cat",
-			frogatar_pink = "Pink Frog",
-			frogatar_progressive = "Progressive Frog",
-			frogatar_golden = "Golden Frog"
-        }
-		
-		if profile.monument then
-			smallImageText = "Spirit "..monumentStrings[profile:getActiveMonument()]
-        else
-			smallImageText = frogatarStrings[profile:getFrogatar()]
-		end
+
+		smallImageText = profile:getFrogatarInstance().displayName
 
         line1 = string.format(
             "Score: %s | Multiplier: %s | Chain: %s (Max: %s)",

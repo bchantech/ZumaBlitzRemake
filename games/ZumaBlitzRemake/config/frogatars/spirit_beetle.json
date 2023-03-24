@@ -1,6 +1,7 @@
 {
     "displayName": "Spirit Beetle",
     "coinCosts": [45000, 30000, 25000],
+    "isMonument": true,
     "shooterConfig": "spirit_beetle",
     "effects": {
         "additionalStartingTime": 12
