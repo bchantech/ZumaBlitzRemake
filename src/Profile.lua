@@ -515,7 +515,7 @@ end
 
 
 -- FORK-SPECIFIC CODE GOES HERE
--- Frogatars
+-- Frogatars/Monuments
 
 ---@return string
 function Profile:getFrogatar()
@@ -523,12 +523,8 @@ function Profile:getFrogatar()
 end
 
 function Profile:setFrogatar(frogatar)
-	self.frogatar = frogatar
+    self.frogatar = frogatar
 end
-
-
-
--- Spirit Animals
 
 ---Sets this Profile's Spirit Monument (`"spirit_"..animal`).
 ---Pass `nil` to clear it.
@@ -542,9 +538,29 @@ end
 
 ---@return string|nil
 function Profile:getActiveMonument()
-	if self.monument then
-		return "spirit_"..(self.monument)
-	end
+	local monumentString = "spirit_" .. (self.monument)
+    if _Game.configManager.frogatars[monumentString] then
+        return monumentString
+    end
+end
+
+---@return string
+function Profile:getFrogatarInstanceKey()
+	local activeMonument = self:getActiveMonument()
+    if activeMonument then
+        return activeMonument
+    else
+        return self:getFrogatar()
+    end
+end
+
+---@return Frogatar
+function Profile:getFrogatarInstance()
+	return _Game.configManager.frogatars[self:getFrogatarInstanceKey()]
+end
+
+function Profile:getFrogatarEffects()
+	return self:getFrogatarInstance():getEffects()
 end
 
 

@@ -7,6 +7,7 @@ local ConfigManager = class:derive("ConfigManager")
 local CollectibleGeneratorManager = require("src.CollectibleGenerator.Manager")
 
 local ShooterConfig = require("src.Configs.Shooter")
+local Frogatar = require("src.Configs.Frogatar")
 local Power = require("src.Configs.Power")
 local FoodItem = require("src.Configs.FoodItem")
 
@@ -15,6 +16,9 @@ local FoodItem = require("src.Configs.FoodItem")
 ---Constructs a new ConfigManager and initializes all lists.
 function ConfigManager:new()
 	self.config = _LoadJson(_ParsePath("config.json"))
+
+	-- TODO: make a game config class
+	self.nativeResolution = _ParseVec2(self.config.nativeResolution)
 
 	-- Load all game resources.
 	-- The load list is loaded to ensure that no resource will be loaded twice.
@@ -85,7 +89,10 @@ end
 function ConfigManager:loadStuffAfterResources()
     self.shooters = self:loadFolder("config/shooters", "shooter", false, ShooterConfig)
 	self.targetSprites = _LoadJson(_ParsePath("config/target_sprites.json"))
-	
+
+	---@type Frogatar[]
+    self.frogatars = self:loadFolder("config/frogatars", "Frogatar", false, Frogatar)
+
     self.powers = self:loadFolder("config/powers", "power", false, Power)
     for powerID, power in pairs(self.powers) do
         power._name = powerID -- Only used for self-reference in Powers.lua
@@ -182,7 +189,13 @@ function ConfigManager:getWindowTitle()
 	return self.config.windowTitle or string.format("OpenSMCE [%s] - %s", _VERSION, self:getGameName())
 end
 
----Returns whether the Discord Rich Presence should be on in this game.
+---Returns the native resolution of this game.
+---@return Vector2
+function ConfigManager:getNativeResolution()
+	return self.nativeResolution
+end
+
+---Returns whether the Discord Rich Presence should be active in this game.
 ---@return boolean
 function ConfigManager:isRichPresenceEnabled()
 	return self.config.richPresence.enabled

@@ -26,11 +26,13 @@ function Level:new(data)
     self.shooter = Shooter(data.shooter or self.map.shooter)
 
     -- FORK-SPECIFIC CHANGE: Change to frogatar, then spirit animal if any
-	-- Yes this is the order and there should be an animation soon
-    self.shooter:changeTo(_Game:getCurrentProfile():getFrogatar())
-	if _Game:getCurrentProfile():getActiveMonument() then
+    -- Yes this is the order and there should be an animation soon
+	local frogatar = _Game:getCurrentProfile():getFrogatar()
+	local monument = _Game:getCurrentProfile():getActiveMonument()
+	_Game.configManager.frogatars[frogatar]:changeTo(self)
+	if monument then
 		---@diagnostic disable-next-line: param-type-mismatch
-		self.shooter:changeTo(_Game:getCurrentProfile():getActiveMonument())
+		_Game.configManager.frogatars[monument]:changeTo(self)
 	end
 
 	self.matchEffect = data.matchEffect
@@ -208,11 +210,6 @@ function Level:updateLogic(dt)
 				self.shotLastHotFrogBall = true
 				self.blitzMeter = 0
                 self.blitzMeterCooldown = 0
-
-				local skin = _Game:getCurrentProfile():getActiveMonument() or _Game:getCurrentProfile():getFrogatar()
-				if _Game.configManager:getShooter(skin) then
-					self.shooter:changeTo(skin)
-				end
 			end
         else
 			self.shotLastHotFrogBall = false
@@ -892,9 +889,10 @@ end
 ---@return number[]
 function Level:getTargetHitScoreValues()
     local currentScore = 3000
-	local profile = _Game:getCurrentProfile()
-    if profile:getActiveMonument() == "spirit_eagle" then
-        currentScore = currentScore + 3000
+    local profile = _Game:getCurrentProfile()
+
+    if profile:getFrogatarEffects().fruitValueModifier then
+        currentScore = currentScore + profile:getFrogatarEffects().fruitValueModifier
     end
 	if profile:getEquippedFoodItemEffects().fruitValueModifier then
 		currentScore = currentScore + profile:getEquippedFoodItemEffects().fruitValueModifier
@@ -936,12 +934,6 @@ function Level:incrementBlitzMeter(amount, chain)
 		local additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
         self.shooter:getMultiSphere(-2, (3 + additiveAmount))
 		_Game:playSound("sound_events/hot_frog_activate.json")
-
-		local hotFrogSkin = (_Game:getCurrentProfile():getActiveMonument() and _Game:getCurrentProfile():getActiveMonument().."_hot") or _Game:getCurrentProfile():getFrogatar().."_hot"
-		if _Game.configManager:getShooter(hotFrogSkin) then
-			self.shooter:changeTo(hotFrogSkin)
-		end
-		self.hotFrogStarts = self.hotFrogStarts + 1
 	end
 end
 

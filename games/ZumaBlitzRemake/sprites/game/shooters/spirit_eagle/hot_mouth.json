@@ -1,0 +1,21 @@
+{
+    "path": "images/game/shooters/spirit_eagle/hot_mouth.png",
+    "frame_size": {
+        "x": 29,
+        "y": 30
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "frames": {
+                "x": 1,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

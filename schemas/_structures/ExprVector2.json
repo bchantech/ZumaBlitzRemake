@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "oneOf": [
+        {
+            "$ref": "Vector2.json",
+            "description": "Legacy Vector definition."
+        },
+        {
+            "type": "string",
+            "description": "An expression of format \"$expr{...}\". Must evaluate to Vec2!",
+            "markdownDescription": "An expression of format `\"$expr{...}\"`. Must evaluate to Vec2!",
+            "pattern": "^\\$expr\\{.*\\}$"
+        }
+    ]
+}
