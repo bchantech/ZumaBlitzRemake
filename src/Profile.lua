@@ -538,6 +538,9 @@ end
 
 ---@return string|nil
 function Profile:getActiveMonument()
+	if self.monument == nil then
+		return nil
+	end
 	local monumentString = "spirit_" .. (self.monument)
     if _Game.configManager.frogatars[monumentString] then
         return monumentString
