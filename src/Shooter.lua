@@ -303,6 +303,9 @@ function Shooter:shoot()
     if self.color == -2 then
         _Game.session.level.hotFrogShotsFired = _Game.session.level.hotFrogShotsFired + 1
     end
+    
+    -- force angle to 1/10000 precision
+    self.angle = math.floor(self.angle * 10000)/10000 
 
     local sphereConfig = self:getSphereConfig()
     if sphereConfig.shootBehavior.type == "lightning" then
