@@ -223,7 +223,7 @@ end
 ---@return integer
 function Path:newSphereColor(curColor)
 	repeat
-		pendingColor = math.random(1, #self.colors)
+		pendingColor = self.map.level.ball_rng:random(#self.colors)
 	until curColor ~= pendingColor
 	
 	return self.colors[pendingColor]

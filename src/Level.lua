@@ -84,6 +84,11 @@ function Level:new(data)
 	self.dangerLoopSoundName = data.dangerLoopSound or "sound_events/warning_loop.json"
     self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
 	
+	-- Initalize random seed for ball generation
+	self.rngseed = os.time()
+	self.ball_rng = love.math.newRandomGenerator(self.rngseed)
+	self.ball_rng_streak = love.math.newRandomGenerator(self.rngseed)
+	
 	-- Additional variables come from this method!
 	self:reset()
 end
@@ -1407,6 +1412,7 @@ function Level:saveStats()
 		WildShotShots = self.wildShotShots,
 		FruitMatched = self.targets,
 		ExtraTimeAdded = self.extraTimeAdded,
+		RandomSeed = self.rngseed,
 		LastPlayed = os.date("%Y-%m-%d %X")
 	}
 	-- set finished to 0 if the game was lost.
@@ -1416,7 +1422,6 @@ function Level:saveStats()
 	-- TODO: Set XP to zero if the game was aborted, and x2 if a potion was used.
 
 	local post_body = json.encode(s)
-	--print(post_body)
 
 	-- add http post request here
 
