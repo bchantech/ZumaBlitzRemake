@@ -279,10 +279,6 @@ function Shooter:isActive()
     if level:hasShotSpheres() and not self.config.multishot then
         return false
     end
-    -- Same for shooting delay.
-    if self.shotCooldown then
-        return false
-    end
     -- FORK-RELATED CHANGE: If the time's up, don't allow to shoot more spheres.
     if level:areAllObjectivesReached() then
         return false
@@ -295,6 +291,12 @@ end
 
 ---Launches the current sphere, if possible.
 function Shooter:shoot()
+
+    -- don't shoot if the shot is still on cooldown
+    if self.shotCooldown then
+        return
+    end
+
     -- if nothing to shoot, it's pointless
     if _Game.session.level.pause or not self:isActive() or self.color == 0 then
         return
@@ -417,7 +419,7 @@ function Shooter:draw()
     end
 
     -- this color
-    if self.sphereEntity then
+    if self.sphereEntity and not self.shotCooldown then
         self.sphereEntity:setPos(self:getSpherePos())
         self.sphereEntity:setAngle(self.angle)
         self.sphereEntity:setFrame(self:getSphereFrame())
