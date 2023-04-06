@@ -91,6 +91,8 @@ def main():
 		
 			file = open(page_name + ".html", "w")
 			file.write(page_content)
+			filename = page_name + ".html"
+			print("Creating page", filename)
 			file.close()
 		
 		
@@ -165,8 +167,7 @@ def main():
 	
 	
 	
-	print("Done")
-	input()
+	print("Done.")
 
 
 
