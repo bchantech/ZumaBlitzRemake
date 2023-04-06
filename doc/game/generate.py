@@ -122,7 +122,10 @@ def main():
 				if optional:
 					name = name[:-1]
 				
-				types = s[1][:-1].split("|")
+				try:
+					types = s[1][:-1].split("|")
+				except IndexError:
+					print (" Error parsing line:", l)
 				
 				page_content += "<li>"
 				
