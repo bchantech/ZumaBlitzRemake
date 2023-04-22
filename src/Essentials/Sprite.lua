@@ -51,6 +51,12 @@ function Sprite:getFrame(state, frame)
 	--	for k2, v2 in pairs(v1) do print(k1, k2, v2) end
 	--end
 	local s = self.states[state]
+	if s == nil then
+		-- should a sprite attempt to get a non existent state attempt to use the data from the first state instead.
+		print ("ERROR: Attempted to get non-existent state: " .. state .. " in file " .. self.path)
+		s = self.states[1]
+	end
+
 	return s.frames[(frame.x - 1) % s.frameCount.x + 1][(frame.y - 1) % s.frameCount.y + 1]
 end
 
