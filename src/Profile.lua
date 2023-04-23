@@ -12,6 +12,17 @@ local Profile = class:derive("Profile")
 function Profile:new(data, name)
 	self.name = name
 
+	-- unique identifier used in score submissions and cloud data.
+	self.uniqueid = math.random(1,4294967295)
+	self.is_local = true
+	self.is_discord_user = false -- also used to determine whether to display the discord friends leaderboard and other things.
+
+	-- progression data saved in the server or locally.
+	self.xplevel = 1
+	self.xp = 0
+	self.currency = 0
+
+	-- initalize player data. If online account, data will be loaded from cloud instead.
 	-- TODO: Consider extracting this variable and associated functions to ProfileSession.lua
 	self.session = nil
 	self.levels = {}
@@ -746,7 +757,10 @@ function Profile:serialize()
         equippedFood = self.equippedFood,
         powerCatalog = self.powerCatalog,
 		foodInventory = self.foodInventory,
-		ultimatelySatisfyingMode = self.ultimatelySatisfyingMode
+		ultimatelySatisfyingMode = self.ultimatelySatisfyingMode,
+		xplevel = self.xplevel,
+		xp = self.xp,
+		uniqueid = self.uniqueid
 	}
 	return t
 end
@@ -769,6 +783,10 @@ function Profile:deserialize(t)
 	self.foodInventory = t.foodInventory
 	self.equippedFood = t.equippedFood
     self.ultimatelySatisfyingMode = t.ultimatelySatisfyingMode
+	self.xplevel = t.xplevel
+	self.xp = t.xp
+	self.uniqueid = t.uniqueid
+	self:migration()
 
 	-- Equipped Powers routines
     local hash = {}
@@ -788,6 +806,22 @@ function Profile:deserialize(t)
             table.remove(self.equippedPowers, i)
 		end
 	end
+end
+
+---Migrate older savefiles to current version used to populate tables when they didn't exist in older savefiles, etc.
+function Profile:migration()
+	if self.xp == nil then
+		print ("WARNING: no xp detected in savefile, resetting xp values")
+		self.xp = 0
+		self.xplevel = 1
+	end
+
+	if self.uniqueid == nil then
+		print ("WARNING: no uniqueid detected in savefile, generating new uniqueid")
+		self.uniqueid = math.random(1,4294967295)
+	end
+
+
 end
 
 
