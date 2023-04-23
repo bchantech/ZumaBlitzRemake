@@ -209,6 +209,13 @@ function UIManager:mousereleased(x, y, button)
 	end
 end
 
+-- only track y movement
+function UIManager:wheelmoved(x, y)
+		for widgetN, widget in pairs(self.widgets) do
+			widget:wheelmoved(y)
+		end
+end
+
 function UIManager:keypressed(key)
 	for widgetN, widget in pairs(self.widgets) do
 		widget:keypressed(key)
