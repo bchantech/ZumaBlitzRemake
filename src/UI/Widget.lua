@@ -353,7 +353,14 @@ function UIWidget:generateDrawData(layers, startN)
 			table.insert(layers[self:getLayer()], names)
 		end
 		if self.widget.type == "text" then
-			self.widget.textTmp = self.widget.text
+			if type(self.widget.text) == "number" then
+				self.widget.textTmp = tostring(self.widget.text)
+			elseif type(self.widget.text) == "string" then
+				self.widget.textTmp = self.widget.text
+			else 
+				self.widget.textTmp = ""
+			end
+
 		end
 	end
 end
