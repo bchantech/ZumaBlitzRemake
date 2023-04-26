@@ -58,6 +58,8 @@ function UIManager:new()
 
     profileGetExists = function() return _Game:getCurrentProfile() ~= nil end,
     profileGetName = function() return _Game:getCurrentProfile().name end,
+    profileGetPlayerLevel = function() return _Game:getCurrentProfile():getLevel() end,
+    profileGetPlayerCurrency = function() return _Game:getCurrentProfile():getCurrency() end,
     profileGetLives = function() return _Game:getCurrentProfile():getLives() end,
     profileGetCoins = function() return _Game:getCurrentProfile():getCoins() end,
     profileGetScore = function() return _Game:getCurrentProfile():getScore() end,

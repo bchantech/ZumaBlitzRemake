@@ -346,7 +346,35 @@ function Profile:grantCoin()
 	_Game.uiManager:executeCallback("newCoin")
 end
 
+---Gives currency.
+function Profile:grantCurrency(amount)
+	self.currency = self.currency + amount
+end
 
+---Gives xp. XP cannot go below zero.
+function Profile:grantXP(amount)
+	self.xp = self.xp + amount
+	if self.xp < 0 then self.xp = 0 end
+end
+
+
+---Get number of coins
+function Profile:getCurrency()
+	return self.currency
+end
+
+---Calculates the level from XP. Normally 55 more per level, but it will be 250 here to adjust for xp scaling.
+---Fractional values are used to determine the length of the XP bar.
+function Profile:getLevel()
+	if self.xp <= 0 then return 1 end
+
+	local efflevel = (math.sqrt((8 * self.xp / 250)+1)-1)*0.5
+
+	-- level cap
+	if efflevel > 500 then efflevel = 500 end
+
+	return efflevel
+end
 
 -- Lives
 
@@ -760,7 +788,8 @@ function Profile:serialize()
 		ultimatelySatisfyingMode = self.ultimatelySatisfyingMode,
 		xplevel = self.xplevel,
 		xp = self.xp,
-		uniqueid = self.uniqueid
+		uniqueid = self.uniqueid,
+		currency = self.currency
 	}
 	return t
 end
@@ -786,6 +815,7 @@ function Profile:deserialize(t)
 	self.xplevel = t.xplevel
 	self.xp = t.xp
 	self.uniqueid = t.uniqueid
+	self.currency = t.currency
 	self:migration()
 
 	-- Equipped Powers routines
@@ -814,6 +844,11 @@ function Profile:migration()
 		print ("WARNING: no xp detected in savefile, resetting xp values")
 		self.xp = 0
 		self.xplevel = 1
+	end
+
+	if self.currency == nil then
+		print ("WARNING: no coins detected in savefile, resetting coins values")
+		self.currency = 0
 	end
 
 	if self.uniqueid == nil then
