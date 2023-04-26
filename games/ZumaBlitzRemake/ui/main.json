@@ -78,7 +78,7 @@
                     "children": {},
                     "animations": {},
                     "sounds": {},
-                    "layer": "MenuControls",
+                    "layer": "MenuControls2",
                     "font": "fonts/dialog_body2.json",
                     "align": {
                         "x": 0.5,
