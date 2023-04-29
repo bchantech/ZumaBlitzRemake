@@ -38,7 +38,7 @@ function ParticlePiece:new(manager, spawner, data)
 	if self.speedMode == "loose" then
 		self.speed = _ParseVec2(data.speed)
 	elseif self.speedMode == "radius" then
-		self.speed = spawnPos * _ParseVec2(data.speed)
+		self.speed = spawnRotVec * _ParseVec2(data.speed)
 	elseif self.speedMode == "circle" then
 		self.speed = _ParseNumber(data.speed) * math.pi / 180 -- convert degrees to radians
 	else
