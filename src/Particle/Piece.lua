@@ -165,8 +165,9 @@ function ParticlePiece:getAlpha()
 end
 
 function ParticlePiece:draw(layer)
+	local frame = math.min(math.floor(self.animationFrame), self.animationFrameCount)
 	if self.layer == layer then
-		self.sprite:draw(self:getPos(), Vec2(0.5), nil, Vec2(math.min(math.floor(self.animationFrame), self.animationFrameCount), 1), nil, self:getColor(), self:getAlpha(), nil, self.blendMode)
+		self.sprite:draw(self:getPos(), Vec2(0.5), nil, frame, nil, self:getColor(), self:getAlpha(), nil, self.blendMode)
 	end
 end
 
