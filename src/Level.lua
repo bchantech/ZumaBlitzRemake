@@ -939,6 +939,7 @@ function Level:incrementBlitzMeter(amount, chain)
 		local additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
         self.shooter:getMultiSphere(-2, (3 + additiveAmount))
 		_Game:playSound("sound_events/hot_frog_activate.json")
+		_Game:spawnParticle("particles/hf_blast.json", self.shooter.pos)
 	end
 end
 
