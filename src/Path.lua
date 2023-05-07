@@ -66,14 +66,6 @@ function Path:new(map, pathData, pathBehavior)
 --	_Log:printt("Max Singles", "-> " .. self.maxSingles)
 --	_Log:printt("Max Clumps", "-> " .. self.maxClumps)
 
-	if _Game.satMode then
-		local n = _Game:getCurrentProfile():getUSMNumber() * 10
-		self.spawnRules = {
-			--type = "waves",
-			--amount = n
-			type = "continuous"
-		}
-	end
 	self.spawnAmount = 0
 	self.spawnDistance = pathBehavior.spawnDistance
 	self.dangerDistance = pathBehavior.dangerDistance
@@ -496,9 +488,6 @@ end
 ---@return number
 function Path:getSpeed(pixels)
 	local satModeMult = 1
-	if _Game.satMode and _Game:getCurrentProfile().session then
-		satModeMult = 1 + (_Game:getCurrentProfile():getUSMNumber() - 1) * 0.05
-	end
 
 	local part = pixels / self.length
 	for i, speed in ipairs(self.speeds) do

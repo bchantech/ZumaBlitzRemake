@@ -41,9 +41,6 @@ function Level:new(data)
 	if data.target then
 		objectives = {{type = "destroyedSpheres", target = data.target}}
 	end
-	if _Game.satMode then
-		objectives = {{type = "destroyedSpheres", target = _Game:getCurrentProfile():getUSMNumber() * 10}}
-	end
 	self.objectives = {}
 	for i, objective in ipairs(objectives) do
 		table.insert(self.objectives, {type = objective.type, target = objective.target, progress = 0, reached = false})
@@ -460,7 +457,7 @@ function Level:updateLogic(dt)
 		end
 		-- FORK-SPECIFIC CODE: Add a highscore after the board
 		_Game:getCurrentProfile():writeHighscore()
-		_Game.uiManager:executeCallback("levelLost")
+		_Game.uiManager:executeCallback("levelComplete")
 		self.ended = true
 		self:saveStats()
 	end
@@ -560,22 +557,6 @@ function Level:grantScore(score)
 end
 
 
-
----Adds one coin to the current Profile and to level's statistics.
-function Level:grantCoin()
-	self.coins = self.coins + 1
-	_Game:getCurrentProfile():grantCoin()
-end
-
-
-
----Adds one gem to the level's statistics.
-function Level:grantGem()
-	self.gems = self.gems + 1
-end
-
-
-
 ---Adds one sphere to the destroyed sphere counter.
 function Level:destroySphere()
 	if self.lost then
@@ -654,10 +635,6 @@ function Level:applyEffect(effect, TMP_pos)
 	elseif effect.type == "grantScore" then
 		self:grantScore(effect.score)
 		self:spawnFloatingText(_NumStr(effect.score), TMP_pos, "fonts/score0.json")
-	elseif effect.type == "grantCoin" then
-		self:grantCoin()
-	elseif effect.type == "incrementGemStat" then
-		self:grantGem()
 	elseif effect.type == "addTime" then
         self.objectives[1].target = self.objectives[1].target + effect.amount
 		self.extraTimeAdded = self.extraTimeAdded + effect.amount
@@ -989,20 +966,6 @@ end
 function Level:getFinish()
 	return self:hasNoMoreSpheres() and #self.collectibles == 0
 end
-
-
-
----Takes one life away from the current Profile, and either restarts this Level, or ends the game.
-function Level:tryAgain()
-	if _Game:getCurrentProfile():loseLevel() then
-		_Game.uiManager:executeCallback("levelStart")
-		self:reset()
-	else
-		_Game.session:terminate()
-	end
-end
-
-
 
 ---Starts the Level.
 function Level:begin()

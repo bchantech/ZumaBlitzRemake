@@ -80,14 +80,6 @@ function Session:levelSave()
 	self.level = nil
 end
 
----Destroys this level and triggers a `gameOver` callback in the UI script.
-function Session:terminate()
-	self.level = nil
-	_Game.uiManager:executeCallback("gameOver")
-end
-
-
-
 ---Draws itself... It's actually just the level, from which all its components are drawn.
 function Session:draw()
 	if self.level then
