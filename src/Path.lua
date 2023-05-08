@@ -707,6 +707,10 @@ function Path:getGapSize(offset)
 				if sphereGroup.nextGroup and sphereGroup.nextGroup:getBackPos() > offset and sphereGroup:getFrontPos() < offset then
 					return sphereGroup.nextGroup:getBackPos() - sphereGroup:getFrontPos(), sphereGroup
 				end
+				-- If the ball passes through the sphere group, return 1. Should only occur if it passed through a ghost sphere.
+				if sphereGroup:getFrontPos() > offset and sphereGroup:getBackPos() < offset then
+					return 1, sphereGroup
+				end
 			end
 		end
 	end
