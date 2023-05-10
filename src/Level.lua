@@ -88,6 +88,10 @@ function Level:new(data)
 	
 	-- Additional variables come from this method!
 	self:reset()
+	self:resetGameStatistics()
+
+	-- TODO: retrieve the game constants from server when POSTing start of game.
+
 end
 
 
@@ -1126,7 +1130,15 @@ function Level:reset()
 	self.shooter.speedShotTime = 0
 	_Game.session.colorManager:reset()
 
+
+	-- Set game constants here. 
+
+end
+
 	-- other in-game statistics
+
+function Level:resetGameStatistics()
+
 	self.gapsNum = 0
 	self.combosScore = 0
 	self.gapsScore = 0
@@ -1325,6 +1337,7 @@ end
 
 ---Stores all ingame statistics to be submitted online.
 function Level:saveStats()
+	local currentProfile = _Game:getCurrentProfile()
 	local s = {
 		destroyedSpheres = self.destroyedSpheres,
 		spheresShot = self.spheresShot,
@@ -1337,8 +1350,8 @@ function Level:saveStats()
 		MultiplierMax = self.multiplier,
 		XpEarned = (100 + self.targets + self.curveClearsNum + self.hotFrogStarts + self.chronoBallsMatched),
 		ChainMax = self.maxCombo,
-		SNSUserID = "aaa",
-		XpStartingLevel = 80,
+		SNSUserID = currentProfile:getPlayerID(),
+		XpStartingLevel = math.floor(currentProfile:getLevel()),
 		FruitSpawned = self.fruitSpawned,
 		NukesMatched = self.colorNukesMatched,
 		CombosNum = self.combosNum,
@@ -1368,9 +1381,9 @@ function Level:saveStats()
 		SpiritShotSpawned = self.spiritShotSpawned,
 		FruitScore = self.fruitScore,
 		MapName = "test",
-		CoinStartingBalance = 7500000,
+		CoinStartingBalance = currentProfile:getCurrency(),
 		SpinnerSpawned = self.spinnerSpawned,
-		XpStarting = 500000,
+		XpStarting = currentProfile.xp,
 		NukesScore = self.colorNukesScore,
 		FrogatarID = "1",
 		SpinnerMatched = self.spinnerMatched,

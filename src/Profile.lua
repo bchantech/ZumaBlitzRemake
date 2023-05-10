@@ -332,6 +332,11 @@ function Profile:getCurrency()
 	return self.currency
 end
 
+--- Return player ID
+function Profile:getPlayerID()
+	return self.uniqueid
+end
+
 ---Calculates the level from XP. Normally 55 more per level, but it will be 250 here to adjust for xp scaling.
 ---Fractional values are used to determine the length of the XP bar.
 function Profile:getLevel()
