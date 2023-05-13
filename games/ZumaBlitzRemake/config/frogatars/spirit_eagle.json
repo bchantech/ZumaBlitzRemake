@@ -5,8 +5,10 @@
     "shooterConfig": "spirit_eagle",
     "effects": {
         "shotSpeedMultiplier": 0.75,
-        "fruitValueModifier": 3000,
-        "fruitInfiniteLifetime": true
+        "fruitPointsBase": 3000,
+        "fruitLifetime": 60,
+        "spiritBlastEnabled": 1,
+        "spiritBlastColor": 4
     },
     "spiritBlastColor": 4
 }

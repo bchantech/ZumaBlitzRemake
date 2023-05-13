@@ -125,6 +125,7 @@ function Session:destroyFunction(f, scorePos, scoreFont, noRewards)
 						sphereGroup:destroySphere(l)
 						if not noRewards then
 							score = score + 10
+							-- TODO: Adjust score based on source (chain blast, hot frog, bomb, spirit shot, last hurrah)
 						end
 					end
 				end

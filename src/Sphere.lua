@@ -286,7 +286,7 @@ function Sphere:deleteVisually(ghostTime, crushed)
     if self.powerup and not (self.map.level.finish or self.map.level.lost) then
         local effectTable = {
             timeball = function()
-                local secs = 5
+                local secs = self.map.level:getParameter("timeBallsTimeBonus")
 				local sandsOfTime = _Game:getCurrentProfile():getEquippedPower("sands_of_time")
 				if sandsOfTime then
 					secs = secs + sandsOfTime:getCurrentLevelData().additiveAmount

@@ -22,6 +22,14 @@ local ltn12 = require"ltn12"
 ---Constructs a new Level.
 ---@param data table The level data, specified in a level config file.
 function Level:new(data)
+	
+	-- Initalize level parameters
+	self.levelParameters = {}
+	self:setLevelDefaultParameters()
+
+	-- Add the values from powers, fruit, spirit animals, and the like.
+	self:addPowerEffects()
+
     self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
     self.shooter = Shooter(data.shooter or self.map.shooter)
 
@@ -38,12 +46,17 @@ function Level:new(data)
 	self.matchEffect = data.matchEffect
 
 	local objectives = data.objectives
-	if data.target then
-		objectives = {{type = "destroyedSpheres", target = data.target}}
+
+	-- if there are no objectives defined on the map, create one with timer = 60
+	if objectives == nil then
+		objectives = {{type = "timeSurvived", target = 60}}
 	end
 	self.objectives = {}
+
+	-- account for extra time
+	-- this might not work correctly if type is other than timeSurvived
 	for i, objective in ipairs(objectives) do
-		table.insert(self.objectives, {type = objective.type, target = objective.target, progress = 0, reached = false})
+		table.insert(self.objectives, {type = objective.type, target = objective.target + self:getParameter("extraStartingTime"), progress = 0, reached = false})
 	end
 
 	self.stateCount = 0
@@ -68,7 +81,6 @@ function Level:new(data)
     self.targetFrequency = data.targetFrequency
     self.targetInitialDelaySecondsElapsed = false
 
-	self.targetHitScores = self:getTargetHitScoreValues()
 
 	self.colorGeneratorNormal = data.colorGeneratorNormal
 	self.colorGeneratorDanger = data.colorGeneratorDanger
@@ -90,6 +102,10 @@ function Level:new(data)
 	self:reset()
 	self:resetGameStatistics()
 
+
+	-- calculate fruit values
+	self.targetHitScore = self:getParameter("fruitPointsBase")
+	
 	-- TODO: retrieve the game constants from server when POSTing start of game.
 
 end
@@ -132,8 +148,7 @@ function Level:updateLogic(dt)
 	self.map:update(dt)
     self.shooter:update(dt)
     self.stateCount = self.stateCount + dt
-	self.targetHitScore = self.targetHitScores[math.min(self.targets+1, 6)] + (_MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "fruitPointsBase") or 0)
-
+	
     -- Danger sound
 	--[[
 	local d1 = self:getDanger() and not self.lost
@@ -236,11 +251,7 @@ function Level:updateLogic(dt)
 			table.insert(powerups, v)
 		end
 
-		local multiplierCap = 9
-		local raiseCap = _MathAreKeysInTable(_Game:getCurrentProfile():getEquippedFoodItemEffects(), "multiplierMaximum")
-        if raiseCap then
-            multiplierCap = multiplierCap + raiseCap
-        end
+		local multiplierCap = self:getParameter("multiplierMaximum")
 		-- Don't spawn multipliers if we've hit the cap
 		if self.multiplier >= multiplierCap then
 			local pCount = 1
@@ -874,15 +885,7 @@ end
 ---Get the Target score values that changes depending on the Fruit and Spirit Animal.
 ---@return number[]
 function Level:getTargetHitScoreValues()
-    local currentScore = 3000
-    local profile = _Game:getCurrentProfile()
-
-    if profile:getFrogatarEffects().fruitValueModifier then
-        currentScore = currentScore + profile:getFrogatarEffects().fruitValueModifier
-    end
-	if profile:getEquippedFoodItemEffects().fruitValueModifier then
-		currentScore = currentScore + profile:getEquippedFoodItemEffects().fruitValueModifier
-	end
+    local currentScore = self:getParameter("fruitPointsBase")
 	local useFilter = false
 	local filterScore = 0
 	local tbl = {}
@@ -916,11 +919,16 @@ function Level:incrementBlitzMeter(amount, chain)
 	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
     if (not chain and self.blitzMeter == 1) or (chain and self.blitzMeter >= 1) then
         -- hot frog
-		local infernoFrog = _Game:getCurrentProfile():getEquippedPower("inferno_frog")
-		local additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
-        self.shooter:getMultiSphere(-2, (3 + additiveAmount))
+		-- TODO: Power to be based off inferno frog
+		--local infernoFrog = _Game:getCurrentProfile():getEquippedPower("inferno_frog")
+		--additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
+
+		-- minimum hot frog shots is 1 otherwise graphics won't work properly
+		local additiveAmount = math.max(self:getParameter("hotFrogShots"), 1)
+        self.shooter:getMultiSphere(-2, (additiveAmount))
 		_Game:playSound("sound_events/hot_frog_activate.json")
 		_Game:spawnParticle("particles/hf_blast.json", self.shooter.pos)
+		self.hotFrogStarts = self.hotFrogStarts + 1
 	end
 end
 
@@ -1073,6 +1081,7 @@ function Level:reset()
 
 	-- add in current speedbonus
 	self.speedBonus = 0
+	self.speedBonusIncrement = 0
 	self.speedTimer = 0
 
     self.target = nil
@@ -1087,7 +1096,7 @@ function Level:reset()
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
 	self.shotLastHotFrogBall = false
-    self.multiplier = 1
+    self.multiplier = self:getParameter("multiplierStarting")
 	-- TODO: Fix this unless this is the only way.
     -- For some stupid reason, _Game:getCurrentProfile() doesn't work here.
 	-- Yet, the value that returns from that function works fine??
@@ -1185,7 +1194,170 @@ function Level:resetGameStatistics()
 	self.bombsScore = 0
 	self.hotFrogConsolationScore = 0
 	self.wildShotShots = 0
+end
 
+-- set level scoring constants
+-- We convert 32 to 29px (TODO)
+function Level:setLevelDefaultParameters()
+	self.levelParameters["shotSpeedBase"] = 0
+	self.levelParameters["shotSpeedMultiplier"] = 1
+	self.levelParameters["speedUpShotsTotalIncrease"] = 0
+	self.levelParameters["bombsExplosionRadius"] = 107
+	self.levelParameters["bombsFrequencyBase"] = 7
+	self.levelParameters["bombsFrequencyRange"] = 3
+	self.levelParameters["bombsLifetime"] = 21
+	self.levelParameters["bombsMaxBalls"] = -1
+	self.levelParameters["bombsBasePoints"] = 0
+	self.levelParameters["bombsEachPoints"] = 10
+	self.levelParameters["bombsMultPoints"] = 1
+	self.levelParameters["cannonsFrequencyBase"] = 7
+	self.levelParameters["cannonsFrequencyRange"] = 3
+	self.levelParameters["cannonsLifetime"] = 21
+	self.levelParameters["cannonsPointsBase"] = 10
+	self.levelParameters["cannonsPointsMultiplier"] = 1
+	self.levelParameters["cannonsSpread"] = 2
+	self.levelParameters["cannonsMaxBalls"] = -1
+	self.levelParameters["cannonsSpreadSpread"] = 15
+	self.levelParameters["chainBlastEnabled"] = 0
+	self.levelParameters["chainBlastExplosionRadius"] = 107
+	self.levelParameters["chainBlastIncrement"] = 5
+	self.levelParameters["chainBlastMinimum"] = 10
+	self.levelParameters["chainBlastScoreBase"] = 0
+	self.levelParameters["chainBlastScoreEach"] = 10
+	self.levelParameters["chainBlastScoreMult"] = 1
+	self.levelParameters["frogatar"] = 1
+	self.levelParameters["multiplierMaximum"] = 9
+	self.levelParameters["multiplierStarting"] = 1
+	self.levelParameters["extraStartingTime"] = 0
+	self.levelParameters["xpMultiplier"] = 1
+	self.levelParameters["coinsMultiplier"] = 1
+	self.levelParameters["matchPointsBase"] = 10
+	self.levelParameters["fruitFrequency"] = 12
+	self.levelParameters["fruitFrequencyRange"] = 5
+	self.levelParameters["fruitLifetime"] = 10
+	self.levelParameters["fruitPointsBase"] = 3000
+	self.levelParameters["fruitPointsMultiplier"] = 1
+	self.levelParameters["fruitRadius"] = 24
+	self.levelParameters["fruitTicksAdded"] = 0
+	self.levelParameters["fruitFactor"] = 0.5
+	self.levelParameters["fruitCap"] = 5
+	self.levelParameters["fruitRoundingValue"] = 50
+	self.levelParameters["hotFrogShots"] = 3
+	self.levelParameters["hotFrogRadius"] = 112
+	self.levelParameters["hotFrogPointsBase"] = 1000
+	self.levelParameters["hotFrogPointsInc"] = 100
+	self.levelParameters["hotFrogDecayPerSecond"] = 500
+	self.levelParameters["hotFrogMatchValue"] = 1000
+	self.levelParameters["hotFrogGoal"] = 20000
+	self.levelParameters["hotFrogFruitInc"] = 1
+	self.levelParameters["hotFrogExplosionInc"] = 1
+	self.levelParameters["hotFrogDelayFrames"] = 50
+	self.levelParameters["hotFrogComboBreaker"] = 0
+	self.levelParameters["hotFrogJackpotInc"] = 500
+	self.levelParameters["hotFrogGoalInc"] = 0
+	self.levelParameters["hotFrogGoalCap"] = 0
+	self.levelParameters["hotFrogGapInc"] = 0
+	self.levelParameters["hotFrogShotSpeed"] = 20
+	self.levelParameters["lastHurrahMultiplier"] = 1
+	self.levelParameters["lastHurrahRadius"] = 112
+	self.levelParameters["lastHurrahPointBase"] = 1000
+	self.levelParameters["lastHurrahPointInc"] = 100
+	self.levelParameters["spiritShotRadius"] = 112
+	self.levelParameters["spiritShotPointsEach"] = 10
+	self.levelParameters["spiritShotPointsMult"] = 1
+	self.levelParameters["multiplierBallsEnabled"] = 1
+	self.levelParameters["multiplierFrequencyBase"] = 5
+	self.levelParameters["multiplierFrequencyRange"] = 14
+	self.levelParameters["multiplierLifetime"] = 21
+	self.levelParameters["multiplierMaxBalls"] = -1
+	self.levelParameters["spiritBlastThreshold"] = 13
+	self.levelParameters["spiritBlastRadius"] = 112
+	self.levelParameters["timeBallsFrequencyBase"] = 8
+	self.levelParameters["timeBallsFrequencyRange"] = 5
+	self.levelParameters["timeBallsLifetime"] = 21
+	self.levelParameters["timeBallsTimeBonus"] = 5
+	self.levelParameters["timeBallsMaxBalls"] = -1
+	self.levelParameters["chainBonusChainMin"] = 6
+	self.levelParameters["chainBonusPointsInc"] = 10
+	self.levelParameters["chainBonusPointsBase"] = 100
+	self.levelParameters["chainBonusJackpotPoints"] = 500
+	self.levelParameters["chainBonusJackpotEachPoints"] = 250
+	self.levelParameters["chainBonusJackpotEach"] = 5
+	self.levelParameters["chainBonusJackpotStart"] = 10
+	self.levelParameters["curveSpeedFactor"] = 1
+	self.levelParameters["curveMaxSingleAdj"] = 0
+	self.levelParameters["curveMaxClumpAdj"] = 0
+	self.levelParameters["curveMatchPercentAdj"] = 0
+	self.levelParameters["gapPointsRounding"] = 10
+	self.levelParameters["gapPointMin"] = 50
+	self.levelParameters["gapGapMax"] = 300
+	self.levelParameters["gapPointsBase"] = 10000
+	self.levelParameters["gapMultSingle"] = 1
+	self.levelParameters["gapMultDouble"] = 2
+	self.levelParameters["gapMultTriple"] = 3
+	self.levelParameters["gapMinAdjustment"] = 0
+	self.levelParameters["speedBonusPointsBase"] = 10
+	self.levelParameters["speedBonusMaxMult"] = 12
+	self.levelParameters["speedBonusTimeBase"] = 2.75
+	self.levelParameters["wildBallEnabled"] = 0
+	self.levelParameters["wildBallThreshold"] = 15
+	self.levelParameters["wildBallPointsBase"] = 20
+	self.levelParameters["powerballDurationModifier"] = 1
+	self.levelParameters["powerballGraceFrames"] = 100
+	self.levelParameters["treasureSpawnMax"] = 2
+	self.levelParameters["treasureEnabled"] = 1
+	self.levelParameters["treasurePercentChance"] = 2
+	self.levelParameters["colorNukeMaxBalls"] = -1
+	self.levelParameters["colorNukeEnabled"] = 0
+	self.levelParameters["colorNukeLifetime"] = 16
+	self.levelParameters["colorNukeFrequencyRange"] = 5
+	self.levelParameters["colorNukePointsMultiplier"] = 1
+	self.levelParameters["colorNukePointsBase"] = 50
+	self.levelParameters["colorNukeFrequencyBase"] = 12
+	self.levelParameters["colorNukeCurveCount"] = 1
+	self.levelParameters["colorNukeLifetimeRange"] = 0
+	self.levelParameters["colorNukePointsEach"] = 10
+	self.levelParameters["comboBonusPointsBase"] = 1000
+	self.levelParameters["curveClearTicksAdded"] = 0
+	self.levelParameters["curveClearPointsBase"] = 1000
+end
+
+function Level:addPowerEffects()
+	local fruitEffects = _Game:getCurrentProfile():getEquippedFoodItemEffects()
+
+	for k, v in pairs(fruitEffects) do
+		self:setParameterAdd(k, fruitEffects[k])
+	end
+
+	local frogatarEffects = _Game:getCurrentProfile():getFrogatarEffects()
+
+    for k, v in pairs(frogatarEffects) do
+		self:setParameterAdd(k, frogatarEffects[k])
+	end
+	
+
+end
+
+
+function Level:getParameter(parameter)
+	return self.levelParameters[parameter] or 0
+
+end
+
+-- set parameter used for boolean items
+function Level:setParameter(parameter, value)
+	if self.levelParameters[parameter] == nil then self.levelParameters[parameter] = parameter end
+	self.levelParameters[parameter] = value
+end
+
+-- set parameter stacking additively, for setting values of powers and such
+-- If the value does not exist, this will be set to whatever value is
+function Level:setParameterAdd(parameter, value)	
+	if self.levelParameters[parameter] == nil then 
+		self.levelParameters[parameter] = value
+	else
+		self.levelParameters[parameter] = self.levelParameters[parameter] + value
+	end
 end
 
 
@@ -1323,6 +1495,7 @@ function Level:serialize()
 		paths = self.map:serialize(),
 		lost = self.lost,
 		speedBonus = self.speedBonus,
+		speedBonus = self.speedBonusIncrement,
 		speedTimer = self.speedTimer
 	}
 	for i, shotSphere in ipairs(self.shotSpheres) do
@@ -1429,6 +1602,9 @@ function Level:deserialize(t)
 	-- Prepare the counters
 	_Game.session.colorManager:reset()
 
+	-- Re-create the scoring default parameters (instead of storing it on the savefile).
+	self:setLevelDefaultParameters()
+
 	-- Level stats
 	self.score = t.stats.score
 	self.coins = t.stats.coins
@@ -1458,6 +1634,7 @@ function Level:deserialize(t)
 	self.lost = t.lost
 	-- ingame counters
 	self.speedBonus = t.speedBonus or 0
+	self.speedBonusIncrement = t.speedBonusIncrement or 0
 	self.speedTimer = t.speedTimer or 0
 	-- Utils
 	self.controlDelay = t.controlDelay
