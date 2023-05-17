@@ -723,9 +723,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	
 	self.map.level.speedTimer = self.map.level:getParameter("speedBonusTimeBase")
 
-		local speedShot = _Game:getCurrentProfile():getEquippedPower("speed_shot")
-		local powerSpeedBonusMultiplier = (speedShot and speedShot:getCurrentLevelData().speedBonusMultiplier) or 1
-		local finalSpeedBonus = self.map.level.speedBonusIncrement * self.map.level:getParameter("speedBonusPointsBase") * powerSpeedBonusMultiplier
+		local finalSpeedBonus = self.map.level.speedBonusIncrement * self.map.level:getParameter("speedBonusPointsBase")
 
 	-- Calculate and grant score.
 	local score = length * (self.map.level:getParameter("matchPointsBase") + finalSpeedBonus)

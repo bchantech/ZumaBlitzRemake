@@ -330,11 +330,7 @@ function Level:updateLogic(dt)
 				if self.targetSecondsCooldown < 0 then
 					if not self.targetInitialDelaySecondsElapsed then
 						self.targetInitialDelaySecondsElapsed = true
-                        self.targetSecondsCooldown = self.targetFrequency.delay
-						local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
-						if fruitMaster then
-							self.targetSecondsCooldown = self.targetSecondsCooldown - fruitMaster:getCurrentLevelData().subtractiveSeconds
-						end
+                        self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
 					end
 					for i, point in ipairs(self.map.targetPoints) do
 						for j, path in ipairs(self.map.paths) do
@@ -360,11 +356,7 @@ function Level:updateLogic(dt)
 			end
 		elseif self.target then
 			-- don't tick the timer down if there's fruit present
-            self.targetSecondsCooldown = self.targetFrequency.delay
-			local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
-			if fruitMaster then
-				self.targetSecondsCooldown = self.targetSecondsCooldown - fruitMaster:getCurrentLevelData().subtractiveSeconds
-			end
+            self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
 			if self.target.delQueue then
 				self.target = nil
             end
@@ -919,10 +911,6 @@ function Level:incrementBlitzMeter(amount, chain)
 	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
     if (not chain and self.blitzMeter == 1) or (chain and self.blitzMeter >= 1) then
         -- hot frog
-		-- TODO: Power to be based off inferno frog
-		--local infernoFrog = _Game:getCurrentProfile():getEquippedPower("inferno_frog")
-		--additiveAmount = (infernoFrog and infernoFrog:getCurrentLevelData().additiveAmount) or 0
-
 		-- minimum hot frog shots is 1 otherwise graphics won't work properly
 		local additiveAmount = math.max(self:getParameter("hotFrogShots"), 1)
         self.shooter:getMultiSphere(-2, (additiveAmount))
@@ -1086,24 +1074,13 @@ function Level:reset()
 
     self.target = nil
 	if _MathAreKeysInTable(self, "targetFrequency", "type") == "seconds" then
-        self.targetSecondsCooldown = self.targetFrequency.initialDelay
-		local fruitMaster = _Game:getCurrentProfile():getEquippedPower("fruit_master")
-		if fruitMaster then
-			self.targetSecondsCooldown = self.targetSecondsCooldown - fruitMaster:getCurrentLevelData().subtractiveSeconds
-		end
+        self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
 	end
 
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
 	self.shotLastHotFrogBall = false
     self.multiplier = self:getParameter("multiplierStarting")
-	-- TODO: Fix this unless this is the only way.
-    -- For some stupid reason, _Game:getCurrentProfile() doesn't work here.
-	-- Yet, the value that returns from that function works fine??
-    local multiMultiplier = _Game.runtimeManager.profileManager:getCurrentProfile():getEquippedPower("multi_multiplier")
-	if multiMultiplier then
-		self.multiplier = self.multiplier + multiMultiplier:getCurrentLevelData().additiveAmount
-	end
 
 	self.spheresShot = 0
 	self.sphereChainsSpawned = 0
@@ -1335,6 +1312,24 @@ function Level:addPowerEffects()
 		self:setParameterAdd(k, frogatarEffects[k])
 	end
 	
+	--load effects from all powers
+	
+	for i, power in ipairs(_Game:getCurrentProfile().equippedPowers) do
+		if _Game:getCurrentProfile().powerCatalog[power] == nil then
+			print("WARNING: " .. power .. " does not exist in powerCatalog")
+		else
+			local power_level = _Game:getCurrentProfile().powerCatalog[power].level
+
+			local power_effects = _Game:getCurrentProfile():getEquippedPower(power):getEffects(power_level) or {}
+
+			if power_effects ~= nil then
+				for k, v in pairs(power_effects) do
+					self:setParameterAdd(k, power_effects[k])
+				end
+			end
+		end
+
+	end
 
 end
 

@@ -661,8 +661,6 @@ function Shooter:getShootingSpeed()
     elseif self.speedShotTime > 0 then
         return self.speedShotSpeed
     end
-    local speedShot = _Game:getCurrentProfile():getEquippedPower("speed_shot")
-    local powerMultiplier = (speedShot and speedShot:getCurrentLevelData().additiveMultiplier) or 0
 
     local foodSpeedShot_add = _Game.session.level:getParameter("shotSpeedBase")
     local foodSpeedShot_mult = _Game.session.level:getParameter("shotSpeedMultiplier")
@@ -679,7 +677,7 @@ function Shooter:getShootingSpeed()
     local foodSpeedBonusVel_add = _Game.session.level:getParameter("speedUpShotsTotalIncrease")
     local speedBonusShotSpeed = math.max(_Game.session.level.blitzMeter - 0.5,0) * ((self.config.shootSpeed * 1.6) + foodSpeedBonusVel_add)
 
-    local finalSpeed =  self.config.shootSpeed + (self.config.shootSpeed * powerMultiplier) + foodSpeedShot_add + speedBonusShotSpeed
+    local finalSpeed =  self.config.shootSpeed + foodSpeedShot_add + speedBonusShotSpeed
     finalSpeed = finalSpeed * (foodSpeedShot_mult)
 
     --print("final speed", "-> " ..  finalSpeed)

@@ -287,10 +287,6 @@ function Sphere:deleteVisually(ghostTime, crushed)
         local effectTable = {
             timeball = function()
                 local secs = self.map.level:getParameter("timeBallsTimeBonus")
-				local sandsOfTime = _Game:getCurrentProfile():getEquippedPower("sands_of_time")
-				if sandsOfTime then
-					secs = secs + sandsOfTime:getCurrentLevelData().additiveAmount
-				end
 				
 				self.map.level:applyEffect({type = "addTime", amount = secs})
 				self.map.level:spawnFloatingText(
