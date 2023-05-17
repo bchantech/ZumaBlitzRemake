@@ -49,13 +49,15 @@ end
 function Target:onShot()
     self:destroy()
     _Game:playSound("sound_events/target_hit.json")
-    _Game.session.level:grantScore(_Game.session.level.targetHitScore)
+    local fruitRoundingValue = math.max(math.floor(_Game.session.level:getParameter("fruitRoundingValue")), 1)
+    local fruitScoreRounded = _MathRoundUp(_Game.session.level.targetHitScore, fruitRoundingValue)
+    _Game.session.level:grantScore(fruitScoreRounded)
 
     local bonusTime = _Game.session.level:getParameter("fruitTicksAdded")
     _Game.session.level:applyEffect({type = "addTime", amount = bonusTime})
 
     _Game.session.level:spawnFloatingText(
-        string.format("BONUS\n+%s", _NumStr(_Game.session.level.targetHitScore * _Game.session.level.multiplier)),
+        string.format("BONUS\n+%s", _NumStr(fruitScoreRounded * _Game.session.level.multiplier)),
         self.pos,
         "fonts/score0.json"
     )
@@ -73,14 +75,10 @@ function Target:onShot()
     -- apply that multiplier effect with cap and rounding
     local fruitPointsMultiplier = 1 + _Game.session.level:getParameter("fruitFactor")
     local fruitCap = math.floor(_Game.session.level:getParameter("fruitCap"))
-    local fruitRoundingValue = math.min(_Game.session.level:getParameter("fruitFactor"), 1)
 
-    if _Game.session.level.fruitCollected < fruitCap then
+    if _Game.session.level.fruitCollected <= fruitCap then
         _Game.session.level.targetHitScore = _Game.session.level.targetHitScore * fruitPointsMultiplier
     end
-
-    _Game.session.level.targetHitScore = _MathRoundDown(_Game.session.level.targetHitScore, fruitRoundingValue)
-
 end
 
 
