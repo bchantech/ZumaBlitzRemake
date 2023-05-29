@@ -26,6 +26,7 @@ function Level:new(data)
 	-- Initalize level parameters
 	self.levelParameters = {}
 	self:setLevelDefaultParameters()
+	self.mapEffects = data.effects or {}
 
 	-- Add the values from powers, fruit, spirit animals, and the like.
 	self:addPowerEffects()
@@ -1300,6 +1301,13 @@ function Level:setLevelDefaultParameters()
 end
 
 function Level:addPowerEffects()
+	
+	local mapEffects = self.mapEffects
+
+	for k, v in pairs(mapEffects) do
+		self:setParameter(k, mapEffects[k])
+	end
+
 	local fruitEffects = _Game:getCurrentProfile():getEquippedFoodItemEffects()
 
 	for k, v in pairs(fruitEffects) do
