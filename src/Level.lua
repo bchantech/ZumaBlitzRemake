@@ -44,7 +44,7 @@ function Level:new(data)
 		_Game.configManager.frogatars[monument]:changeTo(self)
 	end
 
-	self.matchEffect = data.matchEffect
+	self.matchEffect = data.matchEffect or "match"
 
 	local objectives = data.objectives
 
@@ -79,15 +79,13 @@ function Level:new(data)
 
 	---@type Sprite
 	self.targetSprite = _Game.configManager.targetSprites.random[math.random(1, #_Game.configManager.targetSprites.random)]
-    self.targetFrequency = data.targetFrequency
-    self.targetInitialDelaySecondsElapsed = false
 
 
-	self.colorGeneratorNormal = data.colorGeneratorNormal
-	self.colorGeneratorDanger = data.colorGeneratorDanger
+	self.colorGeneratorNormal = data.colorGeneratorNormal or "default"
+	self.colorGeneratorDanger = data.colorGeneratorDanger or "default"
 
-	self.musicName = data.music
-	self.dangerMusicName = data.dangerMusic
+	self.musicName = data.music or "game3"
+	self.dangerMusicName = data.dangerMusic or "danger2"
 	self.ambientMusicName = data.ambientMusic
 
 	self.dangerSoundName = data.dangerSound or "sound_events/warning.json"
@@ -324,15 +322,10 @@ function Level:updateLogic(dt)
 
     -- Targets
     if self.started and not self.finish then
-		if not self.target and (self.map.targetPoints and self.targetFrequency) then
+		if not self.target and (self.map.targetPoints) then
             local validPoints = {}
-			if self.targetFrequency.type == "seconds" then
 				self.targetSecondsCooldown = self.targetSecondsCooldown - dt
 				if self.targetSecondsCooldown < 0 then
-					if not self.targetInitialDelaySecondsElapsed then
-						self.targetInitialDelaySecondsElapsed = true
-                        self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
-					end
 					for i, point in ipairs(self.map.targetPoints) do
 						for j, path in ipairs(self.map.paths) do
 							local d = path:getMaxOffset() / path.length
@@ -342,10 +335,6 @@ function Level:updateLogic(dt)
 						end
 					end
 				end
-			elseif self.targetFrequency.type == "frequency" then
-				-- we won't be implementing this for ZBR, but this is here for
-				-- flexibility of OpenSMCE
-			end
 			if #validPoints > 0 then
 				self.target = Target(
 					self.targetSprite,
@@ -1074,9 +1063,7 @@ function Level:reset()
 	self.speedTimer = 0
 
     self.target = nil
-	if _MathAreKeysInTable(self, "targetFrequency", "type") == "seconds" then
-        self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
-	end
+	self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
 
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
@@ -1477,7 +1464,6 @@ function Level:serialize()
         target = (self.target and self.target:serialize()),
 		targetSprite = self.targetSprite,
         targetSecondsCooldown = self.targetSecondsCooldown,
-        targetInitialDelaySecondsElapsed = self.targetInitialDelaySecondsElapsed,
         targetHitScore = self.targetHitScore,
 		blitzMeter = self.blitzMeter,
         blitzMeterCooldown = self.blitzMeterCooldown,
@@ -1629,7 +1615,6 @@ function Level:deserialize(t)
 	end
     self.targetSecondsCooldown = t.targetSecondsCooldown
 	self.targetHitScore = t.targetHitScore
-	self.targetInitialDelaySecondsElapsed = t.targetInitialDelaySecondsElapsed
 	self.blitzMeter = t.blitzMeter
 	self.blitzMeterCooldown = t.blitzMeterCooldown
 	self.shotLastHotFrogBall = t.shotLastHotFrogBall
