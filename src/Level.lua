@@ -62,21 +62,6 @@ function Level:new(data)
 
 	self.stateCount = 0
 
-    self.powerupFrequency = data.powerupFrequency or 15
-    self.individualPowerupFrequencies = data.individualPowerupFrequencies or nil
-	self.powerupList = {"timeball", "multiplier"} -- this should prob be replaced with a function when powers are implemented
-    -- Apparently Multiplier balls appear faster as Spirit Turtle, but by how much?
-    -- src: http://bchantech.dreamcrafter.com/zumablitz/spiritanimals.php
-	self.lastPowerupDeltas = {}
-	for i, powerup in ipairs(self.powerupList) do
-        self.lastPowerupDeltas[powerup] = self.stateCount - 600
-    end
-    for powerup, v in pairs(self.lastPowerupDeltas) do
-		if self.individualPowerupFrequencies and #self.individualPowerupFrequencies ~= 0 then
-			self.individualPowerupFrequencies[powerup] = data.individualPowerupFrequencies[powerup]
-		end
-	end
-
 	---@type Sprite
 	self.targetSprite = _Game.configManager.targetSprites.random[math.random(1, #_Game.configManager.targetSprites.random)]
 
@@ -242,63 +227,45 @@ function Level:updateLogic(dt)
     end
 
 
+-- todo - get # of balls with a certain attribute
 
-    -- Zuma style powerups
+	-- Zuma Blitz style powerups
     if self.started and not self.finish and not self:areAllObjectivesReached() and not self:getEmpty() then
-        local powerups = {}
-		for _,v in pairs(self.powerupList) do
-			table.insert(powerups, v)
-		end
 
-		local multiplierCap = self:getParameter("multiplierMaximum")
-		-- Don't spawn multipliers if we've hit the cap
-		if self.multiplier >= multiplierCap then
-			local pCount = 1
-			for _,v in pairs(powerups) do
-                if v == "multiplier" then
-					table.remove(powerups, pCount)
-                end
-				pCount = pCount + 1
-			end
+		-- timer will tick down even if the powerup isn't active, but needs to be active for it to spawn
+		self.multiplierCooldown = self.multiplierCooldown - dt
+		self.timeballCooldown = self.timeballCooldown - dt
+		self.bombsCooldown = self.bombsCooldown - dt
+		self.cannonCooldown = self.cannonCooldown - dt
+		self.colorNukeCooldown = self.colorNukeCooldown - dt
+		local multiplierCap = self:getParameter("multiplierMaximum") 
+		
+		if self.multiplierCooldown <= 0 and self.multiplier < multiplierCap and self:getParameter("multiplierBallsEnabled") > 0 then
+			self.multipliersSpawned = self.multipliersSpawned + 1
+			self.multiplierCooldown = self:getParameter("multiplierFrequencyBase") + (math.random() * self:getParameter("multiplierFrequencyRange"))
+			self:addPowerup("multiplier", self:getParameter("multiplierLifetime"))
 		end
-
-        local powerupToAdd = powerups[math.random(1, #powerups)]
-        local frequencies = {
-            all = self.powerupFrequency
-        }
-        for i, powerup in ipairs(self.powerupList) do
-            frequencies[powerup] = (self.individualPowerupFrequencies and self.individualPowerupFrequencies[powerup]) or frequencies.all
+		if self.timeballCooldown <= 0 and self:getParameter("timeBallsEnabled") > 0 then
+			self.chronoBallsSpawned = self.chronoBallsSpawned + 1
+			self.timeballCooldown = self:getParameter("timeBallsFrequencyBase") + (math.random() * self:getParameter("timeBallsFrequencyRange"))
+			self:addPowerup("timeball", self:getParameter("timeBallsLifetime"))
 		end
-        for powerup, v in pairs(self.lastPowerupDeltas) do
-			for k, w in pairs(frequencies) do
-				if frequencies[powerup] > 0 and (math.random() < 1 / frequencies[powerup]) and frequencies[powerup] < self.stateCount - self.lastPowerupDeltas[powerup] then
-					local sphere = _Game.session:getRandomSphere()
-                    if sphere then
-                        if powerupToAdd == "multiplier" then
-                            sphere:addPowerup("multiplier")
-							self.multipliersSpawned = self.multipliersSpawned + 1
-						elseif powerupToAdd ~= "multiplier" then
-							sphere:addPowerup(powerupToAdd)
-							-- determine what powerup spawned and increment the respective stat.
-							
-							if powerupToAdd == "timeball" then
-								self.chronoBallsSpawned = self.chronoBallsSpawned + 1
-							end
-							if powerupToAdd == "bomb" then
-								self.bombsSpawned = self.bombsSpawned + 1
-							end
-							if powerupToAdd == "cannon" then
-								self.cannonsSpawned = self.cannonsSpawned + 1
-							end
-							if powerupToAdd == "colornuke" then
-								self.colorNukesSpawned = self.colorNukesSpawned + 1
-							end
-						end
-					end
-					self.lastPowerupDeltas[powerup] = self.stateCount
-				end
-			end
-        end
+		if self.bombsCooldown <= 0 and self:getParameter("bombsEnabled") > 0 then
+			self.bombsSpawned = self.bombsSpawned + 1
+			self.bombsCooldown = self:getParameter("bombsFrequencyBase") + (math.random() * self:getParameter("bombsFrequencyRange"))
+			self:addPowerup("bombs", self:getParameter("bombsLifetime"))
+		end
+		if self.cannonCooldown <= 0 and self:getParameter("cannonsEnabled") > 0 then
+			self.cannonsSpawned = self.cannonsSpawned + 1
+			self.cannonCooldown = self:getParameter("cannonsFrequencyBase") + (math.random() * self:getParameter("cannonsFrequencyRange"))
+			self:addPowerup("cannons", self:getParameter("cannonsLifetime"))
+		end
+		if self.colorNukeCooldown <= 0 and self:getParameter("colorNukeEnabled") > 0 then
+			self.colorNukesSpawned = self.colorNukesSpawned + 1
+			self.colorNukeCooldown = self:getParameter("colorNukeFrequencyBase") + (math.random() * self:getParameter("colorNukeFrequencyRange"))
+			self:addPowerup("colornuke", self:getParameter("colorNukeLifetime"))
+		end
+		
 		-- Traverse through all the spheres one more time and remove any multiplier powerups if
         -- we've reached the cap
 		-- TODO: Is there a better way to traverse every sphere? Might need to add a new function
@@ -346,7 +313,10 @@ function Level:updateLogic(dt)
 			end
 		elseif self.target then
 			-- don't tick the timer down if there's fruit present
-            self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
+			-- if cooldown is already established do not do it again.
+			if self.targetSecondsCooldown <= 0 then 
+           		self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
+			end
 			if self.target.delQueue then
 				self.target = nil
             end
@@ -466,7 +436,16 @@ function Level:updateLogic(dt)
 	end
 end
 
+--- Add powerup, default 20 seconds if not defined
+--- Only spawn if duration is positive
 
+function Level:addPowerup(name, duration)
+	if duration == nil then duration = 20 end
+	local sphere = _Game.session:getRandomSphere()
+	if sphere and duration > 0 then
+		sphere:addPowerup(name, nil, duration)
+	end
+end
 
 ---Adjusts which music is playing based on the level's internal state.
 function Level:updateMusic()
@@ -1064,6 +1043,11 @@ function Level:reset()
 
     self.target = nil
 	self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
+	self.multiplierCooldown = self:getParameter("multiplierFrequencyBase") + (math.random() * self:getParameter("multiplierFrequencyRange"))
+	self.timeballCooldown = self:getParameter("timeBallsFrequencyBase") + (math.random() * self:getParameter("timeBallsFrequencyRange"))
+	self.bombsCooldown = self:getParameter("bombsFrequencyBase") + (math.random() * self:getParameter("bombsFrequencyRange"))
+	self.cannonCooldown = self:getParameter("cannonsFrequencyBase") + (math.random() * self:getParameter("cannonsFrequencyRange"))
+	self.colorNukeCooldown = self:getParameter("colorNukeFrequencyBase") + (math.random() * self:getParameter("colorNukeFrequencyRange"))
 
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
@@ -1231,12 +1215,14 @@ function Level:setLevelDefaultParameters()
 	self.levelParameters["spiritShotPointsEach"] = 10
 	self.levelParameters["spiritShotPointsMult"] = 1
 	self.levelParameters["multiplierBallsEnabled"] = 1
+	self.levelParameters["multiplierBallsEnabled"] = 1
 	self.levelParameters["multiplierFrequencyBase"] = 5
 	self.levelParameters["multiplierFrequencyRange"] = 14
 	self.levelParameters["multiplierLifetime"] = 21
 	self.levelParameters["multiplierMaxBalls"] = -1
 	self.levelParameters["spiritBlastThreshold"] = 13
 	self.levelParameters["spiritBlastRadius"] = 112
+	self.levelParameters["timeBallsEnabled"] = 1
 	self.levelParameters["timeBallsFrequencyBase"] = 8
 	self.levelParameters["timeBallsFrequencyRange"] = 5
 	self.levelParameters["timeBallsLifetime"] = 21

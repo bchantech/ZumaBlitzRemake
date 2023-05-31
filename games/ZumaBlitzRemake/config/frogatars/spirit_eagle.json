@@ -7,6 +7,7 @@
         "shotSpeedMultiplier": 0.75,
         "fruitPointsBase": 3000,
         "fruitLifetime": 60,
+        "multiplierFrequencyBase": -1,
         "spiritBlastEnabled": 1,
         "spiritBlastColor": 4
     },
