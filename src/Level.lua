@@ -877,6 +877,8 @@ function Level:incrementBlitzMeter(amount, chain)
 		return
     end
 	
+	-- test
+	--amount = 0.5
 	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
     if (not chain and self.blitzMeter == 1) or (chain and self.blitzMeter >= 1) then
         -- hot frog
