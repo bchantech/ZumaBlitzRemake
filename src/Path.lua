@@ -67,7 +67,8 @@ function Path:new(map, pathData, pathBehavior)
 --	_Log:printt("Max Clumps", "-> " .. self.maxClumps)
 
 	self.spawnAmount = 0
-	self.spawnDistance = pathBehavior.spawnDistance
+	self.spawnDistance = pathBehavior.spawnDistance or 0.5
+	self.spawnDistanceHit = false
 	self.dangerDistance = pathBehavior.dangerDistance
 	self.dangerParticle = pathBehavior.dangerParticle or "particles/warning.json"
 	self.speeds = pathBehavior.speeds
@@ -141,6 +142,11 @@ end
 ---Updates the Path.
 ---@param dt number Delta time in seconds.
 function Path:update(dt)
+
+	if not self.spawnDistanceHit and self:getMaxOffset() > self.length * self.spawnDistance then
+		 self.spawnDistanceHit = true 
+		end
+
 	for i, sphereChain in ipairs(self.sphereChains) do
 		if not sphereChain.delQueue then
 			sphereChain:update(dt)
@@ -459,6 +465,13 @@ function Path:getMaxOffset()
 	return offset
 end
 
+---Returns the offset of the frontmost sphere on this Path as a percentage (1 = end, 0 = start)
+---@return number
+function Path:getMaxOffsetPct()
+	return self:getMaxOffsetPct() / self.length
+end
+
+
 
 
 ---Returns 0 if this path is not in danger, and linearly interpolates from 0 (danger point) to 1 (end of the path).
@@ -484,7 +497,12 @@ end
 function Path:getSpeed(pixels)
 	local satModeMult = 1
 
-	local part = pixels / self.length
+	-- Initial rollout speed is set based on what is needed to reach the spawn distance in one second.
+	if self.spawnDistanceHit == false then 
+		return self.spawnDistance * self.length
+	end
+
+	local part = math.max(pixels / self.length, 0)
 	for i, speed in ipairs(self.speeds) do
 		if part < speed.distance then
 			local prevSpeed = self.speeds[i - 1]
@@ -531,7 +549,7 @@ end
 ---Returns `true` if the given path should give a Curve Clear bonus.
 ---@return boolean
 function Path:isValidForCurveClear()
-	return not self.map.isDummy and not self.map.level.controlDelay and self:getMaxOffset() <= 0 and not self.pathClearGranted and #self.sphereChains > 0
+	return not self.map.isDummy and not self.map.level.controlDelay and self.spawnDistanceHit and self:getMaxOffset() <= 0 and not self.pathClearGranted and #self.sphereChains > 0
 end
 
 

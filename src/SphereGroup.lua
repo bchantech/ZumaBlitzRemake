@@ -156,6 +156,11 @@ function SphereGroup:update(dt)
 		self.offset = self.offset - self:getLastSphereOffset()
 	end
 
+	-- force balls to a certain speed on initial rollout, since it doesn't respect speedDesired and accelerates too slowly
+	if self.sphereChain.path.spawnDistanceHit == false then
+		self.speed = speedBound
+	end
+
 	self:move(self.speed * dt)
 
 	-- Tick the powerup timers, but only if the current speed matches the desired value.
