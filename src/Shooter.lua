@@ -292,6 +292,13 @@ end
 ---Launches the current sphere, if possible.
 function Shooter:shoot()
 
+    
+    -- If within the intro sequence, will skip certain phases if possible.
+    if _Game.session.level.started == false then
+        _Game.session.level:changePhase()
+        return
+    end
+
     -- don't shoot if the shot is still on cooldown
     if self.shotCooldown then
         return
@@ -470,7 +477,22 @@ function Shooter:draw()
     --love.graphics.rectangle("line", p4.x - 80, p4.y - 15, 160, 30)
 end
 
+-- spirit animal transform draw functions
+-- curTimer is the value of the spirit animal delay timer, start at 2.5, 500px at 2.25, 0 alpha at 1.5
+function Shooter:drawSpiritTransformation(pos, curTimer)
+    local radius = 0
+    local alpha = 1
+    if curTimer < 2.5 then
+        radius = math.min((2.5 - curTimer) * 2500, 500)
+    end 
+    
+    if curTimer < 2.25 then
+        alpha = math.max(math.min((curTimer - 1.5) * 1.34, 1),0)
+    end 
 
+    love.graphics.setColor(1, 1, 1, alpha)
+    love.graphics.circle("fill", pos.x, pos.y, radius, 100)
+end
 
 ---Draws the speed shot beam.
 function Shooter:drawSpeedShotBeam()

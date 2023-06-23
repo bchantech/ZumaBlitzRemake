@@ -2,6 +2,7 @@
     "displayName": "Spirit Beetle",
     "coinCosts": [45000, 30000, 25000],
     "isMonument": true,
+    "transformSound": "sound_events/transform_spirit_beetle.json",
     "shooterConfig": "spirit_beetle",
     "effects": {
         "extraStartingTime": 12,

@@ -15,6 +15,7 @@ function Frogatar:new(data)
     self.shooterConfig = data.shooterConfig
     self.effects = data.effects or {}
     self.spiritBlastColor = data.spiritBlastColor
+    self.transformSound = data.transformSound
 end
 
 

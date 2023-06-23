@@ -2,6 +2,7 @@
     "displayName": "Spirit Weasel",
     "coinCosts": [45000, 30000, 25000],
     "isMonument": true,
+    "transformSound": "sound_events/transform_spirit_weasel.json",
     "shooterConfig": "spirit_weasel",
     "effects": {
         "cannonsEnabled": 1,

@@ -2,6 +2,7 @@
     "displayName": "Spirit Eagle",
     "coinCosts": [55000, 45000, 40000],
     "isMonument": true,
+    "transformSound": "sound_events/transform_spirit_eagle.json",
     "shooterConfig": "spirit_eagle",
     "effects": {
         "shotSpeedMultiplier": 0.75,

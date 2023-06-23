@@ -39,13 +39,15 @@ function ParticlePiece:new(manager, spawner, data)
 		self.speed = _ParseVec2(data.speed)
 	elseif self.speedMode == "radius" then
 		self.speed = spawnRotVec * _ParseVec2(data.speed)
+	elseif self.speedMode == "radius_linear" then
+		self.speed = spawnRotVec * _ParseNumber(data.speed)
 	elseif self.speedMode == "circle" then
 		self.speed = _ParseNumber(data.speed) * math.pi / 180 -- convert degrees to radians
 	else
 		error("Unknown particle speed mode: " .. tostring(self.speedMode))
 	end
 
-	if self.speedMode == "circle" then
+	if self.speedMode == "circle" or self.speedMode == "radius_linear" then
 		self.acceleration = _ParseNumber(data.acceleration)
 	else
 		self.acceleration = _ParseVec2(data.acceleration)

@@ -1,0 +1,21 @@
+{
+    "path": "images/particles/sparkle.png",
+    "frame_size": {
+        "x": 13.5,
+        "y": 14
+    },
+    "states": [
+        {
+            "pos": {
+                "x": 1,
+                "y": 0
+            },
+            "frames": {
+                "x": 14,
+                "y": 1
+            }
+        }
+    ],
+    "internal": false,
+    "batched": false
+}

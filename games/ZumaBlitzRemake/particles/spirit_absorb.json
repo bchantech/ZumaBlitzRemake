@@ -1,0 +1,54 @@
+[
+    {
+        "name": "sparks",
+        "pos": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "speed": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "acceleration": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "lifespan": 1,
+        "spawnCount": 25,
+        "spawnMax": 1000,
+        "spawnDelay": 0.05,
+        "spawnDelayCount": 10,
+        "particleData": {
+            "speedMode": "radius_linear",
+            "spawnScale": {
+                "x": {
+                    "type": "randomFloat",
+                    "min": 75.0,
+                    "max": 100.0
+                },
+                "y": {
+                    "type": "randomFloat",
+                    "min": 75.0,
+                    "max": 100.0
+                }
+            },
+            "speed": {
+                "type": "randomFloat",
+                "min": -50.0,
+                "max": -100.0
+            },
+            "acceleration": 0.0,
+            "lifespan": 0.75,
+            "sprite": "sprites/particles/particle1.json",
+            "animationFrameCount": 1,
+            "animationSpeed": 30.0,
+            "animationLoop": true,
+            "animationFrameRandom": true,
+            "fadeInPoint": 0.0,
+            "fadeOutPoint": 0.1,
+            "posRelative": false,
+            "rainbow": false,
+            "rainbowSpeed": 0
+        }
+    }
+]

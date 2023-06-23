@@ -2,6 +2,7 @@
     "displayName": "Spirit Cat",
     "coinCosts": [45000, 30000, 25000],
     "isMonument": true,
+    "transformSound": "sound_events/transform_spirit_cat.json",
     "shooterConfig": "spirit_cat",
     "effects": {
         "spiritShotEnabled": 1,

@@ -37,12 +37,8 @@ function Level:new(data)
     -- FORK-SPECIFIC CHANGE: Change to frogatar, then spirit animal if any
     -- Yes this is the order and there should be an animation soon
 	local frogatar = _Game:getCurrentProfile():getFrogatar()
-	local monument = _Game:getCurrentProfile():getActiveMonument()
+	self.monument = _Game:getCurrentProfile():getActiveMonument()
 	_Game.configManager.frogatars[frogatar]:changeTo(self)
-	if monument then
-		---@diagnostic disable-next-line: param-type-mismatch
-		_Game.configManager.frogatars[monument]:changeTo(self)
-	end
 
 	self.matchEffect = data.matchEffect or "match"
 
@@ -94,6 +90,45 @@ function Level:new(data)
 
 end
 
+-- Change phase, setting all variables from skipping the intro.
+-- Called from shooter.lua
+function Level:changePhase()
+	-- skip the sparkle phase 
+	if self.phase == 3 then
+		self.started = true
+		self.phase = 4
+	-- skip the food eating animation
+	elseif self.phase == 2 then
+		if self.foodSoundResource then
+			self.foodSoundResource:stop()
+			self.foodSoundResource = nil
+		end
+		self.phase = 3
+	-- skip the spirit animal sequence
+	elseif self.phase == 1 then
+		if self.spiritAnimalTransformResource then
+			self.spiritAnimalTransformResource:stop()
+			self.spiritAnimalTransformResource = nil
+		end
+		self.spiritAnimalDelay = -1
+		-- destroy all transformation particle effects
+		if self.spiritAnimalTransformParticle1 then
+			self.spiritAnimalTransformParticle1:destroy()
+			self.spiritAnimalTransformParticle1 = nil
+		end
+		if self.spiritAnimalTransformParticle2 then
+			self.spiritAnimalTransformParticle2:destroy()
+			self.spiritAnimalTransformParticle2 = nil
+		end
+		-- transform if that was skipped
+		if not self.spiritAnimalTransformed then
+			_Game.configManager.frogatars[self.monument]:changeTo(self)
+			self.spiritAnimalTransformed = true
+		end
+
+		self.phase = 2
+	end
+end
 
 
 ---Updates the Level.
@@ -132,7 +167,65 @@ function Level:updateLogic(dt)
 	self.map:update(dt)
     self.shooter:update(dt)
     self.stateCount = self.stateCount + dt
+
+	-- intro handling
 	
+	if self.phase == 1 then
+		self.spiritAnimalDelay = self.spiritAnimalDelay - dt 
+
+		if self.spiritAnimalDelay < 2.5 and not self.spiritAnimalTransformed then
+			_Game.configManager.frogatars[self.monument]:changeTo(self)
+			self.spiritAnimalTransformed = true
+			self.spiritAnimalTransformParticle2 = _Game:spawnParticle("particles/spirit_release.json", self.shooter.pos)
+		end
+
+		if self.spiritAnimalDelay < 0 then
+			self.phase = 2
+		end
+	end
+
+	if self.phase == 2 then
+		if not _Game:getCurrentProfile():getEquippedFoodItem() then 
+			self.phase = 3
+		else
+			if self.foodSound == false then
+				self.foodSoundResource = _Game:playSound("sound_events/food_eat.json")
+				self.foodSound = true	
+			end
+			self.foodDelay = self.foodDelay - dt
+			
+			if self.foodDelay < 0 then
+				self.phase = 3
+			end
+
+		end
+		
+	end
+
+	-- draw the intro sparkle trail
+	-- More than one particle per frame is drawn for faster speeds
+	-- TODO: Adjust trail to cover the entire board in x seconds, add sounds
+
+	if self.phase == 3 then
+		local path = self.map.paths[self.drawCurve]
+		local pos = path:getPos(self.drawOffset)
+		self.drawOffset = self.drawOffset + 6
+		_Game:spawnParticle("particles/sparkle.json", pos)
+		self.drawOffset = self.drawOffset + 6
+		pos = path:getPos(self.drawOffset)
+		_Game:spawnParticle("particles/sparkle.json", pos)
+		if self.drawOffset > path.length then
+			self.drawCurve = self.drawCurve + 1
+			self.drawOffset = 0
+		end
+		
+		if self.drawCurve > self.curveCount then
+			self.phase = 4
+			self.started = true
+		end
+
+	end
+		
     -- Danger sound
 	--[[
 	local d1 = self:getDanger() and not self.lost
@@ -938,10 +1031,26 @@ function Level:getFinish()
 	return self:hasNoMoreSpheres() and #self.collectibles == 0
 end
 
----Starts the Level.
+---Starts the Level. 
 function Level:begin()
-	self.started = true
 	self.controlDelay = _Game.configManager.gameplay.level.controlDelay
+	self.phase = 3
+
+	if self.monument then
+		self.spiritAnimalTransformParticle1 = _Game:spawnParticle("particles/spirit_absorb.json", self.shooter.pos)
+		local transformSound = _Game:getCurrentProfile():getFrogatarInstance().transformSound
+		if transformSound then
+			self.spiritAnimalTransformResource = _Game:playSound(transformSound)
+		end
+		self.phase = 1
+	elseif _Game:getCurrentProfile():getEquippedFoodItem() then
+		-- TBD: Food Animation
+		self.phase = 2
+	end
+
+	-- get path information
+	self.curveCount = #self.map.paths
+
 	_Game:getMusic(self.musicName):reset()
 end
 
@@ -1073,6 +1182,22 @@ function Level:reset()
 	self.pause = false
 	self.canPause = true
 	self.started = false
+	-- phase to control level before and after level sequencing 
+	-- 1 = spirit animal, 2 = food, 3 = sparkle, 4 = regular game, 5 = spirit animal ending, 6 = last hurrah
+	-- 1-3 can be skipped via mouse click
+	self.phase = 0
+	self.drawOffset = 0
+	self.drawCurve = 1
+	self.curveCount = 1
+	self.spiritAnimalDelay = 3.5
+	self.spiritAnimalTransformResource = nil
+	self.spiritAnimalTransformParticle1 = nil
+	self.spiritAnimalTransformParticle2 = nil
+	self.spiritAnimalTransformed = false
+	self.foodDelay = 5
+	self.foodSound = false
+	self.foodSoundResource = nil
+
 	self.controlDelay = nil
 	self.lost = false
 	self.ended = false
@@ -1411,6 +1536,10 @@ function Level:draw()
 	self.map:drawSpheres()
 	self.shooter:draw()
 
+	if self.phase == 1 then
+		self.shooter:drawSpiritTransformation(self.shooter.pos, self.spiritAnimalDelay)
+	end
+
 	for i, shotSphere in ipairs(self.shotSpheres) do
 		shotSphere:draw()
 	end
@@ -1567,6 +1696,7 @@ function Level:saveStats()
 	-- TODO: Set XP to zero if the game was aborted, and x2 if a potion was used.
 
 	local post_body = json.encode(s)
+	print(post_body)
 
 	-- add http post request here
 
