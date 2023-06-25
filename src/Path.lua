@@ -41,7 +41,7 @@ function Path:new(map, pathData, pathBehavior)
 	self.maxClumps = pathBehavior.maxClumps or 5
 	self.curSingles = 0
 	self.curClump = 0
-	self.spawnRules = pathBehavior.spawnRules or "continuous"
+	self.spawnRules = pathBehavior.spawnRules or {type = "continuous"}
 
 	-- handle adjustments from food effects
 	self.adjustSingles = self.map.level:getParameter("curveMaxSingleAdj")
