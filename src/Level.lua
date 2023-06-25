@@ -180,6 +180,12 @@ function Level:updateLogic(dt)
 		end
 
 		if self.spiritAnimalDelay < 0 then
+			self.map.level:spawnFloatingText(
+				_Game:getCurrentProfile():getFrogatarInstance().transformText,
+				Vec2(380, 236),
+				"fonts/score0.json"
+			)
+			
 			self.phase = 2
 		end
 	end

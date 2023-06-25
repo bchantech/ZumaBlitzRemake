@@ -3,6 +3,7 @@
     "coinCosts": [45000, 30000, 25000],
     "isMonument": true,
     "transformSound": "sound_events/transform_spirit_cat.json",
+    "transformText": "Spirit Fireball\n every 13 shots!",
     "shooterConfig": "spirit_cat",
     "effects": {
         "spiritShotEnabled": 1,

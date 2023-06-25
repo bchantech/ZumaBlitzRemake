@@ -3,6 +3,7 @@
     "coinCosts": [55000, 25000, 15000],
     "isMonument": true,
     "transformSound": "sound_events/transform_spirit_turtle.json",
+    "transformText": "Shoot the Fruit!",
     "shooterConfig": "spirit_turtle",
     "effects": {
         "speedBonusPointsBase": 10,

@@ -3,6 +3,7 @@
     "coinCosts": [45000, 30000, 25000],
     "isMonument": true,
     "transformSound": "sound_events/transform_spirit_beetle.json",
+    "transformText": "+12 Extra Seconds!",
     "shooterConfig": "spirit_beetle",
     "effects": {
         "extraStartingTime": 12,
