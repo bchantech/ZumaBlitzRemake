@@ -13,7 +13,7 @@ local Vec2 = require("src.Essentials.Vector2")
 ---@param pos Vector2 The starting position of this text.
 ---@param font string Path to the Font which is going to be used.
 function FloatingText:new(text, pos, font)
-	self.text = text
+	self.text = text or " "
 	self.pos = pos
 	self.font = _Game.resourceManager:getFont(font)
 
