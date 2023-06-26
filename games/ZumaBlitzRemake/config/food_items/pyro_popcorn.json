@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Pyro Popcorn",
-    "sprite": "",
+    "sprite": "sprites/food_items/pyro_popcorn.json",
+    "displayEffects": "Mega Booms!",
     "effects": {
         "bombsExplosionRadius": 22,
         "chainBlastExplosionRadius": 22,

@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Baco Bouquet",
-    "sprite": "",
+    "sprite": "sprites/food_items/baco_bouquet.json",
+    "displayEffects": "More Power Balls!",
     "effects": {
         "multiplierFrequencyBase": -2, 
         "timeBallsFrequencyBase": -2,

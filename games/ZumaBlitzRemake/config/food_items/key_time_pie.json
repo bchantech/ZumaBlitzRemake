@@ -1,13 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Key Time Pie",
-    "sprite": "",
-    "variants": {
-        "progressive": {
-            "displayName": "Price Gun Pie",
-            "sprite": ""
-        }
-    },
+    "sprite": "sprites/food_items/key_time_pie.json",
+    "displayEffects": "Five More Seconds!",
     "effects": {
         "extraStartingTime": 5
     }

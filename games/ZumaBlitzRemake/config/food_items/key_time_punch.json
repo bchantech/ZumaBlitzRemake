@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Key Time Punch",
-    "sprite": "",
+    "sprite": "sprites/food_items/key_time_punch.json",
+    "displayEffects": "More Time per Time Ball!",
     "effects": {
         "shotSpeedBase": 175,
         "extraStartingTime": 5,

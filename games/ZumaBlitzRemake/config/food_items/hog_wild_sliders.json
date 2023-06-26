@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Hog Wild Sliders",
-    "sprite": "",
+    "sprite": "sprites/food_items/hog_wild_sliders.json",
+    "displayEffects": "More Wild Shots!",
     "effects": {
         "wildBallThreshold": -2
     }

@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Cookie Chain",
-    "sprite": "",
+    "sprite": "sprites/food_items/cookie_chain.json",
+    "displayEffects": "Make TEN Matches!",
     "effects": {
         "chainBonusJackpotPoints": 1000,
         "chainBonusJackpotEachPoints": 500

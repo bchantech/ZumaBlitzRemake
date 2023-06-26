@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Ivan's Last Call",
-    "sprite": "",
+    "sprite": "sprites/food_items/ivans_last_call.json",
+    "displayEffects": "Shoot Faster! Huge Harrah!",
     "effects": {
         "shotSpeedBase": 175,
         "lastHurrahRadius": 16,

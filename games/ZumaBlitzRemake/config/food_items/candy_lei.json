@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Candy Lei",
-    "sprite": "",
+    "sprite": "sprites/food_items/candy_lei.json",
+    "displayEffects": "Bigger Ball Clusters!",
     "effects": {
         "curveMatchPercentAdj": 10,
         "curveMaxClumpAdj": 2,

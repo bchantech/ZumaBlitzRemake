@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Chocolate Love",
-    "sprite": "",
+    "sprite": "sprites/food_items/chocolate_love.json",
+    "displayEffects": "Grab the Fruit!",
     "effects": {
         "fruitTicksAdded": 1,
         "fruitPointsBase": 750

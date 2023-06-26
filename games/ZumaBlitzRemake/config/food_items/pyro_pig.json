@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
-    "displayName": "Pyro Pig",
-    "sprite": "",
+    "displayName": "Pyro Piggy",
+    "sprite": "sprites/food_items/pyro_pig.json",
+    "displayEffects": "Speedy Big Booms!",
     "effects": {
         "shotSpeedBase": 175,
         "bombsExplosionRadius": 22,

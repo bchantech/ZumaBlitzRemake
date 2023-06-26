@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Shoo Fly Pie",
-    "sprite": "",
+    "sprite": "sprites/food_items/shoo_fly_pie.json",
+    "displayEffects": "Time Balls! Stay!",
     "effects": {
         "timeBallsLifetime": 60
     }

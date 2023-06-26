@@ -7,9 +7,21 @@
             "type": "string",
             "description": "The display name of this Food Item."
         },
+        "displayDescription": {
+            "type": "string",
+            "description": "The description of the food under the display name."
+        },
+        "displayEffects": {
+            "type": "string",
+            "description": "The description that is displayed when the food is eaten in-game."
+        },
         "sprite": {
             "type": "string",
             "description": "A path to the sprite to use for this Food Item."
+        },
+        "id": {
+            "type": "integer",
+            "description": "Internal ID of the food item. Needed to render the food item correctly on the statistics page."
         },
         "effects": {
             "type": "object",
@@ -640,10 +652,8 @@
         }
     },
     "required": [
-        "particle",
-        "pickupParticle",
-        "spawnSound",
-        "pickupSound"
+        "displayName",
+        "sprite"
     ],
     "additionalProperties": false
 }

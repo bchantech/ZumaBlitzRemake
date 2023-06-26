@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Cherry Time Tart",
-    "sprite": "",
+    "sprite": "sprites/food_items/cherry_time_tart.json",
+    "displayEffects": "Fruit Adds Time!",
     "effects": {
         "fruitTicksAdded": 1
     }

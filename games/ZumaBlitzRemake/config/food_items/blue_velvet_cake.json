@@ -1,13 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Blue Velvet Cake",
-    "sprite": "",
-    "variants": {
-        "progressive": {
-            "displayName": "Flo's Cupcakes",
-            "sprite": ""
-        }
-    },
+    "sprite": "sprites/food_items/blue_velvet_cake.json",
+    "displayEffects": "Hot Frog, Blue Ball!",
     "effects": {
         "hotFrogPointsBase": 200,
         "hotFrogPointsInc": 50,

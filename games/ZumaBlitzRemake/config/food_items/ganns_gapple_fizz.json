@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Gann's Gapple Fizz",
-    "sprite": "",
+    "sprite": "sprites/food_items/ganns_gapple_fizz.json",
+    "displayEffects": "Shoot Faster! Go Go Gap Shots!",
     "effects": {
         "shotSpeedBase": 175,
         "gapPointsBase": 3000,

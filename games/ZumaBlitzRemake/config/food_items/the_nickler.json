@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "The Nickler",
-    "sprite": "",
+    "sprite": "sprites/food_items/the_nickler.json",
+    "displayEffects": "Shoot Faster! More Time!",
     "effects": {
         "shotSpeedBase": 175,
         "extraStartingTime": 5

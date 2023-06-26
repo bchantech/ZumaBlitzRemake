@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Kroakatoa Wave",
-    "sprite": "",
+    "sprite": "sprites/food_items/kroakatoa_wave.json",
+    "displayEffects": "Cannon Barrage!",
     "effects": {
         "cannonsSpread": 2
     }

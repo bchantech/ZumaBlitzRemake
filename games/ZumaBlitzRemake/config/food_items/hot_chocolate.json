@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Hot Chocolate",
-    "sprite": "",
+    "sprite": "sprites/food_items/hot_chocolate.json",
+    "displayEffects": "Big Burstin' Bombs!",
     "effects": {
         "bombsEnabled": true,
         "bombsExplosionRadius": 22,

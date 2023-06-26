@@ -1,7 +1,8 @@
 {
     "$schema": "../../../../schemas/config/food_item.json",
     "displayName": "Combo Corn",
-    "sprite": "",
+    "sprite": "sprites/food_items/combo_corn.json",
+    "displayEffects": "Combos Score More!",
     "effects": {
         "comboBonusPointsBase": 150,
         "curveMaxSingleAdj": -2
