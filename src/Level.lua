@@ -103,6 +103,7 @@ function Level:changePhase()
 			self.foodSoundResource:stop()
 			self.foodSoundResource = nil
 		end
+		self.foodDelay = -1
 		self.phase = 3
 	-- skip the spirit animal sequence
 	elseif self.phase == 1 then
@@ -1203,6 +1204,19 @@ function Level:reset()
 	self.foodDelay = 5
 	self.foodSound = false
 	self.foodSoundResource = nil
+	self.foodSprite = _Game:getCurrentProfile():getEquippedFoodItem().sprite
+	self.foodLabel = _Game:getCurrentProfile():getEquippedFoodItem().displayEffects or " "
+	self.foodLabelDrawn = false
+	
+    self.foodShader = love.graphics.newShader [[
+        vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
+            if (Texel(texture, texture_coords).rgb == vec3(0.0)) {
+                // a discarded pixel wont be applied as the stencil.
+                discard;
+            }
+            return vec4(1.0);
+        }
+    ]]
 
 	self.controlDelay = nil
 	self.lost = false
@@ -1544,6 +1558,56 @@ function Level:draw()
 
 	if self.phase == 1 then
 		self.shooter:drawSpiritTransformation(self.shooter.pos, self.spiritAnimalDelay)
+	end
+
+	-- draw the food portion with the shooter, since it's positioned relative to it
+	if self.phase == 2 then
+		local food_sprite_pos = self.shooter.pos
+		local food_sprite_offset = {x = -50, y = 80}
+		
+		-- draw from y = 300 to y = position within one second.
+		-- TODO: Start from the top if the frog is too far down that the food doesn't show.
+		local timer_offset = {x = 0, y = math.max((self.foodDelay-4)*300,0) }
+		food_sprite_pos = food_sprite_pos + food_sprite_offset + timer_offset
+		
+		if self.foodDelay < 3.2 then
+			love.graphics.stencil(function()
+				love.graphics.setShader(self.foodShader)
+				local eat_mask1 = _Game.resourceManager:getSprite("sprites/food_items/eating_mask_1.json")
+				local eat_mask2 = _Game.resourceManager:getSprite("sprites/food_items/eating_mask_2.json")
+
+				if self.foodDelay >= 2.4 then			
+					eat_mask1:draw(food_sprite_pos)
+				end
+
+				if self.foodDelay < 2.4 then			
+					eat_mask2:draw(food_sprite_pos)
+				end
+			
+				love.graphics.setShader()
+			end, "replace", 1)
+			love.graphics.setStencilTest("greater", 0)
+		end
+
+		local sprite2 = _Game.resourceManager:getSprite(self.foodSprite)
+		
+		if self.foodDelay > 2.1 then
+			sprite2:draw(food_sprite_pos)
+		end
+		
+		local food_sprite_pos_label = food_sprite_pos
+		food_sprite_pos_label.y = food_sprite_pos_label.y + 50
+		food_sprite_pos_label.x = food_sprite_pos_label.x + 50
+
+		if self.foodDelay < 2.1 and not self.foodLabelDrawn then
+			self:spawnFloatingText(self.foodLabel, food_sprite_pos, "fonts/score0.json")
+			self.foodLabelDrawn = true
+		end
+
+		love.graphics.setStencilTest()
+		
+		-- code to counter the offset being preserved next draw, remove when it gets fixed
+		food_sprite_pos = food_sprite_pos - food_sprite_offset - timer_offset
 	end
 
 	for i, shotSphere in ipairs(self.shotSpheres) do
