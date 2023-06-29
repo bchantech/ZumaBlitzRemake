@@ -104,15 +104,21 @@ end
 
 
 ---Destroys these spheres, for which the provided function returns `true`. Each sphere is checked separately.
----The playes is also given 100 points for each destroyed sphere.
 ---@param f function The function to be run for each sphere. Two parameters are allowed: `sphere` (Sphere) and `spherePos` (Vector2). If the function returns `true`, the sphere is destroyed.
 ---@param scorePos Vector2 The location of the floating text indicator showing how much score the player has gained.
 ---@param scoreFont string? The font to be used in the score text.
 ---@param noRewards boolean? If set to `true`, the previous two parameters are ignored, and the spheres are destroyed without giving any points.
-function Session:destroyFunction(f, scorePos, scoreFont, noRewards)
+---@param source string? The scoring source to attribute the destroy function to.
+function Session:destroyFunction(f, scorePos, scoreFont, noRewards, source)
 	-- we pass a function in the f variable
 	-- if f(param1, param2, ...) returns true, the sphere is nuked
+	source = source or "default"
 	local score = 0
+	local base_score = 0
+	local base_multiplier = 1
+	-- balls destroyed is used to calculate the exponent factor
+	local balls_destroyed = 0
+	local effective_ball_exponent = 1
 	for i, path in ipairs(self.level.map.paths) do
 		for j = #path.sphereChains, 1, -1 do
 			local sphereChain = path.sphereChains[j]
@@ -123,18 +129,82 @@ function Session:destroyFunction(f, scorePos, scoreFont, noRewards)
 					local spherePos = sphereGroup:getSpherePos(l)
 					if f(sphere, spherePos) and sphere.color ~= 0 then
 						sphereGroup:destroySphere(l)
+						balls_destroyed = balls_destroyed + 1
 						if not noRewards then
-							score = score + 10
-							-- TODO: Adjust score based on source (chain blast, hot frog, bomb, spirit shot, last hurrah)
+							-- Adjust score based on source (chain blast, hot frog, bomb, spirit shot, last hurrah)
+							if source == "hotfrog" then
+								score = score + self.level:getParameter("hotFrogPointsInc")
+							elseif source == "cannon" then
+								score = score + self.level:getParameter("cannonsPointsBase")
+							elseif source == "chainblast" then
+								score = score + self.level:getParameter("chainBlastScoreEach")
+							elseif source == "bomb" then
+								score = score + self.level:getParameter("bombsEachPoints")
+							elseif source == "spritshot" then
+								score = score + self.level:getParameter("spiritShotPointsEach")
+							elseif source == "lasthurrah" then
+								score = score + self.level:getParameter("lastHurrahPointInc")
+							else
+								score = score + self.level:getParameter("matchPointsBase")
+							end
 						end
 					end
 				end
 			end
 		end
 	end
+	-- calculate exponential and base score effects
+	if source == "hotfrog" then
+		effective_ball_exponent = self.level:getParameter("hotFrogEffectiveBallExponent")
+		base_score = self.level:getParameter("hotFrogPointsBase")
+	elseif source == "cannon" then
+		base_multiplier = self.level:getParameter("cannonsPointsMultiplier")
+	elseif source == "lasthurrah" then
+		base_multiplier = self.level:getParameter("lastHurrahMultiplier")
+		base_score = self.level:getParameter("lastHurrahPointBase")
+	elseif source == "bomb" then
+		effective_ball_exponent = self.level:getParameter("bombsEffectiveBallExponent")
+		base_score = self.level:getParameter("bombsBasePoints")
+		base_multiplier = self.level:getParameter("bombsMultPoints")
+	elseif source == "chainblast" then
+		effective_ball_exponent = self.level:getParameter("chainBlastEffectiveBallExponent")
+		base_score = self.level:getParameter("chainBlastScoreBase")
+		base_multiplier = self.level:getParameter("chainBlastScoreMult")
+	elseif source == "spritshot" then
+		effective_ball_exponent = self.level:getParameter("spiritShotEffectiveBallExponent")
+		base_score = self.level:getParameter("spiritShotPointsBase")
+		base_multiplier = self.level:getParameter("spiritShotPointsMult")
+	end
+
+	score = score * (math.floor(balls_destroyed^effective_ball_exponent) / balls_destroyed)
+	score = score + base_score
+	score = score * base_multiplier
+
 	if not noRewards then
 		self.level:grantScore(score)
-		self.level:spawnFloatingText("+".._NumStr(score), scorePos, scoreFont or "fonts/score0.json")
+		
+		local final_score = score * self.level.multiplier
+
+		-- do not display if cannon
+		if source ~= "cannon" and source ~= "lasthurrah" then
+			self.level:spawnFloatingText("+".._NumStr(final_score), scorePos, scoreFont or "fonts/score0.json")
+		end
+
+		-- add score to the appropriate category
+	
+		if source == "hotfrog" then
+			self.level.hotFrogScore = self.level.hotFrogScore + final_score
+		elseif source == "cannon" then
+			self.level.cannonsScore = self.level.cannonsScore + final_score
+		elseif source == "chainblast" then
+			self.level.chainBlastsScore = self.level.chainBlastsScore + final_score
+		elseif source == "bomb" then
+			self.level.bombsScore = self.level.bombsScore + final_score
+		elseif source == "spritshot" then
+			self.level.spiritShotScore = self.level.spiritShotScore + final_score
+		elseif source == "lasthurrah" then
+			self.level.lastHurrahScore = self.level.lastHurrahScore + final_score
+		end
 	end
 end
 
@@ -181,10 +251,12 @@ end
 
 ---Destroys a single sphere from the board.
 ---@param s Sphere The sphere to be destroyed.
-function Session:destroySingleSphere(s)
+function Session:destroySingleSphere(s, effect)
 	self:destroyFunction(
 		function(sphere, spherePos) return sphere == s end,
-		s:getPos(), _Game.configManager.spheres[s.color].matchFont
+		s:getPos(), _Game.configManager.spheres[s.color].matchFont,
+		nil,
+		effect
 	)
 end
 
@@ -230,9 +302,13 @@ end
 ---@param radius number The range in pixels.
 ---@param color integer A color that any sphere must be matching with in order to destroy it.
 function Session:destroyRadiusColor(pos, radius, color)
+	-- DIRTY: Only hot frog uses this, so we can set the source to "hotfrog"
+
 	self:destroyFunction(
 		function(sphere, spherePos) return (pos - spherePos):len() <= radius and self:colorsMatch(color, sphere.color) end,
-		pos
+		pos,
+		nil, nil,
+		"hotfrog"
 	)
 end
 

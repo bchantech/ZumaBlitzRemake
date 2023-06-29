@@ -128,7 +128,8 @@ function ShotSphere:moveStep()
 				self:destroy()
 				_Game:spawnParticle(sphereConfig.destroyParticle, self.pos)
             elseif sphereConfig.hitBehavior.type == "pierce" then
-				_Game.session:destroySingleSphere(nearestSphere.sphere)
+				-- DIRTY: treat pierce as cannon since no other sphere type does that
+				_Game.session:destroySingleSphere(nearestSphere.sphere, "cannon")
 				self.hitSphere = nil
 			else
 				if self.hitSphere.half then
