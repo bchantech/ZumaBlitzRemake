@@ -82,6 +82,7 @@ function Debug:draw()
 	if self.gameDebugVisible then self:drawDebugInfo() end
 	if self.fpsDebugVisible then self:drawFpsInfo() end
 	if self.sphereDebugVisible then self:drawSphereInfo() end
+	if self.sphereDebugVisible3 then self:drawPathInfoOnHover() end
 end
 
 function Debug:keypressed(key)
@@ -93,6 +94,7 @@ function Debug:keypressed(key)
 		if key == "f5" then self.fpsDebugVisible = not self.fpsDebugVisible end
 		if key == "f6" then self.sphereDebugVisible = not self.sphereDebugVisible end
 		if key == "f7" then self.sphereDebugVisible2 = not self.sphereDebugVisible2 end
+		if key == "f8" then self.sphereDebugVisible3 = not self.sphereDebugVisible3 end
 		if key == "kp-" and self.profPage > 1 then self.profPage = self.profPage - 1 end
 		if key == "kp+" and self.profPage < #self.profPages then self.profPage = self.profPage + 1 end
 		if key == "," then self.uiDebugOffset = self.uiDebugOffset - 75 end
@@ -354,6 +356,57 @@ function Debug:drawSphereInfo()
 		love.graphics.setColor(1, 1, 1)
 		love.graphics.print("No level available!", p.x, p.y)
 	end
+end
+
+-- draw the path location on hover
+function Debug:drawPathInfoOnHover()
+	local p = Vec2(0, _DisplaySize.y - 200)
+	local s = Vec2(_DisplaySize.x, 200)
+
+	-- background
+	love.graphics.setColor(0, 0, 0, 0.5)
+	love.graphics.rectangle("fill", p.x, p.y, s.x, s.y)
+
+	local n = 0
+	local y2 = 1
+
+	if _Game:levelExists() then
+		for i, path in ipairs(_Game.session.level.map.paths) do
+			love.graphics.setColor(1, 1, 1)
+			love.graphics.print("Path " .. tostring(i), p.x + 10, p.y + 10 + n)
+			love.graphics.line(p.x + 120, p.y + 20 + n, p.x + 720, p.y + 20 + n)
+			
+			local x = 0
+			local y = 0
+			local z = {x=0,y=0}
+			x, y = love.mouse.getPosition() 
+			x = math.min(math.max(x,120),720)
+			z = path:getPos((x-120) / 600 * path.length)
+
+			-- at 120 value should be 0, 720 should be the max value of length()
+
+			love.graphics.setColor(0, 0, 0)
+			love.graphics.circle("fill", z.x, z.y, 10)
+			love.graphics.circle("fill", x, p.y + 20 + n, 10)
+
+			love.graphics.setColor(1, y2, 0.5)
+			love.graphics.circle("fill", z.x, z.y, 8)
+			love.graphics.circle("fill", x, p.y + 20 + n, 8)
+			
+			local z2 = math.floor(((x-120) / 600) * 100)/100
+
+			love.graphics.setColor(1, 1, 0)
+			love.graphics.print(z2, p.x + 60, p.y + 10 + n)
+			
+			y2 = y2 - 0.25
+			n = n + 25
+		end
+		
+	else
+		love.graphics.setColor(1, 1, 1)
+		love.graphics.print("No level available!", p.x, p.y)
+	end
+
 end
 
 
