@@ -9,7 +9,8 @@
         "speedBonusPointsBase": 10,
         "hotFrogFruitInc": 20000,
         "spiritBlastEnabled": 1,
-        "spiritBlastColor": 5
-    },
-    "spiritBlastColor": 5
+        "spiritBlastColor": 5,
+        "spiritBlastPointsBase": 9500, 
+        "spiritBlastPointsIncrement": 800
+    }
 }

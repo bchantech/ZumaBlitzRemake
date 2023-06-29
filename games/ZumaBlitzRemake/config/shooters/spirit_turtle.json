@@ -13,13 +13,10 @@
         "colored": false
     },
     "speedShotParticle": "particles/speed_shot_beam.json",
-    "shootSpeed": 770,
     "ballPos": {
         "x": 0,
         "y": -60
     },
-    "multishot": true,
-    "shotCooldown": 0.2,
     "hitboxSize": {
         "x": 160,
         "y": 30

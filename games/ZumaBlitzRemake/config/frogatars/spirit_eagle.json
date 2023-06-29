@@ -11,7 +11,8 @@
         "fruitLifetime": 60,
         "multiplierFrequencyBase": -1,
         "spiritBlastEnabled": 1,
-        "spiritBlastColor": 4
-    },
-    "spiritBlastColor": 4
+        "spiritBlastColor": 4,
+        "spiritBlastPointsBase": 9500, 
+        "spiritBlastPointsIncrement": 800
+    }
 }

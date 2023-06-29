@@ -101,11 +101,11 @@ function ShooterConfig:new(data, path)
     ---@type string
     self.speedShotParticle = data.speedShotParticle
     ---@type number
-    self.shotCooldown = data.shotCooldown or 0
+    self.shotCooldown = data.shotCooldown or 0.2
     ---@type boolean
-    self.multishot = data.multishot or false
+    self.multishot = data.multishot or true
     ---@type number
-    self.shootSpeed = data.shootSpeed
+    self.shootSpeed = data.shootSpeed or 800
     ---@type Vector2
     self.hitboxSize = _ParseVec2(data.hitboxSize) or Vec2()
 end

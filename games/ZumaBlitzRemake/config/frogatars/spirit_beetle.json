@@ -8,7 +8,8 @@
     "effects": {
         "extraStartingTime": 12,
         "spiritBlastEnabled": 1,
-        "spiritBlastColor": 3
-    },
-    "spiritBlastColor": 3
+        "spiritBlastColor": 3,
+        "spiritBlastPointsBase": 7500, 
+        "spiritBlastPointsIncrement": 250 
+    }
 }

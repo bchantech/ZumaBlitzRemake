@@ -12,7 +12,8 @@
         "spiritShotPointsBase": 0,
         "spiritShotPointsEach": 10,
         "spiritBlastEnabled": 1,
-        "spiritBlastColor": 1
-    },
-    "spiritBlastColor": 1
+        "spiritBlastColor": 1,
+        "spiritBlastPointsBase": 7500, 
+        "spiritBlastPointsIncrement": 250
+    }
 }
