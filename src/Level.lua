@@ -318,8 +318,8 @@ function Level:updateLogic(dt)
 			end
         else
 			self.shotLastHotFrogBall = false
-			if self.blitzMeterCooldown == 0 then
-				self.blitzMeter = math.max(self.blitzMeter - 0.03 * dt, 0)
+			if self.blitzMeterCooldown == 0 and self.blitzMeter > 0 then
+				self.blitzMeter = math.min(math.max(self.blitzMeter - (self:getParameter("hotFrogDecayPerSecond") / self:getParameter("hotFrogGoal") * dt), 0),0.99)
 			else
 				self.blitzMeterCooldown = math.max(self.blitzMeterCooldown - dt, 0)
 			end
@@ -976,9 +976,15 @@ function Level:incrementBlitzMeter(amount, chain)
 	if not chain and self.blitzMeter == 1 then
 		return
     end
-	
-	-- test
-	--amount = 0.5
+
+	-- Use the values of goal and match value instead
+	amount = self:getParameter("hotFrogMatchValue") / self:getParameter("hotFrogGoal")
+
+	-- If hot frog is not enabled, then matching will go no further than 99% of the meter
+	if self:getParameter("hotFrogEnabled") == 0 then
+		self.blitzMeter = math.min(self.blitzMeter + amount, 0.99)
+	end
+
 	self.blitzMeter = math.min(self.blitzMeter + amount, 1)
     if (not chain and self.blitzMeter == 1) or (chain and self.blitzMeter >= 1) then
         -- hot frog
@@ -1338,16 +1344,17 @@ function Level:setLevelDefaultParameters()
 	self.levelParameters["fruitFactor"] = 0.5
 	self.levelParameters["fruitCap"] = 5
 	self.levelParameters["fruitRoundingValue"] = 50
+	self.levelParameters["hotFrogEnabled"] = 1
 	self.levelParameters["hotFrogShots"] = 3
 	self.levelParameters["hotFrogRadius"] = 112
 	self.levelParameters["hotFrogPointsBase"] = 1000
 	self.levelParameters["hotFrogPointsInc"] = 100
-	self.levelParameters["hotFrogDecayPerSecond"] = 500
+	self.levelParameters["hotFrogDecayPerSecond"] = 600
 	self.levelParameters["hotFrogMatchValue"] = 1000
-	self.levelParameters["hotFrogGoal"] = 20000
+	self.levelParameters["hotFrogGoal"] = 18000
 	self.levelParameters["hotFrogFruitInc"] = 1
 	self.levelParameters["hotFrogExplosionInc"] = 1
-	self.levelParameters["hotFrogDelayFrames"] = 50
+	self.levelParameters["hotFrogDelaySeconds"] = 0.5
 	self.levelParameters["hotFrogComboBreaker"] = 0
 	self.levelParameters["hotFrogJackpotInc"] = 500
 	self.levelParameters["hotFrogGoalInc"] = 0

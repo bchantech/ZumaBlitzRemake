@@ -3,10 +3,6 @@
     "displayName": "Shamrock Soda",
     "sprite": "sprites/food_items/shamrock_soda.json",
     "effects": {
-        "$comment": [
-            "Hot Frog meter slowly fills up at 60% the normal decay rate, so a negative value must be used.",
-            "Decay only starts when the meter is above zero, and cannot trigger hot frog automatically."
-        ],
-        "hotFrogDecayPerTickBase": -2.2
+        "hotFrogDecayPerSecond": -1000
     }
 }

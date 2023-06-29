@@ -4,6 +4,6 @@
     "sprite": "sprites/food_items/ginger_up.json",
     "displayEffects": "Up! Up! Frog-O-Meter!",
     "effects": {
-        "hotFrogDecayPerTickBase": -1
+        "hotFrogDecayPerSecond": -600
     }
 }

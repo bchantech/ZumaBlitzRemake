@@ -4,7 +4,7 @@
     "sprite": "sprites/food_items/ignition_sauce.json",
     "displayEffects": "Hotter Hot Frog!",
     "effects": {
-        "hotFrogGoalInc": 125,
+        "hotFrogMatchValue": 125,
         "hotFrogRadius": 22,
         "hotFrogPointsBase": 500
     }
