@@ -145,6 +145,7 @@ function Path:update(dt)
 
 	if not self.spawnDistanceHit and self:getMaxOffset() > self.length * self.spawnDistance then
 		 self.spawnDistanceHit = true 
+		 self.map.level.rollingSound:stop()
 		end
 
 	for i, sphereChain in ipairs(self.sphereChains) do

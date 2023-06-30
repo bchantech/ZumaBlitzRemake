@@ -71,8 +71,8 @@ function Level:new(data)
 
 	self.dangerSoundName = data.dangerSound or "sound_events/warning.json"
 	self.dangerLoopSoundName = data.dangerLoopSound or "sound_events/warning_loop.json"
-    self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
-	
+	self.rollingSound = nil
+
 	-- Initalize random seed for ball generation
 	self.rngseed = os.time()
 	self.ball_rng = love.math.newRandomGenerator(self.rngseed)
@@ -97,6 +97,7 @@ function Level:changePhase()
 	if self.phase == 3 then
 		self.started = true
 		self.phase = 4
+		self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
 	-- skip the food eating animation
 	elseif self.phase == 2 then
 		if self.foodSoundResource then
@@ -148,14 +149,6 @@ function Level:update(dt)
 	if not self.pause then
 		self:updateLogic(dt * self.gameSpeed)
     end
-	-- Rolling sound
-	if self.rollingSound then
-		if self.pause then
-            self.rollingSound:pause()
-        elseif (not self.pause) and self.controlDelay then
-			self.rollingSound:play()
-		end
-	end
 
 	self:updateMusic()
 end
@@ -229,6 +222,7 @@ function Level:updateLogic(dt)
 		if self.drawCurve > self.curveCount then
 			self.phase = 4
 			self.started = true
+			self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
 		end
 
 	end
@@ -465,9 +459,6 @@ function Level:updateLogic(dt)
 		self.controlDelay = self.controlDelay - dt
 		if self.controlDelay <= 0 then
             self.controlDelay = nil
-			if self.rollingSound then
-				self.rollingSound:stop()
-			end
 		end
 	end
 
@@ -519,9 +510,6 @@ function Level:updateLogic(dt)
 
 	-- Level lose
     if self.lost and self:getEmpty() and not self.ended then
-		if self.rollingSound then
-			self.rollingSound:stop()
-		end
 		-- FORK-SPECIFIC CODE: Add a highscore after the board
 		_Game:getCurrentProfile():writeHighscore()
 		_Game.uiManager:executeCallback("levelComplete")
@@ -1135,9 +1123,6 @@ function Level:destroy()
 	if self.target then
 		self.target:destroy()
     end
-	if self.rollingSound then
-		self.rollingSound:stop()
-	end
 
 	if self.ambientMusicName then
 		local ambientMusic = _Game:getMusic(self.ambientMusicName)
@@ -1511,7 +1496,6 @@ function Level:lose()
 		shotSphere:destroy()
 	end
 	self.shotSpheres = {}
-	self.rollingSound = _Game:playSound("sound_events/sphere_roll.json")
     _Game:playSound("sound_events/level_lose.json")
 end
 
