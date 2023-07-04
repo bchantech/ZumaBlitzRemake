@@ -29,13 +29,13 @@ local ThreadManager = require("src.ThreadManager")
 
 -- CONSTANT ZONE
 _VERSION = "vZB"
-_VERSION_NAME = "Zuma Blitz Remake Fork"
+_VERSION_NAME = "Zuma Blitz Remake"
 _DISCORD_APPLICATION_ID = "797956172539887657"
 _START_TIME = love.timer.getTime()
 
 -- Set this to a string of your choice. This will be only printed in log files and is not used anywhere else.
 -- You can automate this in i.e. a script by simply adding a `_BUILD_NUMBER = "<your number>"` line at the end of this main.lua file.
-_BUILD_NUMBER = "2023-02-15"
+_BUILD_NUMBER = "2023-06-30"
 
 
 

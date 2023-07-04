@@ -11,6 +11,114 @@ All dates are in YYYY-MM-DD format.
 
 ==========
 
+Alpha v0.1.4 - 2023-06-30
+
+Additions:
+ - Add spirit animal transformation
+ - Add food eating animation
+ - Add skippable sparkle before balls roll out
+ - Add various exponent parameters to explosions
+
+Bugfixes:
+ - Fix hot frog explosions not displaying the correct amount of points
+ - Fix spawnRules not spawning balls when not defined
+ - Fix equipping Shamrock Soda crashed the game
+
+Changes:
+ - Optimized resource loading times
+ - Scores from bombs, chain blast, etc. are now scored properly in their categories
+ - Balls destroyed now give the appropriate amount of points depending on source
+ - Balls destroyed by cannon no longer display points scored
+ - Balls now roll out as fast as needed to reach the spawn point within one second
+
+Custom Levels:
+ - Hot Frog meter gain is now affected by hotFrogMatchValue and hotFrogGoal, as well as food that changes those values
+ - Add radius_linear as an speedMode option to particle effects
+ - Hot Frog can now be disabled, if so the most the meter can reach is 99%
+
+Other:
+ - Add F8 to debug to highlight path % based on the location of your mouse cursor
+
+==========
+
+Alpha v0.1.3 - 2023-05-31
+
+Additions:
+ - Scoring and game mechanic rehaul - fruit, powers and spirit animals now accepts any effect parameter
+ - Add hot frog transformation graphic
+ - Add XP and level support
+ - Add support for cannons, bombs, and color nukes on spheres
+ - Add color nuke and cannon sounds when powerup picked up
+ - Add coin counter (currently you are allowed to go negative but this will not be the case in a later release)
+
+Bugfixes:
+ - Fix that gap shots from double tapping were not registered
+ - Fix crash when powerup spawns on a sphere that does not have powerupSprites defined
+
+Changes:
+ - ZBR will automatically load by default, autoload.txt will no longer be used
+ - Powerups are now generated based on the level parameter's spawn rates rather than being purely probability based
+ - Duration can now be adjusted for powerups
+ - Spirit Eagle now increases multiplier ball spawn rate
+
+Removed:
+ - Remove most leftover Luxor banners and associated navigation
+ 
+Custom Levels:
+ - Levels now accept effects, they override game defaults
+ - objectives are now optional - if not defined, will set a timer for 60 seconds
+ - colorGeneratorNormal, colorGeneratorDanger, and matchEffect are now optional parameters
+ - music and dangerMusic are now optional parmeters
+ - individualPowerupFrequencies and powerupFrequency is no longer supported - Use the respective parameters for that powerup instead
+ - targetFrequency is no longer supported - use mapEffect fruitFrequency instead
+ - Duration can now be adjusted for powerups
+ - Fix particle sprites not displaying multi-row sprite definitions properly
+ - Add spawnDelayCount as optional parameter to particle
+ - Fix radius speedMode not respecting speed under some conditions
+
+Misc:
+ - SpriteButton now requires 4 states, and a warning will show if the sprite does not have it
+ - Sprites will use the sprite definition in the first state if an invalid state in the sprite is called.
+
+==========
+
+Alpha v0.1.2 - 2023-04-21
+
+Additions:
+ - Add speed bonus
+ - Add multithreading support
+ - Added fullscreen in option menu
+
+Changes:
+ - Fonts that do not contain a particular character will now render as whitespace instead of 0
+ - Loading progress bar GUI is now circular
+ - Next ball updates immediately after a ball is fired
+ - Update ball generation algorithm
+ - Refactor internal food effect names
+ - Space now swaps spheres, pause moved to 'P'
+ - Balls now shoot faster after the hot frog meter is half fullscreen
+ - Reduced starting speed of balls
+ - Max shot speed capped at 2000
+ - Super Speed Ball and Warp Ball powers now multiply speed bonus by 1.6x and 3.5x respectively
+ - Gap shot formula reworked to be as close to the original
+ - Shooter only fires when not over a UI button
+
+Bugfixes:
+ - Fix crash if sphere color is defined in the level but not defined in nextBallSprites for the shooter
+ - Fix crash on missing settings.json when saving engine settings
+ - Fix balls being magnitized back no longer kept drifting when there was no longer a match for it to slide back
+
+Custom Levels:
+ - Added the rest of the file definitions in the documentation. This is a WIP and some definitions may be subject to change.
+ - Add support for 'circular' for spriteProgress
+ - Add support for 'maxSingles' and 'maxClumps' in level data
+ - Add support for 'bidirectional' for shooter
+
+Removed:
+ - Remove most leftover Luxor sprites and associated .json files
+
+==========
+
 Alpha v0.1.1 - 2023-02-15
 
 Additions:
