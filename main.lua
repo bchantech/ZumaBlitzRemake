@@ -91,6 +91,9 @@ function love.load(args)
 	-- Initialize RNG for Boot Screen
 	local _ = math.randomseed(os.time())
 
+	-- Initalize save location
+	love.filesystem.setIdentity("ZumaBlitzRemake")
+
 	-- Initialize some classes
 	_Log = Log()
 	_Debug = Debug()
@@ -272,14 +275,13 @@ end
 
 
 function _LoadFile(path)
-	local file, err = io.open(path, "r")
+	local file, err = love.filesystem.newFile(path, "r")
 	if not file then
 		_Log:printt("main", string.format("WARNING: Error during loading: \"%s\" (%s): expect errors!", path, err))
 		return
 	end
-	io.input(file)
-	local contents = io.read("*a")
-	io.close(file)
+	local contents = file:read()
+	file:close()
 	return contents
 end
 
@@ -295,9 +297,9 @@ end
 -- This function allows to load images from external sources.
 -- This is an altered code from https://love2d.org/forums/viewtopic.php?t=85350#p221460
 function _LoadImageData(path)
-	local f = io.open(path, "rb")
+	local f, errorstr = love.filesystem.newFile(path, "r")
 	if f then
-		local data = f:read("*all")
+		local data = f:read()
 		f:close()
 		if data then
 			data = love.filesystem.newFileData(data, "tempname")
@@ -317,9 +319,9 @@ end
 -- This function allows to load sounds from external sources.
 -- This is an altered code from the above function.
 function _LoadSoundData(path)
-	local f = io.open(path, "rb")
+	local f, errorstr = love.filesystem.newFile(path, "r")
 	if f then
-		local data = f:read("*all")
+		local data = f:read()
 		f:close()
 		if data then
 			-- to make everything work properly, we need to get the extension from the path, because it is used
@@ -353,9 +355,9 @@ end
 -- This function allows to load fonts from external sources.
 -- This is an altered code from the above function.
 function _LoadFontData(path, size)
-	local f = io.open(path, "rb")
+	local f, errorstr = love.filesystem.newFile(path, "r")
 	if f then
-		local data = f:read("*all")
+		local data = f:read()
 		f:close()
 		if data then
 			data = love.filesystem.newFileData(data, "tempname")
@@ -375,11 +377,13 @@ end
 
 
 function _SaveFile(path, data)
-	local file = io.open(path, "w")
+	--replace slash in order to prevent save fails from saving in nonexistent directory
+	path = string.gsub(path, "/", "_")
+	local file, errorstr = love.filesystem.newFile(path, "w")
+	if errorstr then print(errorstr) end
 	assert(file, string.format("SAVE FILE FAIL: %s", path))
-	io.output(file)
-	io.write(data)
-	io.close(file)
+	file:write(data)
+	file:close()
 end
 
 function _SaveJson(path, data)

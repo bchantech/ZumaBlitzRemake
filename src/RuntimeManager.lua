@@ -23,12 +23,20 @@ end
 
 
 
----Loads runtime data from `runtime.json`. If the file doesn't exist or is corrupted, generates a new runtime and prints a message to the log.
+---Loads runtime data from `profile.json`. 
+---If the file does not exist or is corrupted, searches for a legacy runtime.json file
+---If this also fails, generates a new runtime and prints a message to the log.
 function RuntimeManager:load()
-	-- if runtime.json exists, then load it
-	if pcall(function() _LoadJson(_ParsePath("runtime.json")) end) then
-		local data = _LoadJson(_ParsePath("runtime.json"))
 
+	local data = nil
+
+	if pcall(function() _LoadJson("profile.json") end) then
+		data = _LoadJson("profile.json")
+	elseif pcall(function() _LoadJson(_ParsePath("runtime.json")) end) then
+		data = _LoadJson(_ParsePath("runtime.json"))
+	end
+
+	if data then
 		self.profileManager = ProfileManager(data.profiles)
 		self.highscores = Highscores(data.highscores)
 		self.options = Options(data.options)
@@ -49,7 +57,7 @@ end
 
 
 
----Saves runtime data to `runtime.json`.
+---Saves runtime data to `profile.json`.
 function RuntimeManager:save()
 	local data = {}
 
@@ -57,7 +65,7 @@ function RuntimeManager:save()
 	data.highscores = self.highscores.data
 	data.options = self.options.data
 
-	_SaveJson(_ParsePath("runtime.json"), data)
+	_SaveJson("profile.json", data)
 end
 
 
