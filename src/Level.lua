@@ -31,6 +31,7 @@ function Level:new(data)
 	-- Add the values from powers, fruit, spirit animals, and the like.
 	self:addPowerEffects()
 
+	self.level_colors = data.pathsBehavior[1].colors
     self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
     self.shooter = Shooter(data.shooter or self.map.shooter)
 
@@ -737,82 +738,25 @@ function Level:getLightningStormSphere()
 	return nil
 end
 
-
-
-
-
----Returns currently used color generator data.
----@return table
-function Level:getCurrentColorGenerator()
-	if self.danger then
-		return _Game.configManager.colorGenerators[self.colorGeneratorDanger]
-	else
-		return _Game.configManager.colorGenerators[self.colorGeneratorNormal]
-	end
-end
-
-
-
----Generates a new color for the Shooter.
+---Generates a new color for the Shooter, based on the colors on the level.
 ---@return integer
 function Level:getNewShooterColor()
-	return self:generateColor(self:getCurrentColorGenerator())
-end
-
-
-
----Generates a color based on the data.
----@param data table Shooter color generator data.
----@return integer
-function Level:generateColor(data)
-	if data.type == "random" then
-		-- Make a pool with colors which are on the board.
-		local pool = {}
-		for i, color in ipairs(data.colors) do
-			if not data.hasToExist or _Game.session.colorManager:isColorExistent(color) then
-				table.insert(pool, color)
-			end
-		end
-		-- Return a random item from the pool.
-		if #pool > 0 then
-			return pool[math.random(#pool)]
-		end
-
-	elseif data.type == "near_end" then
-		-- Select a random path.
-		local path = _Game.session.level:getRandomPath(true, data.paths_in_danger_only)
-		if not path:getEmpty() then
-			-- Get a SphereChain nearest to the pyramid
-			local sphereChain = path.sphereChains[1]
-			-- Iterate through all groups and then spheres in each group
-			local lastGoodColor = nil
-			-- reverse iteration!!!
-			for i, sphereGroup in ipairs(sphereChain.sphereGroups) do
-				for j = #sphereGroup.spheres, 1, -1 do
-					local sphere = sphereGroup.spheres[j]
-					local color = sphere.color
-					-- If this color is generatable, check if we're lucky this time.
-					if _MathIsValueInTable(data.colors, color) then
-						if math.random() < data.select_chance then
-							return color
-						end
-						-- Save this color in case if no more spheres are left.
-						lastGoodColor = color
-					end
-				end
-			end
-			-- no more spheres left, get the last good one if exists
-			if lastGoodColor then
-				return lastGoodColor
-			end
-		end
+	-- Make a pool with colors which are on the board.
+	local pool = {}
+	for i, color in ipairs(self.level_colors) do
+		table.insert(pool, color)
+		--if not data.hasToExist or _Game.session.colorManager:isColorExistent(color) then
+		--	table.insert(pool, color)
+		--end
+	end
+	-- Return a random item from the pool.
+	if #pool > 0 then
+		print("new item")
+		return pool[self.next_ball_rng:random(#pool)]
 	end
 
 	-- Else, return a fallback value.
-	if type(data.fallback) == "table" then
-		return self:generateColor(data.fallback)
-	end
-	return data.fallback
+	return 0
 end
 
 
