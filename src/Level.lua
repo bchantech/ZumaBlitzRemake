@@ -295,14 +295,14 @@ function Level:updateLogic(dt)
 
 
 	-- Time counting
-	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
+	if self.started and self.phase == 4 and not self:getFinish() and not self.finish and not self.lost then
 		self.time = self.time + dt
     end
 
 
 
     -- Hot Frog handling
-	if self.started and not self.controlDelay and not self:getFinish() and not self.finish and not self.lost then
+	if self.started and not self:getFinish() and not self.finish and not self.lost then
 		if self.blitzMeter == 1 then
 			-- We're in hot frog mode, reset once the shooter has a ball other than the fireball.
 			if self.shooter.color > 0 then
@@ -450,19 +450,6 @@ function Level:updateLogic(dt)
 		--TODO: Implement the Last Hurrah
         _Game:playSound("sound_events/time_up.json")
 	end
-
-
-
-	-- Level start
-	-- TODO: HARDCODED - make it more flexible
-	if self.controlDelay then
-		self.controlDelay = self.controlDelay - dt
-		if self.controlDelay <= 0 then
-            self.controlDelay = nil
-		end
-	end
-
-
 
 	-- Level finish
 	if self:getFinish() and not self.finish and not self.finishDelay then
@@ -1034,7 +1021,6 @@ end
 
 ---Starts the Level. 
 function Level:begin()
-	self.controlDelay = _Game.configManager.gameplay.level.controlDelay
 	self.phase = 3
 
 	if self.monument then
@@ -1209,7 +1195,6 @@ function Level:reset()
         }
     ]]
 
-	self.controlDelay = nil
 	self.lost = false
 	self.ended = false
 	self.wonDelay = nil
@@ -1655,7 +1640,6 @@ function Level:serialize()
         blitzMeterCooldown = self.blitzMeterCooldown,
 		shotLastHotFrogBall = self.shotLastHotFrogBall,
 		multiplier = self.multiplier,
-		controlDelay = self.controlDelay,
 		finish = self.finish,
 		finishDelay = self.finishDelay,
 		bonusPathID = self.bonusPathID,
@@ -1812,7 +1796,6 @@ function Level:deserialize(t)
 	self.speedBonusIncrement = t.speedBonusIncrement or 0
 	self.speedTimer = t.speedTimer or 0
 	-- Utils
-	self.controlDelay = t.controlDelay
 	self.finish = t.finish
 	self.finishDelay = t.finishDelay
 	self.bonusPathID = t.bonusPathID

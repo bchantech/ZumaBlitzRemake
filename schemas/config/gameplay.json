@@ -7,11 +7,6 @@
             "type": "object",
             "description": "Defines some key level times.",
             "properties": {
-                "controlDelay": {
-                    "type": "number",
-                    "minimum": 0,
-                    "description": "Time between launching the first spheres in a level and the shooter activation in seconds."
-                },
                 "finishDelay": {
                     "type": "number",
                     "minimum": 0,
@@ -29,7 +24,6 @@
                 }
             },
             "required": [
-                "controlDelay",
                 "finishDelay",
                 "bonusDelay",
                 "wonDelay"

@@ -1,7 +1,6 @@
 {
     "$schema": "../../../schemas/config/gameplay.json",
     "level": {
-        "controlDelay": 2,
         "finishDelay": 2,
         "bonusDelay": 1.5,
         "wonDelay": 1.5

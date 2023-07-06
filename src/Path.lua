@@ -248,7 +248,6 @@ end
 ---Summons a new Sphere Chain on this Path.
 function Path:spawnChain()
 	local sphereChain = SphereChain(self)
-	if self.map.level.controlDelay then sphereChain.sphereGroups[1].speed = self.speeds[1].speed end
 	table.insert(self.sphereChains, sphereChain)
 	if not self.map.isDummy then
 		self.map.level.sphereChainsSpawned = self.map.level.sphereChainsSpawned + 1
@@ -550,7 +549,7 @@ end
 ---Returns `true` if the given path should give a Curve Clear bonus.
 ---@return boolean
 function Path:isValidForCurveClear()
-	return not self.map.isDummy and not self.map.level.controlDelay and self.spawnDistanceHit and self:getMaxOffset() <= 0 and not self.pathClearGranted and #self.sphereChains > 0
+	return not self.map.isDummy and self.spawnDistanceHit and self:getMaxOffset() <= 0 and not self.pathClearGranted and #self.sphereChains > 0
 end
 
 
