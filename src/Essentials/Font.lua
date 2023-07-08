@@ -91,6 +91,10 @@ function Font:draw(text, pos, align, color, alpha, blendMode)
     end
 	---@diagnostic disable-next-line: param-type-mismatch
     love.graphics.setBlendMode(blendMode)
+	
+	if type(text) == "number" then
+		text = tostring(text)
+	end
 
 	if self.type == "image" then
 		love.graphics.setColor(color.r, color.g, color.b, alpha)
