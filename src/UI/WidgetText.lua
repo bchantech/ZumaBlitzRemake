@@ -22,7 +22,9 @@ end
 
 
 function UIWidgetText:draw(variables)
-	self.font:draw(self.textTmp, self.parent:getPos(), self.align, nil, self.parent:getAlpha(), nil, self.parent.blendMode)
+	
+	local textTmp = string.gsub(self.textTmp, "$expr{.-}", function(s) return _Vars:evaluateExpression(s) end)
+	self.font:draw(textTmp, self.parent:getPos(), self.align, nil, self.parent:getAlpha(), nil, self.parent.blendMode)
 end
 
 function UIWidgetText:getSize()
