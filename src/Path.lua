@@ -495,7 +495,7 @@ end
 ---@param pixels number The path offset to be checked, in pixels.
 ---@return number
 function Path:getSpeed(pixels)
-	local satModeMult = 1
+	local satModeMult = 1 *  (1 + (self.map.level.time * self.map.level:getParameter("curveIncreasePctPerSecond")/100)) * self.map.level:getParameter("curveSpeedFactor")
 
 	-- Initial rollout speed is set based on what is needed to reach the spawn distance in one second.
 	if self.spawnDistanceHit == false then 

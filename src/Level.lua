@@ -1312,6 +1312,7 @@ function Level:setLevelDefaultParameters()
 	self.levelParameters["chainBonusJackpotEach"] = 5
 	self.levelParameters["chainBonusJackpotStart"] = 10
 	self.levelParameters["curveSpeedFactor"] = 1
+	self.levelParameters["curveIncreasePctPerSecond"] = 0
 	self.levelParameters["curveMaxSingleAdj"] = 0
 	self.levelParameters["curveMaxClumpAdj"] = 0
 	self.levelParameters["curveMatchPercentAdj"] = 0
