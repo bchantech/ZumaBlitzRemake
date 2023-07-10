@@ -337,7 +337,7 @@ function Level:updateLogic(dt)
 		
 		if self.multiplierCooldown <= 0 and self.multiplier < multiplierCap and self:getParameter("multiplierBallsEnabled") > 0 then
 			self.multipliersSpawned = self.multipliersSpawned + 1
-			self.multiplierCooldown = self:getParameter("multiplierFrequencyBase") + (math.random() * self:getParameter("multiplierFrequencyRange"))
+			self.multiplierCooldown = self:getParameter("multiplierFrequencyBase") + self.multipliersMatched + (math.random() * self:getParameter("multiplierFrequencyRange"))
 			self:addPowerup("multiplier", self:getParameter("multiplierLifetime"))
 		end
 		if self.timeballCooldown <= 0 and self:getParameter("timeBallsEnabled") > 0 then
@@ -1181,6 +1181,7 @@ function Level:resetGameStatistics()
 	self.hotFrogStarts = 0
 	self.ballsMissed = 0
 	self.multipliersSpawned = 0
+	self.multipliersMatched = 0
 	self.chronoBallsSpawned = 0
 	self.bombsSpawned = 0
 	self.cannonsSpawned = 0

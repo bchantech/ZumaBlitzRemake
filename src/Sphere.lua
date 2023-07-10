@@ -311,6 +311,7 @@ function Sphere:deleteVisually(ghostTime, crushed)
 					Vec2(380, 150),
 					"fonts/score0.json"
 				)
+				self.map.level.multipliersMatched = self.map.level.multipliersMatched + 1
 			end,
             cannons = function()
 				self.map.level.cannonsMatched = self.map.level.cannonsMatched + 1				
