@@ -342,7 +342,7 @@ function Level:updateLogic(dt)
 		end
 		if self.timeballCooldown <= 0 and self:getParameter("timeBallsEnabled") > 0 then
 			self.chronoBallsSpawned = self.chronoBallsSpawned + 1
-			self.timeballCooldown = self:getParameter("timeBallsFrequencyBase") + (math.random() * self:getParameter("timeBallsFrequencyRange"))
+			self.timeballCooldown = self:getParameter("timeBallsFrequencyBase") + (math.random() * (self:getParameter("timeBallsFrequencyRange") + math.min(self.time * self:getParameter("timeBallsFreqIncreasePerSecond") , self:getParameter("timeBallsFrequencyRangeMax") )) )
 			self:addPowerup("timeball", self:getParameter("timeBallsLifetime"))
 		end
 		if self.bombsCooldown <= 0 and self:getParameter("bombsEnabled") > 0 then
@@ -1302,6 +1302,8 @@ function Level:setLevelDefaultParameters()
 	self.levelParameters["timeBallsEnabled"] = 1
 	self.levelParameters["timeBallsFrequencyBase"] = 8
 	self.levelParameters["timeBallsFrequencyRange"] = 5
+	self.levelParameters["timeBallsFreqIncreasePerSecond"] = 0
+	self.levelParameters["timeBallsFrequencyRangeMax"] = 0
 	self.levelParameters["timeBallsLifetime"] = 21
 	self.levelParameters["timeBallsTimeBonus"] = 5
 	self.levelParameters["timeBallsMaxBalls"] = -1
