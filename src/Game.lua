@@ -262,9 +262,8 @@ end
 ---@param y integer The Y coordinate of mouse position.
 ---@param button integer The mouse button which was pressed.
 function Game:mousepressed(x, y, button)
-	if self.uiManager:isButtonHovered() then
-		self.uiManager:mousepressed(x, y, button)
-	else
+	self.uiManager:mousepressed(x, y, button)
+	if not self.uiManager:isButtonHovered() then
 		if self:levelExists() then
 			if button == 1 then
 				self.session.level.shooter:shoot()
@@ -275,7 +274,12 @@ function Game:mousepressed(x, y, button)
 	end
 end
 
-
+---Callback from `main.lua`.
+---@param x integer The X coordinate of mouse position.
+---@param y integer The Y coordinate of mouse position.
+function Game:mousemoved(x, y)
+	self.uiManager:mousemoved(x, y)
+end
 
 ---Callback from `main.lua`.
 ---@param x integer The X coordinate of mouse position.

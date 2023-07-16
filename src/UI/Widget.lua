@@ -29,12 +29,15 @@ function UIWidget:new(name, data, parent)
 	if type(data) == "string" then data = _LoadJson(_ParsePath(data)) end
 
 	self.pos = _ParseVec2(data.pos or {x = 0, y = 0})
+	self.mousePressLoc = {x = 0, y = 0}
+	self.draggable = data.draggable or false
 	self.angle = data.angle or 0
 	self.align = data.align or Vec2()
 	self.layer = data.layer
 	self.alpha = data.alpha or 0
 	self.scrollable = data.scrollable or false
 	self.scroll_pos = 0
+	self.mousedownlock = false
 
 	self.animations = {in_ = nil, out = nil}
 	if data.animations then
@@ -212,15 +215,34 @@ function UIWidget:clean()
 	end
 end
 
-function UIWidget:click()
-	if self.active and self.widget and self.widget.click then self.widget:click() end
+-- If the item has a click action execute the widget's click action
+-- Otherwise record x/y coord of click and start drag if the item is draggable and not over a button
+function UIWidget:click(x,y,button)
+	if self.active and self.widget and self.widget.click then self.widget:click(x,y,button)
+	elseif self.active and self.widget and self.draggable and button == 1 and not self:isButtonHovered() and not self.mousedownlock then 
+		self.mousePressLoc.x = x - self.pos.x
+		self.mousePressLoc.y = y - self.pos.y
+		self.mousedownlock = true
+	end
 
 	for childN, child in pairs(self.children) do
-		child:click()
+		child:click(x,y,button)
+	end
+end
+
+function UIWidget:moveWindow(x,y)
+	if self.active and self.widget and self.draggable and self.mousedownlock then
+		self.pos.x = x - self.mousePressLoc.x
+		self.pos.y = y - self.mousePressLoc.y
+	end
+
+	for childN, child in pairs(self.children) do
+		child:moveWindow(x,y)
 	end
 end
 
 function UIWidget:unclick()
+	self.mousedownlock = false
 	if self.widget and self.widget.unclick then self.widget:unclick() end
 
 	for childN, child in pairs(self.children) do

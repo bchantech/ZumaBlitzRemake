@@ -192,9 +192,15 @@ end
 function UIManager:mousepressed(x, y, button)
 	if button == 1 then
 		for widgetN, widget in pairs(self.widgets) do
-			widget:click()
+			widget:click(x, y, button)
 		end
   end
+end
+
+function UIManager:mousemoved(x, y)
+		for widgetN, widget in pairs(self.widgets) do
+			widget:moveWindow(x,y)
+		end
 end
 
 function UIManager:mousereleased(x, y, button)
