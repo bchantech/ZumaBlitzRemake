@@ -28,11 +28,11 @@ function UIWidget:new(name, data, parent)
 	-- global in methods
 	if type(data) == "string" then data = _LoadJson(_ParsePath(data)) end
 
-	self.pos = _ParseVec2(data.pos)
+	self.pos = _ParseVec2(data.pos or {x = 0, y = 0})
 	self.angle = data.angle or 0
 	self.align = data.align or Vec2()
 	self.layer = data.layer
-	self.alpha = data.alpha
+	self.alpha = data.alpha or 0
 	self.scrollable = data.scrollable or false
 	self.scroll_pos = 0
 
@@ -70,6 +70,8 @@ function UIWidget:new(name, data, parent)
 		self.widget = UIWidgetParticle(self, data.path)
 	elseif data.type == "level" then
 		self.widget = UIWidgetLevel(self, data.path)
+	else
+		data.type = "none"
 	end
 
 	self.parent = parent
@@ -81,8 +83,8 @@ function UIWidget:new(name, data, parent)
 	end
 	self.blendMode = data.blendMode
 
-	self.inheritShow = data.inheritShow
-	self.inheritHide = data.inheritHide
+	self.inheritShow = data.inheritShow or false
+	self.inheritHide = data.inheritHide or false
 	self.inheritPos = data.inheritPos
 	if self.inheritPos == nil then self.inheritPos = true end
 	self.visible = false
