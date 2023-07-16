@@ -545,6 +545,12 @@ end
 
 
 function _NumStr(n)
+
+	-- in expressions the result can either be a number or string. We will return if we find that it isn't a number.
+	if type(n) == "string" then
+		return n
+	end
+
 	local text = ""
 	local s = tostring(n)
 	local l = s:len()

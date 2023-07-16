@@ -23,12 +23,13 @@ end
 
 function UIWidgetText:draw(variables)
 	
-	local textTmp = string.gsub(self.textTmp, "$expr{.-}", function(s) return _Vars:evaluateExpression(s) end)
+	local textTmp = string.gsub(self.textTmp, "$expr{.-}", function(s) return _NumStr(_Vars:evaluateExpression(s)) end)
 	self.font:draw(textTmp, self.parent:getPos(), self.align, nil, self.parent:getAlpha(), nil, self.parent.blendMode)
 end
 
 function UIWidgetText:getSize()
-	return self.font:getTextSize(self.textTmp)
+	local textTmp = string.gsub(self.textTmp, "$expr{.-}", function(s) return _NumStr(_Vars:evaluateExpression(s)) end)
+	return self.font:getTextSize(textTmp)
 end
 
 return UIWidgetText
