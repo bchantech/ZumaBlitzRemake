@@ -11,6 +11,24 @@ All dates are in YYYY-MM-DD format.
 
 ==========
 
+Alpha v0.1.5 - 2023-07-29
+
+Changes:
+ - All profile data is now stored in profile.json. Should this file not be found, it will try to read runtime.json from an older version of the game.
+ - Multiplier spawn rate is now reduced based on number of multipliers collected in a game
+
+Custom Levels:
+ - Color generators are no longer supported - ball generation is now based on colors defined by the level
+ - Add curveIncreasePctPerSecond and curveSpeedFactor as parameters.
+
+Misc:
+ - UI text elements will now render $expr{} as an expression if possible, numbers will be formatted
+ - Add sin(a), cos(a), tan(a), min(a,b), max(a,b), clamp(a,b,c) to the list of expression functions
+ - Add optional parameter 'draggable' to UI elements, indicating it can be moved by click/dragging with mouse.
+ - love.filesystem links are now used to prevent read and save issues with fused versions of the game
+
+==========
+
 Alpha v0.1.4 - 2023-06-30
 
 Additions:
