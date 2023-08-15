@@ -461,8 +461,9 @@ end
 
 
 ---Returns a random sphere on the board.
+---position indicates what position to spawn at (modulus)
 ---@return Sphere
-function Session:getRandomSphere()
+function Session:getRandomSphere(position)
 	local allSpheres = {}
 	for _, path in pairs(self.level.map.paths) do
 		for _, sphereChain in pairs(path.sphereChains) do
@@ -476,7 +477,8 @@ function Session:getRandomSphere()
 			end
 		end
     end
-	return allSpheres[math.random(1, #allSpheres)]
+	position = (position % #allSpheres) + 1
+	return allSpheres[position]
 end
 
 

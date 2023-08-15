@@ -59,10 +59,6 @@ function Level:new(data)
 
 	self.stateCount = 0
 
-	---@type Sprite
-	self.targetSprite = _Game.configManager.targetSprites.random[math.random(1, #_Game.configManager.targetSprites.random)]
-
-
 	self.colorGeneratorNormal = data.colorGeneratorNormal or "default"
 	self.colorGeneratorDanger = data.colorGeneratorDanger or "default"
 
@@ -78,6 +74,13 @@ function Level:new(data)
 	self.rngseed = os.time()
 	self.ball_rng = love.math.newRandomGenerator(self.rngseed)
 	self.ball_rng_streak = love.math.newRandomGenerator(self.rngseed)
+	self.next_ball_rng = love.math.newRandomGenerator(self.rngseed)
+	self.powerup_rng = love.math.newRandomGenerator(self.rngseed)
+	self.fruit_rng = love.math.newRandomGenerator(self.rngseed)
+	self.powerup_position_rng = love.math.newRandomGenerator(self.rngseed)
+
+	---@type Sprite
+	self.targetSprite = _Game.configManager.targetSprites.random[self.fruit_rng:random(1, #_Game.configManager.targetSprites.random)]
 	
 	-- Additional variables come from this method!
 	self:reset()
@@ -337,27 +340,27 @@ function Level:updateLogic(dt)
 		
 		if self.multiplierCooldown <= 0 and self.multiplier < multiplierCap and self:getParameter("multiplierBallsEnabled") > 0 then
 			self.multipliersSpawned = self.multipliersSpawned + 1
-			self.multiplierCooldown = self:getParameter("multiplierFrequencyBase") + self.multipliersMatched + (math.random() * self:getParameter("multiplierFrequencyRange"))
+			self.multiplierCooldown = self:getParameter("multiplierFrequencyBase") + self.multipliersMatched + (self.powerup_rng:random() * self:getParameter("multiplierFrequencyRange"))
 			self:addPowerup("multiplier", self:getParameter("multiplierLifetime"))
 		end
 		if self.timeballCooldown <= 0 and self:getParameter("timeBallsEnabled") > 0 then
 			self.chronoBallsSpawned = self.chronoBallsSpawned + 1
-			self.timeballCooldown = self:getParameter("timeBallsFrequencyBase") + (math.random() * (self:getParameter("timeBallsFrequencyRange") + math.min(self.time * self:getParameter("timeBallsFreqIncreasePerSecond") , self:getParameter("timeBallsFrequencyRangeMax") )) )
+			self.timeballCooldown = self:getParameter("timeBallsFrequencyBase") + (self.powerup_rng:random() * (self:getParameter("timeBallsFrequencyRange") + math.min(self.time * self:getParameter("timeBallsFreqIncreasePerSecond") , self:getParameter("timeBallsFrequencyRangeMax") )) )
 			self:addPowerup("timeball", self:getParameter("timeBallsLifetime"))
 		end
 		if self.bombsCooldown <= 0 and self:getParameter("bombsEnabled") > 0 then
 			self.bombsSpawned = self.bombsSpawned + 1
-			self.bombsCooldown = self:getParameter("bombsFrequencyBase") + (math.random() * self:getParameter("bombsFrequencyRange"))
+			self.bombsCooldown = self:getParameter("bombsFrequencyBase") + (self.powerup_rng:random() * self:getParameter("bombsFrequencyRange"))
 			self:addPowerup("bombs", self:getParameter("bombsLifetime"))
 		end
 		if self.cannonCooldown <= 0 and self:getParameter("cannonsEnabled") > 0 then
 			self.cannonsSpawned = self.cannonsSpawned + 1
-			self.cannonCooldown = self:getParameter("cannonsFrequencyBase") + (math.random() * self:getParameter("cannonsFrequencyRange"))
+			self.cannonCooldown = self:getParameter("cannonsFrequencyBase") + (self.powerup_rng:random() * self:getParameter("cannonsFrequencyRange"))
 			self:addPowerup("cannons", self:getParameter("cannonsLifetime"))
 		end
 		if self.colorNukeCooldown <= 0 and self:getParameter("colorNukeEnabled") > 0 then
 			self.colorNukesSpawned = self.colorNukesSpawned + 1
-			self.colorNukeCooldown = self:getParameter("colorNukeFrequencyBase") + (math.random() * self:getParameter("colorNukeFrequencyRange"))
+			self.colorNukeCooldown = self:getParameter("colorNukeFrequencyBase") + (self.powerup_rng:random() * self:getParameter("colorNukeFrequencyRange"))
 			self:addPowerup("colornuke", self:getParameter("colorNukeLifetime"))
 		end
 		
@@ -400,7 +403,7 @@ function Level:updateLogic(dt)
 			if #validPoints > 0 then
 				self.target = Target(
 					self.targetSprite,
-					validPoints[math.random(1, #validPoints)],
+					validPoints[self.fruit_rng:random(1, #validPoints)],
 					false -- no slot machine yet!
                 )
 				_Game:playSound("sound_events/target_spawn.json")
@@ -410,7 +413,7 @@ function Level:updateLogic(dt)
 			-- don't tick the timer down if there's fruit present
 			-- if cooldown is already established do not do it again.
 			if self.targetSecondsCooldown <= 0 then 
-           		self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
+           		self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (self.fruit_rng:random() * self:getParameter("fruitFrequencyRange"))
 			end
 			if self.target.delQueue then
 				self.target = nil
@@ -517,7 +520,8 @@ end
 
 function Level:addPowerup(name, duration)
 	if duration == nil then duration = 20 end
-	local sphere = _Game.session:getRandomSphere()
+	local position = self.powerup_position_rng:random(1,65536)
+	local sphere = _Game.session:getRandomSphere(position)
 	if sphere and duration > 0 then
 		sphere:addPowerup(name, nil, duration)
 	end
@@ -1081,12 +1085,12 @@ function Level:reset()
 	self.speedTimer = 0
 
     self.target = nil
-	self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (math.random() * self:getParameter("fruitFrequencyRange"))
-	self.multiplierCooldown = self:getParameter("multiplierFrequencyBase") + (math.random() * self:getParameter("multiplierFrequencyRange"))
-	self.timeballCooldown = self:getParameter("timeBallsFrequencyBase") + (math.random() * self:getParameter("timeBallsFrequencyRange"))
-	self.bombsCooldown = self:getParameter("bombsFrequencyBase") + (math.random() * self:getParameter("bombsFrequencyRange"))
-	self.cannonCooldown = self:getParameter("cannonsFrequencyBase") + (math.random() * self:getParameter("cannonsFrequencyRange"))
-	self.colorNukeCooldown = self:getParameter("colorNukeFrequencyBase") + (math.random() * self:getParameter("colorNukeFrequencyRange"))
+	self.targetSecondsCooldown = self:getParameter("fruitFrequency") + (self.fruit_rng:random() * self:getParameter("fruitFrequencyRange"))
+	self.multiplierCooldown = self:getParameter("multiplierFrequencyBase") + (self.powerup_rng:random() * self:getParameter("multiplierFrequencyRange"))
+	self.timeballCooldown = self:getParameter("timeBallsFrequencyBase") + (self.powerup_rng:random() * self:getParameter("timeBallsFrequencyRange"))
+	self.bombsCooldown = self:getParameter("bombsFrequencyBase") + (self.powerup_rng:random() * self:getParameter("bombsFrequencyRange"))
+	self.cannonCooldown = self:getParameter("cannonsFrequencyBase") + (self.powerup_rng:random() * self:getParameter("cannonsFrequencyRange"))
+	self.colorNukeCooldown = self:getParameter("colorNukeFrequencyBase") + (self.powerup_rng:random() * self:getParameter("colorNukeFrequencyRange"))
 
     self.blitzMeter = 0
 	self.blitzMeterCooldown = 0
