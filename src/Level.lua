@@ -194,7 +194,7 @@ function Level:updateLogic(dt)
 	end
 
 	if self.phase == 2 then
-		if not _Game:getCurrentProfile():getEquippedFoodItem() then 
+		if not _Game:getCurrentProfile():getEquippedFoodItem() or foodSprite == nil then 
 			self.phase = 3
 		else
 			if self.foodSound == false then
@@ -1149,7 +1149,8 @@ function Level:reset()
 	self.foodDelay = 5
 	self.foodSound = false
 	self.foodSoundResource = nil
-	self.foodSprite = _Game:getCurrentProfile():getEquippedFoodItem().sprite
+	self.foodSprite = _Game:getCurrentProfile():getEquippedFoodItem().sprite or " "
+	self.displayEffects = " "
 	self.foodLabel = _Game:getCurrentProfile():getEquippedFoodItem().displayEffects or " "
 	self.foodLabelDrawn = false
 	
