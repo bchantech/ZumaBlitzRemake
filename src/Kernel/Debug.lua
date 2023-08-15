@@ -431,10 +431,34 @@ function Debug:runCommand(command)
 			"expr <expression>: Evaluate an expression",
 			"exprt <expression>: Evaluate an expression",
 			"ex: Evaluate an expression",
+			"replay <filename>: Load a replay and run it at ludicrous speed"
         }
 		for i, line in ipairs(muchoTexto) do
 			self.console:print(line)
 		end
+		return true
+	elseif words[1] == "replay" then
+		local filename = "replay_compress.txt"
+		if words[2] then filename = words[2] end
+
+		-- insert replay here
+		if _LoadFile(filename) then
+			self.console:print("Running replay " .. filename)
+			_Game:getCurrentProfile():newGame(1)
+			_Game.session:startLevel()
+
+			-- load from replay compressed
+			local compressed_contents = _LoadFile(filename)
+			_Game.session.level.replayCore:load(compressed_contents)
+			_TimeScale = 50
+
+			_Game.session.level:begin()
+
+		else
+			self.console:print("Replay not found!")
+		end
+
+		return true
 	elseif words[1] == "p" then
 		local t = {fire = "bomb", ligh = "lightning", wild = "wild", bomb = "colorbomb", slow = "slow", stop = "stop", rev = "reverse", shot = "shotspeed"}
 		for word, name in pairs(t) do

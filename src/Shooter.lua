@@ -33,6 +33,7 @@ function Shooter:new(data)
     self.multiColorCount = 0
     self.knockbackAngle = 0
     self.knockbackTime = 0
+    self.swapped = false
 
 
     -- memorizing the pressed keys for keyboard control of the shooter
@@ -173,6 +174,10 @@ function Shooter:update(dt)
     if self.sphereEntity then
         self.sphereEntity:setPos(self:getSpherePos())
     end
+
+    -- Update swap reset if true
+    self.swapped = false
+
 end
 
 
@@ -222,10 +227,17 @@ function Shooter:swapColors()
     if _Game.session.level.pause or self.color == 0 or self.nextColor == 0 or not self:getSphereConfig().interchangeable then
         return
     end
+    if self.swapped then
+        return
+    end
+
     local tmp = self.color
     self:setColor(self.nextColor)
     self:setNextColor(tmp)
     _Game:playSound(self.config.sounds.sphereSwap, 1, self.pos)
+    _Game.session.level:recordSwap()
+    self.swapped = true
+
 end
 
 
@@ -257,6 +269,11 @@ function Shooter:fill()
     end
 end
 
+---Forces shooter to be a certain angle.
+---Used for replays and the like.
+function Shooter:setAngle(angle)
+    if (angle) then self.angle = angle end
+end
 
 
 ---Returns whether the Shooter is active.
@@ -345,6 +362,7 @@ function Shooter:shoot()
     self.color = 0
     self.shotCooldown = self.config.shotCooldown
     _Game.session.level.spheresShot = _Game.session.level.spheresShot + 1
+    _Game.session.level:recordFiredBall(self.angle)
 end
 
 

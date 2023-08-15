@@ -13,6 +13,7 @@ local Target = require("src.Target")
 local Collectible = require("src.Collectible")
 local FloatingText = require("src.FloatingText")
 local json = require("com.json")
+local Replay = require("src.Replay")
 
 -- send stuff
 local http = require("socket.http")
@@ -23,6 +24,10 @@ local ltn12 = require"ltn12"
 ---@param data table The level data, specified in a level config file.
 function Level:new(data)
 	
+	-- Initalize replay
+	self.replayCore = Replay()
+	self.replay_loaded = false
+
 	-- Initalize level parameters
 	self.levelParameters = {}
 	self:setLevelDefaultParameters()
@@ -512,6 +517,21 @@ function Level:updateLogic(dt)
 	-- timer will not tick down when under hot frog.
 	if self.speedTimer > 0 and self.blitzMeter < 1 then
 		self.speedTimer = self.speedTimer - dt
+	end
+
+	-- REPLAY
+	-- if the current time is greater than the replay data current line, advance and line and... shoot
+
+	local replay_angle, replay_button = self.replayCore:advance(self.time)
+	if (replay_angle) then
+		self.shooter:setAngle(replay_angle)
+	end
+	if (replay_button) then
+		if replay_button == 1 then
+			self.shooter:shoot()
+		elseif replay_button == 2 then
+			self.shooter:swapColors()
+		end
 	end
 end
 
@@ -1703,6 +1723,18 @@ function Level:saveStats()
 	local post_body = json.encode(s)
 	print(post_body)
 
+
+	if self.replayCore.replay_loaded then
+		_Debug.console:print(self.score)
+		_TimeScale = 1
+	else
+		local filename_save = "replay_" .. os.date("%Y%m%d_%H%M%S") .. "_" .. self.score .. ".txt"
+		_SaveFile(filename_save, self.replayCore:save())
+		_SaveJson("stats.json", s)
+		_SaveJson("level_parameters.json", self.levelParameters)
+	end
+	
+
 	-- add http post request here
 
 end
@@ -1774,6 +1806,14 @@ function Level:deserialize(t)
 	self:updateObjectives()
 end
 
+function Level:recordFiredBall(angle)
+	self.replayCore:record(self.time, angle, 1)
+end
+
+function Level:recordSwap()
+	self.replayCore:record(self.time, nil, 2)
+
+end
 
 
 return Level
