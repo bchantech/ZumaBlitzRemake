@@ -1149,9 +1149,10 @@ function Level:reset()
 	self.foodDelay = 5
 	self.foodSound = false
 	self.foodSoundResource = nil
-	self.foodSprite = _Game:getCurrentProfile():getEquippedFoodItem().sprite or " "
+	local equippedFood = _Game:getCurrentProfile():getEquippedFoodItem()
+	self.foodSprite = equippedFood and equippedFood.sprite or " "
 	self.displayEffects = " "
-	self.foodLabel = _Game:getCurrentProfile():getEquippedFoodItem().displayEffects or " "
+	self.foodLabel = equippedFood and equippedFood.displayEffects or " "
 	self.foodLabelDrawn = false
 	
     self.foodShader = love.graphics.newShader [[
