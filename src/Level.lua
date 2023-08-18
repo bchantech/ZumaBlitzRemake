@@ -24,9 +24,10 @@ local ltn12 = require"ltn12"
 ---@param data table The level data, specified in a level config file.
 function Level:new(data)
 	
+	self.pending_action = 0
+
 	-- Initalize replay
 	self.replayCore = Replay()
-	self.replay_loaded = false
 
 	-- Initalize level parameters
 	self.levelParameters = {}
@@ -247,6 +248,32 @@ function Level:updateLogic(dt)
 		self.dangerSound = nil
 	end
 	]]
+
+	-- If there is a pending action (signaled from game.lua) execute it and set to zero
+	
+	if (self.pending_action and not self.replayCore.replay_loaded) then
+		if self.pending_action == 1 then
+			self.shooter:shoot()
+		elseif self.pending_action == 2 then
+			self.shooter:swapColors()
+		end
+		self.pending_action = 0
+	end
+
+	-- REPLAY
+	-- if the current time is greater than the replay data current line, advance and line and... shoot
+
+	local replay_angle, replay_button = self.replayCore:advance(self.time)
+	if (replay_angle) then
+		self.shooter:setAngle(replay_angle)
+	end
+	if (replay_button) then
+		if replay_button == 1 then
+			self.shooter:shoot()
+		elseif replay_button == 2 then
+			self.shooter:swapColors()
+		end
+	end
 
 	self.danger = self:getDanger() and not self.lost
 
@@ -519,20 +546,6 @@ function Level:updateLogic(dt)
 		self.speedTimer = self.speedTimer - dt
 	end
 
-	-- REPLAY
-	-- if the current time is greater than the replay data current line, advance and line and... shoot
-
-	local replay_angle, replay_button = self.replayCore:advance(self.time)
-	if (replay_angle) then
-		self.shooter:setAngle(replay_angle)
-	end
-	if (replay_button) then
-		if replay_button == 1 then
-			self.shooter:shoot()
-		elseif replay_button == 2 then
-			self.shooter:swapColors()
-		end
-	end
 end
 
 --- Add powerup, default 20 seconds if not defined
