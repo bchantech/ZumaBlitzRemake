@@ -1149,9 +1149,11 @@ function Level:reset()
 	self.foodDelay = 5
 	self.foodSound = false
 	self.foodSoundResource = nil
-	self.foodSprite = _Game:getCurrentProfile():getEquippedFoodItem().sprite or " "
-	self.displayEffects = " "
-	self.foodLabel = _Game:getCurrentProfile():getEquippedFoodItem().displayEffects or " "
+	if _Game:getCurrentProfile():getEquippedFoodItem() then
+		self.foodSprite = _Game:getCurrentProfile():getEquippedFoodItem().sprite or " "
+		self.displayEffects = " "
+		self.foodLabel = _Game:getCurrentProfile():getEquippedFoodItem().displayEffects or " "
+	end
 	self.foodLabelDrawn = false
 	
     self.foodShader = love.graphics.newShader [[
@@ -1549,7 +1551,7 @@ function Level:draw()
 		local sprite2 = _Game.resourceManager:getSprite(self.foodSprite)
 		
 		if self.foodDelay > 2.1 then
-			sprite2:draw(food_sprite_pos)
+			if sprite2 then sprite2:draw(food_sprite_pos) end
 		end
 		
 		local food_sprite_pos_label = food_sprite_pos
