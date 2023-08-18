@@ -265,11 +265,7 @@ function Game:mousepressed(x, y, button)
 	self.uiManager:mousepressed(x, y, button)
 	if not self.uiManager:isButtonHovered() then
 		if self:levelExists() then
-			if button == 1 then
-				self.session.level.shooter:shoot()
-			elseif button == 2 then
-				self.session.level.shooter:swapColors()
-			end
+			self.session.level.pending_action = button
 		end
 	end
 end
