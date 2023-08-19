@@ -194,6 +194,10 @@ function love.quit()
 	_Log:save(true)
 end
 
+function love.filedropped(file)
+	_Debug.console:filedropped(file)
+end
+
 
 
 -- FUNCTION ZONE
