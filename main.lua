@@ -17,6 +17,7 @@ local Debug = require("src.Kernel.Debug")
 
 local BootScreen = require("src.Kernel.BootScreen")
 local Game = require("src.Game")
+local Verifier = require("src.Verifier")
 
 local ExpressionVariables = require("src.ExpressionVariables")
 local Settings = require("src.Kernel.Settings")
@@ -49,7 +50,7 @@ _KeyModifiers = {lshift = false, lctrl = false, lalt = false, rshift = false, rc
 -- File system prefix. On Windows defaults to "", on Android defaults to "/sdcard/".
 _FSPrefix = ""
 
----@type Game|BootScreen
+---@type Game|BootScreen|Verifier
 _Game = nil
 
 ---@type Log
@@ -82,12 +83,6 @@ _DiscordRPC = nil
 
 -- CALLBACK ZONE
 function love.load(args)
-	local msg = args[1] or 'no arguments'
-	--print (msg)
-	--local s = loadFile("test.txt")
-	--print(s)
-	--print(jsonBeautify(s))
-
 	-- Initialize RNG for Boot Screen
 	local _ = math.randomseed(os.time())
 
@@ -99,12 +94,14 @@ function love.load(args)
 	_Debug = Debug()
 	_EngineSettings = Settings("settings.json")
 	_DiscordRPC = DiscordRichPresence()
-	
+
     -- Autoload ZBR by default, there is no need to access the boot screen unless requested
-	if msg ~= "boot" and msg ~= "--boot" then
-		_LoadGame("ZumaBlitzRemake")
-	else
+	if #args == 1 and args[1] == "--boot" then
 		_LoadBootScreen()
+	elseif #args == 1 and args[1] == "--verifier" then
+		_LoadVerifier()
+	else
+		_LoadGame("ZumaBlitzRemake")
 	end
 end
 
@@ -209,6 +206,10 @@ end
 function _LoadBootScreen()
 	_Game = BootScreen()
 	_Game:init()
+end
+
+function _LoadVerifier()
+	_Game = Verifier()
 end
 
 
