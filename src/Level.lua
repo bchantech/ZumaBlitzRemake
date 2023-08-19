@@ -251,7 +251,7 @@ function Level:updateLogic(dt)
 
 	-- If there is a pending action (signaled from game.lua) execute it and set to zero
 	
-	if (self.pending_action and not self.replayCore.replay_loaded) then
+	if (self.pending_action and not self.replayCore.replay_loaded and self:getMaxDangerProgress() < 1) then
 		if self.pending_action == 1 then
 			self.shooter:shoot()
 		elseif self.pending_action == 2 then
@@ -268,7 +268,7 @@ function Level:updateLogic(dt)
 		self.shooter:setAngle(replay_angle)
 	end
 	if (replay_button) then
-		if replay_button == 1 then
+		if replay_button == 1 and self:getMaxDangerProgress() < 1 then
 			self.shooter:shoot()
 		elseif replay_button == 2 then
 			self.shooter:swapColors()
