@@ -2,6 +2,7 @@
     "$schema": "../../../../schemas/config/Sphere.json",
     "sprite": "sprites/game/ball_fire.json",
     "spriteAnimationSpeed": 16,
+    "size": 29,
     "destroyParticle": "particles/collapse_ball_bomb.json",
     "color": "images/powerups/fire_pal.png",
     "colorSpeed": 64,

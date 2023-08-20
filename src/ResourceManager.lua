@@ -1,5 +1,6 @@
 local class = require "com.class"
 
+---Manages all the Game's resources, alongside the ConfigManager. I'm not sure if this split is necessary and how it works.
 ---@class ResourceManager
 ---@overload fun():ResourceManager
 local ResourceManager = class:derive("ResourceManager")
@@ -63,19 +64,19 @@ function ResourceManager:update(dt)
 	end
 
 	if self.stepLoading then
-		
-	-- Load as many assets as we can within the span of a few frames
-	local stepLoadStart = love.timer.getTime()
-	local stepLoadEnd = 0
+		-- Load as many assets as we can within the span of a few frames
+		local stepLoadStart = love.timer.getTime()
+		local stepLoadEnd = 0
 
 		while stepLoadEnd < 0.05 do
-			
 			self:stepLoadNext()
 
 			stepLoadEnd = stepLoadEnd + (love.timer.getTime() - stepLoadStart)
 
 			-- exit if no more assets to load
-			if not self.stepLoading then break end
+			if not self.stepLoading then
+				break
+			end
 		end
 	end
 end

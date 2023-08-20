@@ -2,6 +2,7 @@
     "$schema": "../../../../schemas/config/Sphere.json",
 	"spriteRollingSpeed": 1.15,
     "sprite": "sprites/game/ball_1.json",
+    "size": 29,
     "destroyParticle": "particles/collapse_ball_1.json",
     "powerupSprites": {
         "timeball": "sprites/game/time_ball_1.json",

@@ -1,5 +1,6 @@
 local class = require "com.class"
 
+---Represents a Level. Houses the Map, Shooters, Shot Spheres, Collectibles and Floating Texts. Handles elements such as level objectives and general level event order.
 ---@class Level
 ---@overload fun(data):Level
 local Level = class:derive("Level")
@@ -168,6 +169,9 @@ end
 ---Updates the Level's logic.
 ---@param dt number Delta time in seconds.
 function Level:updateLogic(dt)
+	-- Objectives
+	self:updateObjectives()
+
 	self.map:update(dt)
     self.shooter:update(dt)
     self.stateCount = self.stateCount + dt
@@ -325,6 +329,7 @@ function Level:updateLogic(dt)
 		self.netTime = self.netTime - dt
 		if self.netTime <= 0 then
 			self.netTime = 0
+			self:destroyNetParticle()
 		end
 	end
 
@@ -456,11 +461,6 @@ function Level:updateLogic(dt)
 			end
 		end
 	end
-
-
-
-	-- Objectives
-	self:updateObjectives()
 
 
 
@@ -716,6 +716,7 @@ function Level:applyEffect(effect, TMP_pos)
 		self.lightningStormCount = effect.count
 	elseif effect.type == "activateNet" then
 		self.netTime = effect.time
+		self:spawnNetParticle()
 	elseif effect.type == "changeGameSpeed" then
 		self.gameSpeed = effect.speed
 		self.gameSpeedTime = effect.duration
@@ -1087,6 +1088,7 @@ function Level:destroy()
 	for i, path in ipairs(self.map.paths) do
 		path:destroy()
     end
+	self:destroyNetParticle()
 	if self.target then
 		self.target:destroy()
     end
@@ -1192,6 +1194,8 @@ function Level:reset()
 	self.lightningStormTime = 0
 	self.lightningStormCount = 0
 	self.netTime = 0
+	self:destroyNetParticle()
+
 	self.shooter.speedShotTime = 0
 	_Game.session.colorManager:reset()
 
@@ -1494,10 +1498,11 @@ end
 ---@param shooter Shooter The shooter which has shot the sphere.
 ---@param pos Vector2 Where the Shot Sphere should be spawned at.
 ---@param angle number Which direction the Shot Sphere should be moving, in radians. 0 is up.
+---@param size number The diameter of the Shot Sphere, in pixels.
 ---@param color integer The sphere ID to be shot.
 ---@param speed number The sphere speed.
-function Level:spawnShotSphere(shooter, pos, angle, color, speed)
-	table.insert(self.shotSpheres, ShotSphere(nil, shooter, pos, angle, color, speed))
+function Level:spawnShotSphere(shooter, pos, angle, size, color, speed)
+	table.insert(self.shotSpheres, ShotSphere(nil, shooter, pos, angle, size, color, speed))
 end
 
 
@@ -1517,6 +1522,28 @@ end
 ---@param font string Path to the Font which is going to be used.
 function Level:spawnFloatingText(text, pos, font)
 	table.insert(self.floatingTexts, FloatingText(text, pos, font))
+end
+
+
+
+---Spawns the Net particle, if it doesn't exist yet.
+function Level:spawnNetParticle()
+	if self.netParticle then
+		return
+	end
+	local netConfig = _Game.configManager.gameplay.net
+	self.netParticle = _Game:spawnParticle(netConfig.particle, Vec2(_Game:getNativeResolution().x / 2, netConfig.posY))
+end
+
+
+
+---Despawns the Net particle, if it exists.
+function Level:destroyNetParticle()
+	if not self.netParticle then
+		return
+	end
+	self.netParticle:destroy()
+	self.netParticle = nil
 end
 
 
@@ -1638,6 +1665,7 @@ function Level:serialize()
 		combo = self.combo,
 		lightningStormCount = self.lightningStormCount,
 		lightningStormTime = self.lightningStormTime,
+		netTime = self.netTime,
 		destroyedSpheres = self.destroyedSpheres,
 		paths = self.map:serialize(),
 		lost = self.lost,
@@ -1817,6 +1845,10 @@ function Level:deserialize(t)
 	-- Effects
 	self.lightningStormCount = t.lightningStormCount
 	self.lightningStormTime = t.lightningStormTime
+	self.netTime = t.netTime
+	if self.netTime > 0 then
+		self:spawnNetParticle()
+	end
 
 	-- Pause
 	self:setPause(true)

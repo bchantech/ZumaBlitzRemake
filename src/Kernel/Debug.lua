@@ -450,7 +450,7 @@ function Debug:runCommand(command)
 			-- load from replay compressed
 			local compressed_contents = _LoadFile(filename)
 			_Game.session.level.replayCore:load(compressed_contents)
-			_TimeScale = 50
+			_TimeScale = 1
 
 			_Game.session.level:begin()
 

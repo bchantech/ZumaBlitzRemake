@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
+    "description": "The root object.",
     "properties": {
         "property": {
             "enum": [
@@ -12,11 +13,6 @@
                 "scaleX",
                 "scaleY"
             ]
-        },
-        "duration": {
-            "type": "number",
-            "minimum": 0,
-            "description": "The duration of this Animation."
         }
     },
     "allOf": [
@@ -41,24 +37,28 @@
             },
             "then": {
                 "properties": {
-                    "$schema": true,
                     "property": true,
                     "from": {
                         "type": "number",
-                        "minimum": 0,
-                        "maximum": 1,
-                        "description": "The starting value of this Animation. If omitted, the value will be interpolated from the current Node's value."
+                        "description": "The starting value of this Animation. If omitted, the value will be interpolated from the current Node's value.",
+                        "minimum": 0.0,
+                        "maximum": 1.0
                     },
                     "to": {
                         "type": "number",
-                        "minimum": 0,
-                        "maximum": 1,
-                        "description": "The end value of this Animation."
+                        "description": "The end value of this Animation.",
+                        "minimum": 0.0,
+                        "maximum": 1.0
                     },
-                    "duration": true
+                    "duration": {
+                        "type": "number",
+                        "description": "The duration of this Animation.",
+                        "minimum": 0.0
+                    }
                 },
                 "required": [
-                    "to"
+                    "to",
+                    "duration"
                 ],
                 "additionalProperties": false
             }
@@ -77,7 +77,6 @@
             },
             "then": {
                 "properties": {
-                    "$schema": true,
                     "property": true,
                     "from": {
                         "$ref": "../_structures/Vector2.json",
@@ -87,10 +86,15 @@
                         "$ref": "../_structures/Vector2.json",
                         "description": "The end value of this Animation."
                     },
-                    "duration": true
+                    "duration": {
+                        "type": "number",
+                        "description": "The duration of this Animation.",
+                        "minimum": 0.0
+                    }
                 },
                 "required": [
-                    "to"
+                    "to",
+                    "duration"
                 ],
                 "additionalProperties": false
             }
@@ -109,7 +113,6 @@
             },
             "then": {
                 "properties": {
-                    "$schema": true,
                     "property": true,
                     "from": {
                         "type": "number",
@@ -119,10 +122,15 @@
                         "type": "number",
                         "description": "The end value of this Animation."
                     },
-                    "duration": true
+                    "duration": {
+                        "type": "number",
+                        "description": "The duration of this Animation.",
+                        "minimum": 0.0
+                    }
                 },
                 "required": [
-                    "to"
+                    "to",
+                    "duration"
                 ],
                 "additionalProperties": false
             }
@@ -141,7 +149,6 @@
             },
             "then": {
                 "properties": {
-                    "$schema": true,
                     "property": true,
                     "from": {
                         "type": "number",
@@ -151,10 +158,15 @@
                         "type": "number",
                         "description": "The end value of this Animation."
                     },
-                    "duration": true
+                    "duration": {
+                        "type": "number",
+                        "description": "The duration of this Animation.",
+                        "minimum": 0.0
+                    }
                 },
                 "required": [
-                    "to"
+                    "to",
+                    "duration"
                 ],
                 "additionalProperties": false
             }
@@ -173,7 +185,6 @@
             },
             "then": {
                 "properties": {
-                    "$schema": true,
                     "property": true,
                     "from": {
                         "$ref": "../_structures/Vector2.json",
@@ -183,10 +194,15 @@
                         "$ref": "../_structures/Vector2.json",
                         "description": "The end value of this Animation."
                     },
-                    "duration": true
+                    "duration": {
+                        "type": "number",
+                        "description": "The duration of this Animation.",
+                        "minimum": 0.0
+                    }
                 },
                 "required": [
-                    "to"
+                    "to",
+                    "duration"
                 ],
                 "additionalProperties": false
             }
@@ -205,7 +221,6 @@
             },
             "then": {
                 "properties": {
-                    "$schema": true,
                     "property": true,
                     "from": {
                         "type": "number",
@@ -215,10 +230,15 @@
                         "type": "number",
                         "description": "The end value of this Animation."
                     },
-                    "duration": true
+                    "duration": {
+                        "type": "number",
+                        "description": "The duration of this Animation.",
+                        "minimum": 0.0
+                    }
                 },
                 "required": [
-                    "to"
+                    "to",
+                    "duration"
                 ],
                 "additionalProperties": false
             }
@@ -237,7 +257,6 @@
             },
             "then": {
                 "properties": {
-                    "$schema": true,
                     "property": true,
                     "from": {
                         "type": "number",
@@ -247,17 +266,21 @@
                         "type": "number",
                         "description": "The end value of this Animation."
                     },
-                    "duration": true
+                    "duration": {
+                        "type": "number",
+                        "description": "The duration of this Animation.",
+                        "minimum": 0.0
+                    }
                 },
                 "required": [
-                    "to"
+                    "to",
+                    "duration"
                 ],
                 "additionalProperties": false
             }
         }
     ],
     "required": [
-        "property",
-        "duration"
+        "property"
     ]
 }

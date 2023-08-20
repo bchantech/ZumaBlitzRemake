@@ -1,5 +1,6 @@
 local class = require "com.class"
 
+---Represents a Sphere Group, which is a single group of spheres connected to each other. Sphere Groups can magnetize with each other.
 ---@class SphereGroup
 ---@overload fun(sphereChain, deserializationTable):SphereGroup
 local SphereGroup = class:derive("SphereGroup")
@@ -119,6 +120,12 @@ function SphereGroup:update(dt)
 				deccel = self.sphereChain.speedOverrideDecc or deccel
 			elseif self:isMagnetizing() then
 				deccel = self.config.attractionAcceleration or deccel
+				if self.speed > 0 then
+					deccel = self.config.attractionForwardDecceleration or deccel
+					if self.prevGroup:getLastMatureSphere().color == 0 then
+						deccel = self.config.attractionForwardDeccelerationScarab or deccel
+					end
+				end
 			elseif self.prevGroup then
 				deccel = self.config.decceleration or deccel
 			elseif self.sphereChain.speedOverrideTime > 0 then
@@ -135,6 +142,8 @@ function SphereGroup:update(dt)
 			-- Can be different if defined accordingly, such as when the level is lost.
 			if self.map.level.lost then
 				accel = self.config.foulAcceleration or accel
+			elseif self.speed < 0 then
+				accel = self.config.backwardsDecceleration or accel
 			end
 
 			self.speed = math.min(self.speed + accel * dt, self.maxSpeed)
@@ -246,7 +255,10 @@ function SphereGroup:addSphere(color, pos, time, sphereEntity, position, effects
 	end
 	-- if it's a first sphere in the group, lower the offset
 	if position == 1 then
-		self.offset = self.offset - 29
+		self.offset = self.offset - sphere:getDesiredSize() / 2
+		if nextSphere then
+			self.offset = self.offset - nextSphere:getDesiredSize() / 2
+		end
 		self:updateSphereOffsets()
 	end
 	sphere:updateOffset()
@@ -267,9 +279,13 @@ end
 function SphereGroup:destroySphere(position, crushed)
 	-- no need to divide if it's the first or last sphere in this group
 	if position == 1 then
+		-- Shift the group offset to the next sphere. It might not exist.
+		self.offset = self.offset + self.spheres[position].size / 2
+		if self.spheres[position + 1] then
+			self.offset = self.offset + self.spheres[position + 1].size / 2
+		end
 		self.spheres[position]:delete(crushed)
 		table.remove(self.spheres, position)
-		self.offset = self.offset + 29
 		self:updateSphereOffsets()
 		self:checkUnfinishedDestructionAtSpawn()
 	elseif position == #self.spheres then
@@ -300,11 +316,15 @@ function SphereGroup:destroySpheres(position1, position2)
 
 	-- check if it's on the beginning or on the end of the group
 	if position1 == 1 then
+		-- Shift the group offset to the next sphere. It might not exist.
+		self.offset = self.offset + self.spheres[position2].size / 2
+		if self.spheres[position2 + 1] then
+			self.offset = self.offset + self.spheres[position2 + 1].size / 2
+		end
 		for i = 1, position2 do
 			self.spheres[1]:delete()
 			table.remove(self.spheres, 1)
 		end
-		self.offset = self.offset + position2 * 29
 		self:updateSphereOffsets()
 		self:checkUnfinishedDestructionAtSpawn()
 	elseif position2 == #self.spheres then -- or maybe on the end?
@@ -584,7 +604,7 @@ function SphereGroup:matchAndDelete(position)
 	local boostCombo = false
 	-- abort if any sphere from the given ones has not joined yet and see if we have to boost the combo
 	for i = position1, position2 do
-		if self.spheres[i].size < 1 then
+		if self.spheres[i].appendSize < 1 then
 			return
 		end
 		boostCombo = boostCombo or self.spheres[i].boostCombo
@@ -656,7 +676,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	local boostCombo = false
 	-- Abort if any sphere from the given ones has not joined yet and see if we have to boost the combo.
 	for i, sphere in ipairs(spheres) do
-		if sphere.size < 1 then
+		if sphere.appendSize < 1 then
 			return
 		end
 		boostCombo = boostCombo or sphere.boostCombo
@@ -963,12 +983,18 @@ end
 
 
 function SphereGroup:drawDebug()
+	if #self.spheres == 0 then
+		return
+	end
 	local pos = _PosOnScreen(self.sphereChain.path:getPos(self:getFrontPos()))
 	love.graphics.setColor(0.5, 1, 0)
 	love.graphics.circle("fill", pos.x, pos.y, 6)
 	local pos = _PosOnScreen(self.sphereChain.path:getPos(self:getBackPos()))
 	love.graphics.setColor(1, 0.5, 0)
 	love.graphics.circle("fill", pos.x, pos.y, 6)
+	local pos = _PosOnScreen(self.sphereChain.path:getPos(self.offset))
+	love.graphics.setColor(1, 1, 1)
+	love.graphics.circle("fill", pos.x, pos.y, 4)
 end
 
 
@@ -984,7 +1010,7 @@ function SphereGroup:getMatchPositions(position)
 		if not self.spheres[seekPosition] or not _Game.session:colorsMatch(self.spheres[seekPosition].color, self.spheres[seekPosition + 1].color) then
 			break
 		end
-		--if self.spheres[seekPosition].size < 1 then return {position} end -- combinations with not spawned yet balls are forbidden
+		--if self.spheres[seekPosition].appendSize < 1 then return {position} end -- combinations with not spawned yet balls are forbidden
 		table.insert(positions, seekPosition)
 	end
 	-- seek forwards
@@ -995,7 +1021,7 @@ function SphereGroup:getMatchPositions(position)
 		if not self.spheres[seekPosition] or not _Game.session:colorsMatch(self.spheres[seekPosition].color, self.spheres[seekPosition - 1].color) then
 			break
 		end
-		--if self.spheres[seekPosition].size < 1 then return {position} end -- combinations with not spawned yet balls are forbidden
+		--if self.spheres[seekPosition].appendSize < 1 then return {position} end -- combinations with not spawned yet balls are forbidden
 		table.insert(positions, seekPosition)
 	end
 	return positions
@@ -1142,7 +1168,7 @@ end
 
 function SphereGroup:getFirstMatureSphere()
 	for i = 1, #self.spheres do
-		if self.spheres[i].size == 1 then
+		if self.spheres[i].appendSize == 1 then
 			return self.spheres[i]
 		end
 	end
@@ -1152,7 +1178,7 @@ end
 
 function SphereGroup:getLastMatureSphere()
 	for i = #self.spheres, 1, -1 do
-		if self.spheres[i].size == 1 then
+		if self.spheres[i].appendSize == 1 then
 			return self.spheres[i]
 		end
 	end
@@ -1162,6 +1188,12 @@ end
 
 function SphereGroup:getSphereOffset(sphereID)
 	return self.offset + ((_MathAreKeysInTable(self.spheres, sphereID) and self.spheres[sphereID].offset) or 0)
+end
+
+
+
+function SphereGroup:getSphereSize(sphereID)
+	return self.spheres[sphereID]:getSize()
 end
 
 
@@ -1178,6 +1210,12 @@ end
 
 function SphereGroup:getLastSphereOffset()
 	return self:getSphereOffset(#self.spheres)
+end
+
+
+
+function SphereGroup:getLastSphereSize()
+	return self:getSphereSize(#self.spheres)
 end
 
 
@@ -1234,13 +1272,13 @@ end
 
 
 function SphereGroup:getFrontPos()
-	return self:getLastSphereOffset() + 16
+	return self:getLastSphereOffset() + self:getLastSphereSize() / 2
 end
 
 
 
 function SphereGroup:getBackPos()
-	return self:getSphereOffset(1) - 29 * self.spheres[1].size + 16
+	return self:getSphereOffset(1) - self:getSphereSize(1) + self.spheres[1].size / 2
 end
 
 
@@ -1269,7 +1307,7 @@ end
 
 function SphereGroup:hasShotSpheres()
 	for i, sphere in ipairs(self.spheres) do
-		if sphere.size < 1 then
+		if sphere.appendSize < 1 then
 			return true
 		end
 	end
@@ -1436,6 +1474,7 @@ function SphereGroup:deserialize(t)
 		offset = offset + 29 * s.size
 	end
 	self.matchCheck = t.matchCheck
+	self:updateSphereOffsets()
 end
 
 
