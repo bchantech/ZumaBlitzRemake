@@ -96,10 +96,14 @@ function love.load(args)
 	_DiscordRPC = DiscordRichPresence()
 
     -- Autoload ZBR by default, there is no need to access the boot screen unless requested
-	if #args == 1 and args[1] == "--boot" then
+	if #args >= 1 and args[1] == "--boot" then
 		_LoadBootScreen()
-	elseif #args == 1 and args[1] == "--verifier" then
-		_LoadVerifier()
+	elseif #args >= 1 and args[1] == "--verifier" then
+		local cores = nil
+		if #args == 3 and args[2] == "-c" then
+			cores = tonumber(args[3])
+		end
+		_LoadVerifier(cores)
 	else
 		_LoadGame("ZumaBlitzRemake")
 	end
@@ -208,8 +212,10 @@ function _LoadBootScreen()
 	_Game:init()
 end
 
-function _LoadVerifier()
-	_Game = Verifier()
+---Loads the Verifier program, used in game servers.
+---@param cores integer? Amount of workers at maximum. See `Verifier:new()`.
+function _LoadVerifier(cores)
+	_Game = Verifier(cores)
 end
 
 

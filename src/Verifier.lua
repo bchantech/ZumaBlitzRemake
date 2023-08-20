@@ -16,7 +16,9 @@ local Vec2 = require("src.Essentials.Vector2")
 ---and sends back the results into another socket.
 ---
 ---Right now, this is heavily work in progress. Lots of stuff will be happening here!
-function Verifier:new()
+---@param cores integer? How many workers will be active at once at maximum. Defaults to `max(n-4, ceil(n/2))`, where `n` is the amount of cores your CPU has.
+function Verifier:new(cores)
+    print("Starting Cosmic Crash Game Verifier...")
 	self.nativeResolution = Vec2(800, 600)
 
     self.TEXT = [[
@@ -32,7 +34,18 @@ function Verifier:new()
     (none of that works lol)
     ]]
 
+    -- Save four cores or use half the cores rounded up, whichever is higher.
+    if cores then
+        self.MAX_ACTIVE_JOBS = cores
+    else
+        local systemCores = love.system.getProcessorCount()
+        self.MAX_ACTIVE_JOBS = math.max(systemCores - 4, math.ceil(systemCores / 2))
+    end
+    print(string.format("Using %s cores.", self.MAX_ACTIVE_JOBS))
+
+    self.activeJobs = 0
     self.nextJob = 1
+    self.jobQueue = {}
 end
 
 
@@ -40,8 +53,20 @@ end
 ---Updates this Verifier.
 ---@param dt number Time delta in seconds.
 function Verifier:update(dt)
-    _ThreadManager:startJob("verifierJob", {id = self.nextJob}, self.onJobFinished, self)
+    self:startJob({id = self.nextJob})
     self.nextJob = self.nextJob + 1
+end
+
+
+
+function Verifier:startJob(data)
+    if self.activeJobs < self.MAX_ACTIVE_JOBS then
+        _ThreadManager:startJob("verifierJob", data, self.onJobFinished, self)
+        self.activeJobs = self.activeJobs + 1
+    else
+        -- If all workers have been exhausted, put the job in a queue.
+        table.insert(self.jobQueue, data)
+    end
 end
 
 
@@ -50,6 +75,12 @@ end
 ---@param data table Verification result data.
 function Verifier:onJobFinished(data)
     print(string.format("end %s: got %s", data.id, data.result))
+    self.activeJobs = self.activeJobs - 1
+    -- If there are jobs waiting in the queue, take it off the queue.
+    if #self.jobQueue > 0 then
+        local job = table.remove(self.jobQueue, 1)
+        self:startJob(job)
+    end
 end
 
 
@@ -63,6 +94,9 @@ function Verifier:draw()
 	love.graphics.print("Game ID", 500, 130)
 	love.graphics.print("Score In", 560, 130)
 	love.graphics.print("Score Out", 660, 130)
+    love.graphics.print(string.format("Next job: %s", self.nextJob), 500, 150)
+    love.graphics.print(string.format("Jobs in progress: %s", self.activeJobs), 600, 150)
+    love.graphics.print(string.format("Jobs in queue: %s", #self.jobQueue), 600, 165)
 end
 
 

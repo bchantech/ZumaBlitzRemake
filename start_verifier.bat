@@ -1,1 +1,1 @@
-"C:/Program Files/LOVE/love.exe" ./ --console --verifier
+"C:/Program Files/LOVE/love.exe" ./ --console --verifier -c 4
