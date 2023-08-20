@@ -31,6 +31,8 @@ function Verifier:new()
     Press C to clear the list
     (none of that works lol)
     ]]
+
+    self.nextJob = 1
 end
 
 
@@ -38,7 +40,16 @@ end
 ---Updates this Verifier.
 ---@param dt number Time delta in seconds.
 function Verifier:update(dt)
-    
+    _ThreadManager:startJob("verifierJob", {id = self.nextJob}, self.onJobFinished, self)
+    self.nextJob = self.nextJob + 1
+end
+
+
+
+---Callback function called when the verifier job finishes.
+---@param data table Verification result data.
+function Verifier:onJobFinished(data)
+    print(string.format("end %s: got %s", data.id, data.result))
 end
 
 
