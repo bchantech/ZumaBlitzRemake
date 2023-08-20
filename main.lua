@@ -83,6 +83,9 @@ _DiscordRPC = nil
 
 -- CALLBACK ZONE
 function love.load(args)
+	-- Parse command line arguments.
+	local arg = _ParseCommandLineArguments(args)
+
 	-- Initialize RNG for Boot Screen
 	local _ = math.randomseed(os.time())
 
@@ -92,20 +95,18 @@ function love.load(args)
 	-- Initialize some classes
 	_Log = Log()
 	_Debug = Debug()
-	_EngineSettings = Settings("settings.json")
-	_DiscordRPC = DiscordRichPresence()
+	if arg.mode ~= "verifier" then
+		_DiscordRPC = DiscordRichPresence()
+		_EngineSettings = Settings("settings.json")
+	end
 
     -- Autoload ZBR by default, there is no need to access the boot screen unless requested
-	if #args >= 1 and args[1] == "--boot" then
-		_LoadBootScreen()
-	elseif #args >= 1 and args[1] == "--verifier" then
-		local cores = nil
-		if #args == 3 and args[2] == "-c" then
-			cores = tonumber(args[3])
-		end
-		_LoadVerifier(cores)
-	else
+	if arg.mode == "game" then
 		_LoadGame("ZumaBlitzRemake")
+	elseif arg.mode == "boot" then
+		_LoadBootScreen()
+	elseif arg.mode == "verifier" then
+		_LoadVerifier(arg.cores)
 	end
 end
 
@@ -117,8 +118,10 @@ function love.update(dt)
 
 	_Log:update(dt)
 	_Debug:update(dt)
-	_DiscordRPC:update(dt)
 	_ThreadManager:update(dt)
+	if _DiscordRPC then
+		_DiscordRPC:update(dt)
+	end
 
 	-- rainbow effect for the shooter and console cursor blink; to be phased out soon
 	_TotalTime = _TotalTime + dt
@@ -190,8 +193,12 @@ end
 
 function love.quit()
 	_Log:printt("main", "User-caused Exit...")
-	if _Game and _Game.quit then _Game:quit(true) end
-	_DiscordRPC:disconnect()
+	if _Game and _Game.quit then
+		_Game:quit(true)
+	end
+	if _DiscordRPC then
+		_DiscordRPC:disconnect()
+	end
 	_Log:save(true)
 end
 
@@ -202,6 +209,43 @@ end
 
 
 -- FUNCTION ZONE
+
+---Parses command-line arguments (currently, `--boot`, `--verifier`, `--verifierw` and `-c X` are supported) and returns a table with the following fields:
+--- - `mode` (`"game"`, `"boot"` or `"verifier"`) - Which mode the program will be run in.
+--- - `window` (`true` or `false`) - Whether the window will be visible. Matters when `mode` is `"verifier"`.
+--- - `cores` (`nil` or a number) - The number of cores allotted for the Verifier.
+---@param args any
+---@return table
+function _ParseCommandLineArguments(args)
+	local out = {
+		mode = "game",
+		window = true
+	}
+	local currentSwitch = nil
+
+	for i, v in ipairs(args) do
+		if not currentSwitch then
+			if v == "--boot" then
+				out.mode = "boot"
+			elseif v == "--verifier" then
+				out.mode = "verifier"
+				out.window = false
+			elseif v == "--verifierw" then
+				out.mode = "verifier"
+			elseif v == "-c" then
+				currentSwitch = v
+			end
+		else
+			if currentSwitch == "-c" then
+				out.cores = tonumber(v)
+			end
+			currentSwitch = nil
+		end
+	end
+
+	return out
+end
+
 function _LoadGame(gameName)
 	_Game = Game(gameName)
 	_Game:init()

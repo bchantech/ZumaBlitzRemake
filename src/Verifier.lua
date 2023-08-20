@@ -60,6 +60,7 @@ end
 
 
 function Verifier:startJob(data)
+    print(string.format("begin %s", data.id))
     if self.activeJobs < self.MAX_ACTIVE_JOBS then
         _ThreadManager:startJob("verifierJob", data, self.onJobFinished, self)
         self.activeJobs = self.activeJobs + 1

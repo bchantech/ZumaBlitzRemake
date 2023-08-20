@@ -7,8 +7,6 @@
 local outID, data = ...
 local out = love.thread.getChannel(outID)
 
-print(string.format("begin %s", data.id))
-
 -- Do some long and time expensive stuff.
 for i = 1, 1000000000 do
     --print(i)

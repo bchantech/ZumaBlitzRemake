@@ -14,7 +14,9 @@ local Expression = require("src.Expression")
 
 
 function Debug:new()
-	self.console = Console()
+	if love.graphics then
+		self.console = Console()
+	end
 
 
 
@@ -46,7 +48,9 @@ end
 
 
 function Debug:update(dt)
-	self.console:update(dt)
+	if self.console then
+		self.console:update(dt)
+	end
 end
 
 function Debug:draw()
