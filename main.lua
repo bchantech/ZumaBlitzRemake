@@ -232,13 +232,13 @@ function _ParseCommandLineArguments(args)
 				out.window = false
 			elseif v == "--verifierw" then
 				out.mode = "verifier"
-			elseif v == "-c" then
-				currentSwitch = v
+			elseif string.sub(v, 1, 2) == "-j" then
+				out.cores = tonumber(string.sub(v, 3))
 			end
 		else
-			if currentSwitch == "-c" then
-				out.cores = tonumber(v)
-			end
+			--if currentSwitch == "-j" then
+			--	out.cores = tonumber(v)
+			--end
 			currentSwitch = nil
 		end
 	end
