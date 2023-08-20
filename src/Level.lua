@@ -1736,6 +1736,7 @@ function Level:saveStats()
 	end
 	-- TODO: Set XP to zero if the game was aborted, and x2 if a potion was used.
 
+	for k, v in pairs(s) do print(k, v) end
 	local post_body = json.encode(s)
 	print(post_body)
 
