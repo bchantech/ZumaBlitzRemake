@@ -37,7 +37,9 @@ function ShotSphere:new(deserializationTable, shooter, pos, angle, color, speed)
 		self.hitSphere = nil
 	end
 
-	self.PIXELS_PER_STEP = 8
+	-- dynamically adjust pixels per step for lower speeds
+	-- speed is based on a framerate of 1/60
+	self.PIXELS_PER_STEP = math.abs(math.min(speed/60,8))
 
 	self.delQueue = false
 end
@@ -54,7 +56,7 @@ function ShotSphere:update(dt)
 		if self.hitTime >= self.hitTimeMax then self:destroy() end
 	else
 		-- move
-		self.steps = self.steps + self.speed * dt / self.PIXELS_PER_STEP
+		self.steps = self.steps + math.max(self.speed * dt / self.PIXELS_PER_STEP, 1)
 		while self.steps > 0 and not self.hitSphere and not self.delQueue do self:moveStep() end
 	end
 end
