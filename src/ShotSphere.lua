@@ -96,6 +96,7 @@ function ShotSphere:moveStep()
 			nearestSphere.sphere:matchEffectFragile()
 		else
 			self.hitSphere = nearestSphere
+			self.speed = math.max(self.speed, 800)
 			local sphereConfig = _Game.configManager.spheres[self.color]
 			local hitColor = self.hitSphere.sphereGroup.spheres[self.hitSphere.sphereID].color
 			local badShot = false
