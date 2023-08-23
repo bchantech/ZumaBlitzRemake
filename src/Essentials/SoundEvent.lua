@@ -21,7 +21,7 @@ function SoundEvent:new(path)
     self.sound = _Game.resourceManager:getSound(data.path)
   end
   self.volume = data.volume or 1
-  self.pitch = data.volume or 1
+  self.pitch = data.pitch or 1
   self.loop = data.loop or false
 	self.flat = data.flat or false
 end
