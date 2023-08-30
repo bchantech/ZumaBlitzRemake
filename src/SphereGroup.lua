@@ -263,31 +263,34 @@ function SphereGroup:getAddSpherePos(position)
 end
 
 
+-- position will check for not nil since 0 is a valid value for position
 
 function SphereGroup:destroySphere(position, crushed)
 	-- no need to divide if it's the first or last sphere in this group
-	if position == 1 then
-		self.spheres[position]:delete(crushed)
-		table.remove(self.spheres, position)
-		self.offset = self.offset + 29
-		self:updateSphereOffsets()
-		self:checkUnfinishedDestructionAtSpawn()
-	elseif position == #self.spheres then
-		self.spheres[position]:delete(crushed)
-		table.remove(self.spheres, position)
-	else
-		self:divide(position)
-		self.spheres[position]:delete(crushed)
-		table.remove(self.spheres, position)
-	end
+	if position ~= nil then
+		if position == 1 then
+			self.spheres[position]:delete(crushed)
+			table.remove(self.spheres, position)
+			self.offset = self.offset + 29
+			self:updateSphereOffsets()
+			self:checkUnfinishedDestructionAtSpawn()
+		elseif position == #self.spheres then
+			self.spheres[position]:delete(crushed)
+			table.remove(self.spheres, position)
+		else
+			self:divide(position)
+			self.spheres[position]:delete(crushed)
+			table.remove(self.spheres, position)
+		end
 
-	self:checkDeletion()
+		self:checkDeletion()
+	end
 end
 
-
-
 function SphereGroup:destroySphereVisually(position, ghostTime, crushed)
-	self.spheres[position]:deleteVisually(ghostTime, crushed)
+	if position ~= nil then
+		self.spheres[position]:deleteVisually(ghostTime, crushed)
+	end
 end
 
 

@@ -318,9 +318,11 @@ function Sphere:deleteVisually(ghostTime, crushed)
 				self.map.level.shooter:getMultiSphere(-6, 1)
 
 			end,
-			-- TODO: Add bomb effect
             bombs = function()
-				self.map.level.bombsMatched = self.map.level.bombsMatched + 1				
+				self.map.level.bombsMatched = self.map.level.bombsMatched + 1
+				_Game.session:destroyRadius(self:getPos(), self.map.level:getParameter("bombsExplosionRadius"), "bomb")
+				_Game:spawnParticle("particles/explosion.json", self:getPos())
+						
 			end,
 			-- TODO: Add color nuke effect
             colornuke = function()
