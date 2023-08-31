@@ -176,7 +176,7 @@ function Session:destroyFunction(f, scorePos, scoreFont, noRewards, source)
 		base_multiplier = self.level:getParameter("spiritShotPointsMult")
 	end
 
-	score = score * (math.floor(balls_destroyed^effective_ball_exponent) / balls_destroyed)
+	score = score * (math.floor(balls_destroyed^effective_ball_exponent) / math.max(balls_destroyed,1))
 	score = score + base_score
 	score = score * base_multiplier
 
