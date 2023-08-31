@@ -335,8 +335,11 @@ function Sphere:deleteVisually(ghostTime, crushed)
 	end
 
 	-- Remove the entity.
+
+	if self.entity then
 	self.entity:destroy(not ((self.map.level.lost or self.map.isDummy) and self:getOffset() >= self.path.length))
 	self.entity = nil
+	end
 
 	-- Remove all effects.
 	for i, effect in ipairs(self.effects) do
