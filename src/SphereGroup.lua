@@ -720,6 +720,17 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 		_Game:playSound(comboSoundParams.name, comboSoundParams.pitch, pos)
 	end
 
+	-- chain blast
+	if self.map.level:getParameter("chainBlastEnabled") > 0 then
+		local chain_start = self.map.level:getParameter("chainBlastMinimum") 
+		local chain_each = self.map.level:getParameter("chainBlastIncrement") 
+		if self.map.level.combo >= chain_start and (self.map.level.combo - chain_start) % chain_each == 0 then
+			_Game.session:destroyRadius(pos, self.map.level:getParameter("chainBlastExplosionRadius"), "chainblast")
+			_Game:spawnParticle("particles/explosion.json", pos)
+			_Game:playSound("sound_events/sphere_hit_fire.json")
+		end
+	end
+
 	-- speed bonus
 	if self.map.level.speedTimer <= 0 then
 		self.map.level.speedBonusIncrement = 0
