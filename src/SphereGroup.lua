@@ -280,28 +280,27 @@ end
 function SphereGroup:destroySphere(position, crushed)
 	-- no need to divide if it's the first or last sphere in this group
 	if position ~= nil then
-    if position == 1 then
-      -- Shift the group offset to the next sphere. It might not exist.
-      self.offset = self.offset + self.spheres[position].size / 2
-      if self.spheres[position + 1] then
-        self.offset = self.offset + self.spheres[position + 1].size / 2
-      end
-      self.spheres[position]:delete(crushed)
-      table.remove(self.spheres, position)
-      self:updateSphereOffsets()
-      self:checkUnfinishedDestructionAtSpawn()
-    elseif position == #self.spheres then
-      self.spheres[position]:delete(crushed)
-      table.remove(self.spheres, position)
-    else
-      self:divide(position)
-      self.spheres[position]:delete(crushed)
-      table.remove(self.spheres, position)
-    end
+		if position == 1 then
+		-- Shift the group offset to the next sphere. It might not exist.
+			self.offset = self.offset + self.spheres[position].size / 2
+			if self.spheres[position + 1] then
+				self.offset = self.offset + self.spheres[position + 1].size / 2
+			end
+			self.spheres[position]:delete(crushed)
+			table.remove(self.spheres, position)
+			self:updateSphereOffsets()
+			self:checkUnfinishedDestructionAtSpawn()
+		elseif position == #self.spheres then
+			self.spheres[position]:delete(crushed)
+			table.remove(self.spheres, position)
+		else
+			self:divide(position)
+			self.spheres[position]:delete(crushed)
+			table.remove(self.spheres, position)
+		end
 	end
 
-		self:checkDeletion()
-	end
+	self:checkDeletion()
 end
 
 function SphereGroup:destroySphereVisually(position, ghostTime, crushed)
