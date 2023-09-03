@@ -1,5 +1,6 @@
 local class = require "com.class"
 
+---Manages separate Threads, which can be used for multi-processing. Janky syntax and pretty barebones, be careful!
 ---@class ThreadManager
 ---@overload fun():ThreadManager
 local ThreadManager = class:derive("ThreadManager")
@@ -23,7 +24,11 @@ function ThreadManager:update(dt)
     for i, job in pairs(self.jobs) do
         if not job.thread:isRunning() then
             if job.onFinish then
-                job.onFinish(job.outChannel:pop())
+                if job.caller then
+                    job.onFinish(job.caller, job.outChannel:pop())
+                else
+                    job.onFinish(job.outChannel:pop())
+                end
             end
             self.jobs[i] = nil
         end
@@ -36,12 +41,14 @@ end
 ---@param name string The name of a Lua source code file which is located in the path `src.Threads.<name>`. That file must exist!
 ---@param data table? A table of values to be passed to the thread.
 ---@param onFinish function? The function which will be executed when this Thread finishes its job. Can contain a data table as an argument.
-function ThreadManager:startJob(name, data, onFinish)
+---@param caller any? Any class instance for which the `onFinish` function should run. Useful if you don't want to create anonymous functions.
+function ThreadManager:startJob(name, data, onFinish, caller)
     local path = string.format("src/Threads/%s.lua", name)
     local outID = string.format("thr%s", self.nextJob)
 
     local job = {
         thread = love.thread.newThread(path),
+        caller = caller,
         onFinish = onFinish,
         outChannel = love.thread.getChannel(outID)
     }

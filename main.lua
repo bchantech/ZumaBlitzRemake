@@ -17,6 +17,7 @@ local Debug = require("src.Kernel.Debug")
 
 local BootScreen = require("src.Kernel.BootScreen")
 local Game = require("src.Game")
+local Verifier = require("src.Verifier")
 
 local ExpressionVariables = require("src.ExpressionVariables")
 local Settings = require("src.Kernel.Settings")
@@ -49,7 +50,7 @@ _KeyModifiers = {lshift = false, lctrl = false, lalt = false, rshift = false, rc
 -- File system prefix. On Windows defaults to "", on Android defaults to "/sdcard/".
 _FSPrefix = ""
 
----@type Game|BootScreen
+---@type Game|BootScreen|Verifier
 _Game = nil
 
 ---@type Log
@@ -82,11 +83,8 @@ _DiscordRPC = nil
 
 -- CALLBACK ZONE
 function love.load(args)
-	local msg = args[1] or 'no arguments'
-	--print (msg)
-	--local s = loadFile("test.txt")
-	--print(s)
-	--print(jsonBeautify(s))
+	-- Parse command line arguments.
+	local arg = _ParseCommandLineArguments(args)
 
 	-- Initialize RNG for Boot Screen
 	local _ = math.randomseed(os.time())
@@ -97,14 +95,18 @@ function love.load(args)
 	-- Initialize some classes
 	_Log = Log()
 	_Debug = Debug()
-	_EngineSettings = Settings("settings.json")
-	_DiscordRPC = DiscordRichPresence()
-	
+	if arg.mode ~= "verifier" then
+		_DiscordRPC = DiscordRichPresence()
+		_EngineSettings = Settings("settings.json")
+	end
+
     -- Autoload ZBR by default, there is no need to access the boot screen unless requested
-	if msg ~= "boot" and msg ~= "--boot" then
+	if arg.mode == "game" then
 		_LoadGame("ZumaBlitzRemake")
-	else
+	elseif arg.mode == "boot" then
 		_LoadBootScreen()
+	elseif arg.mode == "verifier" then
+		_LoadVerifier(arg.cores)
 	end
 end
 
@@ -116,8 +118,10 @@ function love.update(dt)
 
 	_Log:update(dt)
 	_Debug:update(dt)
-	_DiscordRPC:update(dt)
 	_ThreadManager:update(dt)
+	if _DiscordRPC then
+		_DiscordRPC:update(dt)
+	end
 
 	-- rainbow effect for the shooter and console cursor blink; to be phased out soon
 	_TotalTime = _TotalTime + dt
@@ -189,14 +193,59 @@ end
 
 function love.quit()
 	_Log:printt("main", "User-caused Exit...")
-	if _Game and _Game.quit then _Game:quit(true) end
-	_DiscordRPC:disconnect()
+	if _Game and _Game.quit then
+		_Game:quit(true)
+	end
+	if _DiscordRPC then
+		_DiscordRPC:disconnect()
+	end
 	_Log:save(true)
+end
+
+function love.filedropped(file)
+	_Debug.console:filedropped(file)
 end
 
 
 
 -- FUNCTION ZONE
+
+---Parses command-line arguments (currently, `--boot`, `--verifier`, `--verifierw` and `-c X` are supported) and returns a table with the following fields:
+--- - `mode` (`"game"`, `"boot"` or `"verifier"`) - Which mode the program will be run in.
+--- - `window` (`true` or `false`) - Whether the window will be visible. Matters when `mode` is `"verifier"`.
+--- - `cores` (`nil` or a number) - The number of cores allotted for the Verifier.
+---@param args any
+---@return table
+function _ParseCommandLineArguments(args)
+	local out = {
+		mode = "game",
+		window = true
+	}
+	local currentSwitch = nil
+
+	for i, v in ipairs(args) do
+		if not currentSwitch then
+			if v == "--boot" then
+				out.mode = "boot"
+			elseif v == "--verifier" then
+				out.mode = "verifier"
+				out.window = false
+			elseif v == "--verifierw" then
+				out.mode = "verifier"
+			elseif string.sub(v, 1, 2) == "-j" then
+				out.cores = tonumber(string.sub(v, 3))
+			end
+		else
+			--if currentSwitch == "-j" then
+			--	out.cores = tonumber(v)
+			--end
+			currentSwitch = nil
+		end
+	end
+
+	return out
+end
+
 function _LoadGame(gameName)
 	_Game = Game(gameName)
 	_Game:init()
@@ -205,6 +254,12 @@ end
 function _LoadBootScreen()
 	_Game = BootScreen()
 	_Game:init()
+end
+
+---Loads the Verifier program, used in game servers.
+---@param cores integer? Amount of workers at maximum. See `Verifier:new()`.
+function _LoadVerifier(cores)
+	_Game = Verifier(cores)
 end
 
 
@@ -247,11 +302,22 @@ end
 
 
 
----Checks online and returns the newest engine version tag available (i.e. `v0.47.0`). Returns `nil` on failure (for example, when you go offline).
+---Used internally as a common part of `_GetNewestVersion` and `_GetNewestVersionThreaded`.
+---Don't call this function directly. Instead, use one of the aforementioned functions.
+---@see _GetNewestVersion
+---@see _GetNewestVersionThreaded
+---@param result table HTTPS request result.
 ---@return string?
-function _GetNewestVersion()
-	local result = _Network:get("https://api.github.com/repos/jakubg1/OpenSMCE/tags")
+function _ParseNewestVersion(result)
 	if result.code == 200 and result.body then
+		-- Trim everything before the first square bracket.
+		while result.body:sub(1, 1) ~= "[" do
+			result.body = result.body:sub(2)
+		end
+		-- And everything after the last square bracket.
+		while result.body:sub(-1) ~= "]" do
+			result.body = result.body:sub(1, -2)
+		end
 		result.body = json.decode(result.body)
 		return result.body[1].name
 	end
@@ -260,16 +326,25 @@ end
 
 
 
+---Checks online and returns the newest engine version tag available (i.e. `v0.47.0`). Returns `nil` on failure (for example, when you go offline).
+---@return string?
+function _GetNewestVersion()
+	local result = _Network:get("https://api.github.com/repos/jakubg1/OpenSMCE/tags")
+	return _ParseNewestVersion(result)
+end
+
+
+
 ---Checks online and executes a function with the newest engine version tag available (i.e. `v0.47.0`) as an argument or `nil` on failure (for example, when you go offline).
 ---Threaded version: non-blocking call.
 ---@param onFinish function A function which will be called once the checking process is finished. A version argument is passed.
-function _GetNewestVersionThreaded(onFinish)
+---@param caller any? An optional instance of any class on which the function will be executed. Useful if you don't want to create anonymous functions.
+function _GetNewestVersionThreaded(onFinish, caller)
 	_Network:getThreaded("https://api.github.com/repos/jakubg1/OpenSMCE/tags", false, function(result)
-		if result.code == 200 and result.body then
-			result.body = json.decode(result.body)
-			onFinish(result.body[1].name)
+		if caller then
+			onFinish(caller, _ParseNewestVersion(result))
 		else
-			onFinish(nil)
+			onFinish(_ParseNewestVersion(result))
 		end
 	end)
 end

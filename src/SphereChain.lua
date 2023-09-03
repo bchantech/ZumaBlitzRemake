@@ -1,5 +1,6 @@
 local class = require "com.class"
 
+---Represents a Sphere Chain, which is a single train of spheres, usually with a pusher (Scarab) at the end.
 ---@class SphereChain
 ---@overload fun(path, deserializationTable):SphereChain
 local SphereChain = class:derive("SphereChain")
@@ -158,8 +159,7 @@ function SphereChain:isPushingFrontTrain()
 	local prevChain = self:getPreviousChain()
 	if prevChain and not prevChain.delQueue then
 		-- Check whether this sphere chain collides with a front one. If so, return true.
-		local dist = prevChain:getLastSphereGroup():getSphereOffset(1) - self.sphereGroups[1]:getLastSphereOffset()
-		return dist <= 29
+		return self.sphereGroups[1]:getFrontPos() > prevChain:getLastSphereGroup():getBackPos()
 	end
 end
 

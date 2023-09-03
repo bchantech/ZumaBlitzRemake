@@ -103,6 +103,13 @@ function Console:keypressed(key)
 	end
 end
 
+function Console:filedropped(file)
+	if self.active then
+		local s = _StrSplit(file:getFilename(), "\\")
+		self.command = self.command .. s[#s]
+	end
+end
+
 function Console:keyreleased(key)
 	if key == "backspace" then
 		self.backspace = false

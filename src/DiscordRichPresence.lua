@@ -1,5 +1,6 @@
 local class = require "com.class"
 
+---Handles the Discord Rich Presence. This class communicates with the actual Rich Presence code.
 ---@class DiscordRichPresence
 ---@overload fun():DiscordRichPresence
 local DiscordRichPresence = class:derive("DiscordRichPresence")
@@ -20,8 +21,8 @@ function DiscordRichPresence:new()
 
 	self.status = {}
 
-	local s, egg = pcall(self.getEgg)
-	if s and egg then
+	local egg = self:getEgg()
+	if egg then
 		self.egg = egg
 	end
 
@@ -42,7 +43,11 @@ function DiscordRichPresence:init()
 
 	function self.rpcMain.ready(userId, username, discriminator, avatar)
 		self.connected = true
-		self.username = string.format("%s#%s", username, discriminator)
+		if #discriminator == 4 then
+			self.username = string.format("%s#%s", username, discriminator)
+		else
+			self.username = string.format("@%s", username)
+		end
 		--_Debug.console:print({{0, 1, 1}, "[DiscordRPC] ", {0, 1, 0}, string.format("Connected! (username: %s)", self.username)})
 	end
 
@@ -181,9 +186,13 @@ end
 
 
 ---Returns a random witty comment to be shown... uh, somewhere.
----@return string
+---@return string?
 function DiscordRichPresence:getEgg()
-	local eggs = _StrSplit(_LoadFile("assets/eggs_rpc.txt"), "\n")
+	local rawEggs = _LoadFile("assets/eggs_rpc.txt")
+	if not rawEggs then
+		return
+	end
+	local eggs = _StrSplit(rawEggs, "\n")
 	return eggs[math.random(1, #eggs)]
 end
 

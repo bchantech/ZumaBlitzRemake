@@ -3,6 +3,7 @@
 	"spriteRollingSpeed": 1.15,
     "sprite": "sprites/game/ball_4.json",
     "colorblindSprite": "sprites/game/ball_4_cb.json",
+    "size": 29,
     "destroyParticle": "particles/collapse_ball_4.json",
     "powerupSprites": {
         "timeball": "sprites/game/time_ball_4.json",

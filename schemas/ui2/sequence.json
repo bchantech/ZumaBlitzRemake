@@ -1,15 +1,16 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "type": "object",
+    "description": "The root object.",
     "properties": {
         "$schema": true,
         "timeline": {
             "type": "array",
+            "description": "Defines a Timeline consisting of Timeline Entries.",
             "items": {
                 "$ref": "timeline_entry.json",
                 "description": "Defines a single Timeline Entry."
-            },
-            "description": "Defines a Timeline consisting of Timeline Entries."
+            }
         }
     },
     "required": [
