@@ -9,7 +9,13 @@ local Vec2 = require("src.Essentials.Vector2")
 
 
 function Image:new(path)
-	self.img = _LoadImage(path)
+	if type(path) == "string" then
+		self.img = _LoadImage(path)
+	else
+		-- if path is an object, we assume path is a type Sprite.
+		self.img = _LoadImageRaw(path)
+	end
+
 	if not self.img then error("Failed to load image: " .. path) end
 	self.size = Vec2(self.img:getDimensions())
 end

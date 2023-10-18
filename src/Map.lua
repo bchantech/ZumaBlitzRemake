@@ -15,10 +15,11 @@ local Hole = require("src.Hole")
 
 ---Constructs a new Map.
 ---@param level Level The level which is tied to this Map.
----@param path string Path to the Map's folder.
+---@param path string Path to the Map's folder. OR a raw config.json table. 
 ---@param pathsBehavior table A table of Path Behaviors.
 ---@param isDummy boolean Whether this Map corresponds to a Dummy Level.
-function Map:new(level, path, pathsBehavior, isDummy)
+---sprites at the very end, required if path is inline
+function Map:new(level, path, pathsBehavior, isDummy, inlineSprites)
 	self.level = level
 	-- whether it's just a decorative map, if false then it's meant to be playable
 	self.isDummy = isDummy
@@ -26,16 +27,39 @@ function Map:new(level, path, pathsBehavior, isDummy)
 	self.paths = {}
 	self.sprites = {}
 
+	-- determine if it's a string, if so, we follow normal path loading rules
+	local data = {}
+	local rootPath = ""
 
-	local data = _LoadJson(_ParsePath(path .. "/config.json"))
-	self.name = data.name
-	for i, spriteData in ipairs(data.sprites) do
-		local spritePath = spriteData.path
-		if spriteData.internal then
-			spritePath = path .. "/" .. spritePath
+	if type(path) == "string" then
+		data = _LoadJson(_ParsePath(path .. "/config.json"))
+		rootPath = path .. "/"
+
+		for i, spriteData in ipairs(data.sprites) do
+			local spritePath = spriteData.path
+			if spriteData.internal then
+				spritePath = rootPath .. spritePath
+			end
+			table.insert(self.sprites, {pos = Vec2(spriteData.x, spriteData.y), sprite = Sprite(_ParsePath(spritePath)), background = spriteData.background})
 		end
-		table.insert(self.sprites, {pos = Vec2(spriteData.x, spriteData.y), sprite = Sprite(_ParsePath(spritePath)), background = spriteData.background})
+
+	else
+		data = path
+
+		-- Load Internal Sprites from inline, value of internal does not matter 
+		for i, spriteData in ipairs(data.sprites) do
+			-- load the raw sprite
+			local raw_sprite = inlineSprites[spriteData.path]
+			-- instead of parsing a file, we parse raw data.
+			
+			table.insert(self.sprites, {pos = Vec2(spriteData.x, spriteData.y), sprite = Sprite(raw_sprite), background = spriteData.background})
+		end
 	end
+
+	-- name of the map
+	self.name = data.name or ""
+
+	-- Load Path Data
 	for i, pathData in ipairs(data.paths) do
 		-- Loop around the path behavior list if not sufficient enough.
 		-- Useful if all paths should share the same behavior; you don't have to clone it.

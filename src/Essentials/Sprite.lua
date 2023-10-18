@@ -11,16 +11,25 @@ local Image = require("src.Essentials.Image")
 
 
 ---Constructs a new Sprite.
----@param path string A path to the sprite file.
+---@param path string A path to the sprite file. OR it can be a raw sprite.
 function Sprite:new(path)
-	self.path = path
-	local data = _LoadJson(path)
-
-	if data.internal then
-		self.img = Image(_ParsePath(data.path))
+	
+	local data = {}
+	
+	if type(path) == "string" then
+		self.path = path
+		data = _LoadJson(path)
+		if data.internal then
+			self.img = Image(_ParsePath(data.path))
+		else
+			self.img = _Game.resourceManager:getImage(data.path)
+		end
 	else
-		self.img = _Game.resourceManager:getImage(data.path)
+		-- the path is a data file.
+		data = path
+		self.img = Image(path)
 	end
+
 	self.size = self.img.size
 	self.frameSize = data.frame_size
 	self.states = {}

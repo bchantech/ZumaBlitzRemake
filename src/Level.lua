@@ -22,24 +22,55 @@ local ltn12 = require"ltn12"
 
 
 ---Constructs a new Level.
----@param data table The level data, specified in a level config file.
-function Level:new(data)
-	
+---@param data table The level data, specified in a level config file, or a standalone level json file.
+---@param rngseed int? If specified, sets rng to this value instead of os.time
+---@param gameID int? If specified, this is the game ID passed from the server.
+---@param levelParameters json? If specified, use the level parameters instead of computing these values
+--- Level parameters are passed in JSON format
+
+function Level:new(data, rngseed, gameID, levelParameters)
+
 	self.pending_action = 0
 
 	-- Initalize replay
 	self.replayCore = Replay()
 
-	-- Initalize level parameters
-	self.levelParameters = {}
-	self:setLevelDefaultParameters()
+	-- make sure map effects load properly
 	self.mapEffects = data.effects or {}
 
-	-- Add the values from powers, fruit, spirit animals, and the like.
-	self:addPowerEffects()
+	-- initalize all other parameters passed in
+	self.gameID = gameID or 0
+	self.rngseed = rngseed or os.time()
+	self.levelParameters = {}
+	
+	-- replaces getParameter but old function will be saved for compatability
+	setmetatable(self.levelParameters, { __index = function(t, i) return 0 end })
+
+	-- initalize sprites to pass into map 
+	self.levelSprites = data.sprites or {}
+
+	-- Determine if server or local (regular) level
+	if data.level then
+		-- server level
+		self.map = Map(self, data.config, data.level.pathsBehavior, nil, self.levelSprites)
+		data = data.level
+		if data.effects then self.mapEffects = data.effects end
+	else
+		-- regular level
+		self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
+	end
+
+	-- if level parameters provided (from server), load them, else compute power effects 
+	if levelParameters then
+		self.levelParameters = json.decode(levelParameters)
+	else
+		-- Add the values from powers, fruit, spirit animals, and the like.
+		self:setLevelDefaultParameters()
+		self:addPowerEffects()
+	end
 
 	self.level_colors = data.pathsBehavior[1].colors
-    self.map = Map(self, "maps/" .. data.map, data.pathsBehavior)
+	self.map_name = data.map or " "
     self.shooter = Shooter(data.shooter or self.map.shooter)
 
     -- FORK-SPECIFIC CHANGE: Change to frogatar, then spirit animal if any

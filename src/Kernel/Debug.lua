@@ -435,7 +435,8 @@ function Debug:runCommand(command)
 			"expr <expression>: Evaluate an expression",
 			"exprt <expression>: Evaluate an expression",
 			"ex: Evaluate an expression",
-			"replay <filename>: Load a replay and run it at ludicrous speed"
+			"replay <filename>: Load a replay and run it at ludicrous speed",
+			"loadmap <filename>: Load a .json server map from file"
         }
 		for i, line in ipairs(muchoTexto) do
 			self.console:print(line)
@@ -463,6 +464,21 @@ function Debug:runCommand(command)
 		end
 
 		return true
+		
+	elseif words[1] == "loadmap" then
+		local filename = "map.json"
+		if words[2] then filename = words[2] end
+		if _LoadFile(filename) then
+			local map_data = _LoadFile(filename)
+			_Game:getCurrentProfile():newGame(1)
+			_Game.session:startServerLevel(map_data, true)
+			-- load from map compressed
+			_Game.session.level:begin()
+		else
+			self.console:print("Map not found!")
+		end
+		return true
+	
 	elseif words[1] == "p" then
 		local t = {fire = "bomb", ligh = "lightning", wild = "wild", bomb = "colorbomb", slow = "slow", stop = "stop", rev = "reverse", shot = "shotspeed"}
 		for word, name in pairs(t) do

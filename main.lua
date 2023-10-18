@@ -395,6 +395,19 @@ function _LoadImage(path)
 	return image
 end
 
+-- Raw image loader function that loads an image based on raw data.
+-- Inline images are stored in zlib-base64 format
+
+function _LoadImageRaw(path)
+	local rawdata = love.data.decode("string", "base64", path.data)
+    rawdata = love.data.decompress("string", "zlib", rawdata)
+
+	local data = love.filesystem.newFileData(rawdata, "tempname")
+	data = love.image.newImageData(data)
+	local image = love.graphics.newImage(data)
+	return image
+end
+
 -- This function allows to load sounds from external sources.
 -- This is an altered code from the above function.
 function _LoadSoundData(path)
