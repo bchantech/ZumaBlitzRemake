@@ -1,3 +1,6 @@
+--- A root for all variable things during the game that aren't necessarily part of a level, such as level completion and player's progress.
+-- @module Session
+
 -- NOTE:
 -- May consider to ditch this class in the future and spread the contents to Game.lua, Level.lua and Profile.lua.
 -- ~jakubg1
@@ -20,6 +23,7 @@ local Vec2 = require("src.Essentials.Vector2")
 local Level = require("src.Level")
 local ColorManager = require("src.ColorManager")
 
+local json = require("com.json")
 
 
 ---Constructs a new Session.
@@ -55,6 +59,19 @@ function Session:startLevel()
 	else
 		_Game.uiManager:executeCallback("levelStart")
 	end
+end
+
+-- Starts a server level based on level name. Second parameter = load from disk.
+function Session:startServerLevel(map, localMap)
+	if localMap then
+		mapData = json.decode(map)
+	else
+		mapData =  _LoadMap(map)
+		mapData = json.decode(mapData)
+	end
+
+	self.level = Level(mapData)
+	_Game.uiManager:executeCallback("levelStart")
 end
 
 
