@@ -39,6 +39,10 @@
             ],
             "additionalProperties": false
         },
+        "autosaveReplays": {
+            "type": "string",
+            "description": "If true, saves a replay after each game."
+        },
         "useUI2": {
             "type": "boolean",
             "description": "Enables experimental UI2 support. The game will launch using UI2 instead of legacy UI."

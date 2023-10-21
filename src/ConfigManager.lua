@@ -85,6 +85,7 @@ function ConfigManager:new()
 			end
 		end
 	end
+	self:setAutosaveReplays()
 end
 
 
@@ -211,6 +212,13 @@ function ConfigManager:getRichPresenceApplicationID()
 	return self.config.richPresence.applicationID
 end
 
+
+---Sets the score submission url, and whether or not submission is enabled.
+function ConfigManager:setAutosaveReplays()
+	if self.config.autosaveReplays then 
+		_AUTOSAVE_REPLAYS = self.config.autosaveReplays
+	end
+end
 
 
 ---Gets the level number which the checkpoint points to.

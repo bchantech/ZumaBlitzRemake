@@ -1805,8 +1805,10 @@ function Level:saveStats()
 		_Debug.console:print(self.score)
 		_TimeScale = 1
 	else
-		local filename_save = "replay_" .. os.date("%Y%m%d_%H%M%S") .. "_" .. self.score .. ".txt"
-		_SaveFile(filename_save, self.replayCore:save())
+		if _AUTOSAVE_REPLAYS then
+			local filename_save = "replay_" .. os.date("%Y%m%d_%H%M%S") .. "_" .. self.score .. ".txt"
+			_SaveFile(filename_save, self.replayCore:save())
+		end
 		_SaveJson("stats.json", s)
 		_SaveJson("level_parameters.json", self.levelParameters)
 	end
