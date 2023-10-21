@@ -14,7 +14,7 @@ function Profile:new(data, name)
 	self.name = name
 
 	-- unique identifier used in score submissions and cloud data.
-	self.uniqueid = math.random(1,4294967295)
+	self.uniqueid = math.random(1,2000000000)
 	self.is_local = true
 	self.is_discord_user = false -- also used to determine whether to display the discord friends leaderboard and other things.
 
@@ -783,7 +783,12 @@ function Profile:migration()
 
 	if self.uniqueid == nil then
 		print ("WARNING: no uniqueid detected in savefile, generating new uniqueid")
-		self.uniqueid = math.random(1,4294967295)
+		self.uniqueid = math.random(1,2000000000)
+	end
+	
+	if self.uniqueid > 2000000000 then
+		print ("WARNING: uniqueid invalid, generating new uniqueID")
+		self.uniqueid = math.random(1,2000000000)
 	end
 
 
