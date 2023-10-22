@@ -10,7 +10,8 @@ local Profile = class:derive("Profile")
 ---Constructs a Profile.
 ---@param data table? Data to be deserialized, if any.
 ---@param name string The profile name.
-function Profile:new(data, name)
+---@param selected string? If this matches, attempt to load the online profile.
+function Profile:new(data, name, selected)
 	self.name = name
 
 	-- unique identifier used in score submissions and cloud data.
@@ -36,8 +37,21 @@ function Profile:new(data, name)
 	self.equippedFood = nil
     self.foodInventory = {}
 
+	-- server constants that are not serialized with profile
+	self.session_id = nil
+	self.online = true
+	self.new_player = false
+	self.inventory = {}
+
+	-- has the front page announcement been read? If so do not show for the rest of the session.
+	self.announcement_read = false
+
 	if data then
 		self:deserialize(data)
+		if selected and selected == name then
+			self:loadOnlineProfile()
+		end
+	-- new profile created
 	else
 		for i, checkpoint in ipairs(_Game.configManager.levelSet.startCheckpoints) do
 			self.checkpoints[i] = checkpoint
@@ -48,12 +62,43 @@ function Profile:new(data, name)
 				amount = 0 -- if this is 0 then pay up
 			}
 		end
+		self:loadOnlineProfile()
 	end
 end
 
-
-
 -- Core stuff
+
+---Load online profile. This will return true if it was able to do so, and false otherwise.
+function Profile:loadOnlineProfile()
+
+	print ("load data for " .. self.uniqueid)
+	online_data = _LoginUser(self.uniqueid, _CLIENT_VERSION)
+	-- Enter offline mode if online_data is error (cannot connect)
+	if online_data.error then
+		print("Error while connecting to server: " .. online_data.error)
+		print("Game will launch in offline mode.")
+		self.online = false
+		return false
+	else
+		print ("getting session id " .. online_data.session_id)
+		print ("getting xp " .. online_data.player_data.xp)
+		print ("getting coins " .. online_data.player_data.coins)
+		print ("getting level " .. online_data.player_data.level)
+		
+		-- self.xp = online_data.player_data.xp
+		-- self.xplevel = online_data.player_data.level
+		-- self.currency = online_data.player_data.coins
+
+		self.inventory = online_data.inventory
+		self.session_id = online_data.session_id
+		if online_data.player_data.new_player then
+			print ("this is a new player")
+			self.new_player = true
+		end
+	end
+	return true
+end
+
 
 ---Returns the player's session data. This does NOT return a Session instance; they are separate entities.
 ---@return table

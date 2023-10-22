@@ -33,12 +33,13 @@ _VERSION = "vZB"
 _VERSION_NAME = "Zuma Blitz Remake"
 _DISCORD_APPLICATION_ID = "797956172539887657"
 _START_TIME = love.timer.getTime()
+_SITEURL = "http://localhost/dev/"
+_SCORE_SUBMIT_URL = nil
+_CLIENT_VERSION = 100
 
 -- Set this to a string of your choice. This will be only printed in log files and is not used anywhere else.
 -- You can automate this in i.e. a script by simply adding a `_BUILD_NUMBER = "<your number>"` line at the end of this main.lua file.
-_BUILD_NUMBER = "2023-06-30"
-
-
+_BUILD_NUMBER = "2023-10-21"
 
 
 
@@ -74,12 +75,8 @@ _EngineSettings = nil
 ---@type DiscordRichPresence
 _DiscordRPC = nil
 
-
-
-
-
-
-
+-- Map Cache for downloaded maps in this game session
+_MapCache = {}
 
 -- CALLBACK ZONE
 function love.load(args)
@@ -347,6 +344,82 @@ function _GetNewestVersionThreaded(onFinish, caller)
 			onFinish(_ParseNewestVersion(result))
 		end
 	end)
+end
+
+---Legacy score submission for metrics saving. This does not record the score to the server and receive xp, etc..
+---@return string?
+function _SubmitScoreLegacy(data)
+	if _SCORE_SUBMIT_URL then
+		print "submitting stats..."
+		local result = _Network:postSerialized(_SCORE_SUBMIT_URL, data, return_data, function(result)
+		end)
+	end
+end
+
+--- Save score to the server
+--- the data has score, game_stats data, replay data, and checksum
+function _SubmitScore(data)
+		print "submitting score..."
+		local result = _Network:postSerialized(_SITEURL .. "submit_score.php", data, return_data, function(result)
+		end)
+end
+
+-- Load main.php Data
+-- TODO: Add user/pass auth
+function _LoginUser(player_id, version)
+	-- test version
+	print "logging in..."
+	local result = _Network:get(_SITEURL .. "main.php?player_id=" .. player_id .. "&v=" .. version)
+	
+	if result.body then
+		if pcall(function() json.decode(result.body) end) then
+			return json.decode(result.body)
+		else
+			result.body = {error = "Unable to connect to server."}
+		end
+	else
+		result.body = {error = "Unable to connect to server."}
+	end
+	return result.body
+end
+
+-- Start Game
+-- Attempt to get the map on the same call.
+-- return coins, map, level parameters, rngseed, game id 
+function _StartGame(session_id, powers, tournament_id)
+	print "starting game..."
+	local data = {}
+	data.version = _CLIENT_VERSION
+	if powers then
+		data.powers = powers
+	end
+	-- TODO: Add support for powers
+	-- For online games, powers do not actually work unless they are loaded on the server end
+	
+	local result = _Network:get(_SITEURL .. "start_game.php?session_id=" .. session_id .. "&v=" .. _CLIENT_VERSION)
+	
+	return json.decode(result.body)
+end
+
+-- load map from memory, if miss, then download map data. Returns nil on failure.
+function _LoadMap(map)
+	local mapData = ""
+	print "loading map..."
+	if _MapCache[map] then
+		mapData = _MapCache[map]
+	else
+		local result = _Network:get(_SITEURL .. "get_map.php?map=" .. map)
+		if result.code == 200 and result.body then
+			_MapCache[map] = result.body
+			mapData = result.body
+		else
+			print ("failed to download map")
+			return nil
+		end
+	end
+
+	return mapData;
+
 end
 
 

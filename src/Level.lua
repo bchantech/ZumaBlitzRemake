@@ -62,7 +62,10 @@ function Level:new(data, rngseed, gameID, levelParameters)
 
 	-- if level parameters provided (from server), load them, else compute power effects 
 	if levelParameters then
-		self.levelParameters = json.decode(levelParameters)
+		local raw = love.data.decode("string", "base64", levelParameters)
+		raw = love.data.decompress("string", "zlib", raw)
+		self.levelParameters  = json.decode(raw)
+		self.level_hash = love.data.encode("string", "hex", love.data.hash( "md5", levelParameters ))
 	else
 		-- Add the values from powers, fruit, spirit animals, and the like.
 		self:setLevelDefaultParameters()
@@ -1724,7 +1727,7 @@ function Level:saveStats()
 		ProductName = "ZumaBlitzRemake",
 		PlatformName = "Social",
 		MetricsType = "Gameplay",
-		ClientVersion = "ZBR 0.1.6 alpha",
+		ClientVersion = "ZBR 0.1.7 alpha",
 		GapsNum = self.gapsNum,
 		BallsClearedNum = self.destroyedSpheres,
 		MultiplierMax = self.multiplier,
@@ -1760,7 +1763,7 @@ function Level:saveStats()
 		WildShotSpawned = self.wildShotSpawned,
 		SpiritShotSpawned = self.spiritShotSpawned,
 		FruitScore = self.fruitScore,
-		MapName = "test",
+		MapName = self.map_name,
 		CoinStartingBalance = currentProfile:getCurrency(),
 		SpinnerSpawned = self.spinnerSpawned,
 		XpStarting = currentProfile.xp,
@@ -1796,9 +1799,9 @@ function Level:saveStats()
 	end
 	-- TODO: Set XP to zero if the game was aborted, and x2 if a potion was used.
 
-	for k, v in pairs(s) do print(k, v) end
-	local post_body = json.encode(s)
-	print(post_body)
+	--for k, v in pairs(s) do print(k, v) end
+	--local post_body = json.encode(s)
+	--print(post_body)
 
 
 	if self.replayCore.replay_loaded then
@@ -1814,7 +1817,18 @@ function Level:saveStats()
 	end
 	
 
-	-- add http post request here
+	-- legacy submit to leaderboard
+	_SubmitScoreLegacy(s)
+
+	-- add the actual submit code
+	local submit_data = {}
+	submit_data["csm"] = self.level_hash
+	submit_data["replay_data"] = self.replayCore:save()
+	submit_data["gamestats_data"] = json.encode(s)
+	submit_data["game_id"] = self.gameID
+	submit_data["score"] = self.score
+	
+	_SubmitScore(submit_data)
 
 end
 

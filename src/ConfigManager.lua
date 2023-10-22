@@ -85,6 +85,9 @@ function ConfigManager:new()
 			end
 		end
 	end
+
+	self:setScoreSubmissionURL()
+	self:setServerLocation()
 	self:setAutosaveReplays()
 end
 
@@ -212,6 +215,12 @@ function ConfigManager:getRichPresenceApplicationID()
 	return self.config.richPresence.applicationID
 end
 
+---Sets the score submission url, and whether or not submission is enabled.
+function ConfigManager:setScoreSubmissionURL()
+	if self.config.scoreSubmissionSite then 
+		_SCORE_SUBMIT_URL = self.config.scoreSubmissionSite
+	end
+end
 
 ---Sets the score submission url, and whether or not submission is enabled.
 function ConfigManager:setAutosaveReplays()
@@ -220,6 +229,12 @@ function ConfigManager:setAutosaveReplays()
 	end
 end
 
+---Sets the game server location.
+function ConfigManager:setServerLocation()
+	if self.config.serverAddress then
+		_SITEURL = self.config.serverAddress
+	end
+end
 
 ---Gets the level number which the checkpoint points to.
 ---@param checkpoint number The checkpoint ID.

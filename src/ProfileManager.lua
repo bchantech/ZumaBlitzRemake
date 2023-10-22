@@ -47,9 +47,9 @@ function ProfileManager:createProfile(name)
 	if self.profiles[name] then
 		return false
 	end
+	self.selected = name
 	self.profiles[name] = Profile(nil, name)
 	table.insert(self.order, name)
-	self.selected = name
 	return true
 end
 
@@ -94,10 +94,11 @@ end
 function ProfileManager:deserialize(t)
 	self.order = t.order
 	self.profiles = {}
-	for profileN, profile in pairs(t.profiles) do
-		self.profiles[profileN] = Profile(profile, profileN)
-	end
 	self.selected = t.selected
+	print ("selected one is " .. self.selected)
+	for profileN, profile in pairs(t.profiles) do
+		self.profiles[profileN] = Profile(profile, profileN, self.selected)
+	end
 end
 
 

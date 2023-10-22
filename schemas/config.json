@@ -39,9 +39,17 @@
             ],
             "additionalProperties": false
         },
+        "scoreSubmissionSite": {
+            "type": "string",
+            "description": "If specified, also POSTs game results to this address after each game."
+        },
         "autosaveReplays": {
             "type": "string",
             "description": "If true, saves a replay after each game."
+        },
+        "serverAddress": {
+            "type": "string",
+            "description": "If specified, connects to a custom server of your choice."
         },
         "useUI2": {
             "type": "boolean",

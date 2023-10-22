@@ -65,12 +65,18 @@ end
 function Session:startServerLevel(map, localMap)
 	if localMap then
 		mapData = json.decode(map)
+		self.level = Level(mapData)
 	else
 		mapData =  _LoadMap(map)
 		mapData = json.decode(mapData)
+
+		-- start online game 
+		local session_id = _Game:getCurrentProfile().session_id
+		local data = _StartGame(session_id)
+		
+		self.level = Level(mapData, data.rngseed, data.game_id, data.parameters)
 	end
 
-	self.level = Level(mapData)
 	_Game.uiManager:executeCallback("levelStart")
 end
 
