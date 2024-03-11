@@ -37,6 +37,7 @@ function UIWidget:new(name, data, parent)
 	self.alpha = data.alpha or 0
 	self.scrollable = data.scrollable or false
 	self.scroll_pos = 0
+	self.scale_size = data.scale or Vec2(1)
 	self.mousedownlock = false
 
 	self.animations = {in_ = nil, out = nil}
@@ -103,7 +104,42 @@ function UIWidget:new(name, data, parent)
 
 	self.callbacks = data.callbacks
 
+	-- custom origin
+	self.origin = _ParseVec2(data.origin or {x = 0, y = 0})
 
+	-- custom move animation
+	self.move_time = nil
+	self.move_time_target = nil
+	self.move_method = nil
+	self.move_orig = {x = 0, y = 0}
+	self.move_target = {x = 0, y = 0}
+
+	-- custom scale animation
+	self.scale_time = nil
+	self.scale_time_target = nil
+	self.scale_method = nil
+	self.scale_orig = {x = 0, y = 0}
+	self.scale_target = {x = 0, y = 0}
+	
+	-- custom rotation animation
+	self.rotate_time = nil
+	self.rotate_time_target = nil
+	self.rotate_method = nil
+	self.rotate_orig = 0
+	self.rotate_target = 0
+	
+	-- custom opacity animation
+	self.opacity_time = nil
+	self.opacity_time_target = nil
+	self.opacity_method = nil
+	self.opacity_orig = 0
+	self.opacity_target = 0
+	
+	-- custom clipping (beta)
+	self.clip = data.clip
+
+	-- custom delay
+	self.delay = data.showDelay or 0
 
 	-- init animation alpha/position
 	if self.animations.in_ then
@@ -151,6 +187,74 @@ function UIWidget:update(dt)
 		if self.visible then self.time = self.hideDelay else self.time = self.showDelay end
 	end
 	if self.widget and self.widget.update then self.widget:update(dt) end
+
+	-- custom move animation
+	if self.move_time and self.delay <= 0 then
+		self.move_time = self.move_time + dt
+		-- the target time is normalized to 1, and position slider is target-origin
+		local t = math.min(self.move_time/self.move_time_target,1)
+		-- additional transform for display purposes
+		local t_t = self:easing(t, self.move_method)
+				
+		-- set new position
+		self.pos.x = self.move_orig.x + ( (self.move_target.x - self.move_orig.x) * t_t)
+		self.pos.y = self.move_orig.y + ( (self.move_target.y - self.move_orig.y) * t_t)
+
+		--print(self.move_orig.x .. "," .. self.move_orig.y)
+		--print(t)
+
+		if self.move_time > self.move_time_target then self.move_time = nil; self:executeAction("moveEnd");  end
+	end
+	
+	-- custom scale animation
+	if self.scale_time then
+		self.scale_time = self.scale_time + dt
+		local t = math.min(self.scale_time/self.scale_time_target,1)
+
+		-- additional transform for display purposes
+		local t_t = self:easing(t, self.scale_method)
+
+		-- set new size
+		self.scale_size.x = self.scale_orig.x + ( (self.scale_target.x - self.scale_orig.x) * t_t)
+		self.scale_size.y = self.scale_orig.y + ( (self.scale_target.y - self.scale_orig.y) * t_t)
+
+		if self.scale_time > self.scale_time_target then self.scale_time = nil; self:executeAction("scaleEnd"); end
+	end
+	
+	-- custom rotate animation
+	if self.rotate_time then
+		self.rotate_time = self.rotate_time + dt
+		local t = math.min(self.rotate_time/self.rotate_time_target,1)
+
+		-- additional transform for display purposes
+		local t_t = self:easing(t, self.rotate_method)
+
+		-- set new rotate
+		self.angle = self.rotate_orig + ( (self.rotate_target - self.rotate_orig) * t_t)
+
+		if self.rotate_time > self.rotate_time_target then self.rotate_time = nil; self:executeAction("rotateEnd");  end
+	end
+
+	-- custom opacity animation
+    -- NOTE: a value of 0 does not 'hide' the element or trigger its callback
+	if self.opacity_time then
+		self.opacity_time = self.opacity_time + dt
+		local t = math.min(self.opacity_time/self.opacity_time_target,1)
+
+		-- additional transform for display purposes
+		local t_t = self:easing(t, self.opacity_method)
+
+		-- set new opacity
+		self.alpha = self.opacity_orig + ( (self.opacity_target - self.opacity_orig) * t_t)
+
+		if self.opacity_time > self.opacity_time_target then self.opacity_time = nil; self:executeAction("opacityEnd");  end
+	end
+	
+	-- update the number individually
+	if self.widget and self.widget.type == "text" then self.widget:updateNumber(dt) end
+
+	-- update delay
+	if self.delay > 0 then self.delay = self.delay - dt; end
 
 	for childN, child in pairs(self.children) do
 		child:update(dt)
@@ -394,6 +498,9 @@ function UIWidget:draw()
 	self.widget:draw()
 end
 
+function UIWidget:setNumber(x, t, m)
+	self.widget:setNumber(x, t, m)
+end
 
 
 
@@ -495,6 +602,124 @@ end
 function UIWidget:scheduleFunction(actionType, f)
 	if not self.actions[actionType] then self.actions[actionType] = {} end
 	table.insert(self.actions[actionType], f)
+end
+
+-- UI FUNCTIONS --
+
+-- function widget move transition
+-- if there is no t, then it will instantly move without animation
+-- if m is defined, allows you set the easing function to use.
+
+function UIWidget:set_origin(x,y)
+	self.origin.x = x
+	self.origin.y = y
+end
+
+function UIWidget:set_position(x,y,t,m)
+	if t then
+		self.move_orig.x = self.pos.x
+		self.move_orig.y = self.pos.y
+		self.move_target.x = x - self.origin.x
+		self.move_target.y = y - self.origin.y
+		
+		self.move_time = 0
+		self.move_time_target = t
+		if m then self.move_method = m end
+	else
+		self.pos.x = x - self.origin.x
+		self.pos.y = y - self.origin.y
+	end
+
+end
+
+function UIWidget:set_scale(x,y,t,m)
+	if t then
+		self.scale_orig.x = self.scale_size.x
+		self.scale_orig.y = self.scale_size.y
+		self.scale_target.x = x
+		self.scale_target.y = y
+		
+		self.scale_time = 0
+		self.scale_time_target = t
+		if m then self.scale_method = m end
+	else
+		self.scale_size.x = x
+		self.scale_size.y = y
+	end
+end
+
+function UIWidget:set_rotation(x,t,m)
+	if t then
+		self.rotate_orig = self.angle
+		self.rotate_target = x
+		if m then self.rotate_method = m end
+		
+		self.rotate_time = 0
+		self.rotate_time_target = t
+	else
+		self.rotate = x
+	end
+end
+
+function UIWidget:set_alpha(x,t,m)
+
+	if t then
+		self.opacity_orig = self.alpha
+		self.opacity_target = x
+		if m then self.opacity_method = m end
+		
+		self.opacity_time = 0
+		self.opacity_time_target = t
+	else
+		self.alpha = x
+	end
+end
+
+function UIWidget:set_delay(t)
+	self.delay = t
+end
+
+
+-- easing functions
+-- https://easings.net/
+-- supported - sine, cupic, circ, elastic, bounce, back,
+
+function UIWidget:easing(t, type)
+
+	if not type then type = "linear" end
+	t = math.min(t,1)
+
+	if type == "easeInBack" then
+		local c1 = 1.70158
+		local c3 = c1 + 1
+		return c3 * t * t * t - c1 * t * t
+	elseif type == "easeOutBack" then
+		local c1 = 1.70158
+		local c3 = c1 + 1
+		return 1 + c3 * (t-1)^3 + c1 * (t-1)^2 
+	elseif type == "easeInCubic" then
+		return t^3
+	elseif type == "easeOutCubic" then
+		return 1 - (1 - t)^3
+	elseif type == "easeInSine" then
+		return 1 - math.cos((t * math.pi) / 2)
+	elseif type == "easeOutSine" then
+		return 1 - math.sin((t * math.pi) / 2)
+	elseif type == "easeOutBounce" then
+		print(t)
+		local n1 = 7.5625
+		local d1 = 2.75
+
+		if t < 1 / d1 then return n1 * t * t
+		elseif t < 2 / d1 then t = t - 1.5 / d1; return n1 * t * t + 0.75
+		elseif t < 2.5 / d1 then t = t - 2.25 / d1; return n1 * t * t + 0.9375
+		else t = t - 2.625 / d1; return n1 * t * t + 0.984375 end
+
+	else
+		-- defaults to linear
+		return t
+	end
+
 end
 
 

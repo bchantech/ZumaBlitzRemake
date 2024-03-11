@@ -41,7 +41,9 @@ function UIWidgetSpriteProgress:draw(variables)
 	-- if this is neither we assume this is a bar
 	-- TODO: Specify start and end arc
 
-	local pos = self.parent:getPos()
+	self.scale_render = self.parent.scale_size or Vec2(1)
+	local position_render = Vec2( -(self.sprite.frameSize.x/2 * (self.parent.scale_size.x - 1) ), -(self.sprite.frameSize.y/2 * (self.parent.scale_size.y - 1)) )
+	local pos = self.parent:getPos() + position_render
 	local pos2 = _PosOnScreen(pos)
 	
 	local p2 = _PosOnScreen(pos + self.size/2)
@@ -55,13 +57,13 @@ function UIWidgetSpriteProgress:draw(variables)
 		-- mark only these pixels as the pixels which can be affected
 		love.graphics.setStencilTest("equal", 1)
 		-- draw the circle
-		self.sprite:draw(self.parent:getPos(), nil, nil, nil, nil, nil, self.parent:getAlpha(), nil, self.parent.blendMode)
+		self.sprite:draw(self.parent:getPos() + position_render, nil, nil, nil, nil, nil, self.parent:getAlpha(), self.scale_render, self.parent.blendMode)
 		-- reset the mask
 		love.graphics.setStencilTest()
 
 	else
 		love.graphics.setScissor(pos2.x, pos2.y, self.size.x * _GetResolutionScale() * self.value, self.size.y * _GetResolutionScale())
-		self.sprite:draw(pos, nil, nil, nil, nil, nil, self.parent:getAlpha(), nil, self.parent.blendMode)
+		self.sprite:draw(pos, nil, nil, nil, nil, nil, self.parent:getAlpha(), self.scale_render, self.parent.blendMode)
 		love.graphics.setScissor()
 	end
 end
