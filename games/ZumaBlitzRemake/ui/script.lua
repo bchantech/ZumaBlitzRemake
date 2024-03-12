@@ -6,6 +6,7 @@
 local c = {}
 
 
+c.DoneLoading = false
 
 
 
@@ -14,7 +15,8 @@ local c = {}
 
 -- SPLASH STUFF
 function c.init(f)
-  f.getWidgetN("splash"):show()
+  f.getWidgetN("splash/Main"):show()
+  f.getWidgetN("splash/Main"):setActive()
 end
 
 
@@ -54,7 +56,16 @@ end
 
 
 function c.splashClick(f)
-  f.getWidgetN("splash/Main"):hide()
+  f.getWidgetN("splash/Main/Frame/Progress"):set_scale(0,0,0.75, "easeInBack")
+  f.getWidgetN("splash/Main/Frame/Progress_Bg"):set_scale(0,0,0.75, "easeInBack")
+  f.getWidgetN("splash/Main/Frame/Progress_Overlay"):set_scale(0,0,0.75, "easeInBack")
+  f.getWidgetN("splash/Main/Frame/Logo"):set_alpha(0,0.3)
+  
+  f.getWidgetN("splash/Main/Frame/Progress"):scheduleFunction("scaleEnd",
+  function()
+    f.getWidgetN("splash/Main"):hide()
+  end
+  )
 end
 
 
@@ -189,16 +200,18 @@ function c.splashEnd(f)
 
   c.LeaderboardRows = {}
   local i = 1
+  local d = 0.05
   while f.getWidgetN("root/Main/Menu/Leaderboards/Row" .. tostring(i)) do
     local path = "root/Main/Menu/Leaderboards/Row" .. tostring(i) .. "/LB_Row"
+    local path2 = f.getWidgetN("root/Main/Menu/Leaderboards/Row" .. tostring(i))
+    path2:set_delay(d)
+    path2:set_position(0,path2.pos.y,0.75, "easeOutCubic")
     local row = {}
-    --row.rank = f.getWidgetN(path .. "/Rank")
     row.name = f.getWidgetN(path .. "/Name")
-    --row.name2 = f.getWidgetN(path .. "/Name2")
-    --row.level = f.getWidgetN(path .. "/Level")
     row.score = f.getWidgetN(path .. "/Score")
     c.LeaderboardRows[i] = row
     i = i + 1
+    d = d + 0.1
   end
 
   c.ProfileRows = {}
@@ -252,13 +265,13 @@ function c.splashEnd(f)
 
 
 
-  c.Main_Text_PlayerE = f.getWidgetN("root/Main/Menu/Text_PlayerE")
-  c.Main_Text_PlayerH = f.getWidgetN("root/Main/Menu/Text_PlayerH")
+  c.Main_Text_PlayerE = f.getWidgetN("root/Main/Menu_Nav/Text_PlayerE")
+  c.Main_Text_PlayerH = f.getWidgetN("root/Main/Menu_Nav/Text_PlayerH")
   c.Main_Text_Version = f.getWidgetN("root/Main/Menu/Text_Version")
   c.Main_Text_PlayerItems = f.getWidgetN("root/Main/Menu/Text_PlayerItems")
-  c.Main_Text_Level = f.getWidgetN("root/Main/Menu/Text_Level")
-  c.Main_Text_Currency = f.getWidgetN("root/Main/Menu/Text_Currency")
-  c.Main_Progress_XP = f.getWidgetN("root/Main/Menu/Progress_XP")
+  c.Main_Text_Level = f.getWidgetN("root/Main/Menu_Nav/Text_Level")
+  c.Main_Text_Currency = f.getWidgetN("root/Main/Menu_Nav/Text_Currency")
+  c.Main_Progress_XP = f.getWidgetN("root/Main/Menu_Nav/Progress_XP")
   c.Menu_Continue_Text_Stage = f.getWidgetN("root/Menu_Continue/Frame/Text_Stage")
   c.Menu_Continue_Text_Score = f.getWidgetN("root/Menu_Continue/Frame/Text_Score")
   c.Menu_StageSelect_Text_StageName = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Text_StageName")
@@ -297,6 +310,21 @@ function c.splashEnd(f)
 
   c.Main_Button_FoodTemp = f.getWidgetN("root/Main/Menu/Button_Food")
 
+  -- make the intro a bit nicer.
+  
+  f.getWidgetN("root/Main/Menu/Button_Start"):set_alpha(0)
+  f.getWidgetN("root/Main/Background"):scheduleFunction("showEnd",
+  function()
+    f.getWidgetN("root/Main/Menu_Nav/Progress_Star"):set_rotation(2500,5000)
+    f.getWidgetN("root/Main/Menu_Nav"):set_position(0,0,0.25, "easeOutBack")
+    f.getWidgetN("root/Main/Menu/Button_Start"):set_alpha(1,1.25, "easeOutCubic")
+    f.getWidgetN("root/Main/Menu/Button_Discord"):set_position(478,488,0.75, "easeOutCubic")
+    c.Main_Text_Currency:setNumber(0)
+    c.Main_Text_Currency:setNumber( f.profileGetPlayerCurrency(),0.75, "easeOutCubic")
+  end
+  )
+
+
   --Comment out these lines if you want (not so helpful) debug functionality
   c.Main_Text_PlayerItems:hide()
   c.Main_Button_FoodTemp:hide()
@@ -307,6 +335,10 @@ end
 
 
 
+-- Main Animation screen
+function c.MainAnim(f)
+    c.Main_Text_Currency:setNumber( f.profileGetPlayerCurrency(),0.75, "easeOutCubic")
+end
 
 -- WHEN CLICKED PAUSE ON HUD
 function c.hudPause(f)
@@ -983,8 +1015,9 @@ function c.tick(f)
   if splash then
     local progress = f.loadingGetProgress()
     f.getWidgetN("splash/Main/Frame/Progress").widget.valueData = progress
-    if progress == 1 then
+    if progress == 1 and c.DoneLoading ~= true then
       c.splashClick(f)
+      c.DoneLoading = true
     end
   end
 
@@ -1090,7 +1123,7 @@ function c.tick(f)
 
     -- update widget to get current coins / values
     c.Main_Text_Level.widget.text = math.floor(playerlevel)
-    c.Main_Text_Currency.widget.text = _NumStr(playercurrency)
+    --c.Main_Text_Currency.widget.text = _NumStr(playercurrency)
     c.Main_Progress_XP.widget.valueData = playerlevel % 1
 
     c.Main_Text_PlayerE.widget.text = player
@@ -1121,8 +1154,13 @@ function c.tick(f)
     for i, row in ipairs(c.LeaderboardRows) do
       local entry = f.highscoreGetEntry(i)
       --row.rank.widget.text = tostring(i)
-      row.name.widget.text = entry.name
-      row.score.widget.text = _NumStr(entry.score)
+      if entry then 
+        row.name.widget.text = entry.name
+        row.score.widget.text = _NumStr(entry.score)
+      else
+        row.name.widget.text = " "
+        row.score.widget.text = " "
+      end
     end
   end
 end

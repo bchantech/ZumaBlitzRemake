@@ -42,6 +42,8 @@ _CLIENT_VERSION = 100
 _BUILD_NUMBER = "2023-10-21"
 
 
+-- Fonts
+_FONT_CACHE = {}
 
 -- GLOBAL ZONE
 _DisplaySize = Vec2(800, 600)
@@ -533,10 +535,16 @@ function _LoadFontData(path, size)
 end
 
 function _LoadFont(path, size)
-	local fontData = _LoadFontData(path, size)
-	assert(fontData, string.format("LOAD FONT FAIL: %s", path))
-	local font = love.graphics.newFont(fontData)
-	return font
+	local size_text = size or ""
+	if not _FONT_CACHE[path .. size_text] then
+		local fontData = _LoadFontData(path, size)
+		assert(fontData, string.format("LOAD FONT FAIL: %s", path))
+		local font = love.graphics.newFont(fontData)
+		_FONT_CACHE[path .. size_text] = font
+		return font
+	else	
+		return _FONT_CACHE[path .. size_text]
+	end
 end
 
 

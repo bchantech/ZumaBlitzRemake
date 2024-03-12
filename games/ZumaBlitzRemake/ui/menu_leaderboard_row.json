@@ -6,7 +6,14 @@
         "x": 0,
         "y": 0
     },
+    "scrollable": true,
     "alpha": 1,
+    "clip": {
+        "x": 0,
+        "y": 80,
+        "w": 800,
+        "h": 400
+    },
     "children": {
         "Name": {
             "inheritShow": true,
@@ -17,6 +24,12 @@
                 "y": 24
             },
             "alpha": 1,
+            "clip": {
+                "x": 0,
+                "y": 80,
+                "w": 800,
+                "h": 400
+            },
             "children": {},
             "animations": {},
             "sounds": {},
@@ -37,6 +50,12 @@
                 "y": 48
             },
             "alpha": 1,
+            "clip": {
+                "x": 0,
+                "y": 80,
+                "w": 800,
+                "h": 400
+            },
             "children": {},
             "animations": {},
             "sounds": {},

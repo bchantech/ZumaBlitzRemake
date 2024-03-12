@@ -31,7 +31,7 @@
                     "type": "fade",
                     "time": 0.5,
                     "startValue": 0.0,
-                    "endValue": 1.0
+                    "endValue": 0.0
                 }
             },
             "sounds": {},
@@ -122,5 +122,6 @@
         }
     },
     "animations": {},
-    "sounds": {}
+    "sounds": {},
+    "hideDelay": 1.5
 }

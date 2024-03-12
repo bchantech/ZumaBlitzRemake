@@ -6,6 +6,7 @@
         "x": 482,
         "y": 86
     },
+    "scrollable": true,
     "alpha": 1,
     "children": {
         "Row1": {
@@ -13,7 +14,7 @@
             "inheritHide": true,
             "type": "none",
             "pos": {
-                "x": 0,
+                "x": 300,
                 "y": 0
             },
             "alpha": 1,
@@ -28,7 +29,7 @@
             "inheritHide": true,
             "type": "none",
             "pos": {
-                "x": 0,
+                "x": 300,
                 "y": 78
             },
             "alpha": 1,
@@ -43,7 +44,7 @@
             "inheritHide": true,
             "type": "none",
             "pos": {
-                "x": 0,
+                "x": 300,
                 "y": 156
             },
             "alpha": 1,
@@ -58,7 +59,7 @@
             "inheritHide": true,
             "type": "none",
             "pos": {
-                "x": 0,
+                "x": 300,
                 "y": 234
             },
             "alpha": 1,
@@ -73,7 +74,7 @@
             "inheritHide": true,
             "type": "none",
             "pos": {
-                "x": 0,
+                "x": 300,
                 "y": 312
             },
             "alpha": 1,

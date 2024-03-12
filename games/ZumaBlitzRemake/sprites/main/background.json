@@ -1,21 +1,9 @@
 {
-    "path": "images/main/background.png",
+    "path": "images/splash/background.png",
     "frame_size": {
-        "x": 800,
-        "y": 600
+        "x": 760,
+        "y": 570
     },
-    "states": [
-        {
-            "pos": {
-                "x": 0,
-                "y": 0
-            },
-            "frames": {
-                "x": 1,
-                "y": 1
-            }
-        }
-    ],
     "internal": false,
     "batched": false
 }

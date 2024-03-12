@@ -24,7 +24,7 @@
                 "in_": {
                     "type": "fade",
                     "time": 0.5,
-                    "startValue": 1.0,
+                    "startValue": 0.0,
                     "endValue": 0.0
                 },
                 "out": {
@@ -35,18 +35,57 @@
                 }
             },
             "sounds": {},
-            "layer": "MenuDialog"
+            "layer": "MenuDialog",
+            "callbacks": {
+                "showEnd": "MainAnim"
+            }
         },
-        "Menu": {
+        "Menu_Nav": {
             "inheritShow": true,
             "inheritHide": true,
-            "type": "sprite",
+            "type": "none",
             "pos": {
                 "x": 0,
-                "y": 0
+                "y": -100
             },
             "alpha": 1,
             "children": {
+                "Currency_Bar": {
+                    "inheritShow": true,
+                    "inheritHide": true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 13,
+                        "y": 18
+                    },
+                    "alpha": 1,
+                    "layer": "MenuControls",
+                    "sprite": "sprites/main/currency_bar.json"
+                },
+                "Currency_Coins": {
+                    "inheritShow": true,
+                    "inheritHide": true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 25,
+                        "y": 26
+                    },
+                    "alpha": 1,
+                    "layer": "MenuControls2",
+                    "sprite": "sprites/main/coins.json"
+                },
+                "Player_Bar": {
+                    "inheritShow": true,
+                    "inheritHide": true,
+                    "type": "sprite",
+                    "pos": {
+                        "x": 192,
+                        "y": 2
+                    },
+                    "alpha": 1,
+                    "layer": "MenuControls",
+                    "sprite": "sprites/main/player_bar.json"
+                },
                 "Text_Currency": {
                     "inheritShow": true,
                     "inheritHide": true,
@@ -59,7 +98,7 @@
                     "children": {},
                     "animations": {},
                     "sounds": {},
-                    "layer": "MenuControls",
+                    "layer": "MenuControls2",
                     "font": "fonts/dialog_body.json",
                     "align": {
                         "x": 0,
@@ -78,7 +117,7 @@
                     "children": {},
                     "animations": {},
                     "sounds": {},
-                    "layer": "MenuControls2",
+                    "layer": "MenuControls4",
                     "font": "fonts/dialog_body2.json",
                     "align": {
                         "x": 0.5,
@@ -116,53 +155,13 @@
                     "children": {},
                     "animations": {},
                     "sounds": {},
-                    "layer": "MenuControls",
+                    "layer": "MenuControls2",
                     "font": "fonts/dialog_body.json",
                     "align": {
                         "x": 0.5,
                         "y": 0
                     },
                     "text": ""
-                },
-                "Text_Version": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "text",
-                    "pos": {
-                        "x": 10,
-                        "y": 583
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuControls",
-                    "font": "fonts/debug.json",
-                    "align": {
-                        "x": 0,
-                        "y": 0
-                    },
-                    "text": "If you can read this then you're smart boi"
-                },
-                "Text_PlayerItems": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "text",
-                    "pos": {
-                        "x": 12,
-                        "y": 96
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuControls",
-                    "font": "fonts/dialog_body.json",
-                    "align": {
-                        "x": 0,
-                        "y": 0
-                    },
-                    "text": "hi"
                 },
                 "Progress_XP": {
 					"inheritShow":true,
@@ -176,7 +175,7 @@
                     "children": {},
                     "animations": {},
                     "sounds": {},
-                    "layer": "MenuControls",
+                    "layer": "MenuControls2",
                     "sprite": "sprites/main/xp_circle.json",
 					"value": 0,
                     "progressBarType": "circular"
@@ -193,26 +192,12 @@
                     "children": {},
                     "animations": {},
                     "sounds": {},
-                    "layer": "MenuControls",
-                    "sprite": "sprites/main/xp_star.json"
-                },
-                "Button_Start": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "spriteButton",
-                    "pos": {
-                        "x": 217,
-                        "y": 152
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuControls",
-                    "sprite": "sprites/main/button_startgame.json",
-					"callbacks": {
-						"buttonClick": "mainStart"
-					}
+                    "layer": "MenuControls3",
+                    "sprite": "sprites/main/xp_star.json",
+                    "origin": {
+                        "x": 27,
+                        "y": 27
+                    }
                 },
                 "Button_Options": {
                     "inheritShow": true,
@@ -267,23 +252,81 @@
 					"callbacks": {
 						"buttonClick": "mainHighscores"
 					}
-                },
-                "Button_Quit": {
+                }
+
+            },
+            "animations": {},
+            "sounds": {},
+            "layer": "MenuBackground"
+        },
+                
+        "Menu": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "none",
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "alpha": 1,
+            "children": {
+                
+                "Text_Version": {
                     "inheritShow": true,
                     "inheritHide": true,
-                    "type": "spriteButton",
+                    "type": "text",
                     "pos": {
-                        "x": 445,
-                        "y": 25
+                        "x": 10,
+                        "y": 583
                     },
                     "alpha": 1,
                     "children": {},
                     "animations": {},
                     "sounds": {},
                     "layer": "MenuControls",
-                    "sprite": "sprites/main/button_quit.json",
+                    "font": "fonts/debug.json",
+                    "align": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "text": "If you can read this then you're smart boi"
+                },
+                "Text_PlayerItems": {
+                    "inheritShow": true,
+                    "inheritHide": true,
+                    "type": "text",
+                    "pos": {
+                        "x": 12,
+                        "y": 96
+                    },
+                    "alpha": 1,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "MenuControls",
+                    "font": "fonts/dialog_body.json",
+                    "align": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "text": "hi"
+                },
+                "Button_Start": {
+                    "inheritShow": true,
+                    "inheritHide": true,
+                    "type": "spriteButton",
+                    "pos": {
+                        "x": 217,
+                        "y": 152
+                    },
+                    "alpha": 0,
+                    "children": {},
+                    "animations": {},
+                    "sounds": {},
+                    "layer": "MenuControls",
+                    "sprite": "sprites/main/button_startgame.json",
 					"callbacks": {
-						"buttonClick": "mainQuit"
+						"buttonClick": "mainStart"
 					}
                 },
                 "Button_Food": {
@@ -309,7 +352,7 @@
                     "inheritHide": true,
                     "type": "spriteButton",
                     "pos": {
-                        "x": 478,
+                        "x": 778,
                         "y": 488
                     },
                     "alpha": 1,
@@ -327,7 +370,21 @@
                 },
                 "Leaderboards": "ui/menu_leaderboard_table.json"
             },
-            "sprite": "sprites/main/background.json",
+            "animations": {},
+            "sounds": {},
+            "layer": "MenuBackground"
+        },
+        "Menu_Bkg": {
+            "inheritShow": true,
+            "inheritHide": true,
+            "type": "sprite",
+            "pos": {
+                "x": 0,
+                "y": 0
+            },
+            "alpha": 1,
+            "children": {},
+            "sprite": "sprites/splash/background.json",
             "animations": {},
             "sounds": {},
             "layer": "MenuBackground"
