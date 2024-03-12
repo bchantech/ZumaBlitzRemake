@@ -495,7 +495,22 @@ end
 
 function UIWidget:draw()
 	_Debug.uiWidgetCount = _Debug.uiWidgetCount + 1
-	self.widget:draw()
+
+	if self.clip then
+		-- transform the rectangle into screen coordinates
+		local pos = Vec2(self.clip.x, self.clip.y)
+		pos = _PosOnScreen(pos)
+
+		love.graphics.stencil(function()
+			love.graphics.setColor(1, 1, 1)
+			love.graphics.rectangle("fill", pos.x, pos.y, self.clip.w * _GetResolutionScale(), self.clip.h * _GetResolutionScale())
+		end, "replace", 1)
+		love.graphics.setStencilTest("equal", 1)
+		self.widget:draw()
+		love.graphics.setStencilTest()
+	else
+		self.widget:draw()
+	end
 end
 
 function UIWidget:setNumber(x, t, m)
