@@ -794,7 +794,7 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	-- Calculate score from gap bonus
     local gapbonus = 0
     if #gaps > 0 then
-		local largestGap = math.max(unpack(gaps))
+		local largestGap = math.max(table.unpack(gaps))
 
 		-- adjustment to largest gap size
 		largestGap = largestGap - 64 - self.map.level:getParameter("gapMinAdjustment")

@@ -91,7 +91,7 @@ function Profiler:draw(pos)
 			for j, t in ipairs(tc) do
 				local h = t / ttot * 200
 				htot = htot + h
-				love.graphics.setColor(unpack(self.COLORS[(j - 1) % 12 + 1]))
+				love.graphics.setColor(table.unpack(self.COLORS[(j - 1) % 12 + 1]))
 				local p = pos + Vec2(i, -htot)
 				love.graphics.rectangle("fill", p.x, p.y, 1, h)
 			end
@@ -103,7 +103,7 @@ function Profiler:draw(pos)
 				if h2 > 200 then
 					h2 = 200
 				end
-				love.graphics.setColor(unpack(self.COLORS[(j - 1) % 12 + 1]))
+				love.graphics.setColor(table.unpack(self.COLORS[(j - 1) % 12 + 1]))
 				local p = pos + Vec2(i, -h2)
 				love.graphics.rectangle("fill", p.x, p.y, 1, h2 - h1)
 			end
@@ -178,7 +178,7 @@ function Profiler:draw(pos)
 		for i, t in ipairs(tc) do
 			local h = t / ttot * 200
 			htot = htot + h
-			love.graphics.setColor(unpack(self.COLORS[(i - 1) % 12 + 1]))
+			love.graphics.setColor(table.unpack(self.COLORS[(i - 1) % 12 + 1]))
 			local p = pos + Vec2(0, -htot)
 			love.graphics.rectangle("fill", p.x, p.y, 10, h)
 		end
