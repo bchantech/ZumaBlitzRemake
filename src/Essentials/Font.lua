@@ -80,10 +80,11 @@ function Font:getTextSize(text)
 	end
 end
 
-function Font:draw(text, pos, align, color, alpha, blendMode)
+function Font:draw(text, pos, align, color, alpha, scale, blendMode)
 	align = align or Vec2(0.5)
 	color = color or Color()
     alpha = alpha or 1
+	scale = scale or Vec2(1)
     blendMode = blendMode or "alpha"
 	-- see Sprite.lua on why this reassigment exists
 	if blendMode == "none" then
@@ -104,14 +105,14 @@ function Font:draw(text, pos, align, color, alpha, blendMode)
 		for i = 1, text:len() do
 			local character = text:sub(i, i)
 			if character == "\n" then
-				self:drawLine(line, Vec2(pos.x, y), align.x)
+				self:drawLine(line, Vec2(pos.x, y), align.x, scale)
 				line = ""
 				y = y + self.height
 			else
 				line = line .. character
 			end
 		end
-		self:drawLine(line, Vec2(pos.x, y), align.x)
+		self:drawLine(line, Vec2(pos.x, y), align.x, scale)
 	elseif self.type == "truetype" then
 		local oldFont = love.graphics.getFont()
 
@@ -125,20 +126,20 @@ function Font:draw(text, pos, align, color, alpha, blendMode)
 end
 
 -- Image type only
-function Font:drawLine(text, pos, align)
+function Font:drawLine(text, pos, align, scale)
 	pos.x = pos.x - self:getTextSize(text).x * align
 	for i = 1, text:len() do
 		local character = text:sub(i, i)
-		self:drawCharacter(character, pos)
-		pos.x = pos.x + self:getCharacter(character).width
+		self:drawCharacter(character, pos, scale)
+		pos.x = pos.x + self:getCharacter(character).width * scale.x
 	end
 end
 
 -- Image type only
-function Font:drawCharacter(character, pos)
+function Font:drawCharacter(character, pos, scale)
 	pos = _PosOnScreen(pos)
 	--if self.characters[character] then
-	self.image:draw(self:getCharacter(character).quad, pos.x, pos.y, 0, _GetResolutionScale())
+	self.image:draw(self:getCharacter(character).quad, pos.x, pos.y, 0, _GetResolutionScale() * scale.x)
 	--else
 	--	print("ERROR: Unexpected character: " .. character)
 	--end

@@ -57,8 +57,10 @@ function UIWidgetText:draw(variables)
 		textTmp = _NumStr(self.text) 
 	end
 
+	local scale = self.parent.scale_size or Vec2(1)
+
 	textTmp = string.gsub(textTmp, "$expr{.-}", function(s) return _NumStr(_Vars:evaluateExpression(s)) end)
-	self.font:draw(textTmp, self.parent:getPos(), self.align, nil, self.parent:getAlpha(), nil, self.parent.blendMode)
+	self.font:draw(textTmp, self.parent:getPos(), self.align, nil, self.parent:getAlpha(), scale, self.parent.blendMode)
 end
 
 function UIWidgetText:getSize()
