@@ -569,7 +569,13 @@ function UIWidget:getAlpha()
 end
 
 function UIWidget:getLayer()
-	if self.layer then return self.layer else return self.parent:getLayer() end
+    if self.layer then
+        return self.layer
+    end
+    if self.parent then
+        return self.parent:getLayer()
+    end
+    return "MAIN"
 end
 
 -- function UIWidget:getVisible()
