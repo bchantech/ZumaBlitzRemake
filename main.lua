@@ -39,7 +39,7 @@ _CLIENT_VERSION = 100
 
 -- Set this to a string of your choice. This will be only printed in log files and is not used anywhere else.
 -- You can automate this in i.e. a script by simply adding a `_BUILD_NUMBER = "<your number>"` line at the end of this main.lua file.
-_BUILD_NUMBER = "2023-10-21"
+_BUILD_NUMBER = "2024-03-12"
 
 
 -- Fonts
