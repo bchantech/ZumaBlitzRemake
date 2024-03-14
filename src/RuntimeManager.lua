@@ -17,6 +17,7 @@ function RuntimeManager:new()
 
 	self.profileManager = nil
 	self.highscores = nil
+	self.online_highscores = nil
 	self.options = nil
 
 	self:load()
@@ -40,6 +41,7 @@ function RuntimeManager:load()
 	if data then
 		self.profileManager = ProfileManager(data.profiles)
 		self.highscores = Highscores(data.highscores)
+		self.online_highscores = Highscores(data.highscores, true)
 		self.options = Options(data.options)
 	else
 		_Log:printt("RuntimeManager", "No data found! Possibly starting up for the first time or the save data got corrupted...")

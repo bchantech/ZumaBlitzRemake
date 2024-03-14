@@ -9,12 +9,14 @@ local Highscores = class:derive("Highscores")
 
 ---Constructs a new Highscores object.
 ---@param data table? Data to be loaded.
-function Highscores:new(data)
+function Highscores:new(data, online)
 	self.data = data
 	self.config = _Game.configManager.highscores
 
 	-- default if not found
 	if not self.data then self:reset() end
+
+	if online then self:load() end
 end
 
 
@@ -35,11 +37,36 @@ function Highscores:reset()
 end
 
 
+---Load the leaderboard based on the json output.
+
+function Highscores:load()
+	-- if there is no leaderboard data or is in error, return
+	if not _LEADERBOARD_DATA then return end
+	
+	local data = _LEADERBOARD_DATA
+
+	self.data = {entries = {}}
+	for i = 1, #data.players do
+		local def = data.players[i]
+		self.data.entries[i] = {
+			name = def.name,
+			score = tonumber(def.score)
+		}
+		
+		print ("score is type " .. type(self.data.entries[i].score))
+		print (i)
+	end
+end
+
+
 
 ---Returns a specified entry from the leaderboard.
 ---@param n integer An entry index.
 ---@return table
 function Highscores:getEntry(n)
+	if n > #self.data.entries then
+		n = #self.data.entries
+	end
 	return self.data.entries[n]
 end
 

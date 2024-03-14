@@ -625,6 +625,19 @@ function c.mainStart(f)
   end
 end
 
+-- WHEN CLICKED "ONLINE GAME" ON MAIN MENU - may be merged later on
+function c.onlineStart(f)
+  f.profileNewGame(c.newGameStage)
+  c.Main:hide()
+  c.Main_Background:scheduleFunction("hideEnd",
+  function()
+    c.Main:clean()
+    f.musicVolume("menu", 0)
+    c.newGameStarting = true
+    c.startOnlineGame(f)
+  end
+  )
+end
 
 
 -- WHEN CLICKED "OPTIONS" ON MAIN MENU
@@ -1229,6 +1242,19 @@ function c.startGame(f)
   )
 end
 
+-- copy of start game except it calls
+
+function c.startOnlineGame(f)
+  c.newGameStarting = false
+  c.Hud:show()
+  c.Hud:scheduleFunction("showEnd",
+  function()
+    c.Hud:setActive()
+    c.Button_Menu:buttonSetEnabled(true)
+    _Game.session:startServerLevel()
+  end
+  )
+end
 
 
 function c.stageMapShow(f, advance)

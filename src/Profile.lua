@@ -42,6 +42,7 @@ function Profile:new(data, name, selected)
 	self.online = true
 	self.new_player = false
 	self.inventory = {}
+	self.online_map = nil
 
 	-- has the front page announcement been read? If so do not show for the rest of the session.
 	self.announcement_read = false
@@ -84,7 +85,14 @@ function Profile:loadOnlineProfile()
 		print ("getting xp " .. online_data.player_data.xp)
 		print ("getting coins " .. online_data.player_data.coins)
 		print ("getting level " .. online_data.player_data.level)
+
+		if online_data.tournament then
+			self.online_map = online_data.tournament.map
+		else
+			print ("no tournament running at this time.")
+		end
 		
+		_LEADERBOARD_DATA = _LoadLeaderboard(50)
 		-- self.xp = online_data.player_data.xp
 		-- self.xplevel = online_data.player_data.level
 		-- self.currency = online_data.player_data.coins
@@ -518,6 +526,10 @@ end
 ---If successful, returns the position on the leaderboard. If not, returns `false`.
 ---@return integer|boolean
 function Profile:writeHighscore()
+	if self.online then
+		return false
+	end
+
 	local pos = _Game.runtimeManager.highscores:getPosition(self:getScore())
 	if not pos then
 		return false

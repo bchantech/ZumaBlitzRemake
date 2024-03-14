@@ -67,6 +67,7 @@ function Session:startServerLevel(map, localMap)
 		mapData = json.decode(map)
 		self.level = Level(mapData)
 	else
+		map =  _Game:getCurrentProfile().online_map
 		mapData =  _LoadMap(map)
 		mapData = json.decode(mapData)
 

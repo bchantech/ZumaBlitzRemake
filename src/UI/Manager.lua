@@ -98,7 +98,13 @@ function UIManager:new()
     profileGetVariable = function(name) return _Game:getCurrentProfile():getVariable(name) end,
 
     highscoreReset = function() _Game.runtimeManager.highscores:reset() end,
-    highscoreGetEntry = function(n) return _Game.runtimeManager.highscores:getEntry(n) end,
+    highscoreGetEntry = function(n) 
+      if _Game:getCurrentProfile().online then
+        return _Game.runtimeManager.online_highscores:getEntry(n) 
+      else
+        return _Game.runtimeManager.highscores:getEntry(n)
+      end
+    end,
 
     configGetLevelData = function(n) return _Game.configManager.levels[n] end,
     configGetMapData = function(name) return _Game.configManager.maps[name] end,

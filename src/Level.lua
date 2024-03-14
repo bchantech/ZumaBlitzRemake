@@ -1828,7 +1828,11 @@ function Level:saveStats()
 	submit_data["game_id"] = self.gameID
 	submit_data["score"] = self.score
 	
-	_SubmitScore(submit_data)
+	if not _OFFLINE_MODE then
+		_SubmitScore(submit_data)
+		_LEADERBOARD_DATA = _LoadLeaderboard(50)
+		_Game.runtimeManager.online_highscores:load()
+	end
 
 end
 

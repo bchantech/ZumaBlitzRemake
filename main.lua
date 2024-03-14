@@ -33,7 +33,7 @@ _VERSION = "vZB"
 _VERSION_NAME = "Zuma Blitz Remake"
 _DISCORD_APPLICATION_ID = "797956172539887657"
 _START_TIME = love.timer.getTime()
-_SITEURL = "http://localhost/dev/"
+_OFFLINE_MODE = false
 _SCORE_SUBMIT_URL = nil
 _CLIENT_VERSION = 100
 
@@ -371,6 +371,13 @@ end
 function _LoginUser(player_id, version)
 	-- test version
 	print "logging in..."
+
+	-- if there is no site then it will start offline.
+	if not _SITEURL then 
+		_OFFLINE_MODE = true
+		return {error = "No site specified."} 
+	end
+
 	local result = _Network:get(_SITEURL .. "main.php?player_id=" .. player_id .. "&v=" .. version)
 	
 	if result.body then
@@ -425,7 +432,16 @@ function _LoadMap(map)
 end
 
 
+function _LoadAssets()
+	print "loading assets ..."
+	local result = _Network:get(_SITEURL .. "load_assets.php")
+end
 
+function _LoadLeaderboard(tournament_id)
+	print "loading leaderboard ..."
+	local result = _Network:get(_SITEURL .. "leaderboard.php?id=" .. tournament_id)
+	return json.decode(result.body)
+end
 
 
 function _LoadFile(path)
