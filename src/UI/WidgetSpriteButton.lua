@@ -45,7 +45,7 @@ end
 function UIWidgetSpriteButton:keypressed(key)
 	if not self.parent:isVisible() or not self.enabled then return end
 	if key == self.parent.hotkey then
-		self.parent:executeAction("buttonClick")
+		self.parent:executeAction("keyPress")
 	end
 end
 
