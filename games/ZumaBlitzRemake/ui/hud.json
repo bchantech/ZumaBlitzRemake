@@ -167,6 +167,7 @@
                     "layer": "HudControls",
 					"hotkey": "escape",
 					"callbacks": {
+						"keyPress": "hudMenu",
 						"buttonClick": "hudMenu"
 					}
                 },
@@ -186,7 +187,7 @@
                     "layer": "HudControls",
 					"hotkey": "p",
 					"callbacks": {
-						"buttonClick": "hudPause"
+						"keyPress": "hudPause"
 					}
                 },
                 "Button_AdvanceFrame": {
