@@ -24,7 +24,7 @@ function Console:new()
 	self.MAX_MESSAGES = 20
 
 	self.font = _LoadFont("assets/dejavusans.ttf")
-	self.consoleFont = _LoadFont("assets/unifont.ttf", 16)
+	self.consoleFont = _LoadFont("assets/dejavusans_mono.ttf", 12)
 end
 
 function Console:update(dt)
