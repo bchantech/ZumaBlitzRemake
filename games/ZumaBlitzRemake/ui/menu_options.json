@@ -230,24 +230,6 @@
 					"callbacks": {
 						"buttonClick": "optionsDone"
 					}
-                },
-                "Button_Credits": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "spriteButton",
-                    "pos": {
-                        "x": 230,
-                        "y": 325
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog2Controls",
-                    "sprite": "sprites/dialogs/button_credits.json",
-					"callbacks": {
-						"buttonClick": "optionsCredits"
-					}
                 }
             },
             "animations": {

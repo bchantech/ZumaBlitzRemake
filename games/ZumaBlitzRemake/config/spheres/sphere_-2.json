@@ -4,8 +4,6 @@
     "spriteAnimationSpeed": 16,
     "size": 29,
     "destroyParticle": "particles/collapse_ball_bomb.json",
-    "color": "images/powerups/fire_pal.png",
-    "colorSpeed": 64,
     "interchangeable": false,
     "shootBehavior": {
         "type": "normal"

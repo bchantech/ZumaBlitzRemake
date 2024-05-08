@@ -84,21 +84,6 @@
                     "layer": "MenuBackground",
                     "sprite": "sprites/dialogs/highscore_bottom.json"
                 },
-                "Psys_Highlight": {
-                    "inheritShow": false,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 0,
-                        "y": 0
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuBackgroundMask",
-                    "path": "particles/high_score.json"
-                },
                 "Button_Clear": {
                     "inheritShow": true,
                     "inheritHide": true,

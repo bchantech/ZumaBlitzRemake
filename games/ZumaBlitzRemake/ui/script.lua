@@ -68,8 +68,6 @@ function c.splashClick(f)
   )
 end
 
-
-
 function c.splashEnd(f)
   f.initSession()
   f.getWidgetN("root/Main"):show()
@@ -104,7 +102,6 @@ function c.splashEnd(f)
   c.Menu_Game_Frame = f.getWidgetN("root/Menu_Game/Frame")
   c.Menu_Highscores = f.getWidgetN("root/Menu_Highscores")
   c.Menu_Highscores_Frame = f.getWidgetN("root/Menu_Highscores/Frame")
-  c.Menu_Highscores_Highlight = f.getWidgetN("root/Menu_Highscores/Frame/Psys_Highlight")
   c.Menu_ClearScores = f.getWidgetN("root/Menu_ClearScores")
   c.Menu_ClearScores_Frame = f.getWidgetN("root/Menu_ClearScores/Frame")
   c.Menu_Options = f.getWidgetN("root/Menu_Options")
@@ -120,8 +117,6 @@ function c.splashEnd(f)
   c.Menu_Instructions_Mask_Background = f.getWidgetN("root/Menu_Instructions_Mask/Background")
   c.Menu_Continue = f.getWidgetN("root/Menu_Continue")
   c.Menu_Continue_Background = f.getWidgetN("root/Menu_Continue/Background")
-  c.Menu_StageSelect = f.getWidgetN("root/Menu_StageSelect")
-  c.Menu_StageSelect_Frame = f.getWidgetN("root/Menu_StageSelect/Frame")
 
   c.Hud = f.getWidgetN("root/Game/Hud")
   c.Button_Menu = f.getWidgetN("root/Game/Hud/Frame/Button_Menu")
@@ -131,72 +126,8 @@ function c.splashEnd(f)
   c.Banner_LevelComplete = f.getWidgetN("root/Game/Hud/Banner_LevelComplete")
   c.Banner_LevelComplete_Frame = f.getWidgetN("root/Game/Hud/Banner_LevelComplete/Frame")
   c.Banner_LevelComplete_Record = f.getWidgetN("root/Game/Hud/Banner_LevelComplete/Frame/Container/VW_LevelScoreRecord")
-  c.Banner_StageMapTrans = f.getWidgetN("root/Game/Hud/Banner_StageMapTrans")
-  c.Banner_StageMapTrans_Background = f.getWidgetN("root/Game/Hud/Banner_StageMapTrans/Background")
-  c.Banner_StageMap = f.getWidgetN("root/Game/Hud/Banner_StageMap")
-  c.Banner_StageMap_Frame = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame")
-  c.Banner_HighScore = f.getWidgetN("root/Game/Hud/Banner_HighScore")
-  c.Banner_HighScore_Panel = f.getWidgetN("root/Game/Hud/Banner_HighScore/Panel")
   c.Banner_QuitBackground = f.getWidgetN("root/Game/Hud/Banner_QuitBackground")
   c.Banner_QuitBackground_Background = f.getWidgetN("root/Game/Hud/Banner_QuitBackground/Background")
-  c.Banner_Intro = f.getWidgetN("root/Game/Hud/Banner_Intro")
-  c.Banner_Intro_Panel = f.getWidgetN("root/Game/Hud/Banner_Intro/Panel")
-
-
-
-  c.LevelButtons = {}
-  local i = 1
-  while f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/LevelButtons/" .. tostring(i)) do
-    c.LevelButtons[i] = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/LevelButtons/" .. tostring(i))
-    i = i + 1
-  end
-  c.StageButtons = {}
-  local i = 1
-  while f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/StageButtons/" .. tostring(i)) do
-    c.StageButtons[i] = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/StageButtons/" .. tostring(i))
-    i = i + 1
-  end
-  c.Banner_StageMap_StageCompletePsys = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/StageCompletePsys")
-  c.Banner_StageMap_StageUnlockPsys = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/StageUnlockPsys")
-  c.Banner_StageMap_LevelPsys = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/LevelPsys")
-  c.Banner_StageMap_StageButtons = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/StageButtons")
-  c.Banner_StageMap_LevelButtons = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/LevelButtons")
-  c.Banner_StageMap_Set = f.getWidgetN("root/Game/Hud/Banner_StageMap/Frame/StageMap/Stage_Select/Set")
-
-  c.NewGameLevelButtons = {}
-  local i = 1
-  while f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Stage_Select/LevelButtons/" .. tostring(i)) do
-    c.NewGameLevelButtons[i] = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Stage_Select/LevelButtons/" .. tostring(i))
-    i = i + 1
-  end
-  c.NewGameStageButtons = {}
-  local i = 1
-  while f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Stage_Select/StageButtons/" .. tostring(i)) do
-    c.NewGameStageButtons[i] = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Stage_Select/StageButtons/" .. tostring(i))
-    i = i + 1
-  end
-  c.Menu_StageSelect_LevelPsys = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Stage_Select/LevelPsys")
-  c.Menu_StageSelect_StageButtons = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Stage_Select/StageButtons")
-  c.Menu_StageSelect_LevelButtons = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Stage_Select/LevelButtons")
-  c.Menu_StageSelect_Set = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Stage_Select/Set")
-
-
-
-  --[[
-  c.HighscoreRows = {}
-  local i = 1
-  while f.getWidgetN("root/Menu_Highscores/Frame/HS_Table/Row" .. tostring(i - 1)) do
-    local path = "root/Menu_Highscores/Frame/HS_Table/Row" .. tostring(i - 1) .. "/HS_Row"
-    local row = {}
-    row.rank = f.getWidgetN(path .. "/Rank")
-    row.name = f.getWidgetN(path .. "/Name")
-    row.name2 = f.getWidgetN(path .. "/Name2")
-    row.level = f.getWidgetN(path .. "/Level")
-    row.score = f.getWidgetN(path .. "/Score")
-    c.HighscoreRows[i] = row
-    i = i + 1
-  end
-  ]]
 
   c.LeaderboardRows = {}
   local i = 1
@@ -214,6 +145,23 @@ function c.splashEnd(f)
     d = d + 0.1
   end
 
+  for i, row in ipairs(c.LeaderboardRows) do
+    local entry = f.highscoreGetEntry(i)
+    --row.rank.widget.text = tostring(i)
+    if entry then 
+      row.name.widget.text = entry.name
+      row.score.widget.text = _NumStr(entry.score)
+    else
+      row.name.widget.text = " "
+      row.score.widget.text = " "
+    end
+  end
+  
+  c.Main_Text_Level = f.getWidgetN("root/Main/Menu_Nav/Text_Level")
+  c.Main_Text_Currency = f.getWidgetN("root/Main/Menu_Nav/Text_Currency")
+  c.Main_Progress_XP = f.getWidgetN("root/Main/Menu_Nav/Progress_XP")
+  c.Main_Text_PlayerE = f.getWidgetN("root/Main/Menu_Nav/Text_PlayerE")
+  
   c.ProfileRows = {}
   local i = 1
   while f.getWidgetN("root/Main/Profile_Manage/Frame/Listbox/Button_" .. tostring(i)) do
@@ -265,18 +213,10 @@ function c.splashEnd(f)
 
 
 
-  c.Main_Text_PlayerE = f.getWidgetN("root/Main/Menu_Nav/Text_PlayerE")
-  c.Main_Text_PlayerH = f.getWidgetN("root/Main/Menu_Nav/Text_PlayerH")
   c.Main_Text_Version = f.getWidgetN("root/Main/Menu/Text_Version")
   c.Main_Text_PlayerItems = f.getWidgetN("root/Main/Menu/Text_PlayerItems")
-  c.Main_Text_Level = f.getWidgetN("root/Main/Menu_Nav/Text_Level")
-  c.Main_Text_Currency = f.getWidgetN("root/Main/Menu_Nav/Text_Currency")
-  c.Main_Progress_XP = f.getWidgetN("root/Main/Menu_Nav/Progress_XP")
   c.Menu_Continue_Text_Stage = f.getWidgetN("root/Menu_Continue/Frame/Text_Stage")
   c.Menu_Continue_Text_Score = f.getWidgetN("root/Menu_Continue/Frame/Text_Score")
-  c.Menu_StageSelect_Text_StageName = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Text_StageName")
-  c.Menu_StageSelect_Text_StageNumber = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Text_StageNumber")
-  c.Menu_StageSelect_Text_MapName = f.getWidgetN("root/Menu_StageSelect/Frame/StageMap/Text_MapName")
   c.Profile_Create_Entry_Name = f.getWidgetN("root/Main/Profile_Create/Frame/Entry_Name")
   c.Profile_Delete_Text_Name = f.getWidgetN("root/Main/Profile_Delete/Frame/Text_Name")
   c.Hud_Text_Stage = f.getWidgetN("root/Game/Hud/Frame/Text_Stage")
@@ -320,8 +260,13 @@ function c.splashEnd(f)
     f.getWidgetN("root/Main/Menu/Button_Start"):set_alpha(1,1.25, "easeOutCubic")
     f.getWidgetN("root/Main/Menu/Button_Discord"):set_position(478,488,0.75, "easeOutCubic")
     c.Main_Text_Currency:setNumber(0)
+
+    if f.profileGetExists() then
     c.Main_Text_Currency:setNumber( f.profileGetPlayerCurrency(),0.75, "easeOutCubic")
+    end
   end
+  
+
   )
 
 
@@ -330,10 +275,8 @@ function c.splashEnd(f)
   c.Main_Button_FoodTemp:hide()
   c.Main_Text_PlayerItems.alpha = 0
   c.Main_Button_FoodTemp.alpha = 0
+  
 end
-
-
-
 
 -- Main Animation screen
 function c.MainAnim(f)
@@ -389,30 +332,6 @@ function c.levelCompleteOk(f)
 end
 
 
-
--- WHEN CLICKED "DONE" ON NEW HIGHSCORE SCREEN
-function c.highscoreOk(f)
-  c.Banner_HighScore:hide()
-  c.Banner_HighScore_Panel:scheduleFunction("hideEnd",
-  function()
-    c.Banner_HighScore:clean()
-    c.Hud:hide()
-    c.Hud:scheduleFunction("hideEnd",
-    function()
-      f.profileDeleteGame()
-      c.Menu_Highscores:show()
-      c.Menu_Highscores:setActive()
-      c.Menu_Highscores_Highlight.pos.y = c.highscorePlace * 45 + 62
-      c.Menu_Highscores_Highlight:show()
-      f.musicVolume("menu", 1)
-    end
-    )
-  end
-  )
-end
-
-
-
 -- WHEN CLICKED "CONTINUE PLAYING" ON GAME MENU
 function c.gameMenuContinue(f)
   c.Menu_Game:hide()
@@ -431,21 +350,6 @@ function c.gameMenuOptions(f)
   c.Menu_Options:show()
   c.Menu_Options:setActive()
 end
-
-
-
--- WHEN CLICKED "INSTRUCTIONS" ON GAME MENU
-function c.gameMenuHelp(f)
-  c.Menu_Instructions_Mask:show()
-  c.Menu_Instructions_Mask_Background:scheduleFunction("showEnd",
-  function()
-    c.Menu_Instructions:show()
-    c.Menu_Instructions:setActive()
-    c.Menu_Instructions_Toggle_DontShow.widget:setState(f.profileGetVariable("dontShowInstructions"))
-  end
-  )
-end
-
 
 
 -- WHEN CLICKED "QUIT GAME" ON GAME MENU
@@ -491,8 +395,6 @@ function c.quitMenuQuit(f)
     function()
       c.Banner_LevelComplete:hide()
       c.Banner_LevelComplete:clean()
-      c.Banner_HighScore:hide()
-      c.Banner_HighScore:clean()
       c.Hud:hide()
       c.Hud:scheduleFunction("hideEnd",
       function()
@@ -521,23 +423,6 @@ function c.optionsDone(f)
     c.Main:setActive()
   end
 end
-
-
-
--- WHEN CLICKED "CREDITS" ON OPTIONS MENU
-function c.optionsCredits(f)
-  c.Menu_Credits:show()
-  c.Menu_Credits:setActive()
-end
-
-
-
--- WHEN CLICKED "DONE" ON CREDITS MENU
-function c.creditsDone(f)
-  c.Menu_Credits:hide()
-  c.Menu_Options:setActive()
-end
-
 
 
 -- WHEN CLICKED "OK" ON INSTRUCTIONS MENU
@@ -611,7 +496,6 @@ function c.mainStart(f)
     c.Menu_Continue:show()
     c.Menu_Continue:setActive()
   else
-    --c.stageSelectShow(f)
     f.profileNewGame(c.newGameStage)
     c.Main:hide()
     c.Main_Background:scheduleFunction("hideEnd",
@@ -926,8 +810,6 @@ function c.mainContinueContinue(f)
         c.Main:clean()
         c.Hud:setActive()
         f.levelStart()
-      else
-        c.stageMapShow(f, false)
       end
     end
     )
@@ -942,79 +824,6 @@ function c.mainContinueCancel(f)
   c.Menu_Continue:hide()
   c.Main:setActive()
 end
-
-
-
--- WHEN CLICKED START ON LEVEL MAP
-function c.mainMapStart(f)
-  f.profileNewGame(c.newGameStage)
-  c.Menu_StageSelect:hide()
-  c.Menu_StageSelect_Frame:scheduleFunction("hideEnd",
-  function()
-    f.musicVolume("menu", 0)
-    c.startGame(f)
-  end
-  )
-end
-
-
-
--- WHEN CLICKED CANCEL ON LEVEL MAP
-function c.mainMapCancel(f)
-  c.Menu_StageSelect:hide()
-  c.Menu_StageSelect_Frame:scheduleFunction("hideEnd",
-  function()
-    c.Main:show()
-    c.Main:setActive()
-  end
-  )
-end
-
-
-
--- WHEN CLICKED A STAGE BUTTON ON LEVEL MAP
-function c.mainMapSelect(f, params)
-  local stage = params[1]
-  c.newGameStage = stage
-  c.stageSelectUpdateButtons(f)
-end
-
-
-
--- WHEN CLICKED START ON LEVEL MAP 2
-function c.gameMapStart(f)
-  c.Banner_StageMap:hide()
-  c.Banner_StageMap_Frame:scheduleFunction("hideEnd",
-  function()
-    c.Banner_StageMapTrans:hide()
-    c.Banner_StageMapTrans_Background:scheduleFunction("hideEnd",
-    function()
-      c.Hud:setActive()
-      f.levelStart()
-    end
-    )
-  end
-  )
-end
-
-
-
--- WHEN CLICKED CANCEL ON LEVEL MAP 2
-function c.gameMapCancel(f)
-  c.Hud:hide()
-  c.Banner_StageMap:hide()
-  c.Banner_StageMap_Frame:scheduleFunction("hideEnd",
-  function()
-    c.Banner_StageMapTrans:hide()
-    c.Banner_StageMapTrans:clean()
-    c.Main:show()
-    c.Main:setActive()
-    f.musicVolume("menu", 1)
-  end
-  )
-end
-
-
 
 
 
@@ -1057,7 +866,7 @@ function c.tick(f)
 
 
   -- Update texts
-  if c.Banner_StageMap then
+  if c.sessionLoaded then
     local player = ""
     local playerlevel = 0
     local playercurrency = 0 
@@ -1072,10 +881,12 @@ function c.tick(f)
         local coins = "0"
         local score = f.profileGetScore()
         local scoreStr = _NumStr(score)
-        if c.scoreDisplay < score then
-          c.scoreDisplay = c.scoreDisplay + math.ceil((score - c.scoreDisplay) / 10)
-        elseif c.scoreDisplay > score then
-          c.scoreDisplay = c.scoreDisplay + math.floor((score - c.scoreDisplay) / 10)
+        if c.scoreDisplay then
+          if c.scoreDisplay < score then
+            c.scoreDisplay = c.scoreDisplay + math.ceil((score - c.scoreDisplay) / 10)
+          elseif c.scoreDisplay > score then
+            c.scoreDisplay = c.scoreDisplay + math.floor((score - c.scoreDisplay) / 10)
+          end
         end
         local scoreAnim = _NumStr(c.scoreDisplay)
         local levelName = f.profileGetLevelName()
@@ -1088,13 +899,6 @@ function c.tick(f)
         c.Hud_Text_Stage.widget.text = levelName
         c.Hud_Text_Coins.widget.text = coins
         c.Hud_Text_Score.widget.text = scoreAnim
-
-        --c.Banner_StageMap_Text_StageName.widget.text = stageName
-        --c.Banner_StageMap_Text_StageNumber.widget.text = "STAGE " .. levelName
-        --c.Banner_StageMap_Text_MapName.widget.text = levelMapName
-
-        --c.Banner_Intro_Text_Stage.widget.text = "STAGE " .. levelName
-        --c.Banner_Intro_Text_Map.widget.text = levelMapName
 
         -- Level
         if f.levelExists() then
@@ -1136,7 +940,7 @@ function c.tick(f)
 
     -- update widget to get current coins / values
     c.Main_Text_Level.widget.text = math.floor(playerlevel)
-    --c.Main_Text_Currency.widget.text = _NumStr(playercurrency)
+    c.Main_Text_Currency.widget.text = _NumStr(playercurrency)
     c.Main_Progress_XP.widget.valueData = playerlevel % 1
 
     c.Main_Text_PlayerE.widget.text = player
@@ -1154,16 +958,6 @@ function c.tick(f)
       )
     end
 
-    --[[
-    for i, row in ipairs(c.HighscoreRows) do
-      local entry = f.highscoreGetEntry(i)
-      row.rank.widget.text = tostring(i)
-      row.name.widget.text = entry.name
-      row.name2.widget.text = entry.name
-      row.level.widget.text = entry.level
-      row.score.widget.text = _NumStr(entry.score)
-    end
-    ]]
     for i, row in ipairs(c.LeaderboardRows) do
       local entry = f.highscoreGetEntry(i)
       --row.rank.widget.text = tostring(i)
@@ -1184,6 +978,7 @@ function c.sessionInit(f)
   f.getWidgetN("root"):show()
   f.getWidgetN("root/Main"):setActive()
   f.optionsLoad()
+  c.sessionLoaded = true
 end
 
 
@@ -1255,144 +1050,6 @@ function c.startOnlineGame(f)
   end
   )
 end
-
-
-function c.stageMapShow(f, advance)
-  c.Banner_StageMapTrans:show()
-  c.Banner_StageMapTrans_Background:scheduleFunction("showEnd",
-  function()
-    c.Main:clean()
-    c.stageMapUpdateButtons(f)
-    c.Banner_StageMap:show()
-    if advance then
-      c.Banner_StageMap_Frame:scheduleFunction("showEnd",
-      function()
-        if f.profileGetLevelN() == 88 or f.profileIsCheckpointUpcoming() then
-          c.Banner_StageMap_StageCompletePsys:show()
-          c.Banner_StageMap_StageCompletePsys:scheduleFunction("particleDespawn",
-          function()
-            if f.profileIsCheckpointUpcoming() then
-              f.profileLevelAdvance()
-              c.stageMapSetActive(f)
-              c.Banner_StageMap_StageUnlockPsys:show()
-            else
-              c.Banner_StageMap:hide()
-              c.Banner_StageMap_Frame:scheduleFunction("hideEnd",
-              function()
-                -- If you've dug this deep, you should know that I'm leaving the "game win" feature to the very end of Beta state :)
-                c.Banner_StageMapTrans:hide()
-                c.Banner_StageMapTrans:clean()
-                c.Hud:hide()
-                c.Main:show()
-                c.Main:setActive()
-              end
-              )
-            end
-          end
-          )
-        else
-          f.profileLevelAdvance()
-          c.stageMapSetActive(f)
-        end
-      end
-      )
-    else
-      c.stageMapSetActive(f)
-    end
-  end
-  )
-end
-
-
-
-function c.stageMapSetActive(f)
-  c.Banner_StageMap:setActive()
-  c.Banner_StageMap_StageButtons:resetActive()
-  c.Banner_StageMap_LevelButtons:resetActive()
-  c.stageMapUpdateButtons(f)
-end
-
-
-
-function c.stageMapUpdateButtons(f)
-  local s = f.profileGetLatestCheckpoint()
-  for i, StageButton in ipairs(c.StageButtons) do
-    StageButton:buttonSetEnabled(i <= s)
-    StageButton.widget.clickedV = i == s
-    if i == s then
-      c.Banner_StageMap_StageUnlockPsys.pos = StageButton.pos + 32
-    end
-  end
-  if s == 13 then
-    c.Banner_StageMap_Set:show()
-  else
-    c.Banner_StageMap_Set:hide()
-    c.Banner_StageMap_Set:clean()
-  end
-
-  local n = f.profileGetLevelN()
-  for i, LevelButton in ipairs(c.LevelButtons) do
-    if i < n then
-      LevelButton:show()
-    else
-      LevelButton:hide()
-      LevelButton:clean()
-    end
-    if i == n then
-      c.Banner_StageMap_LevelPsys.pos = LevelButton.pos
-    end
-  end
-end
-
-
-
-function c.stageSelectShow(f)
-  c.Main:hide()
-  c.Main_Background:scheduleFunction("hideEnd",
-  function()
-    c.Main:clean()
-    -- latest checkpoint will be selected by default
-    local checkpoints = f.profileGetUnlockedCheckpoints()
-    c.newGameStage = checkpoints[#checkpoints]
-    --
-    c.stageSelectUpdateButtons(f)
-    c.Menu_StageSelect:show()
-    c.Menu_StageSelect:setActive()
-  end
-  )
-end
-
-
-
-function c.stageSelectUpdateButtons(f)
-  c.Menu_StageSelect_StageButtons:show()
-
-  local n = f.configGetCheckpointLevel(c.newGameStage)
-  for i, LevelButton in ipairs(c.NewGameLevelButtons) do
-    if i < n then
-      LevelButton:show()
-    else
-      LevelButton:hide()
-      LevelButton:clean()
-    end
-    if i == n then
-      c.Menu_StageSelect_LevelPsys.pos = LevelButton.pos
-    end
-  end
-
-  local s = c.newGameStage
-  for i, StageButton in ipairs(c.NewGameStageButtons) do
-    StageButton:buttonSetEnabled(f.profileIsCheckpointUnlocked(i))
-    StageButton.widget.clickedV = i == s
-  end
-  if s == 13 then
-    c.Menu_StageSelect_Set:show()
-  else
-    c.Menu_StageSelect_Set:hide()
-    c.Menu_StageSelect_Set:clean()
-  end
-end
-
 
 
 function c.profileManagerUpdateButtons(f)

@@ -40,11 +40,13 @@
         "Frame": {
             "inheritShow": true,
             "inheritHide": false,
-            "type": "sprite",
+            "type": "rectangle",
             "pos": {
                 "x": 0,
                 "y": 0
             },
+            "size":{"x":760,"y":570},
+            "color":{"r":0,"g":0,"b":0},
             "alpha": 0.0,
             "children": {
                 "Text_Title": {
@@ -66,21 +68,6 @@
                         "y": 0
                     },
                     "text": "HOW TO PLAY"
-                },
-                "Instr_Psys1": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 133,
-                        "y": 280
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog3Controls2",
-                    "path": "particles/shooter1.json"
                 },
                 "Text_1_1": {
                     "inheritShow": true,
@@ -172,51 +159,6 @@
                     },
                     "text": "CATCH 30 ANKH\nCOINS TO EARN\nAN EXTRA LIFE"
                 },
-                "Instr_Psys3": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 350,
-                        "y": 371
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog3Controls2",
-                    "path": "particles/gem_8.json"
-                },
-                "Instr_Psys4": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 400,
-                        "y": 371
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog3Controls2",
-                    "path": "particles/gem_9.json"
-                },
-                "Instr_Psys5": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 450,
-                        "y": 371
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog3Controls2",
-                    "path": "particles/gem_10.json"
-                },
                 "Text_3_4": {
                     "inheritShow": true,
                     "inheritHide": true,
@@ -237,51 +179,6 @@
                     },
                     "text": "CATCH GEMS TO\nSCORE BONUS\nPOINTS"
                 },
-                "Instr_Psys6": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 608,
-                        "y": 446
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog3Controls2",
-                    "path": "particles/powerup_lightning.json"
-                },
-                "Instr_Psys7": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 667,
-                        "y": 446
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog3Controls2",
-                    "path": "particles/powerup_speed_shot.json"
-                },
-                "Instr_Psys8": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 728,
-                        "y": 446
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog3Controls2",
-                    "path": "particles/powerup_bomb_color_3.json"
-                },
                 "Text_4_1": {
                     "inheritShow": true,
                     "inheritHide": true,
@@ -301,21 +198,6 @@
                         "y": 0
                     },
                     "text": "CATCH SYMBOLS\nTO ACTIVATE\nAWESOME POWERUPS"
-                },
-                "Instr_Psys9": {
-                    "inheritShow": true,
-                    "inheritHide": true,
-                    "type": "particle",
-                    "pos": {
-                        "x": 667,
-                        "y": 280
-                    },
-                    "alpha": 1,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog3Controls2",
-                    "path": "particles/shooter2.json"
                 },
                 "Text_5_1": {
                     "inheritShow": true,
@@ -376,8 +258,7 @@
             },
             "animations": {},
             "sounds": {},
-            "layer": "MenuDialog3",
-            "sprite": "sprites/dialogs/instructions.json"
+            "layer": "MenuDialog3"
         }
     },
     "animations": {},

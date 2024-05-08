@@ -208,13 +208,9 @@
             },
             "sounds": {}
         },
-		"Banner_HighScore":"ui/banner_highscore.json",
-		"Banner_Intro":"ui/banner_intro.json",
 		"Banner_LevelComplete":"ui/banner_levelcomplete.json",
 		"Banner_Paused":"ui/banner_paused.json",
-		"Banner_QuitBackground":"ui/banner_quitbackground.json",
-		"Banner_StageMap":"ui/banner_stagemap.json",
-		"Banner_StageMapTrans":"ui/banner_stagemaptrans.json"
+		"Banner_QuitBackground":"ui/banner_quitbackground.json"
 	},
 	"animations": {
 		"in_": {

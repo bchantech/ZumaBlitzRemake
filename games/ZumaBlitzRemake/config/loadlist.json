@@ -30,7 +30,6 @@
         "music/15toGoMusic_2.ogg"
     ],
     "colorPalettes": [
-        "images/powerups/fire_pal.png",
         "images/powerups/wild_pal.png",
         "images/particles/gem_bloom_blue.png",
         "images/particles/gem_bloom_green.png",
