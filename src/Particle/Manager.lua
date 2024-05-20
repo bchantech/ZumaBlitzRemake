@@ -30,6 +30,11 @@ end
 
 function ParticleManager:spawnParticlePacket(path, pos, layer)
 	local data = _Game.resourceManager:getParticle(path)
+	-- we need to return a null packet if path is not found.
+	if not data then 
+		return nil
+	end
+
 	local packet = ParticlePacket(self, data, pos, layer)
 	table.insert(self.particlePackets, packet)
 	return packet
