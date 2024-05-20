@@ -14,9 +14,9 @@ function ParticleSpawner:new(manager, packet, data)
 	self.packet.spawnerCount = self.packet.spawnerCount + 1
 	self.layer = self.packet.layer
 
-	self.pos = _ParseVec2(data.pos)
-	self.speed = _ParseVec2(data.speed)
-	self.acceleration = _ParseVec2(data.acceleration)
+	self.pos = _ParseVec2(data.pos) or Vec2()
+	self.speed = _ParseVec2(data.speed) or Vec2()
+	self.acceleration = _ParseVec2(data.acceleration) or Vec2()
 	self.lifespan = data.lifespan -- nil if it lives indefinitely
 	self.lifetime = self.lifespan
 	self.spawnMax = data.spawnMax

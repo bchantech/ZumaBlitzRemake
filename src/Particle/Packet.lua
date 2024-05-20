@@ -12,8 +12,10 @@ function ParticlePacket:new(manager, data, pos, layer)
 	self.pos = pos
 	self.layer = layer
 	self.spawnerCount = 0
-	for i, spawnerData in ipairs(data) do
-		manager:spawnParticleSpawner(self, spawnerData)
+	if data and type(data) == "table" then
+		for i, spawnerData in ipairs(data) do
+			manager:spawnParticleSpawner(self, spawnerData)
+		end
 	end
 	
 	self.delQueue = false

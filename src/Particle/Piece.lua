@@ -29,28 +29,28 @@ function ParticlePiece:new(manager, spawner, data)
 
 	self.speedMode = data.speedMode
 
-	self.spawnScale = _ParseVec2(data.spawnScale)
+	self.spawnScale = _ParseVec2(data.spawnScale) or Vec2()
 	self.posAngle = math.random() * math.pi * 2
 	local spawnRotVec = Vec2(1):rotate(self.posAngle)
 	local spawnPos = spawnRotVec * self.spawnScale
 	self.pos = self.pos + spawnPos
 
 	if self.speedMode == "loose" then
-		self.speed = _ParseVec2(data.speed)
+		self.speed = _ParseVec2(data.speed) or Vec2()
 	elseif self.speedMode == "radius" then
-		self.speed = spawnRotVec * _ParseVec2(data.speed)
+		self.speed = spawnRotVec * _ParseVec2(data.speed) or Vec2()
 	elseif self.speedMode == "radius_linear" then
-		self.speed = spawnRotVec * _ParseNumber(data.speed)
+		self.speed = spawnRotVec * _ParseNumber(data.speed) or 0
 	elseif self.speedMode == "circle" then
-		self.speed = _ParseNumber(data.speed) * math.pi / 180 -- convert degrees to radians
+		self.speed = (_ParseNumber(data.speed) * math.pi / 180) or 0 -- convert degrees to radians
 	else
 		error("Unknown particle speed mode: " .. tostring(self.speedMode))
 	end
 
 	if self.speedMode == "circle" or self.speedMode == "radius_linear" then
-		self.acceleration = _ParseNumber(data.acceleration)
+		self.acceleration = _ParseNumber(data.acceleration) or 0
 	else
-		self.acceleration = _ParseVec2(data.acceleration)
+		self.acceleration = _ParseVec2(data.acceleration) or Vec2()
 	end
 
 	self.lifespan = _ParseNumber(data.lifespan) -- nil if it lives indefinitely
@@ -59,9 +59,29 @@ function ParticlePiece:new(manager, spawner, data)
 
     self.sprite = _Game.resourceManager:getSprite(data.sprite)
 	self.blendMode = data.blendMode
-	self.animationSpeed = data.animationSpeed
-	self.animationFrameCount = data.animationFrameCount
-	self.animationLoop = data.animationLoop
+
+	-- initalize the starting frame count assuming a static frame or otherwise.
+
+	self.animationSpeed = 30
+	self.animationFrameCount = 1
+	self.animationLoop = true
+	self.animationFrameRandom = false
+
+	if self.sprite then
+		self.animationSpeed = self.sprite.animationSpeed or self.animationSpeed
+		self.animationFrameCount = self.sprite.animationFrameCount or self.animationFrameCount
+		if self.sprite.animationLoop ~= nil then self.animationLoop = self.sprite.animationLoop end
+		self.animationFrameRandom = self.sprite.animationFrameRandom or self.animationFrameRandom
+	end
+
+	self.animationSpeed = data.animationSpeed or self.animationSpeed
+	self.animationFrameCount = data.animationFrameCount or self.animationFrameCount
+	if data.animationLoop ~= nil then self.animationLoop = data.animationLoop end
+	self.animationFrameRandom = data.animationFrameRandom or self.animationFrameRandom
+
+	-- force animationFrameCount to 1 if it's lower than that.
+	self.animationFrameCount = math.max(1, self.animationFrameCount)
+
 	self.fadeInPoint = data.fadeInPoint
 	self.fadeOutPoint = data.fadeOutPoint
 	self.posRelative = data.posRelative
@@ -69,7 +89,7 @@ function ParticlePiece:new(manager, spawner, data)
 	self.directionDeviationTime = _ParseNumber(data.directionDeviationTime)
 	self.directionDeviationSpeed = data.directionDeviationSpeed -- evaluated every frame
 
-	self.animationFrame = data.animationFrameRandom and math.random(1, self.animationFrameCount) or 1
+	self.animationFrame = self.animationFrameRandom and math.random(1, self.animationFrameCount) or 1
 
 	self.colorPalette = data.colorPalette and _Game.resourceManager:getColorPalette(data.colorPalette)
 	self.colorPaletteSpeed = data.colorPaletteSpeed
@@ -105,7 +125,7 @@ function ParticlePiece:update(dt)
 	-- animation
 	self.animationFrame = self.animationFrame + self.animationSpeed * dt
 	if self.animationFrame >= self.animationFrameCount + 1 then
-		if self.animationLoop then self.animationFrame = self.animationFrame - self.animationFrameCount end
+		if self.animationLoop then self.animationFrame = self.animationFrame % self.animationFrameCount end
 		--self:destroy()
 	end
 

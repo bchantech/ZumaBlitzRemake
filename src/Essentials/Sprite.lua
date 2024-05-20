@@ -53,6 +53,15 @@ function Sprite:new(path)
 		end
 		self.states[i] = s
 	end
+
+	-- animation related stuff
+	-- this only supports first state animation but this will change in the future
+	
+	self.animationSpeed = data.animationSpeed or 0
+	self.animationFrameCount = data.animationFrameCount or (data.states[1].frames.x * data.states[1].frames.y)
+	self.animationLoop = data.animationLoop or false
+	self.animationFrameRandom = data.animationFrameRandom or false
+
 end
 
 
