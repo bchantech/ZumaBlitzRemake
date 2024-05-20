@@ -41,6 +41,8 @@ _CLIENT_VERSION = 100
 -- You can automate this in i.e. a script by simply adding a `_BUILD_NUMBER = "<your number>"` line at the end of this main.lua file.
 _BUILD_NUMBER = "2024-03-12"
 
+-- Custom compile settings
+_IGNORE_RESOURCE_ERRORS = true
 
 -- Fonts
 _FONT_CACHE = {}

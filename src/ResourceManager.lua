@@ -227,7 +227,13 @@ function ResourceManager:getResource(type, path)
 	local data = self.resources[type]
 
 	if not data.t[path] then
-		error(string.format("[ResourceManager] Attempt to get an unknown %s: %s", data.e, path))
+		-- silently fail instead of error
+		if _IGNORE_RESOURCE_ERRORS then
+			_Log:printt("ResourceManager", string.format("Attempt to get an unknown %s: %s", data.e, path))
+			return nil
+		else
+			error(string.format("[ResourceManager] Attempt to get an unknown %s: %s", data.e, path))
+		end
 	end
 	return data.t[path]
 end
