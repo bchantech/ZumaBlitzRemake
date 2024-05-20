@@ -109,22 +109,6 @@ function ConfigManager:loadStuffAfterResources()
     self.foodItems = self:loadFolder("config/food_items", "food item", false, FoodItem)
 	for foodID, food in pairs(self.foodItems) do
         food._name = foodID -- Only used for self-reference in FoodItem.lua
-        if food.variants then
-            for variant, data in pairs(food.variants) do
-				_Log:printt("ConfigManager", string.format("Loading food variant %s (base: %s). ID: %s", variant, food._name, food._name.."_"..variant))
-                local internalName = food._name.."_"..variant
-				local foodVariant = {
-					_name = internalName,
-                    displayName = data.displayName or food.displayName,
-                    sprite = data.sprite or food.sprite,
-                    price = data.price or food.price,
-                }
-                local instance = FoodItem(foodVariant, food._path)
-                instance.variantBase = food._name
-				instance:syncVariantEffects()
-				self.foodItems[internalName] = instance
-			end
-		end
     end
 end
 

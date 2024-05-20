@@ -16,17 +16,7 @@ function FoodItem:new(data, path)
     self.displayEffects = data.displayEffects or " "
     self.sprite = data.sprite
     self.price = data.price or 10000
-    self.variants = data.variants
-    self.variantBase = nil
     self.effects = data.effects
-end
-
-
-
-function FoodItem:syncVariantEffects()
-    if self.variantBase then
-        self.effects = _Game.configManager.foodItems[self.variantBase].effects
-    end
 end
 
 
