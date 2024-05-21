@@ -18,6 +18,8 @@ function UIWidgetText:new(parent, text, font, align)
 	self.font = _Game.resourceManager:getFont(font)
 	self.align = align and _ParseVec2(align) or Vec2(0.5, 0)
 	
+	self.debugColor = {1.0,0.5,0.5}
+
 	-- number easing 
 	self.number_time = nil
 	self.number_time_target = nil

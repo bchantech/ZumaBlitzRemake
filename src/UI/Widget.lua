@@ -27,7 +27,7 @@ function UIWidget:new(name, data, parent)
 	-- local in variables
 	-- global in methods
 	if type(data) == "string" then data = _LoadJson(_ParsePath(data)) end
-
+	self.type = data.type or "none"
 	self.pos = _ParseVec2(data.pos or {x = 0, y = 0})
 	self.mousePressLoc = {x = 0, y = 0}
 	self.draggable = data.draggable or false
@@ -76,7 +76,10 @@ function UIWidget:new(name, data, parent)
 		self.widget = UIWidgetLevel(self, data.path)
 	else
 		data.type = "none"
+		self.debugColor = {0.7,0.7,0.7}
 	end
+	
+	if self.widget then self.debugColor = self.widget.debugColor end
 
 	self.parent = parent
 	self.children = {}

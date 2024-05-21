@@ -70,6 +70,8 @@ function Profiler:stop()
 end
 
 function Profiler:draw(pos)
+	
+	table.unpack = table.unpack or unpack
 	-- Counting
 	local total = 0
 	local max = nil

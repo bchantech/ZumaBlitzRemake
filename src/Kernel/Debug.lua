@@ -43,6 +43,11 @@ function Debug:new()
 	self.fpsDebugVisible = false
 	self.sphereDebugVisible = false
 	self.sphereDebugVisible2 = false
+
+	-- debug text positions
+	self.uiWidgetDebugCount = 0
+	self.uiMouse = Vec2()
+	self.uiMousepressed = false
 end
 
 
@@ -67,11 +72,12 @@ function Debug:draw()
 
 	-- UI tree
 	if self.uiDebugVisible and _Game.sessionExists then
-		love.graphics.setColor(0, 0, 0, 0.5)
-		love.graphics.rectangle("fill", 0, 0, 460, 600)
+		love.graphics.setColor(0, 0, 0, 0.7)
+		love.graphics.rectangle("fill", 0, 0, 460, love.graphics.getHeight( ))
 		love.graphics.setColor(1, 1, 1)
+		self.uiWidgetDebugCount = 0
 		for i, line in ipairs(self:getUITreeText()) do
-			love.graphics.print(line[1], 10, 10 + i * 15 + self.uiDebugOffset)
+			love.graphics.print({line[9],line[1]}, 20, 10 + i * 15 + self.uiDebugOffset)
 			love.graphics.print(line[2], 260, 10 + i * 15 + self.uiDebugOffset)
 			love.graphics.print(line[3], 270, 10 + i * 15 + self.uiDebugOffset)
 			love.graphics.print(line[4], 280, 10 + i * 15 + self.uiDebugOffset)
@@ -80,6 +86,26 @@ function Debug:draw()
 			love.graphics.print(line[7], 340, 10 + i * 15 + self.uiDebugOffset)
 			love.graphics.print(line[8], 360, 10 + i * 15 + self.uiDebugOffset)
 		end
+
+		-- draw the scroll rectangle
+		local widget_limit = (love.graphics.getHeight()/15)
+		if self.uiWidgetDebugCount > widget_limit then
+			local yy = -self.uiDebugOffset / ((self.uiWidgetDebugCount-widget_limit) * 15) * (love.graphics.getHeight( )-30)
+			love.graphics.setColor(0, 1, 0)
+			love.graphics.rectangle("fill", 0, yy, 15, 30)
+			love.graphics.setColor(1, 1, 1)
+			love.graphics.line(15,0,15, love.graphics.getHeight( ))
+		end
+		
+		-- if the mouse is in clicked state then move the rectangle here
+		if self.uiMousepressed then
+			if self.uiMouse.x < 15 then
+				local x,y = love.mouse.getPosition() 
+				self.uiDebugOffset = -y * (((self.uiWidgetDebugCount-widget_limit) * 15) / (love.graphics.getHeight( )-30))
+			end
+		end
+		
+		
 	end
 
 	-- Game and spheres
@@ -101,8 +127,8 @@ function Debug:keypressed(key)
 		if key == "f8" then self.sphereDebugVisible3 = not self.sphereDebugVisible3 end
 		if key == "kp-" and self.profPage > 1 then self.profPage = self.profPage - 1 end
 		if key == "kp+" and self.profPage < #self.profPages then self.profPage = self.profPage + 1 end
-		if key == "," then self.uiDebugOffset = self.uiDebugOffset - 75 end
-		if key == "." then self.uiDebugOffset = self.uiDebugOffset + 75 end
+		if key == "pagedown" then self.uiDebugOffset = self.uiDebugOffset - 75 end
+		if key == "pageup" then self.uiDebugOffset = self.uiDebugOffset + 75 end
 	end
 
 	self.console:keypressed(key)
@@ -116,30 +142,55 @@ function Debug:textinput(t)
 	self.console:textinput(t)
 end
 
+function Debug:mousepressed(x, y, button)
+	self.uiMouse = Vec2(x,y)
+	self.uiMousepressed = true
+end
+
+function Debug:mousereleased(x, y, button)
+	self.uiMouse = Vec2(x,y)
+	self.uiMousepressed = false
+end
+
+
+function Debug:wheelmoved(x,y)
+	
+	
+    if y > 0 then
+        self.uiDebugOffset = self.uiDebugOffset + 15
+    elseif y < 0 then
+        self.uiDebugOffset = self.uiDebugOffset - 15
+    end
+end
+
+
 
 
 function Debug:getUITreeText(node, rowTable, indent)
-	node = node or _Game.uiManager.rootNodes["root"] or _Game.uiManager.rootNodes["splash"]
+	node = node or _Game.uiManager.widgets["root"] or _Game.uiManager.widgets["splash"]
 	rowTable = rowTable or {}
 	indent = indent or 0
 	--if indent > 1 then return end
 
-	local name = node.name
-	for i = 1, indent do name = "    " .. name end
-	local visible = "" --node.visible and "X" or ""
-	local visible2 = "" --node:isVisible() and "V" or ""
-	local active = node:isActive() and "A" or ""
-	local alpha = tostring(math.floor(node.alpha * 10) / 10)
-	local alpha2 = tostring(math.floor(node:getGlobalAlpha() * 10) / 10)
-	local time = "" --node.time and tostring(math.floor(node.time * 100) / 100) or "-"
-	local pos = tostring(node.pos)
-	--if node:getVisible() then
-		table.insert(rowTable, {name, visible, visible2, active, alpha, alpha2, time, pos})
-	--end
+	if node then
+		local name = node.name
+		for i = 1, indent do name = "    " .. name end
+		local visible = "" --node.visible and "X" or ""
+		local visible2 = "" --node:isVisible() and "V" or ""
+		local active = node:isActive() and "A" or ""
+		local alpha = tostring(math.floor(node.alpha * 10) / 10)
+		local alpha2 = ""
+		local time = "" --node.time and tostring(math.floor(node.time * 100) / 100) or "-"
+		local pos = tostring(node.pos)
+		local color = node.debugColor or {1,1,1}
 
-	--if
-	for childN, child in pairs(node.children) do
-		self:getUITreeText(child, rowTable, indent + 1)
+		table.insert(rowTable, {name, visible, visible2, active, alpha, alpha2, time, pos, color})
+		self.uiWidgetDebugCount = self.uiWidgetDebugCount + 1
+
+		--if
+		for childN, child in pairs(node.children) do
+			self:getUITreeText(child, rowTable, indent + 1)
+		end
 	end
 
 	return rowTable
@@ -266,7 +317,7 @@ end
 
 
 
-function Debug:drawVisibleText(text, pos, height, width, alpha)
+function Debug:drawVisibleText(text, pos, height, width, alpha, shadow)
 	alpha = alpha or 1
 
 	if text == "" then
@@ -278,6 +329,10 @@ function Debug:drawVisibleText(text, pos, height, width, alpha)
 		love.graphics.rectangle("fill", pos.x - 3, pos.y, width - 3, height)
 	else
 		love.graphics.rectangle("fill", pos.x - 3, pos.y, love.graphics.getFont():getWidth(_StrUnformat(text)) + 6, height)
+	end
+	if shadow then
+		love.graphics.setColor(0, 0, 0, alpha)
+		love.graphics.print(text, pos.x + 2, pos.y + 2)
 	end
 	love.graphics.setColor(1, 1, 1, alpha)
 	love.graphics.print(text, pos.x, pos.y)
@@ -376,6 +431,7 @@ function Debug:drawPathInfoOnHover()
 
 	if _Game:levelExists() then
 		for i, path in ipairs(_Game.session.level.map.paths) do
+			path:drawDebug()
 			love.graphics.setColor(1, 1, 1)
 			love.graphics.print("Path " .. tostring(i), p.x + 10, p.y + 10 + n)
 			love.graphics.line(p.x + 120, p.y + 20 + n, p.x + 720, p.y + 20 + n)
@@ -423,14 +479,11 @@ function Debug:runCommand(command)
 			"b: Boost spheres",
 			"crash: Manually crashes the game",
 			"e: Toggle background cheat mode",
-			"fs: Toggle fullscreen",
 			"help: Show this list",
 			"n: Nuke all spheres",
 			"s: Spawn a new chain",
-			"sp <num>: Set destroyedSpheres level count to num",
 			"t <scale>: Set time scale",
-			"test: Particle test",
-			"p <powerup>: Gives a powerup. Powerup can be: fire, ligh, wild, bomb, slow, stop, rev, shot",
+			"test: <particle> Particle test",
 			"ppp: Spawn a scorpion",
 			"expr <expression>: Evaluate an expression",
 			"exprt <expression>: Evaluate an expression",
@@ -479,25 +532,6 @@ function Debug:runCommand(command)
 		end
 		return true
 	
-	elseif words[1] == "p" then
-		local t = {fire = "bomb", ligh = "lightning", wild = "wild", bomb = "colorbomb", slow = "slow", stop = "stop", rev = "reverse", shot = "shotspeed"}
-		for word, name in pairs(t) do
-			if words[2] == word then
-				if word == "bomb" then
-					if not words[3] or not tonumber(words[3]) or tonumber(words[3]) < 1 or tonumber(words[3]) > 7 then return false end
-					_Game.session:usePowerup({name = name, color = tonumber(words[3])})
-				else
-					_Game.session:usePowerup({name = name})
-				end
-				self.console:print("Powerup applied")
-				return true
-			end
-		end
-	elseif words[1] == "sp" then
-		if not words[2] or not tonumber(words[2]) then return false end
-		_Game.session.level.destroyedSpheres = tonumber(words[2])
-		self.console:print("Spheres destroyed set to " .. words[2])
-		return true
 	elseif words[1] == "b" then
 		for i, path in ipairs(_Game.session.level.map.paths) do
 			for j, sphereChain in ipairs(path.sphereChains) do
@@ -513,10 +547,6 @@ function Debug:runCommand(command)
 			path:spawnChain()
 		end
 		self.console:print("Spawned new chains!")
-		return true
-	elseif words[1] == "fs" then
-		--toggleFullscreen()
-		self.console:print("Fullscreen toggled")
 		return true
 	elseif words[1] == "t" then
 		if not words[2] or not tonumber(words[2]) then return false end
@@ -534,14 +564,10 @@ function Debug:runCommand(command)
 	elseif words[1] == "ppp" then
 		_Game.session.level:applyEffect({type = "spawnScorpion"})
 	elseif words[1] == "test" then
-		_Game:spawnParticle("particles/collapse_vise.json", Vec2(100, 400))
+		_Game:spawnParticle(words[2], Vec2(100, 400))
 		return true
 	elseif words[1] == "crash" then
-		local s, witty = pcall(self.getWitty)
-		if not s or not witty then
-			witty = "I give up, no idea for the joke! Eh, I'll... just head out then. Cya!"
-		end
-		error(string.format("Manual crash [%s]", witty))
+		return "crash"
 	elseif words[1] == "expr" then
 		local result = _Vars:evaluateExpression(words[2])
 		self.console:print(string.format("expr(%s): %s", words[2], result))
@@ -569,6 +595,9 @@ function Debug:runCommand(command)
 		end
 		self.console:print(string.format("ex(%s): %s", words[2], ce:evaluate()))
 		return true
+	else
+		self.console:print({{1, 0.2, 0.2}, string.format("Command \"%s\" not found. Type \"help\" to see available commands.", words[1])})
+		return
 	end
 
 	return false

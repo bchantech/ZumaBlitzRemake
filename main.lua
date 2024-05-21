@@ -63,6 +63,7 @@ _Log = nil
 
 ---@type Debug
 _Debug = nil
+_DebugEnabled = false
 
 _Vars = ExpressionVariables()
 _Network = Network()
@@ -144,10 +145,12 @@ end
 
 function love.mousepressed(x, y, button)
 	if _Game then _Game:mousepressed(x, y, button) end
+	if _DebugEnabled then _Debug:mousepressed(x, y, button) end
 end
 
 function love.mousereleased(x, y, button)
 	if _Game then _Game:mousereleased(x, y, button) end
+	if _DebugEnabled then _Debug:mousereleased(x, y, button) end
 end
 
 function love.mousemoved(x, y, dx, dy, istouch)
@@ -156,6 +159,7 @@ end
 
 function love.wheelmoved(x, y)
 	if _Game then _Game:wheelmoved(x, y) end
+	if _DebugEnabled then _Debug:wheelmoved(x, y) end
 end
 
 function love.keypressed(key)
@@ -167,7 +171,7 @@ function love.keypressed(key)
 		if _Game then _Game:keypressed(key) end
 	end
 
-	_Debug:keypressed(key)
+	if _DebugEnabled then _Debug:keypressed(key) end
 end
 
 function love.keyreleased(key)
@@ -177,7 +181,7 @@ function love.keyreleased(key)
 		if _Game then _Game:keyreleased(key) end
 	end
 
-	_Debug:keyreleased(key)
+	if _DebugEnabled then _Debug:keyreleased(key) end
 end
 
 function love.textinput(t)
@@ -185,7 +189,7 @@ function love.textinput(t)
 		if _Game then _Game:textinput(t) end
 	end
 
-	_Debug:textinput(t)
+	if _DebugEnabled then _Debug:textinput(t) end
 end
 
 function love.resize(w, h)
@@ -226,7 +230,9 @@ function _ParseCommandLineArguments(args)
 
 	for i, v in ipairs(args) do
 		if not currentSwitch then
-			if v == "--boot" then
+			if v == "--debug" then
+				_DebugEnabled = true
+			elseif v == "--boot" then
 				out.mode = "boot"
 			elseif v == "--verifier" then
 				out.mode = "verifier"
