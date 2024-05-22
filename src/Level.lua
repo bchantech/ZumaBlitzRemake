@@ -1107,7 +1107,6 @@ function Level:destroy()
 	for i, path in ipairs(self.map.paths) do
 		path:destroy()
     end
-	self:destroyNetParticle()
 	if self.target then
 		self.target:destroy()
     end

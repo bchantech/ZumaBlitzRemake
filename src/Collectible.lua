@@ -43,7 +43,7 @@ function Collectible:update(dt)
 	self.pos = self.pos + self.speed * dt
 
 	-- catching/bouncing/destroying
-	if _Game.session.level.shooter:isPosCatchable(self.pos) or (_Game.session.level.netTime > 0 and self.pos.y >= _Game.configManager.gameplay.net.posY) then
+	if _Game.session.level.shooter:isPosCatchable(self.pos) then
 		self:catch()
 	end
 	if self.pos.x < 10 then -- left
