@@ -15,8 +15,6 @@ function Options:new(data)
 	-- default options if not found
 	if not self.data then self:reset() end
 
-	-- fullscreen on start
-	if self:getFullscreen() then _Game:setFullscreen(true) end
 end
 
 
@@ -28,7 +26,6 @@ function Options:reset()
 	self.data = {}
 	self:setMusicVolume(0.25)
 	self:setSoundVolume(0.25)
-	self:setFullscreen(false)
 	self:setMute(false)
 end
 
@@ -68,19 +65,6 @@ end
 ---@return boolean
 function Options:getColorblindMode()
 	return self.data.colorblindMode
-end
-
----Sets the fullscreen flag.
----@param value boolean Whether the fullscreen should be active.
-function Options:setFullscreen(value)
-	self.data.fullscreen = value
-	_Game:setFullscreen(value)
-end
-
----Returns the current fullscreen flag status.
----@return boolean
-function Options:getFullscreen()
-	return self.data.fullscreen
 end
 
 ---Sets the mute flag.

@@ -177,24 +177,6 @@
                     "layer": "MenuDialog2Controls",
                     "sprite": "sprites/dialogs/slider_slot.json"
                 },
-                "Toggle_Fullscreen": {
-                    "inheritShow": false,
-                    "inheritHide": true,
-                    "type": "spriteButtonCheckbox",
-                    "pos": {
-                        "x": 170,
-                        "y": 230
-                    },
-                    "alpha": 0,
-                    "children": {},
-                    "animations": {},
-                    "sounds": {},
-                    "layer": "MenuDialog2Controls",
-                    "sprite": [
-                        "sprites/dialogs/checkbox_fullscreen_off.json",
-                        "sprites/dialogs/checkbox_fullscreen_on.json"
-                    ]
-                },
                 "Toggle_Mute": {
                     "inheritShow": true,
                     "inheritHide": true,

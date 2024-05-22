@@ -38,6 +38,7 @@ function Game:new(name)
 
 	self.uiManager = nil
 	self.particleManager = nil
+	self.fullscreen = false
 
 
 	-- revert to original font size
@@ -306,6 +307,11 @@ function Game:keypressed(key)
 		if key == "up" then self.session.level.pending_action = 1 end
 		if key == "space" then self.session.level.pending_action = 2 end
 	end
+
+	if key == "f11" then 
+		self.fullscreen = not self.fullscreen
+		self:setFullscreen(self.fullscreen) 
+	end
 end
 
 
@@ -397,7 +403,7 @@ function Game:setFullscreen(fullscreen)
 	else
 		_DisplaySize = self:getNativeResolution()
 	end
-	love.window.setMode(_DisplaySize.x, _DisplaySize.y, {fullscreen = fullscreen, resizable = false})
+	love.window.setMode(_DisplaySize.x, _DisplaySize.y, {fullscreen = fullscreen, resizable = true})
 end
 
 
