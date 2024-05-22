@@ -20,13 +20,33 @@ end
 
 
 
----Sets a variable to be used by Expressions.
+---Sets a variable to be used by Expressions. This is scoped into the global context.
 ---@param name string The variable name.
 ---@param value any The value to be stored.
 function ExpressionVariables:set(name, value)
-    self.data[name] = value
+    self:setC("global", name, value)
 end
 
+---Sets a context variable to be used by Expressions.
+---Context variables can be set in a procedure, and when certain things which require them are done, they can be purged in one snap using `:unset()`.
+---@param context string The context name.
+---@param name string The variable name.
+---@param value any The value to be stored.
+function ExpressionVariables:setC(context, name, value)
+    if self.data[context] and type(self.data[context]) ~= "table" then
+        error(string.format("[ExpressionVariables] Tried to create a context of the same name as an already existing variable: %s", context))
+    end
+    if not self.data[context] then
+        self.data[context] = {}
+    end
+    self.data[context][name] = value
+end
+
+---Unsets a variable or a context with the given name.
+---@param name string The variable/context name.
+function ExpressionVariables:unset(name)
+    self.data[name] = nil
+end
 
 
 ---Obtains a variable value.
@@ -34,17 +54,24 @@ end
 ---@param default any? A value to be returned if this variable doesn't exist. If not specified, this function will raise an error in that case instead.
 ---@return any
 function ExpressionVariables:get(name, default)
-    if self.data[name] == nil then
+    return self:getC("global", name, default)
+end
+
+---Obtains a context variable value.
+---@param context string The context name.
+---@param name string The variable name.
+---@param default any? A value to be returned if this variable doesn't exist. If not specified, this function will raise an error in that case instead.
+---@return any
+function ExpressionVariables:getC(context, name, default)
+    if self.data[context] == nil or self.data[context][name] == nil then
         if default ~= nil then
             return default
         else
-            error(string.format("[ExpressionVariables] Tried to get a nonexistent variable: %s", name))
+            error(string.format("[ExpressionVariables] Tried to get a nonexistent context variable: %s.%s", context, name))
         end
     end
-    return self.data[name]
+    return self.data[context][name]
 end
-
-
 
 ---Evaluates an Expression and caches it, or evaluates an already cached Expression. Returns the result.
 ---@param expression string The expression string.

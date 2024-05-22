@@ -1118,6 +1118,7 @@ function Level:destroy()
 		-- Stop any ambient music.
 		ambientMusic:setVolume(0)
 	end
+	_Vars:unset("global")
 end
 
 
@@ -1218,6 +1219,7 @@ function Level:reset()
 
 
 	-- Set game constants here. 
+	_Vars:unset("global")
 
 end
 

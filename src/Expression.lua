@@ -183,7 +183,29 @@ function Expression:new(str)
 			local b = table.remove(stack)
 			local a = table.remove(stack)
 			table.insert(stack, _Vars:get(a, b))
+		end,
+		["getc"] = function(stack)
+			-- Get a value of a context variable.
+			local b = table.remove(stack)
+			local a = table.remove(stack)
+			table.insert(stack, _Vars:getC(a, b))
+		end,
+		["getcd"] = function(stack)
+			-- Get a value of a context variable, or return a specified value if nil.
+			local c = table.remove(stack)
+			local b = table.remove(stack)
+			local a = table.remove(stack)
+			table.insert(stack, _Vars:getC(a, b, c))
+		end,
+
+		-- set variables for the duration of the map
+		["set"] = function(stack)
+			-- Get a value of a context variable.
+			local b = table.remove(stack)
+			local a = table.remove(stack)
+			_Vars:set(a, b)
 		end
+
 	}
 
 	self.data = self:prepare(str)
@@ -397,10 +419,26 @@ function Expression:compile(tokens)
 		elseif token.type == "operator" then
 			local op = token.value
 			local opData = OPERATORS[op]
+			local lastFunction = nil
+			local lastFunctionI = nil
+			for i = #opStack, 1, -1 do
+				if opStack[i].type == "function" then
+					lastFunction = opStack[i].value
+					lastFunctionI = i
+					break
+				end
+			end
 			if op == "|" then
-				-- This is a symbol which changes get to getd.
-				assert(#opStack > 1 and opStack[#opStack - 1].type == "function" and opStack[#opStack - 1].value == "get", string.format("| in incorrect place in Expression(%s)!", self.data))
-				opStack[#opStack - 1].value = "getd"
+				-- This is a symbol which changes get to getd, and getc to getcd.
+				assert(lastFunction == "get" or lastFunction == "getc", string.format("| in incorrect place in Expression(%s)!", self.data))
+				if lastFunction == "get" then
+					opStack[lastFunctionI].value = "getd"
+				else
+					opStack[lastFunctionI].value = "getcd"
+				end
+			elseif op == "." and lastFunction == "get" then
+				-- This is a symbol which changes get to getc.
+				opStack[lastFunctionI].value = "getc"
 			elseif OPERATORS[op] then
 				-- Pop any required operators.
 				local opLast = opStack[#opStack] and opStack[#opStack].value
