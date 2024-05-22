@@ -15,7 +15,6 @@ local Color = require("src.Essentials.Color")
 local Log = require("src.Kernel.Log")
 local Debug = require("src.Kernel.Debug")
 
-local BootScreen = require("src.Kernel.BootScreen")
 local Game = require("src.Game")
 local Verifier = require("src.Verifier")
 
@@ -55,7 +54,7 @@ _KeyModifiers = {lshift = false, lctrl = false, lalt = false, rshift = false, rc
 -- File system prefix. On Windows defaults to "", on Android defaults to "/sdcard/".
 _FSPrefix = ""
 
----@type Game|BootScreen|Verifier
+---@type Game
 _Game = nil
 
 ---@type Log
@@ -105,8 +104,6 @@ function love.load(args)
     -- Autoload ZBR by default, there is no need to access the boot screen unless requested
 	if arg.mode == "game" then
 		_LoadGame("ZumaBlitzRemake")
-	elseif arg.mode == "boot" then
-		_LoadBootScreen()
 	elseif arg.mode == "verifier" then
 		_LoadVerifier(arg.cores)
 	end
@@ -255,11 +252,6 @@ end
 
 function _LoadGame(gameName)
 	_Game = Game(gameName)
-	_Game:init()
-end
-
-function _LoadBootScreen()
-	_Game = BootScreen()
 	_Game:init()
 end
 

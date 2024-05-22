@@ -407,12 +407,7 @@ end
 function Game:quit(forced)
 	self:save()
 	self.resourceManager:unload()
-	if _EngineSettings:getBackToBoot() and not forced then
-		love.window.setMode(800, 600) -- reset window size
-		_LoadBootScreen()
-	else
-		love.event.quit()
-	end
+	love.event.quit()
 end
 
 
