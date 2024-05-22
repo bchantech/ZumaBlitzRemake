@@ -4,7 +4,7 @@ local class = require "com.class"
 ---@overload fun(parent, align, level):UI2WidgetLevel
 local UI2WidgetLevel = class:derive("UI2WidgetLevel")
 
-local DummyLevel = require("src.DummyLevel")
+local Map = require("src.Map")
 
 
 
@@ -17,7 +17,8 @@ function UI2WidgetLevel:new(node, align, level)
     self.node = node
     self.align = align
 	
-	self.level = DummyLevel(level)
+	local data = _LoadJson(_ParsePath(path))
+	self.map = Map(self, "maps/" .. data.map, data.pathsBehavior, true)
 end
 
 
@@ -32,11 +33,12 @@ end
 
 function UI2WidgetLevel:update(dt)
 	if not self.node:isVisible() then return end
-	self.level:update(dt)
+	self.map:update(dt)
 end
 
 function UI2WidgetLevel:draw(variables)
-	self.level:draw()
+	self.map:draw()
+	self.map:drawSpheres()
 end
 
 return UI2WidgetLevel

@@ -4,27 +4,26 @@ local class = require "com.class"
 ---@overload fun(parent, path):UIWidgetLevel
 local UIWidgetLevel = class:derive("UIWidgetLevel")
 
-local DummyLevel = require("src.DummyLevel")
-
-
+local Map = require("src.Map")
 
 function UIWidgetLevel:new(parent, path)
 	self.type = "level"
 	
 	self.parent = parent
-	
-	self.level = DummyLevel(path)
+	local data = _LoadJson(_ParsePath(path))
+	self.map = Map(self, "maps/" .. data.map, data.pathsBehavior, true)
 end
 
 
 
 function UIWidgetLevel:update(dt)
 	if not self.parent.visible then return end
-	self.level:update(dt)
+	self.map:update(dt)
 end
 
 function UIWidgetLevel:draw(variables)
-	self.level:draw()
+	self.map:draw()
+	self.map:drawSpheres()
 end
 
 return UIWidgetLevel
