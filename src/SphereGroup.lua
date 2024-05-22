@@ -794,6 +794,8 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	-- Calculate score from gap bonus
     local gapbonus = 0
     if #gaps > 0 then
+		
+		table.unpack = table.unpack or unpack
 		local largestGap = math.max(table.unpack(gaps))
 
 		-- adjustment to largest gap size

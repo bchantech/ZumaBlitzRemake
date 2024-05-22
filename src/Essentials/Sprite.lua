@@ -130,6 +130,8 @@ function Sprite:draw(pos, align, state, frame, rot, color, alpha, scale, blendMo
 	if color.r then -- temporary chunk
 		love.graphics.setColor(color.r, color.g, color.b, alpha)
 	else
+		
+		table.unpack = table.unpack or unpack
 		love.graphics.setColor(table.unpack(color), alpha)
     end
 
