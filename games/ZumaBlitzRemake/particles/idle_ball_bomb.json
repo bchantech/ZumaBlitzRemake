@@ -43,9 +43,7 @@
             "animationFrameRandom": false,
             "fadeInPoint": 0.48,
             "fadeOutPoint": 0.52,
-            "posRelative": true,
-            "rainbow": false,
-            "rainbowSpeed": 0
+            "posRelative": true
         }
     },
     {
@@ -101,8 +99,6 @@
             "fadeInPoint": 0.25,
             "fadeOutPoint": 0.5,
             "posRelative": false,
-            "rainbow": false,
-            "rainbowSpeed": 0,
             "directionDeviationTime": 0.0,
             "directionDeviationSpeed": {
                 "type": "randomFloat",

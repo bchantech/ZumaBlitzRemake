@@ -39,9 +39,7 @@
             "animationFrameRandom": false,
             "fadeInPoint": 0.0,
             "fadeOutPoint": 0.9,
-            "posRelative": false,
-            "rainbow": false,
-            "rainbowSpeed": 0
+            "posRelative": false
         }
     },
     {
@@ -84,9 +82,7 @@
             "animationFrameRandom": false,
             "fadeInPoint": 0.0,
             "fadeOutPoint": 0.9,
-            "posRelative": false,
-            "rainbow": false,
-            "rainbowSpeed": 0
+            "posRelative": false
         }
     },
     {
@@ -145,9 +141,7 @@
             "animationFrameRandom": true,
             "fadeInPoint": 0.0,
             "fadeOutPoint": 0.5,
-            "posRelative": false,
-            "rainbow": false,
-            "rainbowSpeed": 0
+            "posRelative": false
         }
     }
 ]

@@ -39,9 +39,7 @@
             "animationFrameRandom": false,
             "fadeInPoint": 0.4,
             "fadeOutPoint": 0.6,
-            "posRelative": false,
-            "rainbow": false,
-            "rainbowSpeed": 0
+            "posRelative": false
         }
     },
     {
@@ -85,8 +83,6 @@
             "fadeInPoint": 0.0,
             "fadeOutPoint": 0.9,
             "posRelative": true,
-            "rainbow": false,
-            "rainbowSpeed": 0,
             "colorPaletteSpeed": 33.333333333333336
         }
     },
@@ -131,8 +127,6 @@
             "fadeInPoint": 0.0,
             "fadeOutPoint": 0.9,
             "posRelative": true,
-            "rainbow": false,
-            "rainbowSpeed": 0,
             "colorPaletteSpeed": 33.333333333333336
         }
     },
@@ -177,8 +171,6 @@
             "fadeInPoint": 0.0,
             "fadeOutPoint": 0.9,
             "posRelative": true,
-            "rainbow": false,
-            "rainbowSpeed": 0,
             "colorPaletteSpeed": 33.333333333333336
         }
     },
@@ -223,8 +215,6 @@
             "fadeInPoint": 0.0,
             "fadeOutPoint": 0.9,
             "posRelative": true,
-            "rainbow": false,
-            "rainbowSpeed": 0,
             "colorPaletteSpeed": 33.333333333333336
         }
     }

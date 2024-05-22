@@ -46,9 +46,7 @@
             "fadeInPoint": 0.0,
             "fadeOutPoint": 0.75,
             "posRelative": true,
-            "rainbow": false,
-            "rainbowSpeed": 0,
-            "colorPalette": "images/powerups/wild_pal.png",
+            "colorPalette": "images/particles/wild_pal.png",
             "colorPaletteSpeed": 200.0
         }
     }
