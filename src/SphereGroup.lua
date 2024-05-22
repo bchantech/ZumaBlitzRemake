@@ -712,12 +712,12 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	end
 
 	-- Play a sound.
+	-- FORK-SPECIFIC CODE: Move the settings from game module manager. Temporary fix while integrating Sound Events
     if effectConfig.destroySound == "hardcoded" then
-		local destroySoundParams = MOD_GAME.matchSound(length, self.map.level.combo, self.sphereChain.combo, boostCombo)
-        _Game:playSound(destroySoundParams.name, destroySoundParams.pitch, pos)
-		-- FORK-SPECIFIC CODE: match chime
-        local chainSoundParams = MOD_GAME.chainSound(self.sphereChain.combo)
-		_Game:playSound(chainSoundParams.name, chainSoundParams.pitch, pos)
+		local destroySoundParams_name = "sound_events/sphere_destroy_chime_1.json"
+		local destroySoundParams_pitch = 1 + (math.min(self.sphereChain.combo,7))/12
+		_Game:playSound(destroySoundParams_name, destroySoundParams_pitch, pos)
+		_Game:playSound("sound_events/sphere_destroy_1.json", 1, pos)
 	else
 		_Game:playSound(effectConfig.destroySound, 1, pos)
     end
@@ -736,8 +736,9 @@ function SphereGroup:matchAndDeleteEffect(position, effect)
 	-- FORK-SPECIFIC CODE: chain chime
 	-- Place this below chain and combo value boosting.
     if boostCombo and self.map.level.combo > 5 then
-		local comboSoundParams = MOD_GAME.comboSound(self.map.level.combo)
-		_Game:playSound(comboSoundParams.name, comboSoundParams.pitch, pos)
+		local comboSoundParams_name = "sound_events/chain_bonus_1.json"
+		local comboSoundParams_pitch = 1 + (math.min(self.map.level.combo-5, 10))/12
+		_Game:playSound(comboSoundParams_name, comboSoundParams_pitch, pos)
 	end
 
 	-- chain blast

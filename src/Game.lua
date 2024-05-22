@@ -13,7 +13,6 @@ local Timer = require("src.Timer")
 
 local ConfigManager = require("src.ConfigManager")
 local ResourceManager = require("src.ResourceManager")
-local GameModuleManager = require("src.GameModuleManager")
 local RuntimeManager = require("src.RuntimeManager")
 local Session = require("src.Session")
 
@@ -32,7 +31,6 @@ function Game:new(name)
 
 	self.configManager = nil
 	self.resourceManager = nil
-	self.gameModuleManager = nil
 	self.runtimeManager = nil
 	self.session = nil
 
@@ -70,14 +68,11 @@ function Game:init()
 	-- Step 5. Load initial resources (enough to start up the splash screen)
 	self.resourceManager:loadList(self.configManager.loadList)
 
-	-- Step 6. Load game modules
-	self.gameModuleManager = GameModuleManager()
-
-	-- Step 7. Create a runtime manager
+	-- Step 6. Create a runtime manager
 	self.runtimeManager = RuntimeManager()
 	local p = self:getCurrentProfile()
 
-	-- Step 8. Set up the UI Manager or the experimental UI2 Manager
+	-- Step 7. Set up the UI Manager or the experimental UI2 Manager
 	self.uiManager = self.configManager.config.useUI2 and UI2Manager() or UIManager()
 	self.uiManager:initSplash()
 end
