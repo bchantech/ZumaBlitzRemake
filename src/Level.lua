@@ -356,19 +356,6 @@ function Level:updateLogic(dt)
 		end
 	end
 
-
-
-	-- Net
-	if self.netTime > 0 then
-		self.netTime = self.netTime - dt
-		if self.netTime <= 0 then
-			self.netTime = 0
-			self:destroyNetParticle()
-		end
-	end
-
-
-
 	-- Time counting
 	if self.started and self.phase == 4 and not self:getFinish() and not self.finish and not self.lost then
 		self.time = self.time + dt
@@ -748,9 +735,6 @@ function Level:applyEffect(effect, TMP_pos)
 		end
 	elseif effect.type == "lightningStorm" then
 		self.lightningStormCount = effect.count
-	elseif effect.type == "activateNet" then
-		self.netTime = effect.time
-		self:spawnNetParticle()
 	elseif effect.type == "changeGameSpeed" then
 		self.gameSpeed = effect.speed
 		self.gameSpeedTime = effect.duration
@@ -1228,8 +1212,6 @@ function Level:reset()
 	self.gameSpeedTime = 0
 	self.lightningStormTime = 0
 	self.lightningStormCount = 0
-	self.netTime = 0
-	self:destroyNetParticle()
 
 	self.shooter.speedShotTime = 0
 	_Game.session.colorManager:reset()
@@ -1559,30 +1541,6 @@ function Level:spawnFloatingText(text, pos, font)
 	table.insert(self.floatingTexts, FloatingText(text, pos, font))
 end
 
-
-
----Spawns the Net particle, if it doesn't exist yet.
-function Level:spawnNetParticle()
-	if self.netParticle then
-		return
-	end
-	local netConfig = _Game.configManager.gameplay.net
-	self.netParticle = _Game:spawnParticle(netConfig.particle, Vec2(_Game:getNativeResolution().x / 2, netConfig.posY))
-end
-
-
-
----Despawns the Net particle, if it exists.
-function Level:destroyNetParticle()
-	if not self.netParticle then
-		return
-	end
-	self.netParticle:destroy()
-	self.netParticle = nil
-end
-
-
-
 ---Draws this Level and all its components.
 function Level:draw()
 	self.map:draw()
@@ -1700,7 +1658,6 @@ function Level:serialize()
 		combo = self.combo,
 		lightningStormCount = self.lightningStormCount,
 		lightningStormTime = self.lightningStormTime,
-		netTime = self.netTime,
 		destroyedSpheres = self.destroyedSpheres,
 		paths = self.map:serialize(),
 		lost = self.lost,
@@ -1897,10 +1854,6 @@ function Level:deserialize(t)
 	-- Effects
 	self.lightningStormCount = t.lightningStormCount
 	self.lightningStormTime = t.lightningStormTime
-	self.netTime = t.netTime
-	if self.netTime > 0 then
-		self:spawnNetParticle()
-	end
 
 	-- Pause
 	self:setPause(true)
