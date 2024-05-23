@@ -518,22 +518,7 @@ function Level:updateLogic(dt)
 		if self.finishDelay <= 0 then
 			self.finishDelay = nil
 			self.finish = true
-			self.bonusDelay = 0
 			self.shooter:empty()
-		end
-	end
-
-	if self.bonusDelay and (self.bonusPathID == 1 or not self.map.paths[self.bonusPathID - 1].bonusScarab) then
-		if self.map.paths[self.bonusPathID] then
-			self.bonusDelay = self.bonusDelay - dt
-			if self.bonusDelay <= 0 then
-				self.map.paths[self.bonusPathID]:spawnBonusScarab()
-				self.bonusDelay = _Game.configManager.gameplay.level.bonusDelay
-				self.bonusPathID = self.bonusPathID + 1
-			end
-		elseif self:getFinish() then
-			self.wonDelay = _Game.configManager.gameplay.level.wonDelay
-			self.bonusDelay = nil
 		end
 	end
 
@@ -728,11 +713,6 @@ function Level:applyEffect(effect, TMP_pos)
 	elseif effect.type == "destroyColor" then
 		-- Same as above.
 		_Game.session:destroyColor(effect.color)
-	elseif effect.type == "spawnScorpion" then
-		local path = self:getMostDangerousPath()
-		if path then
-			path:spawnScorpion()
-		end
 	elseif effect.type == "lightningStorm" then
 		self.lightningStormCount = effect.count
 	elseif effect.type == "changeGameSpeed" then
@@ -1048,9 +1028,7 @@ end
 function Level:beginLoad()
 	self.started = true
 	_Game:getMusic(self.musicName):reset()
-	if not self.bonusDelay and not self.map.paths[self.bonusPathID] then
-		self.wonDelay = _Game.configManager.gameplay.level.wonDelay
-	end
+	self.wonDelay = _Game.configManager.gameplay.level.wonDelay
 end
 
 
@@ -1206,7 +1184,6 @@ function Level:reset()
 	self.finish = false
 	self.finishDelay = nil
 	self.bonusPathID = 1
-	self.bonusDelay = nil
 
 	self.gameSpeed = 1
 	self.gameSpeedTime = 0
@@ -1652,7 +1629,6 @@ function Level:serialize()
 		finish = self.finish,
 		finishDelay = self.finishDelay,
 		bonusPathID = self.bonusPathID,
-		bonusDelay = self.bonusDelay,
 		shooter = self.shooter:serialize(),
 		shotSpheres = {},
 		collectibles = {},
@@ -1838,7 +1814,6 @@ function Level:deserialize(t)
 	self.finish = t.finish
 	self.finishDelay = t.finishDelay
 	self.bonusPathID = t.bonusPathID
-	self.bonusDelay = t.bonusDelay
 	-- Paths
 	self.map:deserialize(t.paths)
 	-- Shooter

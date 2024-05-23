@@ -484,7 +484,6 @@ function Debug:runCommand(command)
 			"s: Spawn a new chain",
 			"t <scale>: Set time scale",
 			"test: <particle> Particle test",
-			"ppp: Spawn a scorpion",
 			"expr <expression>: Evaluate an expression",
 			"exprt <expression>: Evaluate an expression",
 			"ex: Evaluate an expression",
@@ -561,8 +560,6 @@ function Debug:runCommand(command)
 		_Game.session:destroyFunction(function(sphere, spherePos) return true end, Vec2())
 		self.console:print("Nuked!")
 		return true
-	elseif words[1] == "ppp" then
-		_Game.session.level:applyEffect({type = "spawnScorpion"})
 	elseif words[1] == "test" then
 		_Game:spawnParticle(words[2], Vec2(100, 400))
 		return true
