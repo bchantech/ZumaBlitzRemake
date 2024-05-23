@@ -64,23 +64,31 @@ end
 ---@param n integer An entry index.
 ---@return table
 function Highscores:getEntry(n)
-	if n > #self.data.entries then
-		n = #self.data.entries
-	end
 	return self.data.entries[n]
 end
 
-
+---Returns a specified entry from the leaderboard. Returns a pair of strings conditing name and score.
+---@param n integer An entry index.
+---@return string, string
+function Highscores:getEntryDisplay(n)
+	if self.data.entries[n] then
+		return self.data.entries[n].name, self.data.entries[n].score
+	else
+		return " ", " "
+	end
+end
 
 ---Returns a hypothetical position a player would get with given score, or `nil` if it does not qualify.
 ---@param score integer The score to be considered.
 ---@return integer|nil
 function Highscores:getPosition(score)
 	-- nil if it does not qualify
-	for i = self.config.size, 1, -1 do
+	local leaderboard_size = math.min(#self.data.entries, self.config.size)
+
+	for i = leaderboard_size, 1, -1 do
 		local entry = self:getEntry(i)
 		if score <= entry.score then
-			if i == self.config.size then
+			if i == leaderboard_size then
 				-- We've hit the end of the highscore table, better luck next time!
 				return nil
 			else
