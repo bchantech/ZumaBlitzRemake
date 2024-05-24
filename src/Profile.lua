@@ -78,6 +78,7 @@ function Profile:loadOnlineProfile()
 	if online_data.error then
 		print("Error while connecting to server: " .. online_data.error)
 		print("Game will launch in offline mode.")
+		_OFFLINE_MODE = true
 		self.online = false
 		return false
 	else

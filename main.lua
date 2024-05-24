@@ -229,8 +229,8 @@ function _ParseCommandLineArguments(args)
 		if not currentSwitch then
 			if v == "--debug" then
 				_DebugEnabled = true
-			elseif v == "--boot" then
-				out.mode = "boot"
+			elseif v == "--offline" then
+				_OFFLINE_MODE = true
 			elseif v == "--verifier" then
 				out.mode = "verifier"
 				out.window = false
@@ -351,7 +351,7 @@ end
 ---Legacy score submission for metrics saving. This does not record the score to the server and receive xp, etc..
 ---@return string?
 function _SubmitScoreLegacy(data)
-	if _SCORE_SUBMIT_URL then
+	if _SCORE_SUBMIT_URL and not _OFFLINE_MODE then
 		print "submitting stats..."
 		local result = _Network:postSerialized(_SCORE_SUBMIT_URL, data, return_data, function(result)
 		end)
@@ -372,6 +372,9 @@ function _LoginUser(player_id, version)
 	-- test version
 	print "logging in..."
 
+	if _OFFLINE_MODE then
+		return {error = "Game started in offline mode."} 
+	end
 	-- if there is no site then it will start offline.
 	if not _SITEURL then 
 		_OFFLINE_MODE = true
