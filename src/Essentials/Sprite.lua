@@ -61,6 +61,7 @@ function Sprite:new(path)
 	self.animationFrameCount = data.animationFrameCount or (data.states[1].frames.x * data.states[1].frames.y)
 	self.animationLoop = data.animationLoop or false
 	self.animationFrameRandom = data.animationFrameRandom or false
+	self.animationFrame = self.animationFrameRandom and math.random(1, self.animationFrameCount) or 1
 
 end
 
